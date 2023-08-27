@@ -14,11 +14,12 @@ namespace Scripts
         [SerializeField] private Button sfxOff;
         [SerializeField] private Button musicOn;
         [SerializeField] private Button musicOff;
-
+        [Header("VolumeSliders")] 
+        [SerializeField] private Slider musicSlider;
+        [SerializeField] private Slider sfxSlider;
         [Header("AudioSources")] 
         [SerializeField] private AudioSource musicSource;
         [SerializeField] private AudioSource sfxSource;
-        
         [Header("MasterMixer")] 
         [SerializeField] private AudioMixer mixer;
         
@@ -38,6 +39,8 @@ namespace Scripts
             sfxOff.onClick.AddListener(SwitchSfxButton);
             musicOn.onClick.AddListener(SwitchMusicButton);
             musicOff.onClick.AddListener(SwitchMusicButton);
+            musicSlider.onValueChanged.AddListener(ChangeMusicVolume);
+            sfxSlider.onValueChanged.AddListener(ChangeSfxVolume);
         }
 
         private void SwitchSfxButton()
