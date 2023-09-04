@@ -191,6 +191,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &287564582 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3026820357365931547, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+  m_PrefabInstance: {fileID: 732170321}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +431,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 565508285227494856, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: makeScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3026820357365931547, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: m_Name
       value: MainField
@@ -517,10 +526,14 @@ PrefabInstance:
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: field
       value: 
-      objectReference: {fileID: 807701774}
+      objectReference: {fileID: 287564582}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: sizeType
-      value: 0
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: makeScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: TileParent
@@ -534,7 +547,8 @@ PrefabInstance:
       propertyPath: _tileOffset
       value: 1.1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 565508285227494856, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
