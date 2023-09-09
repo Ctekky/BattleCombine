@@ -54,7 +54,6 @@ namespace Scripts
         private void AddTileToField()
         {
             var newTile = new FieldCreateFactory(tile);
-            var oldTitle = new Vector2(0, 0);
 
             for (var i = 0; i < _fieldSize; i++)
             {
@@ -63,6 +62,8 @@ namespace Scripts
                     var currentTile = newTile.Create(_fieldParent);
                     currentTile.transform.position = tileParent.transform.position
                                                      + new Vector3(j * _tileOffset, i * _tileOffset, 0);
+
+                    currentTile.transform.Rotate(90, 180, 0);
 
                     _tileList.Add(currentTile);
                 }
