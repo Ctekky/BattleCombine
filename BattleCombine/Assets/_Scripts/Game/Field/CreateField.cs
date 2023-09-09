@@ -6,18 +6,21 @@ namespace Scripts
 {
     public class CreateField : MonoBehaviour
     {
-        [Header("Scale or not on start")] 
-        [SerializeField] private bool makeScale;
-        [Header("MainField")] 
-        [SerializeField] private GameObject field;
-        [Header("FieldSize")] 
-        [SerializeField] private FieldSize sizeType;
-        [Header("TileParent")] 
-        [SerializeField] private GameObject tileParent;
-        [Header("Tile prefab")] 
-        [SerializeField] private GameObject tile;
-        [Header("Offsets & scales (test values)")] 
-        [SerializeField] private float _tileOffset = 1.1f;
+        [Header("Scale or not on start")] [SerializeField]
+        private bool makeScale;
+
+        [Header("MainField")] [SerializeField] private GameObject field;
+        [Header("FieldSize")] [SerializeField] private FieldSize sizeType;
+
+        [Header("TileParent")] [SerializeField]
+        private GameObject tileParent;
+
+        [Header("Tile prefab")] [SerializeField]
+        private GameObject tile;
+
+        [Header("Offsets & scales (test values)")] [SerializeField]
+        private float _tileOffset = 1.1f;
+
         [SerializeField] private float smallFieldScale = 1.45f;
         [SerializeField] private float mediumFieldScale = 1.2f;
         [SerializeField] private float largeFieldScale = 1.04f;
