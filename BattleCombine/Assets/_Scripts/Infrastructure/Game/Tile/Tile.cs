@@ -52,15 +52,6 @@ namespace _Scripts
             EnabledState = new EnabledState(this, StateMachine);
             FinalChoiceState = new FinalChoiceState(this, StateMachine);
 
-            if (_startTile == true)
-            {
-                StateMachine.Initialize(AvailableForSelectionState);
-            }
-            else
-            {
-                StateMachine.Initialize(EnabledState);
-            }
-
             CheckTilesStateNearThisTile(this);
             //TODO: поменять алгоритм 
             _tileModifier = 5;
@@ -77,10 +68,23 @@ namespace _Scripts
             _tileModifier = modifier;
         }
 
+        public void ChangeStartFlag(bool isStartTile)
+        {
+            _startTile = isStartTile;
+        }
+
         private void SetupTile()
         {
             _text.text = _tileModifier.ToString();
             spriteRenderer.sprite = _tileType.sprite;
+            if (_startTile == true)
+            {
+                StateMachine.Initialize(AvailableForSelectionState);
+            }
+            else
+            {
+                StateMachine.Initialize(EnabledState);
+            }
         }
 
         private void Update()

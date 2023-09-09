@@ -126,7 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   makeScale: 0
   field: {fileID: 3026820357365931547}
-  sizeType: 0
+  sizeType: 2
   tileParent: {fileID: 5861258062984849538}
   tile: {fileID: 2841049852580622045, guid: b5cffa0cdebd1814b8fa0e06cd2967e8, type: 3}
   _tileOffset: 1.1
