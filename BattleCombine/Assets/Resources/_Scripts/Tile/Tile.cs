@@ -31,7 +31,7 @@ namespace _Scripts
             private set => _tilesNearThisTile = value;
         }
 
-        const int tileLayerMask = 1 << 6;
+        const int TileLayerMask = 1 << 6;
         const float range = 0.3f; // Const scale для поиска tile
 
         private void Start()
@@ -74,7 +74,7 @@ namespace _Scripts
             float tileOverlapScaleX = gameObject.transform.localScale.x + range;
             float tileOverlapScaleY = gameObject.transform.localScale.y + range;
             Vector2 tileScale = new Vector2(tileOverlapScaleX, tileOverlapScaleY);
-            Collider2D[] tileColliderForChoosing = Physics2D.OverlapBoxAll(tilePosition, tileScale, 45f, tileLayerMask);
+            Collider2D[] tileColliderForChoosing = Physics2D.OverlapBoxAll(tilePosition, tileScale, 45f, TileLayerMask);
             
             Collider2D thisTileCollider = this.gameObject.GetComponent<Collider2D>();
             foreach(var colliderTile in tileColliderForChoosing)
