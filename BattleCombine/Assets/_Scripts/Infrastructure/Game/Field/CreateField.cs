@@ -20,21 +20,19 @@ namespace _Scripts
         [Header("Tile prefab")] [SerializeField]
         private GameObject tile;
 
-        [Header("Tiles Types")] [SerializeField]
-        private List<TileType> tileTypes;
-
-        [Header("Offsets & scales (test values)")] [SerializeField]
+        [Header("Offsets & scales (test values)")] [SerializeField, Tooltip("Отступы от края")]
         private float edgeOffset = 0.5f;
+        [SerializeField, Tooltip("Отступы между тайлами")]
+        private float tileOffset = 1.1f;
+        [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
+        private float smallFieldScale = 1.45f;
+        [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
+        private float mediumFieldScale = 1.2f;
+        [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
+        private float largeFieldScale = 1.04f;
 
-        [SerializeField] private float tileOffset = 1.1f;
-        [SerializeField] private float smallFieldScale = 1.45f;
-        [SerializeField] private float mediumFieldScale = 1.2f;
-        [SerializeField] private float largeFieldScale = 1.04f;
-        
-        [Header("TileType Chances - %")]
-        [SerializeField] private int attackTileChance;
-        [SerializeField] private int defenceTileChance;
-        [SerializeField] private int healthTileChance;
+        [Header("TileTypes & Chances - %")] [SerializeField]
+        private List<TileTypeDictionary> tileTypeChances;
 
         private List<GameObject> _tileList;
         private Transform _fieldParent;
@@ -117,20 +115,27 @@ namespace _Scripts
         private void ChangeTileType(GameObject currentTile)
         {
             rand = new();
-            var tempSort = new List<int>(){attackTileChance, defenceTileChance, healthTileChance};
-            tempSort.Sort();
-            
+
             var tileComponent = currentTile.GetComponent<Tile>();
             var tileRoll = rand.Next(1, 101);
 
-            if (tileRoll <= tempSort[0])
+            if (tileRoll <= tileTypeChances[^1].Value)
             {
-                tileComponent.ChangeTileType(tileTypes[2]);
+                tileComponent.ChangeTileType(tileTypeChances[^1].Key);
             }
             else
             {
-                tileComponent.ChangeTileType(tileRoll <= tempSort[1] ? tileTypes[1] : tileTypes[0]);
+                tileComponent.ChangeTileType(tileRoll <= tileTypeChances[1].Value
+                    ? tileTypeChances[1].Key
+                    : tileTypeChances[0].Key);
             }
         }
+    }
+
+    [Serializable]
+    public class TileTypeDictionary
+    {
+        public TileType Key;
+        public int Value;
     }
 }

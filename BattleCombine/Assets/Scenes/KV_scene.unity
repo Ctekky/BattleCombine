@@ -507,17 +507,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
-      propertyPath: makeScale
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: healthTil
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d80cea5bd433494fa6c47fc8f2fc20b, type: 2}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: TileParent
       value: 
       objectReference: {fileID: 807701774}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: attackTile
+      value: 
+      objectReference: {fileID: 11400000, guid: 530c4220e922b5641b0bf732d90064de, type: 2}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: healthTile
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d80cea5bd433494fa6c47fc8f2fc20b, type: 2}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: _tileOffset
       value: 1.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: defenceTile
+      value: 
+      objectReference: {fileID: 11400000, guid: 0cbfd373c49892844a1b42ffb77a1168, type: 2}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: attackTileChance
       value: 60
