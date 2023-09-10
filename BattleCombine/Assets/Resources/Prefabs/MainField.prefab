@@ -124,12 +124,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404c71d07359dd6499f912153f4845b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  makeScale: 0
+  makeScale: 1
   field: {fileID: 3026820357365931547}
   sizeType: 0
   tileParent: {fileID: 5861258062984849538}
   tile: {fileID: 2841049852580622045, guid: b5cffa0cdebd1814b8fa0e06cd2967e8, type: 3}
-  _tileOffset: 1.1
+  tileTypes:
+  - {fileID: 11400000, guid: 530c4220e922b5641b0bf732d90064de, type: 2}
+  - {fileID: 11400000, guid: 0cbfd373c49892844a1b42ffb77a1168, type: 2}
+  - {fileID: 11400000, guid: 3d80cea5bd433494fa6c47fc8f2fc20b, type: 2}
+  edgeOffset: 0.5
+  tileOffset: 1.1
   smallFieldScale: 1.45
   mediumFieldScale: 1.2
   largeFieldScale: 1.04

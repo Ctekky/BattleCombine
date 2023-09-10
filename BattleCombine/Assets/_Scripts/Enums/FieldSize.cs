@@ -1,4 +1,4 @@
-namespace Scripts
+namespace _Scripts
 {
     public enum FieldSize
     {

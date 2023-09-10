@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using BattleCombine.ScriptableObjects;
 using UnityEngine;
+using Random = System.Random;
 
-namespace Scripts
+namespace _Scripts
 {
     public class CreateField : MonoBehaviour
     {
@@ -18,14 +20,19 @@ namespace Scripts
         [Header("Tile prefab")] [SerializeField]
         private GameObject tile;
 
-        [Header("Offsets & scales (test values)")] [SerializeField]
-        private float _tileOffset = 1.1f;
+        [Header("Tiles Types")] [SerializeField]
+        private List<TileType> tileTypes;
 
+        [Header("Offsets & scales (test values)")] [SerializeField]
+        private float edgeOffset = 0.5f;
+
+        [SerializeField] private float tileOffset = 1.1f;
         [SerializeField] private float smallFieldScale = 1.45f;
         [SerializeField] private float mediumFieldScale = 1.2f;
         [SerializeField] private float largeFieldScale = 1.04f;
 
         private List<GameObject> _tileList;
+        private Random rand;
         private Transform _fieldParent;
         private int _fieldSize;
 
@@ -35,6 +42,7 @@ namespace Scripts
         {
             _tileList = new List<GameObject>();
             _fieldParent = tileParent.transform;
+
             ChangeFieldSize();
         }
 
@@ -64,9 +72,10 @@ namespace Scripts
                 {
                     var currentTile = newTile.Create(_fieldParent);
                     currentTile.transform.position = tileParent.transform.position
-                                                     + new Vector3(j * _tileOffset, i * _tileOffset, 0);
+                                                     + new Vector3(j * tileOffset, i * tileOffset, 0);
 
                     currentTile.transform.Rotate(90, 180, 0);
+                    ChangeTileType(currentTile);
 
                     _tileList.Add(currentTile);
                 }
@@ -87,8 +96,6 @@ namespace Scripts
         private void ScaleMainField()
         {
             //test scaler (not complete)
-            var padding = .5f;
-
             var mainCamera = Camera.main;
             var halfHeight = mainCamera.orthographic ? mainCamera.orthographicSize : 0;
             var halfWidth = mainCamera.aspect * halfHeight;
@@ -96,10 +103,26 @@ namespace Scripts
             var objectWidth = field.GetComponent<Renderer>().bounds.size.x;
             var objectHeight = field.GetComponent<Renderer>().bounds.size.y;
 
-            var scaleX = (halfWidth * 2f - padding * 2) / objectWidth;
-            var scaleY = (halfHeight * 2f - padding * 2) / objectHeight;
+            var scaleX = (halfWidth * 1.7f - edgeOffset * 1.7f) / objectWidth;
+            var scaleZ = (halfHeight * 1f - edgeOffset * 1f) / objectHeight;
 
-            field.transform.localScale = new Vector3(scaleX, scaleY, 1);
+            field.transform.localScale = new Vector3(scaleX, 1, scaleZ);
+        }
+
+        private void ChangeTileType(GameObject currentTile)
+        {
+            rand = new();
+            var tileComponent = currentTile.GetComponent<Tile>();
+            var tileRoll = rand.Next(1, 21);
+
+            if (tileRoll < 15)
+            {
+                tileComponent.ChangeTileType(tileTypes[0]);
+            }
+            else
+            {
+                tileComponent.ChangeTileType(tileRoll > 19 ? tileTypes[2] : tileTypes[1]);
+            }
         }
     }
 }
