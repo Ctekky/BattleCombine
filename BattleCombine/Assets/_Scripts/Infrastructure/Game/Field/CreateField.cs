@@ -30,10 +30,15 @@ namespace _Scripts
         [SerializeField] private float smallFieldScale = 1.45f;
         [SerializeField] private float mediumFieldScale = 1.2f;
         [SerializeField] private float largeFieldScale = 1.04f;
+        
+        [Header("TileType Chances - %")]
+        [SerializeField] private int attackTileChance;
+        [SerializeField] private int defenceTileChance;
+        [SerializeField] private int healthTileChance;
 
         private List<GameObject> _tileList;
-        private Random rand;
         private Transform _fieldParent;
+        private Random rand;
         private int _fieldSize;
 
         public List<GameObject> GetTileList => _tileList;
@@ -112,16 +117,19 @@ namespace _Scripts
         private void ChangeTileType(GameObject currentTile)
         {
             rand = new();
+            var tempSort = new List<int>(){attackTileChance, defenceTileChance, healthTileChance};
+            tempSort.Sort();
+            
             var tileComponent = currentTile.GetComponent<Tile>();
-            var tileRoll = rand.Next(1, 21);
+            var tileRoll = rand.Next(1, 101);
 
-            if (tileRoll < 15)
+            if (tileRoll <= tempSort[0])
             {
-                tileComponent.ChangeTileType(tileTypes[0]);
+                tileComponent.ChangeTileType(tileTypes[2]);
             }
             else
             {
-                tileComponent.ChangeTileType(tileRoll > 19 ? tileTypes[2] : tileTypes[1]);
+                tileComponent.ChangeTileType(tileRoll <= tempSort[1] ? tileTypes[1] : tileTypes[0]);
             }
         }
     }
