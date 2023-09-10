@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleCombine.ScriptableObjects;
 using UnityEngine;
 using Random = System.Random;
@@ -76,8 +77,8 @@ namespace _Scripts
                     var currentTile = newTile.Create(_fieldParent);
                     currentTile.transform.position = tileParent.transform.position
                                                      + new Vector3(j * tileOffset, i * tileOffset, 0);
-
                     currentTile.transform.Rotate(90, 180, 0);
+                    
                     ChangeTileType(currentTile);
 
                     _tileList.Add(currentTile);
@@ -115,19 +116,18 @@ namespace _Scripts
         private void ChangeTileType(GameObject currentTile)
         {
             rand = new();
-
             var tileComponent = currentTile.GetComponent<Tile>();
-            var tileRoll = rand.Next(1, 101);
+            var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
 
-            if (tileRoll <= tileTypeChances[^1].Value)
+            var roll = rand.Next(0, totalWeight);
+            var cumulativeWeight = 0;
+
+            foreach (var dictionary in tileTypeChances)
             {
-                tileComponent.ChangeTileType(tileTypeChances[^1].Key);
-            }
-            else
-            {
-                tileComponent.ChangeTileType(tileRoll <= tileTypeChances[1].Value
-                    ? tileTypeChances[1].Key
-                    : tileTypeChances[0].Key);
+                cumulativeWeight += dictionary.Value;
+                if (roll >= cumulativeWeight) continue;
+                tileComponent.ChangeTileType(dictionary.Key);
+                return;
             }
         }
     }
