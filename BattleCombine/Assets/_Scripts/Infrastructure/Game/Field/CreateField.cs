@@ -9,15 +9,24 @@ namespace _Scripts
 {
     public class CreateField : MonoBehaviour
     {
-        [Header("Scale or not on start")] [SerializeField]
-        private bool makeScale;
+        public List<GameObject> GetTileList => _tileList;
 
-        [Header("MainField")] [SerializeField] private GameObject field;
-        [Header("FieldSize")] [SerializeField] private FieldSize sizeType;
+        [Header("Scale or not on start")] 
+        [SerializeField] private bool makeScale;
+
+        [Header("Start Tile set")] 
+        [SerializeField] private bool isAiRandomStart;
+        [SerializeField] private int defaultAiStartTilePos;
+        [SerializeField] private bool isPlayerRandomStart;
+        [SerializeField] private int defaultPlayerStartTilePos;
+
+        [Header("MainField")] [SerializeField] 
+        private GameObject field;
+        [Header("FieldSize")] [SerializeField] 
+        private FieldSize sizeType;
 
         [Header("TileParent")] [SerializeField]
         private GameObject tileParent;
-
         [Header("Tile prefab")] [SerializeField]
         private GameObject tile;
 
@@ -39,8 +48,6 @@ namespace _Scripts
         private Transform _fieldParent;
         private Random rand;
         private int _fieldSize;
-
-        public List<GameObject> GetTileList => _tileList;
 
         private void Start()
         {
@@ -68,6 +75,9 @@ namespace _Scripts
 
         private void AddTileToField()
         {
+            var startPlayerTile = SetPlayerStartTileIndex();
+            var startAiTile = SetAiStartTileIndex();
+
             var newTile = new FieldCreateFactory(tile);
 
             for (var i = 0; i < _fieldSize; i++)
@@ -78,10 +88,15 @@ namespace _Scripts
                     currentTile.transform.position = tileParent.transform.position
                                                      + new Vector3(j * tileOffset, i * tileOffset, 0);
                     currentTile.transform.Rotate(90, 180, 0);
-                    
+
                     ChangeTileType(currentTile);
 
                     _tileList.Add(currentTile);
+
+                    if (i == 0 && j == startPlayerTile)
+                        ApplyStartTileStatus(currentTile);
+                    if (i == _fieldSize - 1 && j == startAiTile)
+                        ApplyStartTileStatus(currentTile);
                 }
             }
         }
@@ -129,6 +144,32 @@ namespace _Scripts
                 tileComponent.ChangeTileType(dictionary.Key);
                 return;
             }
+        }
+
+        private void ApplyStartTileStatus(GameObject tile)
+        {
+            var tileComponent = tile.GetComponent<Tile>();
+            tileComponent.ChangeStartFlag(true);
+        }
+
+        private int SetPlayerStartTileIndex()
+        {
+            rand = new();
+            
+            if (defaultPlayerStartTilePos >= _fieldSize)
+                defaultPlayerStartTilePos = _fieldSize - 1;
+
+            return isPlayerRandomStart ? rand.Next(0, _fieldSize) : defaultPlayerStartTilePos;
+        }
+
+        private int SetAiStartTileIndex()
+        {
+            rand = new();
+            
+            if (defaultAiStartTilePos >= _fieldSize)
+                defaultAiStartTilePos = _fieldSize - 1;
+            
+            return isAiRandomStart ? rand.Next(0, _fieldSize) : defaultAiStartTilePos;
         }
     }
 
