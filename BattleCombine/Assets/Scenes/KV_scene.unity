@@ -191,11 +191,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &287564582 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3026820357365931547, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
-  m_PrefabInstance: {fileID: 732170321}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,32 +507,40 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
-      propertyPath: tile
+      propertyPath: healthTil
       value: 
-      objectReference: {fileID: 2841049852580622045, guid: b5cffa0cdebd1814b8fa0e06cd2967e8, type: 3}
-    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
-      propertyPath: field
-      value: 
-      objectReference: {fileID: 287564582}
-    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
-      propertyPath: sizeType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
-      propertyPath: makeScale
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 3d80cea5bd433494fa6c47fc8f2fc20b, type: 2}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: TileParent
       value: 
       objectReference: {fileID: 807701774}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
-      propertyPath: tileParent
+      propertyPath: attackTile
       value: 
-      objectReference: {fileID: 807701774}
+      objectReference: {fileID: 11400000, guid: 530c4220e922b5641b0bf732d90064de, type: 2}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: healthTile
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d80cea5bd433494fa6c47fc8f2fc20b, type: 2}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: _tileOffset
       value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: defenceTile
+      value: 
+      objectReference: {fileID: 11400000, guid: 0cbfd373c49892844a1b42ffb77a1168, type: 2}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: attackTileChance
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: healthTileChance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: defenceTileChance
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 565508285227494856, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}

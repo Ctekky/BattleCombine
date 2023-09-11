@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Scripts
+namespace _Scripts
 {
     public class FieldCreateFactory : PlaceholderFactory<Transform, GameObject>
     {
