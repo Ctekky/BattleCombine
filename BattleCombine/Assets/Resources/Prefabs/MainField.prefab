@@ -125,10 +125,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   makeScale: 1
-  isAiStartTileRandom: 0
-  isPlayerStartTileRandom: 0
-  defaultPlayerStartTilePos: 0
-  defaultAiStartTilePos: 0
+  isAiRandomStart: 1
+  defaultAiStartTilePos: 2
+  isPlayerRandomStart: 1
+  defaultPlayerStartTilePos: 4
   field: {fileID: 3026820357365931547}
   sizeType: 0
   tileParent: {fileID: 5861258062984849538}
