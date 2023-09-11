@@ -129,10 +129,9 @@ MonoBehaviour:
   defaultAiStartTilePos: 2
   isPlayerRandomStart: 1
   defaultPlayerStartTilePos: 4
-  field: {fileID: 3026820357365931547}
   sizeType: 0
   tileParent: {fileID: 5861258062984849538}
-  tile: {fileID: 2841049852580622045, guid: b5cffa0cdebd1814b8fa0e06cd2967e8, type: 3}
+  tile: {fileID: 105925409287168891, guid: b5cffa0cdebd1814b8fa0e06cd2967e8, type: 3}
   edgeOffset: 0.5
   tileOffset: 1.1
   smallFieldScale: 1.45
