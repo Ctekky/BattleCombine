@@ -531,6 +531,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 0cbfd373c49892844a1b42ffb77a1168, type: 2}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: isAiRandomStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: attackTileChance
       value: 60
       objectReference: {fileID: 0}
@@ -541,6 +545,18 @@ PrefabInstance:
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: defenceTileChance
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: isPlayerRandomStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: defaultAiStartTilePos
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: defaultPlayerStartTilePos
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 565508285227494856, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}

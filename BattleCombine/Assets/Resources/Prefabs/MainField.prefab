@@ -125,6 +125,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   makeScale: 1
+  isAiStartTileRandom: 0
+  isPlayerStartTileRandom: 0
+  defaultPlayerStartTilePos: 0
+  defaultAiStartTilePos: 0
   field: {fileID: 3026820357365931547}
   sizeType: 0
   tileParent: {fileID: 5861258062984849538}
@@ -138,9 +142,9 @@ MonoBehaviour:
   - Key: {fileID: 11400000, guid: 530c4220e922b5641b0bf732d90064de, type: 2}
     Value: 60
   - Key: {fileID: 11400000, guid: 0cbfd373c49892844a1b42ffb77a1168, type: 2}
-    Value: 35
-  - Key: {fileID: 11400000, guid: 3d80cea5bd433494fa6c47fc8f2fc20b, type: 2}
     Value: 5
+  - Key: {fileID: 11400000, guid: 3d80cea5bd433494fa6c47fc8f2fc20b, type: 2}
+    Value: 35
 --- !u!1 &5861258062984849538
 GameObject:
   m_ObjectHideFlags: 0
