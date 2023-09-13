@@ -68,8 +68,10 @@ namespace _Scripts
 
             AddTileToField();
             ModifyTitleSize();
+            
             if (!makeScale) return;
-            ScaleMainField();
+            FieldScaler scaler = new();
+            scaler.ScaleMainField(this.gameObject, edgeOffset);
         }
 
         private void AddTileToField()
@@ -109,22 +111,6 @@ namespace _Scripts
                 8 => new Vector3(largeFieldScale, 0, largeFieldScale),
                 _ => tileParent.transform.localScale
             };
-        }
-
-        private void ScaleMainField()
-        {
-            //test scaler (not complete)
-            var mainCamera = Camera.main;
-            var halfHeight = mainCamera.orthographic ? mainCamera.orthographicSize : 0;
-            var halfWidth = mainCamera.aspect * halfHeight;
-
-            var objectWidth = mainField.GetComponent<Renderer>().bounds.size.x;
-            var objectHeight = mainField.GetComponent<Renderer>().bounds.size.y;
-
-            var scaleX = (halfWidth * 1.7f - edgeOffset * 1.7f) / objectWidth;
-            var scaleZ = (halfHeight * 1f - edgeOffset * 1f) / objectHeight;
-
-            mainField.transform.localScale = new Vector3(scaleX, 1, scaleZ);
         }
 
         private void ChangeTileType(Tile currentTile)
