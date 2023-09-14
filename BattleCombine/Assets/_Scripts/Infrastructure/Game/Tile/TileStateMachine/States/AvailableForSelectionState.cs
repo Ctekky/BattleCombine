@@ -1,4 +1,5 @@
 using BattleCombine.Interfaces;
+using System;
 using UnityEngine;
 
 namespace _Scripts
@@ -10,29 +11,26 @@ namespace _Scripts
         private Color color = Color.red;
         public AvailableForSelectionState(Tile tile, StateMachine stateMachine) : base(tile, stateMachine)
         {
+
         }
         public override void Enter()
         {
-            base.Enter();
             tile_status_help = true;
             tile.ChangeClolor(color);
         }
         public override void Input()
         {
-            base.Input();
-            tile.FindTileForChoosing(tile, tile.TilesForChoosing);
+            tile.FindTileForAction(tile, tile.TilesForChoosing, "_Scripts.EnabledState");
             foreach (GameObject tileGameObject in tile.TilesForChoosing)
             {
                 Tile chosingTile = tileGameObject.GetComponent<Tile>();
-                if (chosingTile.StateMachine.CurrentState.ToString() == tile.ChosenState.ToString()) //to do сравнивать строки это зло. но как сравнить state нужно разобраться
-                {
-                    continue;
-                }
-                else
-                {
-                    chosingTile.StateMachine.ChangeState(chosingTile.AvailableForSelectionState);
-                }
+                chosingTile.StateMachine.ChangeState(chosingTile.AvailableForSelectionState);
             }
+
+            tile.GetTileStack.TilesStack.Push(tile.gameObject);
+
+            tile.GetTileStack.NextMoveTiles.Clear();
+            tile.GetTileStack.NextMoveTiles.AddRange(tile.TilesForChoosing);
 
             stateMachine.ChangeState(tile.ChosenState);
         }
@@ -43,8 +41,6 @@ namespace _Scripts
         }
         public override void Exit()
         {
-            base.Exit();
-            tile.ClearTheTilesArray();
             tile_status_help = false;
         }
     }
