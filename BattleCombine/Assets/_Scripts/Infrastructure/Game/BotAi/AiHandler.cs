@@ -12,11 +12,12 @@ namespace BattleCombine.Ai
     {
         public static Action MakeAiTurn;
         public static Action FindAiPath;
-        
-       [field: SerializeField] private AiArchetypes currentArchetype { get; set;}
-        
-        [Header("Weights and other")]
-        [SerializeField] private int[] tankFullHealthWeights;
+
+        [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
+
+        [Header("Weights and other")] [SerializeField]
+        private int[] tankFullHealthWeights;
+
         [SerializeField] private int[] tankDamagedWeights;
         [SerializeField] private int tankHealthToChangeMood;
         [SerializeField] private int[] attackFullHealthWeights;
@@ -25,7 +26,7 @@ namespace BattleCombine.Ai
         [SerializeField] private int[] balanceFullHealthWeights;
         [SerializeField] private int[] balanceDamagedWeights;
         [SerializeField] private int balanceHealthToChangeMood;
-        
+
         //todo - separate weights to data base and link it here
         private Dictionary<List<_Scripts.Tile>, int> pathDictionary = new();
         private Random _rand;
@@ -50,7 +51,7 @@ namespace BattleCombine.Ai
             _rand = new();
             //todo - take max value from enemy archetype count
             var archetypeCount = 3;
-            
+
             switch (_rand.Next(0, archetypeCount))
             {
                 case 0:
@@ -65,7 +66,7 @@ namespace BattleCombine.Ai
                 default:
                     break;
             }
-            
+
             ApplyAiArchetype(currentArchetype);
         }
 
@@ -74,8 +75,9 @@ namespace BattleCombine.Ai
         {
             //todo - find path and write it to dict
             AiSpeed = 5;
-
-            foreach (var tile in CreateField.GetTileList.OrderBy(x => Guid.NewGuid())) {
+            foreach (var tile in CreateField.GetTileList.OrderBy(x => Guid.NewGuid()))
+            {
+                if (tile != CreateField.GetAiStartTile) continue;
                 FindPathsFromTile(new List<_Scripts.Tile> { tile });
             }
         }
@@ -84,23 +86,27 @@ namespace BattleCombine.Ai
         private void FindPathsFromTile(IReadOnlyCollection<_Scripts.Tile> path)
         {
             var nextTiles = GetNextTiles(path.Last());
-            
-            foreach (var nextTile in nextTiles.OrderBy(x => Guid.NewGuid())) {
+
+            foreach (var nextTile in nextTiles.OrderBy(x => Guid.NewGuid()))
+            {
                 var newPath = new List<_Scripts.Tile>(path) { nextTile };
 
-                if (newPath.Count == AiSpeed) {
+                if (newPath.Count == AiSpeed)
+                {
                     //todo - change path count to its weight
                     pathDictionary.Add(newPath, newPath.Count);
-                } else {
+                }
+                else
+                {
                     FindPathsFromTile(newPath);
                 }
             }
         }
-        
+
         //Get tiles near current tile (list is empty now :'))
         private IEnumerable<_Scripts.Tile> GetNextTiles(_Scripts.Tile currentTile)
-        {
-            var adjacentTiles 
+        { 
+            var adjacentTiles
                 = ConvertTileList(currentTile.TilesNearThisTile);
             return adjacentTiles.Where(t => CanMoveToTile(currentTile, t)).ToList();
         }
@@ -108,26 +114,26 @@ namespace BattleCombine.Ai
         //Convert list<GameObject> to list<Tile>
         private IEnumerable<_Scripts.Tile> ConvertTileList(IEnumerable<GameObject> oldList)
         {
-            var newList = oldList.Select(obj 
+            var newList = oldList.Select(obj
                 => obj.GetComponent<_Scripts.Tile>()).ToList();
             return newList;
         }
 
         //Temporary patch;
         //todo - return tile no after bool check, but Only after checking the weights
-        private bool CanMoveToTile(_Scripts.Tile currentTile, _Scripts.Tile nextTile) 
+        private bool CanMoveToTile(_Scripts.Tile currentTile, _Scripts.Tile nextTile)
         {
             return true;
         }
-        
+
         //todo - no pathes, no best pathes 0))
         //take pathes weights, and choose best one
         private void FindBestPath()
         {
             var maxPosition = -1;
             var maxValue = int.MinValue;
-            
-            foreach (var entry in pathDictionary.Where(entry 
+
+            foreach (var entry in pathDictionary.Where(entry
                          => entry.Value > maxValue))
             {
                 maxValue = entry.Value;
@@ -163,7 +169,7 @@ namespace BattleCombine.Ai
             currentEnemy._aiHandler = this;
             currentEnemy.Init();
         }
-        
+
         private void AddWeightToList(IEnumerable<int> arrayFirst, IEnumerable<int> arraySecond)
         {
             CurrentWeights.AddRange(arrayFirst);

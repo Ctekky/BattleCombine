@@ -39,15 +39,17 @@ namespace _Scripts
 
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
-        
-        //todo - remuve static
-        public static IEnumerable<_Scripts.Tile> GetTileList => _tileList;
-        private static List<_Scripts.Tile> _tileList;
+
         
         private Transform _fieldParent;
         private GameObject mainField;
         private Random _rand;
         private int _fieldSize;
+        
+        //todo - remove static
+        private static List<_Scripts.Tile> _tileList;
+        public static IEnumerable<_Scripts.Tile> GetTileList => _tileList;
+        public static _Scripts.Tile GetAiStartTile { get; private set; }
 
         private void Start()
         {
@@ -99,7 +101,10 @@ namespace _Scripts
                     if (i == 0 && j == startPlayerTile)
                         ApplyStartTileStatus(tileComponent);
                     if (i == _fieldSize - 1 && j == startAiTile)
+                    {
                         ApplyStartTileStatus(tileComponent);
+                        GetAiStartTile = tileComponent;
+                    }
                 }
             }
         }
