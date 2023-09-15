@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Scripts;
 using BattleCombine.Enums;
+using BattleCombine.Interfaces;
 using UnityEngine;
 using Random = System.Random;
 
@@ -78,6 +79,7 @@ namespace BattleCombine.Ai
             foreach (var tile in CreateField.GetTileList.OrderBy(x => Guid.NewGuid()))
             {
                 if (tile != CreateField.GetAiStartTile) continue;
+                //todo - ChangeState for Chosen
                 FindPathsFromTile(new List<_Scripts.Tile> { tile });
             }
         }
@@ -95,6 +97,7 @@ namespace BattleCombine.Ai
                 {
                     //todo - change path count to its weight
                     pathDictionary.Add(newPath, newPath.Count);
+                    Debug.Log("done");
                 }
                 else
                 {
