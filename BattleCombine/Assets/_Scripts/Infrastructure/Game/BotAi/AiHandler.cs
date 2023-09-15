@@ -80,6 +80,7 @@ namespace BattleCombine.Ai
             {
                 if (tile != CreateField.GetAiStartTile) continue;
                 //todo - ChangeState for Chosen
+                Debug.Log(tile);
                 
                 //tile.StateMachine.ChangeState(tile.ChosenState);
                 //if (tile.GetComponent<ITouchable>() != null)
