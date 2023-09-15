@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
 using UnityEngine;
 using Random = System.Random;
@@ -23,7 +24,7 @@ namespace _Scripts
         [Header("TileParent")] [SerializeField]
         private GameObject tileParent;
         [Header("Tile prefab")] [SerializeField]
-        private Tile tile;
+        private _Scripts.Tile tile;
 
         [Header("Offsets & scales (test values)")] [SerializeField, Tooltip("Отступы от края")]
         private float edgeOffset = 0.5f;
@@ -39,9 +40,10 @@ namespace _Scripts
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
         
-        public IEnumerable<Tile> GetTileList => _tileList;
-
-        private List<Tile> _tileList;
+        //todo - remuve static
+        public static IEnumerable<_Scripts.Tile> GetTileList => _tileList;
+        private static List<_Scripts.Tile> _tileList;
+        
         private Transform _fieldParent;
         private GameObject mainField;
         private Random _rand;
@@ -49,7 +51,7 @@ namespace _Scripts
 
         private void Start()
         {
-            _tileList = new List<Tile>();
+            _tileList = new List<_Scripts.Tile>();
             mainField = this.gameObject;
             _fieldParent = tileParent.transform;
 
@@ -113,7 +115,7 @@ namespace _Scripts
             };
         }
 
-        private void ChangeTileType(Tile currentTile)
+        private void ChangeTileType(_Scripts.Tile currentTile)
         {
             _rand = new();
             var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
@@ -130,7 +132,7 @@ namespace _Scripts
             }
         }
 
-        private void ApplyStartTileStatus(Tile currentTile)
+        private void ApplyStartTileStatus(_Scripts.Tile currentTile)
         {
             currentTile.ChangeStartFlag(true);
         }
