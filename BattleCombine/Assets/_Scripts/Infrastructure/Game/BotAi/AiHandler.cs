@@ -80,6 +80,13 @@ namespace BattleCombine.Ai
             {
                 if (tile != CreateField.GetAiStartTile) continue;
                 //todo - ChangeState for Chosen
+                
+                //tile.StateMachine.ChangeState(tile.ChosenState);
+                //if (tile.GetComponent<ITouchable>() != null)
+                //{
+                //    tile.GetComponent<ITouchable>().Touch();
+                //}
+                
                 FindPathsFromTile(new List<_Scripts.Tile> { tile });
             }
         }
