@@ -102,7 +102,6 @@ namespace BattleCombine.Ai
         {
             var adjacentTiles 
                 = ConvertTileList(currentTile.TilesNearThisTile);
-
             return adjacentTiles.Where(t => CanMoveToTile(currentTile, t)).ToList();
         }
 
@@ -114,9 +113,10 @@ namespace BattleCombine.Ai
             return newList;
         }
 
+        //Temporary patch;
+        //todo - return tile no after bool check, but Only after checking the weights
         private bool CanMoveToTile(_Scripts.Tile currentTile, _Scripts.Tile nextTile) 
         {
-            //todo - check tile status;
             return true;
         }
         
