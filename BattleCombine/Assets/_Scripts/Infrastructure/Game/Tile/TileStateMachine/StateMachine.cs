@@ -16,7 +16,6 @@ namespace _Scripts
         public void ChangeState(State newState)
         {
             CurrentState.Exit();
-
             CurrentState = newState;
             newState.Enter();
         }

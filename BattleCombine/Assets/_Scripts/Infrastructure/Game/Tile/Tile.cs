@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using BattleCombine.ScriptableObjects;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 
 namespace _Scripts
 {
     public class Tile : MonoBehaviour, ITouchable //, IMovable
     {
-        [SerializeField] private bool _startTile = false;
         [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private TileStack _tileStack;
+        [SerializeField] private bool _startTile = false;
         [SerializeField] private string _stateName;
         [SerializeField] private List<GameObject> _tilesForChoosing;
         [SerializeField] private List<GameObject> _tilesNearThisTile;
@@ -38,11 +40,12 @@ namespace _Scripts
             get => _tilesNearThisTile;
             private set => _tilesNearThisTile = value;
         }
+        public TileStack GetTileStack { get => _tileStack; }
 
         const int TileLayerMask = 1 << 6;
         const float range = 0.3f; // Const scale для поиска tile
 
-        private void Start()
+        private void Awake()
         {
             StateMachine = new StateMachine();
 
@@ -51,8 +54,12 @@ namespace _Scripts
             DisabledState = new DisabledState(this, StateMachine);
             EnabledState = new EnabledState(this, StateMachine);
             FinalChoiceState = new FinalChoiceState(this, StateMachine);
+        }
 
+        private void Start()
+        {
             CheckTilesStateNearThisTile(this);
+            _tileStack = FindObjectOfType<TileStack>();
             //TODO: поменять алгоритм 
             _tileModifier = 5;
             SetupTile();
@@ -89,8 +96,8 @@ namespace _Scripts
 
         private void Update()
         {
-            _stateName =
-                StateMachine.CurrentState.ToString(); //Вывожу имя класса для понимания в каком state находится tile
+            
+            _stateName = StateMachine.CurrentState.ToString(); //Вывожу имя класса для понимания в каком state находится tile
         }
 
         public void ChangeClolor(Color color)
@@ -100,13 +107,62 @@ namespace _Scripts
 
         public void Touch()
         {
-            StateMachine.CurrentState.Input();
-            StateMachine.CurrentState.LogicUpdate();
+            if(StateMachine.CurrentState.ToString() == ChosenState.ToString())
+            {
+                if(this.gameObject == _tileStack.TilesStack.Peek())
+                {
+                    StateMachine.CurrentState.Input();
+                    StateMachine.CurrentState.LogicUpdate();
+                }
+                else
+                {
+                    Debug.Log("Выбери другой tile!");
+                }
+            }
+            else
+            {
+                if (_tileStack.TilesStack.Count() < _tileStack.SpeedPlayer)
+                {
+                    StateMachine.CurrentState.Input();
+                    StateMachine.CurrentState.LogicUpdate();
+                }
+                else
+                {
+                    Debug.Log("Скорость закончилась");
+                }
+                
+            }
         }
 
-        public void
-            FindTileForChoosing(Tile tile,
-                List<GameObject> list) // Метод нахождения соседних tile для изменения их состояния
+        public void FindTileForAction(Tile tile, List<GameObject> list, string nameState)// Метод нахождения соседних tile для изменения их состояния
+        {
+            Vector2 tilePosition = tile.transform.position;
+            float tileOverlapScaleX = gameObject.transform.localScale.x + range;
+            float tileOverlapScaleY = gameObject.transform.localScale.y + range;
+            Vector2 tileScale = new Vector2(tileOverlapScaleX, tileOverlapScaleY);
+            Collider2D[] tileColliderForChoosing = Physics2D.OverlapBoxAll(tilePosition, tileScale, 45f, TileLayerMask);
+
+            Collider2D thisTileCollider = this.gameObject.GetComponent<Collider2D>();
+            foreach (var colliderTile in tileColliderForChoosing)
+            {
+                GameObject gameObjectTile = colliderTile.gameObject;
+                if (colliderTile == thisTileCollider || gameObjectTile.GetComponent<Tile>().StateMachine.CurrentState.ToString() != nameState)
+                {
+                    continue;
+                }
+                else
+                {
+                    list.Add(gameObjectTile);
+                }
+            }
+        }
+
+        public void ClearTheTilesArray() // Метод очистки массива найденых tile 
+        {
+            TilesForChoosing.Clear();
+        }
+
+        private void CheckTilesStateNearThisTile(Tile tile) // Метод нахождения соседних tile
         {
             Vector2 tilePosition = tile.transform.position;
             float tileOverlapScaleX = gameObject.transform.localScale.x + range;
@@ -124,19 +180,9 @@ namespace _Scripts
                 else
                 {
                     GameObject gameObjectTile = colliderTile.gameObject;
-                    list.Add(gameObjectTile);
+                    TilesNearThisTile.Add(gameObjectTile);
                 }
             }
-        }
-
-        public void ClearTheTilesArray() // Метод очистки массива найденых tile 
-        {
-            TilesForChoosing.Clear();
-        }
-
-        public void CheckTilesStateNearThisTile(Tile tile) // Метод нахождения соседних tile
-        {
-            FindTileForChoosing(tile, TilesNearThisTile);
         }
 
         private void OnDrawGizmos()
