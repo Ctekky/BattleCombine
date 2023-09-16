@@ -26,7 +26,7 @@ namespace BattleCombine.Gameplay
         private GameObject tileParent;
 
         [Header("Tile prefab")] [SerializeField]
-        private Tile tile;
+        private _Scripts.Tile tile;
 
         [Header("Offsets & scales (test values)")] [SerializeField, Tooltip("Отступы от края")]
         private float edgeOffset = 0.5f;
@@ -45,21 +45,24 @@ namespace BattleCombine.Gameplay
 
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
-
         public IEnumerable<Tile> GetTileList => _tileList;
 
-        private List<Tile> _tileList;
+        
         private Transform _fieldParent;
         private GameObject mainField;
         private Random _rand;
         private int _fieldSize;
         private bool _isTileFullSetup;
-
         public Action<Tile> onTileTouched;
+        
+        //todo - remove static
+        private static List<_Scripts.Tile> _tileList;
+        public static IEnumerable<_Scripts.Tile> GetTileList => _tileList;
+        public static _Scripts.Tile GetAiStartTile { get; private set; }
 
         private void Start()
         {
-            _tileList = new List<Tile>();
+            _tileList = new List<_Scripts.Tile>();
             mainField = this.gameObject;
             _fieldParent = tileParent.transform;
             _isTileFullSetup = false;
@@ -125,7 +128,10 @@ namespace BattleCombine.Gameplay
                     if (i == 0 && j == startPlayerTile)
                         ApplyStartTileStatus(tileComponent);
                     if (i == _fieldSize - 1 && j == startAiTile)
+                    {
                         ApplyStartTileStatus(tileComponent);
+                        GetAiStartTile = tileComponent;
+                    }
                 }
             }
         }
@@ -141,7 +147,7 @@ namespace BattleCombine.Gameplay
             };
         }
 
-        private void ChangeTileType(Tile currentTile)
+        private void ChangeTileType(_Scripts.Tile currentTile)
         {
             _rand = new();
             var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
@@ -158,7 +164,7 @@ namespace BattleCombine.Gameplay
             }
         }
 
-        private void ApplyStartTileStatus(Tile currentTile)
+        private void ApplyStartTileStatus(_Scripts.Tile currentTile)
         {
             currentTile.ChangeStartFlag(true);
         }

@@ -16,7 +16,6 @@ namespace BattleCombine.Gameplay
         public void ChangeState(State newState)
         {
             CurrentState.Exit();
-
             CurrentState = newState;
             newState.Enter();
         }

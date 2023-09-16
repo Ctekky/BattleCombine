@@ -1,4 +1,5 @@
 using BattleCombine.Interfaces;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
@@ -23,6 +24,9 @@ namespace BattleCombine.Services.InputService
         {
             EnhancedTouch.TouchSimulation.Disable();
             EnhancedTouch.EnhancedTouchSupport.Disable();
+
+            EnhancedTouch.Touch.onFingerDown -= FingerDown;
+            EnhancedTouch.Touch.onFingerMove -= FingerMove;
         }
 
         private void Start()
@@ -64,8 +68,6 @@ namespace BattleCombine.Services.InputService
                 obj.GetComponent<IMovable>().FingerMoved();
             }
         }
-        
-
 
         public void OnPress(InputAction.CallbackContext context)
         {

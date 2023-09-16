@@ -13,42 +13,45 @@ namespace BattleCombine.Gameplay
         }
         public override void Enter()
         {
-            base.Enter();
             tile.ChangeClolor(color);
         }
         public override void Input()
         {
-            base.Input();
-            tile.FindTileForChoosing(tile, tile.TilesForChoosing);
+            tile.FindTileForAction(tile, tile.TilesForChoosing, "_Scripts.AvailableForSelectionState");
+
             foreach (GameObject tileGameObject in tile.TilesForChoosing)
             {
                 Tile chosingTile = tileGameObject.GetComponent<Tile>();
-                if (chosingTile.StateMachine.CurrentState.ToString() == tile.AvailableForSelectionState.ToString()) //to do ���������� ������ ��� ���. �� ��� �������� state ����� �����������
+                int i = 0;
+
+                foreach (GameObject tileNearChosingTileGameObject in chosingTile.TilesNearThisTile)
                 {
-                    int i = 0;
-                    List<GameObject> listGameObjectNearThisTileWithoutTouchTile = chosingTile.TilesNearThisTile;
-                    listGameObjectNearThisTileWithoutTouchTile.Remove(tile.gameObject);
+                    Tile chosingTileInNearTile = tileNearChosingTileGameObject.GetComponent<Tile>();
 
-                    foreach (GameObject tileNearChosingTileGameObject in chosingTile.TilesNearThisTile)
+                    if (chosingTileInNearTile.gameObject == this.tile.gameObject)
                     {
-                        Tile chosingTileInNearTile = tileNearChosingTileGameObject.GetComponent<Tile>();
-
-                        if (chosingTileInNearTile.StateMachine.CurrentState.ToString() == tile.ChosenState.ToString())
-                        {
-                            i = 0;
-                            break;
-                        }
-                        else
-                        {
-                            i++;
-                        }
+                        continue;
                     }
+
+                    if (chosingTileInNearTile.StateMachine.CurrentState.ToString() == tile.ChosenState.ToString())
+                    {
+                        i = 0;
+                        break;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+
                     if (i >= 1)
                     {
                         chosingTile.StateMachine.ChangeState(chosingTile.EnabledState);
+                        i = 0;
                     }
-                }
             }
+
+            tile.GetTileStack.TilesStack.Pop();
 
             stateMachine.ChangeState(tile.AvailableForSelectionState);
         }
@@ -58,9 +61,7 @@ namespace BattleCombine.Gameplay
         }
         public override void Exit()
         {
-            base.Exit();
             tile.ClearTheTilesArray();
-
         }
     }
 }
