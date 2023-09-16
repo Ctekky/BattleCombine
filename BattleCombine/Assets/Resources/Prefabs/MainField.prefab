@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404c71d07359dd6499f912153f4845b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  makeScale: 1
+  makeScale: 0
   isAiRandomStart: 1
   defaultAiStartTilePos: 2
   isPlayerRandomStart: 1

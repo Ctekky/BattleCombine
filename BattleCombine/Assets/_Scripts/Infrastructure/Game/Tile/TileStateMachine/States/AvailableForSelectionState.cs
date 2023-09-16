@@ -2,7 +2,7 @@ using BattleCombine.Interfaces;
 using System;
 using UnityEngine;
 
-namespace _Scripts
+namespace BattleCombine.Gameplay
 {
     public class AvailableForSelectionState : State
     {

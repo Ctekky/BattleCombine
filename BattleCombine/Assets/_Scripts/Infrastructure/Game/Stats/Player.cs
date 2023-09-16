@@ -1,15 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Character
+namespace BattleCombine.Gameplay
 {
-   
-    protected override void Start()
+    public class Player : Character
     {
-        base.Start();
+        [SerializeField] private PlayerUI playerUIScript;
+        [SerializeField] private string playerName;
+        public string GetPlayerName => playerName;
 
+        protected override void Start()
+        {
+            base.Start();
+            playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString());
+        }
     }
-
-
 }

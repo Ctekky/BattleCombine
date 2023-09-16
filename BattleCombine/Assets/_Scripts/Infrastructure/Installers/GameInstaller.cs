@@ -1,8 +1,9 @@
+using BattleCombine.Gameplay;
 using BattleCombine.Ai;
 using UnityEngine;
 using Zenject;
 
-namespace _Scripts
+namespace BattleCombine
 {
     public class GameInstaller : MonoInstaller
     {

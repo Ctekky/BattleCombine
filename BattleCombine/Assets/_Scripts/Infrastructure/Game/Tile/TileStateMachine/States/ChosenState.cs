@@ -2,7 +2,7 @@ using BattleCombine.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Scripts
+namespace BattleCombine.Gameplay
 {
     public class ChosenState : State
     {
