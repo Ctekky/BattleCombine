@@ -1,7 +1,7 @@
 using BattleCombine.Interfaces;
 using UnityEngine;
 
-namespace _Scripts
+namespace BattleCombine.Gameplay
 {
     public class AvailableForSelectionState : State
     {
@@ -24,7 +24,7 @@ namespace _Scripts
             foreach (GameObject tileGameObject in tile.TilesForChoosing)
             {
                 Tile chosingTile = tileGameObject.GetComponent<Tile>();
-                if (chosingTile.StateMachine.CurrentState.ToString() == tile.ChosenState.ToString()) //to do сравнивать строки это зло. но как сравнить state нужно разобраться
+                if (chosingTile.StateMachine.CurrentState.ToString() == tile.ChosenState.ToString()) //to do пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ. пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ state пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 {
                     continue;
                 }

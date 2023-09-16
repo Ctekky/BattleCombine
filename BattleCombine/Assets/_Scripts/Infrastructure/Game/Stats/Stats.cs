@@ -1,19 +1,18 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-[Serializable]
-public struct Stats 
+namespace BattleCombine.Gameplay
 {
-    public int Attack_value;
-    public int Attack_value_default;
+    [Serializable]
+    public struct Stats
+    {
+        public int attackValue;
+        public int attackValueDefault;
 
-    public int Health_value;
-    public int Health_value_default;
+        public int healthValue;
+        public int healthValueDefault;
 
-    public int Move_speed_value_default;
-    public bool Shielded;
-
+        public int moveSpeedValueDefault;
+        public bool shielded;
+    }
     
 }

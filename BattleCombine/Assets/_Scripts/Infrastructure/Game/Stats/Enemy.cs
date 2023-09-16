@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Character
+namespace BattleCombine.Gameplay
 {
-
-    protected override void Start()
+    public class Enemy : Character
     {
-        base.Start();
-
+        protected override void Start()
+        {
+            base.Start();
+        }
     }
-
-
+    
 }
 

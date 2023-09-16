@@ -2,7 +2,7 @@ using BattleCombine.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Scripts
+namespace BattleCombine.Gameplay
 {
     public class ChosenState : State
     {
@@ -23,7 +23,7 @@ namespace _Scripts
             foreach (GameObject tileGameObject in tile.TilesForChoosing)
             {
                 Tile chosingTile = tileGameObject.GetComponent<Tile>();
-                if (chosingTile.StateMachine.CurrentState.ToString() == tile.AvailableForSelectionState.ToString()) //to do сравнивать строки это зло. но как сравнить state нужно разобраться
+                if (chosingTile.StateMachine.CurrentState.ToString() == tile.AvailableForSelectionState.ToString()) //to do пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ. пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ state пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 {
                     int i = 0;
                     List<GameObject> listGameObjectNearThisTileWithoutTouchTile = chosingTile.TilesNearThisTile;

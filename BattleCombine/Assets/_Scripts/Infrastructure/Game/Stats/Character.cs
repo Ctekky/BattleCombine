@@ -1,96 +1,84 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character : MonoBehaviour
+namespace BattleCombine.Gameplay
 {
-    [SerializeField] private Stats stats;
-    public int Move_speed_value;
-
-
-    public bool Shielded => stats.Shielded;
-    public int Attack_value => stats.Attack_value;
-    public int Health_value => stats.Health_value;
-
-
-
-
-
-    protected virtual void Start()
+    public abstract class Character : MonoBehaviour
     {
-        StartGame();
-    }
+        [SerializeField] private Stats stats;
+        public int moveSpeedValue;
 
-    public void StartGame()
-    {
-        NextMove();
-        stats.Shielded = false;
-        stats.Attack_value = stats.Attack_value_default;
-        stats.Health_value = stats.Health_value_default;
-    }
+        public bool Shielded => stats.shielded;
+        public int AttackValue => stats.attackValue;
+        public int HealthValue => stats.healthValue;
 
-    public void ChangeHealth(int add_health)
-    {
-        int tmp = stats.Health_value + add_health;
-     
-        if (tmp > stats.Health_value_default)
+
+        protected virtual void Start()
         {
-            stats.Health_value = stats.Health_value_default;
-        }
-        else if (tmp <= 0)
-        {
-            stats.Health_value = 0;
-        }
-        else
-        {
-            stats.Health_value = tmp;
+            StartGame();
         }
 
-    }
-
-  
-    public void AddAttack(int add_attack)
-    {
-        
-        int tmp = stats.Attack_value + add_attack;
-
-        if (tmp > stats.Attack_value_default)
+        public void StartGame()
         {
-            stats.Attack_value = stats.Attack_value_default;
-        }
-        else if (tmp <= 0)
-        {
-            stats.Attack_value = 0;
-        }
-        else
-        {
-            stats.Attack_value = tmp;
+            NextMove();
+            stats.shielded = false;
+            stats.attackValue = stats.attackValueDefault;
+            stats.healthValue = stats.healthValueDefault;
         }
 
+        public void ChangeHealth(int addHealth)
+        {
+            int tmp = stats.healthValue + addHealth;
+
+            if (tmp > stats.healthValueDefault)
+            {
+                stats.healthValue = stats.healthValueDefault;
+            }
+            else if (tmp <= 0)
+            {
+                stats.healthValue = 0;
+            }
+            else
+            {
+                stats.healthValue = tmp;
+            }
+        }
+
+        public void AddAttack(int addAttack)
+        {
+            int tmp = stats.attackValue + addAttack;
+
+            if (tmp > stats.attackValueDefault)
+            {
+                stats.attackValue = stats.attackValueDefault;
+            }
+            else if (tmp <= 0)
+            {
+                stats.attackValue = 0;
+            }
+            else
+            {
+                stats.attackValue = tmp;
+            }
+        }
+
+        public void AddShield()
+        {
+            stats.shielded = true;
+        }
+
+        public void MakeMove(int move)
+        {
+            moveSpeedValue -= move;
+        }
+
+        public bool CheckMove()
+        {
+            return moveSpeedValue != 0;
+        }
+
+        public void NextMove()
+        {
+            moveSpeedValue = stats.moveSpeedValueDefault;
+        }
     }
-
-    public void AddShield()
-    {
-        stats.Shielded = true;
-    }
-
-    public void MakeMove(int move)
-    {
-        Move_speed_value -= move;
-
-    }
-
-    public bool CheckMove()
-    {
-        if (Move_speed_value == 0) return false;
-        return true;
-    }
-
-
-    public void NextMove()
-    {
-        Move_speed_value = stats.Move_speed_value_default;
-    }
-
-    
 }

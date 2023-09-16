@@ -1,46 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
+using BattleCombine.Enums;
 using UnityEngine;
 
-public class IncreaseStats : MonoBehaviour
+namespace BattleCombine.Gameplay
 {
-
-    private Player player;
-    private StatsCollector stats_collector;
-
-    private void Awake()
+    public class IncreaseStats : MonoBehaviour
     {
-        stats_collector = FindObjectOfType<StatsCollector>();
-        player = FindObjectOfType<Player>(true);
-    }
-    public void Increase()
-    {
-        while (stats_collector.IsHasItem() && player.Move_speed_value == 0)
+        private Player _player;
+        private StatsCollector _statsCollector;
+
+        private void Awake()
         {
-            Tile tile = stats_collector.Get();
-            if (StatsEnum.Attack == tile.StatsEnum)
-            {
-                player.AddAttack(tile.Tile_value);
-            }
-
-            else if (StatsEnum.Health == tile.StatsEnum)
-            {
-                player.ChangeHealth(tile.Tile_value);
-            }
-
-            else if (StatsEnum.Shield == tile.StatsEnum)
-            {
-                player.AddShield();
-            }
-
+            _statsCollector = FindObjectOfType<StatsCollector>();
+            _player = FindObjectOfType<Player>(true);
         }
-        if(player.Move_speed_value == 0)
-        player.NextMove();
 
+        public void Increase()
+        {
+            while (_statsCollector.IsHasItem() && _player.moveSpeedValue == 0)
+            {
+                Tile tile = _statsCollector.Get();
+                if (CellType.Attack == tile.GetTileType)
+                {
+                    //_player.AddAttack(tile.Tile_value);
+                }
 
+                else if (CellType.Health == tile.GetTileType)
+                {
+                    //_player.ChangeHealth(tile.Tile_value);
+                }
+
+                else if (CellType.Shield == tile.GetTileType)
+                {
+                    //_player.AddShield();
+                }
+            }
+
+            if (_player.moveSpeedValue == 0) _player.NextMove();
+        }
     }
-
-
 }
 
 

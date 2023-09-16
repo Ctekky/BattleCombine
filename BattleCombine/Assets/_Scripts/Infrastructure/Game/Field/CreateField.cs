@@ -1,44 +1,51 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
 using UnityEngine;
 using Random = System.Random;
 
-namespace _Scripts
+namespace BattleCombine.Gameplay
 {
     public class CreateField : MonoBehaviour
     {
-        [Header("Scale or not on start")] 
-        [SerializeField] private bool makeScale;
+        [Header("Scale or not on start")] [SerializeField]
+        private bool makeScale;
 
-        [Header("Start Tile set")] 
-        [SerializeField] private bool isAiRandomStart;
+        [Header("Start Tile set")] [SerializeField]
+        private bool isAiRandomStart;
+
         [SerializeField] private int defaultAiStartTilePos;
         [SerializeField] private bool isPlayerRandomStart;
         [SerializeField] private int defaultPlayerStartTilePos;
 
-        [Header("FieldSize")] [SerializeField] 
-        private FieldSize sizeType;
+        [Header("FieldSize")] [SerializeField] private FieldSize sizeType;
+
         [Header("TileParent")] [SerializeField]
         private GameObject tileParent;
+
         [Header("Tile prefab")] [SerializeField]
         private Tile tile;
 
         [Header("Offsets & scales (test values)")] [SerializeField, Tooltip("Отступы от края")]
         private float edgeOffset = 0.5f;
+
         [SerializeField, Tooltip("Отступы между тайлами")]
         private float tileOffset = 1.1f;
+
         [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
         private float smallFieldScale = 1.45f;
+
         [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
         private float mediumFieldScale = 1.2f;
+
         [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
         private float largeFieldScale = 1.04f;
 
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
-        
+
         public IEnumerable<Tile> GetTileList => _tileList;
 
         private List<Tile> _tileList;
@@ -46,14 +53,23 @@ namespace _Scripts
         private GameObject mainField;
         private Random _rand;
         private int _fieldSize;
+        private bool _isTileFullSetup;
+
+        public Action<Tile> onTileTouched;
 
         private void Start()
         {
             _tileList = new List<Tile>();
             mainField = this.gameObject;
             _fieldParent = tileParent.transform;
+            _isTileFullSetup = false;
 
             ChangeFieldSize();
+        }
+
+        private void Update()
+        {
+            if (!_isTileFullSetup) SetupTileOnField();
         }
 
         private void ChangeFieldSize()
@@ -68,10 +84,21 @@ namespace _Scripts
 
             AddTileToField();
             ModifyTitleSize();
-            
+
+
             if (!makeScale) return;
             FieldScaler scaler = new();
             scaler.ScaleMainField(this.gameObject, edgeOffset);
+        }
+
+        private void SetupTileOnField()
+        {
+            foreach (var tileInList in _tileList)
+            {
+                tileInList.CheckTilesStateNearThisTile(tileInList);
+            }
+
+            _isTileFullSetup = true;
         }
 
         private void AddTileToField()
@@ -93,6 +120,7 @@ namespace _Scripts
                     var tileComponent = currentTile.GetComponent<Tile>();
                     ChangeTileType(tileComponent);
                     _tileList.Add(tileComponent);
+                    tileComponent.onTileTouched += touchedTile => onTileTouched?.Invoke(touchedTile);
 
                     if (i == 0 && j == startPlayerTile)
                         ApplyStartTileStatus(tileComponent);
@@ -138,7 +166,7 @@ namespace _Scripts
         private int SetPlayerStartTileIndex()
         {
             _rand = new();
-            
+
             if (defaultPlayerStartTilePos >= _fieldSize)
                 defaultPlayerStartTilePos = _fieldSize - 1;
 
@@ -148,10 +176,10 @@ namespace _Scripts
         private int SetAiStartTileIndex()
         {
             _rand = new();
-            
+
             if (defaultAiStartTilePos >= _fieldSize)
                 defaultAiStartTilePos = _fieldSize - 1;
-            
+
             return isAiRandomStart ? _rand.Next(0, _fieldSize) : defaultAiStartTilePos;
         }
     }

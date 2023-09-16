@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Scripts
+namespace BattleCombine.Gameplay
 {
     public class FieldScaler
     {

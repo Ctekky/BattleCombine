@@ -1,6 +1,6 @@
 ﻿using Unity.VisualScripting.Antlr3.Runtime;
 
-namespace _Scripts
+namespace BattleCombine.Gameplay
 {
     public abstract class State
     {

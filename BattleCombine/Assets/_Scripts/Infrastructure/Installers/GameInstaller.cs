@@ -1,7 +1,8 @@
+using BattleCombine.Gameplay;
 using UnityEngine;
 using Zenject;
 
-namespace _Scripts
+namespace BattleCombine
 {
     public class GameInstaller : Installer<GameInstaller>
     {
