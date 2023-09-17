@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Scripts;
 using BattleCombine.Enums;
+using BattleCombine.Gameplay;
 using BattleCombine.Interfaces;
 using UnityEngine;
 using Random = System.Random;
@@ -29,12 +30,12 @@ namespace BattleCombine.Ai
         [SerializeField] private int balanceHealthToChangeMood;
 
         //todo - separate weights to data base and link it here
-        private Dictionary<List<_Scripts.Tile>, int> pathDictionary = new();
+        private Dictionary<List<Tile>, int> pathDictionary = new();
         private Random _rand;
         private EnemyAi currentEnemy;
         private int maxOwnedTiles;
         public List<int> CurrentWeights { get; private set; }
-        public List<_Scripts.Tile> CurrentWay { get; private set; }
+        public List<Tile> CurrentWay { get; private set; }
         public int GetMoodHealthPercent { get; private set; }
         public int AiSpeed { get; private set; }
         public int Rounds { get; private set; }
@@ -88,18 +89,18 @@ namespace BattleCombine.Ai
                 //    tile.GetComponent<ITouchable>().Touch();
                 //}
                 
-                FindPathsFromTile(new List<_Scripts.Tile> { tile });
+                FindPathsFromTile(new List<Tile> { tile });
             }
         }
 
         //find path, and if its done - add to dict
-        private void FindPathsFromTile(IReadOnlyCollection<_Scripts.Tile> path)
+        private void FindPathsFromTile(IReadOnlyCollection<Tile> path)
         {
             var nextTiles = GetNextTiles(path.Last());
 
             foreach (var nextTile in nextTiles.OrderBy(x => Guid.NewGuid()))
             {
-                var newPath = new List<_Scripts.Tile>(path) { nextTile };
+                var newPath = new List<Tile>(path) { nextTile };
 
                 if (newPath.Count == AiSpeed)
                 {
@@ -115,7 +116,7 @@ namespace BattleCombine.Ai
         }
 
         //Get tiles near current tile (list is empty now :'))
-        private IEnumerable<_Scripts.Tile> GetNextTiles(_Scripts.Tile currentTile)
+        private IEnumerable<Tile> GetNextTiles(Tile currentTile)
         { 
             var adjacentTiles
                 = ConvertTileList(currentTile.TilesNearThisTile);
@@ -123,16 +124,16 @@ namespace BattleCombine.Ai
         }
 
         //Convert list<GameObject> to list<Tile>
-        private IEnumerable<_Scripts.Tile> ConvertTileList(IEnumerable<GameObject> oldList)
+        private IEnumerable<Tile> ConvertTileList(IEnumerable<GameObject> oldList)
         {
             var newList = oldList.Select(obj
-                => obj.GetComponent<_Scripts.Tile>()).ToList();
+                => obj.GetComponent<Tile>()).ToList();
             return newList;
         }
 
         //Temporary patch;
         //todo - return tile no after bool check, but Only after checking the weights
-        private bool CanMoveToTile(_Scripts.Tile currentTile, _Scripts.Tile nextTile)
+        private bool CanMoveToTile(Tile currentTile, Tile nextTile)
         {
             return true;
         }

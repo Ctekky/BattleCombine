@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
+using BattleCombine.Gameplay;
 using UnityEngine;
 using Random = System.Random;
 
@@ -26,7 +27,7 @@ namespace BattleCombine.Gameplay
         private GameObject tileParent;
 
         [Header("Tile prefab")] [SerializeField]
-        private _Scripts.Tile tile;
+        private Tile tile;
 
         [Header("Offsets & scales (test values)")] [SerializeField, Tooltip("Отступы от края")]
         private float edgeOffset = 0.5f;
@@ -45,8 +46,6 @@ namespace BattleCombine.Gameplay
 
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
-        public IEnumerable<Tile> GetTileList => _tileList;
-
         
         private Transform _fieldParent;
         private GameObject mainField;
@@ -56,13 +55,13 @@ namespace BattleCombine.Gameplay
         public Action<Tile> onTileTouched;
         
         //todo - remove static
-        private static List<_Scripts.Tile> _tileList;
-        public static IEnumerable<_Scripts.Tile> GetTileList => _tileList;
-        public static _Scripts.Tile GetAiStartTile { get; private set; }
+        private static List<Tile> _tileList;
+        public static IEnumerable<Tile> GetTileList => _tileList;
+        public static Tile GetAiStartTile { get; private set; }
 
         private void Start()
         {
-            _tileList = new List<_Scripts.Tile>();
+            _tileList = new List<Tile>();
             mainField = this.gameObject;
             _fieldParent = tileParent.transform;
             _isTileFullSetup = false;
@@ -147,7 +146,7 @@ namespace BattleCombine.Gameplay
             };
         }
 
-        private void ChangeTileType(_Scripts.Tile currentTile)
+        private void ChangeTileType(Tile currentTile)
         {
             _rand = new();
             var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
@@ -164,7 +163,7 @@ namespace BattleCombine.Gameplay
             }
         }
 
-        private void ApplyStartTileStatus(_Scripts.Tile currentTile)
+        private void ApplyStartTileStatus(Tile currentTile)
         {
             currentTile.ChangeStartFlag(true);
         }

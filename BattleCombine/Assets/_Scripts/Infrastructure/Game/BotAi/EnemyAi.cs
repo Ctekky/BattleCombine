@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BattleCombine.Gameplay;
 
 namespace BattleCombine.Ai
 {
@@ -6,7 +7,7 @@ namespace BattleCombine.Ai
     {
         public AiHandler _aiHandler;
         public virtual List<int> Weights { get; set; }
-        public virtual List<_Scripts.Tile> CurrentWay { get; set; }
+        public virtual List<Tile> CurrentWay { get; set; }
         public virtual int MoodHealthPercent { get; set; }
         public virtual int Speed { get; set; }
 
