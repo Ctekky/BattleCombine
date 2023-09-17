@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
+using BattleCombine.Gameplay;
 using UnityEngine;
 using Random = System.Random;
 
@@ -10,6 +11,8 @@ namespace BattleCombine.Gameplay
 {
     public class CreateField : MonoBehaviour
     {
+        public Action<Tile> onTileTouched;
+        
         [Header("Scale or not on start")] [SerializeField]
         private bool makeScale;
 
@@ -26,7 +29,7 @@ namespace BattleCombine.Gameplay
         private GameObject tileParent;
 
         [Header("Tile prefab")] [SerializeField]
-        private _Scripts.Tile tile;
+        private Tile tile;
 
         [Header("Offsets & scales (test values)")] [SerializeField, Tooltip("Отступы от края")]
         private float edgeOffset = 0.5f;
@@ -45,24 +48,24 @@ namespace BattleCombine.Gameplay
 
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
-        public IEnumerable<Tile> GetTileList => _tileList;
-
         
         private Transform _fieldParent;
         private GameObject mainField;
         private Random _rand;
         private int _fieldSize;
         private bool _isTileFullSetup;
-        public Action<Tile> onTileTouched;
-        
+
         //todo - remove static
-        private static List<_Scripts.Tile> _tileList;
-        public static IEnumerable<_Scripts.Tile> GetTileList => _tileList;
-        public static _Scripts.Tile GetAiStartTile { get; private set; }
+        private static List<Tile> _tileListStatic;
+        public static IEnumerable<Tile> GetTileListStatic => _tileListStatic;
+        
+        public IEnumerable<Tile> GetTileList => _tileList;
+        private List<Tile> _tileList;
+        public static Tile GetAiStartTile { get; private set; }
 
         private void Start()
         {
-            _tileList = new List<_Scripts.Tile>();
+            _tileList = new List<Tile>();
             mainField = this.gameObject;
             _fieldParent = tileParent.transform;
             _isTileFullSetup = false;
@@ -72,7 +75,7 @@ namespace BattleCombine.Gameplay
 
         private void Update()
         {
-            if (!_isTileFullSetup) SetupTileOnField();
+            //if (!_isTileFullSetup) SetupTileOnField();
         }
 
         private void ChangeFieldSize()
@@ -98,7 +101,7 @@ namespace BattleCombine.Gameplay
         {
             foreach (var tileInList in _tileList)
             {
-                tileInList.CheckTilesStateNearThisTile(tileInList);
+                //tileInList.CheckTilesStateNearThisTile(tileInList);
             }
 
             _isTileFullSetup = true;
@@ -123,6 +126,7 @@ namespace BattleCombine.Gameplay
                     var tileComponent = currentTile.GetComponent<Tile>();
                     ChangeTileType(tileComponent);
                     _tileList.Add(tileComponent);
+                    _tileListStatic.Add(tileComponent);
                     tileComponent.onTileTouched += touchedTile => onTileTouched?.Invoke(touchedTile);
 
                     if (i == 0 && j == startPlayerTile)
@@ -147,7 +151,7 @@ namespace BattleCombine.Gameplay
             };
         }
 
-        private void ChangeTileType(_Scripts.Tile currentTile)
+        private void ChangeTileType(Tile currentTile)
         {
             _rand = new();
             var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
@@ -164,7 +168,7 @@ namespace BattleCombine.Gameplay
             }
         }
 
-        private void ApplyStartTileStatus(_Scripts.Tile currentTile)
+        private void ApplyStartTileStatus(Tile currentTile)
         {
             currentTile.ChangeStartFlag(true);
         }
