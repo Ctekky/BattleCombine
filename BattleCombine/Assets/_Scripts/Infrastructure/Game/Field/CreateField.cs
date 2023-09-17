@@ -11,6 +11,8 @@ namespace BattleCombine.Gameplay
 {
     public class CreateField : MonoBehaviour
     {
+        public Action<Tile> onTileTouched;
+        
         [Header("Scale or not on start")] [SerializeField]
         private bool makeScale;
 
@@ -52,11 +54,13 @@ namespace BattleCombine.Gameplay
         private Random _rand;
         private int _fieldSize;
         private bool _isTileFullSetup;
-        public Action<Tile> onTileTouched;
-        
+
         //todo - remove static
-        private static List<Tile> _tileList;
-        public static IEnumerable<Tile> GetTileList => _tileList;
+        private static List<Tile> _tileListStatic;
+        public static IEnumerable<Tile> GetTileListStatic => _tileListStatic;
+        
+        public IEnumerable<Tile> GetTileList => _tileList;
+        private List<Tile> _tileList;
         public static Tile GetAiStartTile { get; private set; }
 
         private void Start()
@@ -71,7 +75,7 @@ namespace BattleCombine.Gameplay
 
         private void Update()
         {
-            if (!_isTileFullSetup) SetupTileOnField();
+            //if (!_isTileFullSetup) SetupTileOnField();
         }
 
         private void ChangeFieldSize()
@@ -97,7 +101,7 @@ namespace BattleCombine.Gameplay
         {
             foreach (var tileInList in _tileList)
             {
-                tileInList.CheckTilesStateNearThisTile(tileInList);
+                //tileInList.CheckTilesStateNearThisTile(tileInList);
             }
 
             _isTileFullSetup = true;
@@ -122,6 +126,7 @@ namespace BattleCombine.Gameplay
                     var tileComponent = currentTile.GetComponent<Tile>();
                     ChangeTileType(tileComponent);
                     _tileList.Add(tileComponent);
+                    _tileListStatic.Add(tileComponent);
                     tileComponent.onTileTouched += touchedTile => onTileTouched?.Invoke(touchedTile);
 
                     if (i == 0 && j == startPlayerTile)

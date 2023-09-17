@@ -77,7 +77,7 @@ namespace BattleCombine.Ai
         {
             //todo - find path and write it to dict
             AiSpeed = 5;
-            foreach (var tile in CreateField.GetTileList.OrderBy(x => Guid.NewGuid()))
+            foreach (var tile in CreateField.GetTileListStatic.OrderBy(x => Guid.NewGuid()))
             {
                 if (tile != CreateField.GetAiStartTile) continue;
                 //todo - ChangeState for Chosen
