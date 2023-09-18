@@ -12,7 +12,7 @@ namespace BattleCombine.Gameplay
     public class CreateField : MonoBehaviour
     {
         public Action<Tile> onTileTouched;
-        
+
         [Header("Scale or not on start")] [SerializeField]
         private bool makeScale;
 
@@ -23,7 +23,8 @@ namespace BattleCombine.Gameplay
         [SerializeField] private bool isPlayerRandomStart;
         [SerializeField] private int defaultPlayerStartTilePos;
 
-        [Header("FieldSize")] [SerializeField] private FieldSize sizeType;
+        [Header("FieldSize")] [SerializeField] 
+        private FieldSize sizeType;
 
         [Header("TileParent")] [SerializeField]
         private GameObject tileParent;
@@ -48,25 +49,21 @@ namespace BattleCombine.Gameplay
 
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
-        
+
+        private List<Tile> _tileList;
         private Transform _fieldParent;
-        private GameObject mainField;
+        private GameObject _mainField;
         private Random _rand;
         private int _fieldSize;
         private bool _isTileFullSetup;
 
-        //todo - remove static
-        private static List<Tile> _tileListStatic;
-        public static IEnumerable<Tile> GetTileListStatic => _tileListStatic;
-        
         public IEnumerable<Tile> GetTileList => _tileList;
-        private List<Tile> _tileList;
-        public static Tile GetAiStartTile { get; private set; }
+        public Tile GetAiStartTile { get; private set; }
 
         private void Start()
         {
             _tileList = new List<Tile>();
-            mainField = this.gameObject;
+            _mainField = this.gameObject;
             _fieldParent = tileParent.transform;
             _isTileFullSetup = false;
 
@@ -126,7 +123,7 @@ namespace BattleCombine.Gameplay
                     var tileComponent = currentTile.GetComponent<Tile>();
                     ChangeTileType(tileComponent);
                     _tileList.Add(tileComponent);
-                    _tileListStatic.Add(tileComponent);
+
                     tileComponent.onTileTouched += touchedTile => onTileTouched?.Invoke(touchedTile);
 
                     if (i == 0 && j == startPlayerTile)
