@@ -72,7 +72,7 @@ namespace BattleCombine.Gameplay
 
         private void Update()
         {
-            //if (!_isTileFullSetup) SetupTileOnField();
+            if (!_isTileFullSetup) SetupTileOnField();
         }
 
         private void ChangeFieldSize()
@@ -98,7 +98,7 @@ namespace BattleCombine.Gameplay
         {
             foreach (var tileInList in _tileList)
             {
-                //tileInList.CheckTilesStateNearThisTile(tileInList);
+                tileInList.CheckTilesStateNearThisTile(tileInList);
             }
 
             _isTileFullSetup = true;
@@ -161,6 +161,7 @@ namespace BattleCombine.Gameplay
                 cumulativeWeight += dictionary.Value;
                 if (roll >= cumulativeWeight) continue;
                 currentTile.ChangeTileType(dictionary.Key);
+                currentTile.ChangeTileModifier(dictionary.Value);
                 return;
             }
         }

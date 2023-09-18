@@ -1,6 +1,7 @@
 using BattleCombine.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
 using TMPro;
@@ -12,16 +13,16 @@ namespace BattleCombine.Gameplay
     public class Tile : MonoBehaviour, ITouchable //, IMovable
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField] private TileStack _tileStack;
-        [SerializeField] private bool _startTile = false;
-        [SerializeField] private string _stateName;
-        [SerializeField] private List<GameObject> _tilesForChoosing;
-        [SerializeField] private List<GameObject> _tilesNearThisTile;
+        [SerializeField] private TileStack tileStack;
+        [SerializeField] private bool startTile = false;
+        [SerializeField] private string stateName;
+        [SerializeField] private List<GameObject> tilesForChoosing;
+        [SerializeField] private List<GameObject> tilesNearThisTile;
 
-        //TODO: Ð½Ð°Ð·Ð½Ð°ÑÐ°ÑÑ ÑÐ°Ð¹Ð»Ñ ÑÐ¸Ð¿ (Ð¾Ñ ÑÐ¸Ð¿Ð° Ð·Ð°Ð²Ð¸ÑÐ¸Ñ Ð¸ÐºÐ¾Ð½ÐºÐ°) Ð¸ Ð¼Ð¾Ð´Ð¸ÑÐ¸ÐºÐ°ÑÐ¾Ñ (Ð¾Ñ Ð½ÐµÐ³Ð¾ Ð·Ð°Ð²Ð¸ÑÐ¸Ñ ÑÐ¸ÑÐ»Ð¾)
-        [SerializeField] private TileType _tileType;
-        [SerializeField, Range(-100, 100)] private float _tileModifier;
-        [SerializeField] private TextMeshPro _text;
+        //TODO: set type and modifier to tile
+        [SerializeField] private TileType tileType;
+        [SerializeField, Range(-100, 100)] private float tileModifier;
+        [SerializeField] private TextMeshPro text;
 
         public StateMachine StateMachine;
         public AvailableForSelectionState AvailableForSelectionState;
@@ -32,22 +33,26 @@ namespace BattleCombine.Gameplay
 
         public List<GameObject> TilesForChoosing
         {
-            get => _tilesForChoosing;
-            set => _tilesForChoosing = value;
+            get => tilesForChoosing;
+            set => tilesForChoosing = value;
         }
 
         public List<GameObject> TilesNearThisTile
         {
-            get => _tilesNearThisTile;
-            private set => _tilesNearThisTile = value;
+            get => tilesNearThisTile;
+            private set => tilesNearThisTile = value;
         }
-        public TileStack GetTileStack { get => _tileStack; }
 
-        public CellType GetTileType => _tileType.cellType;
+        public TileStack GetTileStack
+        {
+            get => tileStack;
+        }
 
-        //ÐÐ¸Ð¼Ð°: Ð¿Ð¾Ð¿ÑÐ°Ð²Ð¸Ð» Ñ ÐºÐ¾Ð½ÑÑÐ°Ð½ÑÑ Ð½Ð° ÑÐµÑÐ¸Ð°Ð»Ð¸Ð·ÑÐµÐ¼Ð¾Ðµ Ð¿Ð¾Ð»Ðµ
+        public CellType GetTileType => tileType.cellType;
+
+        //set tile mask
         [SerializeField] private LayerMask tileLayerMask;
-        [SerializeField] float range; // Const scale Ð´Ð»Ñ Ð¿Ð¾Ð¸ÑÐºÐ° tile
+        [SerializeField] float range; // set player speed
 
         public Action<Tile> onTileTouched;
 
@@ -65,32 +70,32 @@ namespace BattleCombine.Gameplay
         private void Start()
         {
             CheckTilesStateNearThisTile(this);
-            _tileStack = FindObjectOfType<TileStack>();
-            //TODO: ïîìåíÿòü àëãîðèòì 
-            _tileModifier = 5;
+            tileStack = FindObjectOfType<TileStack>();
+            //TODO: change algorithm to set up modifier
+            //_tileModifier = 5;
             SetupTile();
         }
 
         public void ChangeTileType(TileType type)
         {
-            _tileType = type;
+            tileType = type;
         }
 
         public void ChangeTileModifier(float modifier)
         {
-            _tileModifier = modifier;
+            tileModifier = modifier;
         }
 
         public void ChangeStartFlag(bool isStartTile)
         {
-            _startTile = isStartTile;
+            startTile = isStartTile;
         }
 
         private void SetupTile()
         {
-            _text.text = _tileModifier.ToString();
-            spriteRenderer.sprite = _tileType.sprite;
-            if (_startTile)
+            text.text = tileModifier.ToString(CultureInfo.CurrentCulture);
+            spriteRenderer.sprite = tileType.sprite;
+            if (startTile)
             {
                 StateMachine.Initialize(AvailableForSelectionState);
             }
@@ -102,8 +107,7 @@ namespace BattleCombine.Gameplay
 
         private void Update()
         {
-            
-            _stateName = StateMachine.CurrentState.ToString(); //Âûâîæó èìÿ êëàññà äëÿ ïîíèìàíèÿ â êàêîì state íàõîäèòñÿ tile
+            stateName = StateMachine.CurrentState.ToString(); //current tile state
         }
 
         public void ChangeClolor(Color color)
@@ -113,34 +117,34 @@ namespace BattleCombine.Gameplay
 
         public void Touch()
         {
-            if(StateMachine.CurrentState.ToString() == ChosenState.ToString())
+            if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
             {
-                if(this.gameObject == _tileStack.TilesStack.Peek())
+                if (this.gameObject == tileStack.TilesStack.Peek())
                 {
                     StateMachine.CurrentState.Input();
                     StateMachine.CurrentState.LogicUpdate();
                 }
                 else
                 {
-                    Debug.Log("Âûáåðè äðóãîé tile!");
+                    Debug.Log("Pick another tile!");
                 }
             }
             else
             {
-                if (_tileStack.TilesStack.Count() < _tileStack.SpeedPlayer)
+                if (tileStack.TilesStack.Count() < tileStack.SpeedPlayer)
                 {
                     StateMachine.CurrentState.Input();
                     StateMachine.CurrentState.LogicUpdate();
                 }
                 else
                 {
-                    Debug.Log("Ñêîðîñòü çàêîí÷èëàñü");
+                    Debug.Log("Current move over");
                 }
-                
             }
         }
 
-        public void FindTileForAction(Tile tile, List<GameObject> list, string nameState)// Ìåòîä íàõîæäåíèÿ ñîñåäíèõ tile äëÿ èçìåíåíèÿ èõ ñîñòîÿíèÿ
+        public void
+            FindTileForAction(Tile tile, List<GameObject> list, string nameState) //change state for nearest tiles
         {
             Vector2 tilePosition = tile.transform.position;
             var localScale = gameObject.transform.localScale;
@@ -153,31 +157,30 @@ namespace BattleCombine.Gameplay
             foreach (var colliderTile in tileColliderForChoosing)
             {
                 GameObject gameObjectTile = colliderTile.gameObject;
-                if (colliderTile == thisTileCollider || gameObjectTile.GetComponent<Tile>().StateMachine.CurrentState.ToString() != nameState)
+                if (colliderTile == thisTileCollider ||
+                    gameObjectTile.GetComponent<Tile>().StateMachine.CurrentState.ToString() != nameState)
                 {
                     continue;
                 }
-                else
-                {
-                    GameObject gameObjectTile = colliderTile.gameObject;
-                    if(!list.Contains(gameObjectTile)) list.Add(gameObjectTile);
-                }
+
+                //GameObject gameObjectTile = colliderTile.gameObject;
+                if (!list.Contains(gameObjectTile)) list.Add(gameObjectTile);
             }
         }
 
-        public void ClearTheTilesArray() // ÐÐµÑÐ¾Ð´ Ð¾ÑÐ¸ÑÑÐºÐ¸ Ð¼Ð°ÑÑÐ¸Ð²Ð° Ð½Ð°Ð¹Ð´ÐµÐ½ÑÑ tile 
+        public void ClearTheTilesArray() //Clear tiles array
         {
             TilesForChoosing.Clear();
         }
 
-        private void CheckTilesStateNearThisTile(Tile tile) // Ìåòîä íàõîæäåíèÿ ñîñåäíèõ tile
+        public void CheckTilesStateNearThisTile(Tile tile) //find near tile method
 
         {
             Vector2 tilePosition = tile.transform.position;
             float tileOverlapScaleX = gameObject.transform.localScale.x + range;
             float tileOverlapScaleY = gameObject.transform.localScale.y + range;
             Vector2 tileScale = new Vector2(tileOverlapScaleX, tileOverlapScaleY);
-            Collider2D[] tileColliderForChoosing = Physics2D.OverlapBoxAll(tilePosition, tileScale, 45f, TileLayerMask);
+            Collider2D[] tileColliderForChoosing = Physics2D.OverlapBoxAll(tilePosition, tileScale, 45f, tileLayerMask);
 
             Collider2D thisTileCollider = this.gameObject.GetComponent<Collider2D>();
             foreach (var colliderTile in tileColliderForChoosing)
@@ -186,11 +189,9 @@ namespace BattleCombine.Gameplay
                 {
                     continue;
                 }
-                else
-                {
-                    GameObject gameObjectTile = colliderTile.gameObject;
-                    TilesNearThisTile.Add(gameObjectTile);
-                }
+
+                GameObject gameObjectTile = colliderTile.gameObject;
+                TilesNearThisTile.Add(gameObjectTile);
             }
         }
 

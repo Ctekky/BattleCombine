@@ -1,9 +1,8 @@
-using BattleCombine.Interfaces;
+
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace _Scripts
+namespace BattleCombine.Gameplay
 {
     public class TileStack : MonoBehaviour
     {
