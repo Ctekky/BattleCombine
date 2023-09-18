@@ -59,7 +59,6 @@ namespace BattleCombine.Gameplay
         private void Awake()
         {
             StateMachine = new StateMachine();
-
             AvailableForSelectionState = new AvailableForSelectionState(this, StateMachine);
             ChosenState = new ChosenState(this, StateMachine);
             DisabledState = new DisabledState(this, StateMachine);
@@ -72,7 +71,7 @@ namespace BattleCombine.Gameplay
             CheckTilesStateNearThisTile(this);
             tileStack = FindObjectOfType<TileStack>();
             //TODO: change algorithm to set up modifier
-            //_tileModifier = 5;
+            tileModifier = 5;
             SetupTile();
         }
 

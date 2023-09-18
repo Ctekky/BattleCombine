@@ -18,7 +18,7 @@ namespace BattleCombine.Gameplay
         {
             while (_statsCollector.IsHasItem() && _player.moveSpeedValue == 0)
             {
-                Tile tile = _statsCollector.Get();
+                var tile = _statsCollector.Get();
                 if (CellType.Attack == tile.GetTileType)
                 {
                     //_player.AddAttack(tile.Tile_value);
@@ -39,7 +39,3 @@ namespace BattleCombine.Gameplay
         }
     }
 }
-
-
-
-
