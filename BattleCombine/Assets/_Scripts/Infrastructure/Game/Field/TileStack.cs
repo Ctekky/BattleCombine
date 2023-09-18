@@ -1,18 +1,16 @@
-using BattleCombine.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace _Scripts
+namespace BattleCombine.Gameplay
 {
     public class TileStack : MonoBehaviour
     {
-        [SerializeField] private int _speedPlayer;
-        [SerializeField] private List<GameObject> _nextMoveTiles;
+        [SerializeField] private int speedPlayer;
+        [SerializeField] private List<GameObject> nextMoveTiles;
 
         private Stack<GameObject> _tileStack;
 
-        public int SpeedPlayer { get => _speedPlayer; }
+        public int SpeedPlayer { get => speedPlayer; }
         public Stack<GameObject> TilesStack
         {
             get => _tileStack;
@@ -20,21 +18,21 @@ namespace _Scripts
         }
         public List<GameObject> NextMoveTiles
         {
-            get => _nextMoveTiles;
-            set => value = _nextMoveTiles;
+            get => nextMoveTiles;
+            set => value = nextMoveTiles;
         }
 
         private void Start()
         {
             _tileStack = new Stack<GameObject>();
-            _nextMoveTiles = new List<GameObject>();
-            //_speedPalyer = 4; //TODO передаём сюда скорость игрока
+            nextMoveTiles = new List<GameObject>();
+            speedPlayer = 4; //TODO get player speed
         }
 
         private void OnApplicationQuit()
         {
             _tileStack.Clear();
-            _nextMoveTiles.Clear();
+            nextMoveTiles.Clear();
         }
     }
 }

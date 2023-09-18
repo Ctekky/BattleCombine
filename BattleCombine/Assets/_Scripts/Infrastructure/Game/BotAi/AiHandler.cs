@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Scripts;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
-using BattleCombine.Interfaces;
 using UnityEngine;
 using Random = System.Random;
 
@@ -88,13 +86,13 @@ namespace BattleCombine.Ai
                 if (tile != _field.GetAiStartTile) continue;
                 //todo - ChangeState for Chosen
                 Debug.Log(tile);
-                
+
                 //tile.StateMachine.ChangeState(tile.ChosenState);
                 //if (tile.GetComponent<ITouchable>() != null)
                 //{
                 //    tile.GetComponent<ITouchable>().Touch();
                 //}
-                
+
                 FindPathsFromTile(new List<Tile> { tile });
             }
         }
@@ -123,7 +121,7 @@ namespace BattleCombine.Ai
 
         //Get tiles near current tile (list is empty now :'))
         private IEnumerable<Tile> GetNextTiles(Tile currentTile)
-        { 
+        {
             var adjacentTiles
                 = ConvertTileList(currentTile.TilesNearThisTile);
             return adjacentTiles.Where(t => CanMoveToTile(currentTile, t)).ToList();
