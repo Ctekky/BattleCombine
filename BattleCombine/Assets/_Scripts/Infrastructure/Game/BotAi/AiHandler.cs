@@ -32,17 +32,23 @@ namespace BattleCombine.Ai
         //todo - separate weights to data base and link it here
         private Dictionary<List<Tile>, int> pathDictionary = new();
         private Random _rand;
-        private EnemyAi currentEnemy;
-        private int maxOwnedTiles;
+        private EnemyAi _currentEnemy;
+        private CreateField _field;
+        private int _maxOwnedTiles;
         public List<int> CurrentWeights { get; private set; }
         public List<Tile> CurrentWay { get; private set; }
         public int GetMoodHealthPercent { get; private set; }
         public int AiSpeed { get; private set; }
         public int Rounds { get; private set; }
 
+        private void OnValidate()
+        {
+            _field = FindObjectOfType<CreateField>();
+        }
+
         private void Start()
         {
-            maxOwnedTiles = AiSpeed * Rounds;
+            _maxOwnedTiles = AiSpeed * Rounds;
             CurrentWeights = new();
             ChooseArchetype();
             FindAllPaths();
@@ -77,9 +83,9 @@ namespace BattleCombine.Ai
         {
             //todo - find path and write it to dict
             AiSpeed = 5;
-            foreach (var tile in CreateField.GetTileListStatic.OrderBy(x => Guid.NewGuid()))
+            foreach (var tile in _field.GetTileList.OrderBy(x => Guid.NewGuid()))
             {
-                if (tile != CreateField.GetAiStartTile) continue;
+                if (tile != _field.GetAiStartTile) continue;
                 //todo - ChangeState for Chosen
                 Debug.Log(tile);
                 
@@ -160,17 +166,17 @@ namespace BattleCombine.Ai
                 case AiArchetypes.Tank:
                     AddWeightToList(tankFullHealthWeights, tankDamagedWeights);
                     GetMoodHealthPercent = tankHealthToChangeMood;
-                    currentEnemy = new TankAi();
+                    _currentEnemy = new TankAi();
                     break;
                 case AiArchetypes.Attack:
                     AddWeightToList(attackFullHealthWeights, attackDamagedWeights);
                     GetMoodHealthPercent = attackHealthToChangeMood;
-                    currentEnemy = new AttackAi();
+                    _currentEnemy = new AttackAi();
                     break;
                 case AiArchetypes.Balance:
                     AddWeightToList(balanceFullHealthWeights, balanceDamagedWeights);
                     GetMoodHealthPercent = balanceHealthToChangeMood;
-                    currentEnemy = new BalanceAi();
+                    _currentEnemy = new BalanceAi();
                     break;
                 case AiArchetypes.None:
                     break;
@@ -178,8 +184,8 @@ namespace BattleCombine.Ai
                     throw new ArgumentOutOfRangeException();
             }
 
-            currentEnemy._aiHandler = this;
-            currentEnemy.Init();
+            _currentEnemy._aiHandler = this;
+            _currentEnemy.Init();
         }
 
         private void AddWeightToList(IEnumerable<int> arrayFirst, IEnumerable<int> arraySecond)
