@@ -14,7 +14,7 @@ namespace BattleCombine.Ai
         {
             Debug.Log("Ama Balanzza!");
             Debug.Log(Weights + " Weight applied");
-            Debug.Log(CurrentWay + " No Path");
+            Debug.Log(CurrentWay.Count + " Path");
             Debug.Log(MoodHealthPercent + " Health to change mood");
         }
     }
