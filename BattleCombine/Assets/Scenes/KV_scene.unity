@@ -511,6 +511,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 3d80cea5bd433494fa6c47fc8f2fc20b, type: 2}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: makeScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: TileParent
       value: 
       objectReference: {fileID: 807701774}

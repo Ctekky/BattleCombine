@@ -194,8 +194,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3441991957437204115}
   - component: {fileID: 3068339636670248365}
-  - component: {fileID: 105925409287168891}
   - component: {fileID: 3806609544471234140}
+  - component: {fileID: 105925409287168891}
   m_Layer: 6
   m_Name: TilePrefab
   m_TagString: Untagged
@@ -211,7 +211,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2841049852580622045}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -271,26 +271,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &105925409287168891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2841049852580622045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d89ee0c3c8ac754992db08f59adeedb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startTile: 1
-  spriteRenderer: {fileID: 3068339636670248365}
-  _stateName: 
-  _tilesForChoosing: []
-  _tilesNearThisTile: []
-  _tileType: {fileID: 11400000, guid: 530c4220e922b5641b0bf732d90064de, type: 2}
-  _tileModifier: 5
-  _text: {fileID: 2226465790456060401}
 --- !u!61 &3806609544471234140
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -336,3 +316,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &105925409287168891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2841049852580622045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d89ee0c3c8ac754992db08f59adeedb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startTile: 0
+  spriteRenderer: {fileID: 3068339636670248365}
+  _stateName: 
+  _tilesForChoosing: []
+  _tilesNearThisTile: []
+  _tileType: {fileID: 11400000, guid: 530c4220e922b5641b0bf732d90064de, type: 2}
+  _tileModifier: 5
+  _text: {fileID: 2226465790456060401}

@@ -9,8 +9,6 @@ namespace _Scripts
 {
     public class CreateField : MonoBehaviour
     {
-        public List<GameObject> GetTileList => _tileList;
-
         [Header("Scale or not on start")] 
         [SerializeField] private bool makeScale;
 
@@ -20,15 +18,12 @@ namespace _Scripts
         [SerializeField] private bool isPlayerRandomStart;
         [SerializeField] private int defaultPlayerStartTilePos;
 
-        [Header("MainField")] [SerializeField] 
-        private GameObject field;
         [Header("FieldSize")] [SerializeField] 
         private FieldSize sizeType;
-
         [Header("TileParent")] [SerializeField]
         private GameObject tileParent;
         [Header("Tile prefab")] [SerializeField]
-        private GameObject tile;
+        private Tile tile;
 
         [Header("Offsets & scales (test values)")] [SerializeField, Tooltip("Отступы от края")]
         private float edgeOffset = 0.5f;
@@ -43,15 +38,19 @@ namespace _Scripts
 
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
+        
+        public IEnumerable<Tile> GetTileList => _tileList;
 
-        private List<GameObject> _tileList;
+        private List<Tile> _tileList;
         private Transform _fieldParent;
-        private Random rand;
+        private GameObject mainField;
+        private Random _rand;
         private int _fieldSize;
 
         private void Start()
         {
-            _tileList = new List<GameObject>();
+            _tileList = new List<Tile>();
+            mainField = this.gameObject;
             _fieldParent = tileParent.transform;
 
             ChangeFieldSize();
@@ -69,8 +68,10 @@ namespace _Scripts
 
             AddTileToField();
             ModifyTitleSize();
+            
             if (!makeScale) return;
-            ScaleMainField();
+            FieldScaler scaler = new();
+            scaler.ScaleMainField(this.gameObject, edgeOffset);
         }
 
         private void AddTileToField()
@@ -78,7 +79,7 @@ namespace _Scripts
             var startPlayerTile = SetPlayerStartTileIndex();
             var startAiTile = SetAiStartTileIndex();
 
-            var newTile = new FieldCreateFactory(tile);
+            var newTile = new FieldCreateFactory(tile.gameObject);
 
             for (var i = 0; i < _fieldSize; i++)
             {
@@ -89,14 +90,14 @@ namespace _Scripts
                                                      + new Vector3(j * tileOffset, i * tileOffset, 0);
                     currentTile.transform.Rotate(90, 180, 0);
 
-                    ChangeTileType(currentTile);
-
-                    _tileList.Add(currentTile);
+                    var tileComponent = currentTile.GetComponent<Tile>();
+                    ChangeTileType(tileComponent);
+                    _tileList.Add(tileComponent);
 
                     if (i == 0 && j == startPlayerTile)
-                        ApplyStartTileStatus(currentTile);
+                        ApplyStartTileStatus(tileComponent);
                     if (i == _fieldSize - 1 && j == startAiTile)
-                        ApplyStartTileStatus(currentTile);
+                        ApplyStartTileStatus(tileComponent);
                 }
             }
         }
@@ -112,64 +113,46 @@ namespace _Scripts
             };
         }
 
-        private void ScaleMainField()
+        private void ChangeTileType(Tile currentTile)
         {
-            //test scaler (not complete)
-            var mainCamera = Camera.main;
-            var halfHeight = mainCamera.orthographic ? mainCamera.orthographicSize : 0;
-            var halfWidth = mainCamera.aspect * halfHeight;
-
-            var objectWidth = field.GetComponent<Renderer>().bounds.size.x;
-            var objectHeight = field.GetComponent<Renderer>().bounds.size.y;
-
-            var scaleX = (halfWidth * 1.7f - edgeOffset * 1.7f) / objectWidth;
-            var scaleZ = (halfHeight * 1f - edgeOffset * 1f) / objectHeight;
-
-            field.transform.localScale = new Vector3(scaleX, 1, scaleZ);
-        }
-
-        private void ChangeTileType(GameObject currentTile)
-        {
-            rand = new();
-            var tileComponent = currentTile.GetComponent<Tile>();
+            _rand = new();
             var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
 
-            var roll = rand.Next(0, totalWeight);
+            var roll = _rand.Next(0, totalWeight);
             var cumulativeWeight = 0;
 
             foreach (var dictionary in tileTypeChances)
             {
                 cumulativeWeight += dictionary.Value;
                 if (roll >= cumulativeWeight) continue;
-                tileComponent.ChangeTileType(dictionary.Key);
+                currentTile.ChangeTileType(dictionary.Key);
                 return;
             }
         }
 
-        private void ApplyStartTileStatus(GameObject tile)
+        private void ApplyStartTileStatus(Tile currentTile)
         {
-            var tileComponent = tile.GetComponent<Tile>();
-            tileComponent.ChangeStartFlag(true);
+            currentTile.ChangeStartFlag(true);
         }
 
         private int SetPlayerStartTileIndex()
         {
-            rand = new();
+            _rand = new();
             
             if (defaultPlayerStartTilePos >= _fieldSize)
                 defaultPlayerStartTilePos = _fieldSize - 1;
 
-            return isPlayerRandomStart ? rand.Next(0, _fieldSize) : defaultPlayerStartTilePos;
+            return isPlayerRandomStart ? _rand.Next(0, _fieldSize) : defaultPlayerStartTilePos;
         }
 
         private int SetAiStartTileIndex()
         {
-            rand = new();
+            _rand = new();
             
             if (defaultAiStartTilePos >= _fieldSize)
                 defaultAiStartTilePos = _fieldSize - 1;
             
-            return isAiRandomStart ? rand.Next(0, _fieldSize) : defaultAiStartTilePos;
+            return isAiRandomStart ? _rand.Next(0, _fieldSize) : defaultAiStartTilePos;
         }
     }
 
