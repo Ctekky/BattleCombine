@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCombine.Enums;
+using UnityEngine;
 
 namespace BattleCombine.Gameplay
 {
@@ -11,7 +12,9 @@ namespace BattleCombine.Gameplay
         public override void Enter()
         {
             base.Enter();
-            tile.ChangeClolor(color);
+            _tile.ChangeClolor(color);
+            StateName = TileState.EnabledState;
+            _tile.SetCurrentState(StateName);
         }
         public override void Input()
         {

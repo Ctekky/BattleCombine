@@ -1,20 +1,21 @@
-﻿using Unity.VisualScripting.Antlr3.Runtime;
+﻿
+using BattleCombine.Enums;
 
 namespace BattleCombine.Gameplay
 {
     public abstract class State
     {
-        protected Tile tile;
-        protected StateMachine stateMachine;
+        protected readonly Tile _tile;
+        protected readonly StateMachine _stateMachine;
+        protected TileState StateName;
 
         protected State(Tile tile, StateMachine stateMachine)
         {
-            this.tile = tile;
-            this.stateMachine = stateMachine;
+            this._tile = tile;
+            this._stateMachine = stateMachine;
         }
         public virtual void Enter()
         {
-
         }
         public virtual void Input()
         {
