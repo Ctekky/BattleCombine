@@ -3,7 +3,28 @@ namespace BattleCombine.Enums
     public enum CellType : byte
     {
         Attack,
-        Defence,
-        Health
+        Health,
+        Shield
+    }
+    public enum FieldSize : byte
+    {
+        Small,
+        Medium,
+        Large,
+    }
+    public enum StatsEnum : byte
+    {
+        Health,
+        Attack,
+        Shield
+    }
+
+    public enum TileState : byte
+    {
+        AvailableForSelectionState,
+        ChosenState,
+        DisabledState,
+        EnabledState,
+        FinalChoiceState
     }
 }
