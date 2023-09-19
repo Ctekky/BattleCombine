@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCombine.Enums;
+using UnityEngine;
 
 namespace BattleCombine.Gameplay
 {
@@ -7,6 +8,12 @@ namespace BattleCombine.Gameplay
         protected Color color = Color.black;
         public DisabledState(Tile tile, StateMachine stateMachine) : base(tile, stateMachine)
         {
+        }
+
+        public override void Enter()
+        {
+            StateName = TileState.DisabledState;
+            _tile.SetCurrentState(StateName);
         }
     }
 }

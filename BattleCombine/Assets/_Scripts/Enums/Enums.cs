@@ -18,4 +18,13 @@ namespace BattleCombine.Enums
         Attack,
         Shield
     }
+
+    public enum TileState : byte
+    {
+        AvailableForSelectionState,
+        ChosenState,
+        DisabledState,
+        EnabledState,
+        FinalChoiceState
+    }
 }
