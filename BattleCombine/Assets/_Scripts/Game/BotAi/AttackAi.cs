@@ -21,6 +21,9 @@ namespace BattleCombine.Ai
             
             foreach (var tile in CurrentWay)
             {
+                Debug.Log(tile);
+                Debug.Log(tile.StateMachine);
+                Debug.Log(tile.ChosenState);
                 tile.StateMachine.ChangeState(tile.ChosenState);
                 //tile.Touch();
             }
