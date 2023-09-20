@@ -45,6 +45,12 @@ namespace BattleCombine.Ai
 
         private void Start()
         {
+            MakeAiTurn += ManualStart;
+        }
+
+        [ContextMenu("START")]
+        private void ManualStart()
+        {
             _maxOwnedTiles = AiSpeed * Rounds;
             CurrentWeights = new();
             ChooseArchetype();

@@ -19,13 +19,13 @@ namespace BattleCombine.Ai
             
             foreach (var tile in CurrentWay)
             {
-                //Debug.Log(tile);
-                //Debug.Log(tile.StateMachine);
                 Debug.Log(tile.StateMachine.CurrentState);
-                tile.gameObject.SetActive(false);
-                //Debug.Log(tile.ChosenState);
+                
+                ////todo - BpeMeHHo (noka tile He 6ygym HopM pa6omamb)
+                //tile.gameObject.SetActive(false);
+                
                 //tile.StateMachine.ChangeState(tile.ChosenState);
-                //tile.Touch();
+                tile.Touch();
             }
         }
     }

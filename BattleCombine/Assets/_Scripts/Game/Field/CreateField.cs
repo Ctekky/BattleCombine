@@ -129,13 +129,9 @@ namespace BattleCombine.Gameplay
 
                     if (i == 0 && j == startPlayerTile)
                         ApplyStartTileStatus(tileComponent);
-                    if (i == _fieldSize - 1 && j == startAiTile)
-                    {
-                        ApplyStartTileStatus(tileComponent);
-                        GetAiStartTile = tileComponent;
-                    }
-                    
-                    Debug.Log("tile status " + tileComponent.StateMachine.CurrentState);
+                    if (i != _fieldSize - 1 || j != startAiTile) continue;
+                    ApplyStartTileStatus(tileComponent);
+                    GetAiStartTile = tileComponent;
                 }
             }
         }
