@@ -1,15 +1,26 @@
+using System;
 using System.Collections.Generic;
+using System.Timers;
 using BattleCombine.Gameplay;
+using UnityEngine.Analytics;
+using Object = UnityEngine.Object;
 
 namespace BattleCombine.Ai
 {
     public abstract class EnemyAi
     {
         public AiHandler _aiHandler;
-        public virtual List<int> Weights { get; set; }
-        public virtual List<Tile> CurrentWay { get; set; }
-        public virtual int MoodHealthPercent { get; set; }
-        public virtual int Speed { get; set; }
+        public List<int> Weights { get; set; }
+        public List<Tile> CurrentWay { get; set; }
+        public int MoodHealthPercent { get; set; }
+        public int Speed { get; set; }
+
+        public bool IsAiTurn;
+        public bool IsAiLose;
+        
+        protected static Timer timer;
+        protected int count;
+        protected int currentStep;
 
         public virtual void Init()
         {
@@ -19,6 +30,7 @@ namespace BattleCombine.Ai
             CurrentWay = _aiHandler.CurrentWay;
             MoodHealthPercent = _aiHandler.GetMoodHealthPercent;
             Speed = _aiHandler.AiSpeed;
+            count = CurrentWay.Count;
         }
     }
 }

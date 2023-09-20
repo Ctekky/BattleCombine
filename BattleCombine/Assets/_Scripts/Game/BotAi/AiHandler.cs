@@ -79,7 +79,7 @@ namespace BattleCombine.Ai
         private void FindAllPaths()
         {
             //todo - find path and write it to dict
-            AiSpeed = 5;
+            AiSpeed = 4;
             var count = 0;
             foreach (var tile in _field.GetTileList.OrderBy(x => Guid.NewGuid()))
             {
@@ -123,10 +123,9 @@ namespace BattleCombine.Ai
                 var maxWeight = -1;
                 foreach(var index in candidateIndexes) {
                     var weight = FindWeight(tileList[index]);
-                    if (weight > maxWeight && !newPath.Contains(tileList[index])) {
-                        maxWeight = weight;
-                        currentIndex = index;
-                    }
+                    if (weight <= maxWeight || newPath.Contains(tileList[index])) continue;
+                    maxWeight = weight;
+                    currentIndex = index;
                 }
             }
             
@@ -154,7 +153,6 @@ namespace BattleCombine.Ai
         
         private int FindWeight(Tile tile)
         {
-            var weight = 0;
             return tile.GetTileType switch
             {
                 CellType.Attack => CurrentWeights[0],

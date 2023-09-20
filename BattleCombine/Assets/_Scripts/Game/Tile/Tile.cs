@@ -117,7 +117,7 @@ namespace BattleCombine.Gameplay
 
         public void Touch()
         {
-            if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
+            if (StateMachine.CurrentState == ChosenState)
             {
                 if (this.gameObject == tileStack.TilesStack.Peek())
                 {

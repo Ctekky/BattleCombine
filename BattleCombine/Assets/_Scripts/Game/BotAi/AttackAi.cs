@@ -1,3 +1,5 @@
+using System.Timers;
+using BattleCombine.Gameplay;
 using UnityEngine;
 
 namespace BattleCombine.Ai
@@ -16,6 +18,12 @@ namespace BattleCombine.Ai
             Debug.Log(Weights + " Weight applied");
             Debug.Log(CurrentWay.Count + " Path");
             Debug.Log(MoodHealthPercent + " Health to change mood");
+            
+            foreach (var tile in CurrentWay)
+            {
+                tile.StateMachine.ChangeState(tile.ChosenState);
+                //tile.Touch();
+            }
         }
     }
 }
