@@ -16,6 +16,7 @@ namespace BattleCombine.Gameplay
         [SerializeField] private TileStack tileStack;
         [SerializeField] private bool startTile = false;
         [SerializeField] private string stateName;
+        [SerializeField] private TileState tileCurrentState;
         [SerializeField] private List<GameObject> tilesForChoosing;
         [SerializeField] private List<GameObject> tilesNearThisTile;
 
@@ -104,9 +105,9 @@ namespace BattleCombine.Gameplay
             }
         }
 
-        private void Update()
+        public void SetCurrentState(TileState currentState)
         {
-            stateName = StateMachine.CurrentState.ToString(); //current tile state
+            tileCurrentState = currentState;
         }
 
         public void ChangeClolor(Color color)
@@ -143,7 +144,7 @@ namespace BattleCombine.Gameplay
         }
 
         public void
-            FindTileForAction(Tile tile, List<GameObject> list, string nameState) //change state for nearest tiles
+            FindTileForAction(Tile tile, List<GameObject> list, TileState nameState) //change state for nearest tiles
         {
             Vector2 tilePosition = tile.transform.position;
             var localScale = gameObject.transform.localScale;
@@ -156,8 +157,9 @@ namespace BattleCombine.Gameplay
             foreach (var colliderTile in tileColliderForChoosing)
             {
                 GameObject gameObjectTile = colliderTile.gameObject;
+                var tileState = gameObjectTile.GetComponent<Tile>().tileCurrentState;
                 if (colliderTile == thisTileCollider ||
-                    gameObjectTile.GetComponent<Tile>().StateMachine.CurrentState.ToString() != nameState)
+                    tileState != nameState)
                 {
                     continue;
                 }
@@ -176,8 +178,9 @@ namespace BattleCombine.Gameplay
 
         {
             Vector2 tilePosition = tile.transform.position;
-            float tileOverlapScaleX = gameObject.transform.localScale.x + range;
-            float tileOverlapScaleY = gameObject.transform.localScale.y + range;
+            var localScale = gameObject.transform.localScale;
+            float tileOverlapScaleX = localScale.x + range;
+            float tileOverlapScaleY = localScale.y + range;
             Vector2 tileScale = new Vector2(tileOverlapScaleX, tileOverlapScaleY);
             Collider2D[] tileColliderForChoosing = Physics2D.OverlapBoxAll(tilePosition, tileScale, 45f, tileLayerMask);
 
@@ -198,8 +201,9 @@ namespace BattleCombine.Gameplay
         {
             Gizmos.color = Color.red;
             Vector3 position = gameObject.transform.position;
-            float tileScaleX = gameObject.transform.localScale.x + range;
-            float tileScaleY = gameObject.transform.localScale.y + range;
+            var localScale = gameObject.transform.localScale;
+            float tileScaleX = localScale.x + range;
+            float tileScaleY = localScale.y + range;
             Vector2 tileScale = new Vector2(tileScaleX, tileScaleY);
             Gizmos.DrawWireCube(position, tileScale);
 

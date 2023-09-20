@@ -1,25 +1,28 @@
-using BattleCombine.Interfaces;
-using System.Collections.Generic;
+using BattleCombine.Enums;
 using UnityEngine;
 
 namespace BattleCombine.Gameplay
 {
     public class ChosenState : State
     {
-        private Color color = Color.yellow;
+        private readonly Color _color = Color.yellow;
+
         public ChosenState(Tile tile, StateMachine stateMachine) : base(tile, stateMachine)
         {
-
         }
+
         public override void Enter()
         {
-            tile.ChangeClolor(color);
+            _tile.ChangeClolor(_color);
+            StateName = TileState.ChosenState;
+            _tile.SetCurrentState(StateName);
         }
+
         public override void Input()
         {
-            tile.FindTileForAction(tile, tile.TilesForChoosing, "_Scripts.AvailableForSelectionState");
+            _tile.FindTileForAction(_tile, _tile.TilesForChoosing, TileState.AvailableForSelectionState);
 
-            foreach (GameObject tileGameObject in tile.TilesForChoosing)
+            foreach (GameObject tileGameObject in _tile.TilesForChoosing)
             {
                 Tile chosingTile = tileGameObject.GetComponent<Tile>();
                 int i = 0;
@@ -28,12 +31,12 @@ namespace BattleCombine.Gameplay
                 {
                     Tile chosingTileInNearTile = tileNearChosingTileGameObject.GetComponent<Tile>();
 
-                    if (chosingTileInNearTile.gameObject == this.tile.gameObject)
+                    if (chosingTileInNearTile.gameObject == this._tile.gameObject)
                     {
                         continue;
                     }
 
-                    if (chosingTileInNearTile.StateMachine.CurrentState.ToString() == tile.ChosenState.ToString())
+                    if (chosingTileInNearTile.StateMachine.CurrentState.ToString() == _tile.ChosenState.ToString())
                     {
                         i = 0;
                         break;
@@ -44,25 +47,24 @@ namespace BattleCombine.Gameplay
                     }
                 }
 
-                    if (i >= 1)
-                    {
-                        chosingTile.StateMachine.ChangeState(chosingTile.EnabledState);
-                        i = 0;
-                    }
+                if (i >= 1)
+                {
+                    chosingTile.StateMachine.ChangeState(chosingTile.EnabledState);
+                    i = 0;
+                }
             }
 
-            tile.GetTileStack.TilesStack.Pop();
-
-            stateMachine.ChangeState(tile.AvailableForSelectionState);
+            _tile.GetTileStack.TilesStack.Pop();
+            _stateMachine.ChangeState(_tile.AvailableForSelectionState);
         }
+
         public override void LogicUpdate()
         {
-
         }
+
         public override void Exit()
         {
-            tile.ClearTheTilesArray();
+            _tile.ClearTheTilesArray();
         }
     }
 }
-
