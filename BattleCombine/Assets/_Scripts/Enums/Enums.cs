@@ -27,4 +27,10 @@ namespace BattleCombine.Enums
         EnabledState,
         FinalChoiceState
     }
+    public enum IDPlayer : byte
+    {
+        Player1,
+        Player2,
+        AIPlayer
+    }
 }

@@ -1,4 +1,6 @@
+using BattleCombine.Enums;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 namespace BattleCombine.Gameplay
@@ -7,31 +9,46 @@ namespace BattleCombine.Gameplay
     {
         [SerializeField] private int speedPlayer;
         [SerializeField] private List<GameObject> nextMoveTiles;
+        [SerializeField] private IDPlayer player;
 
-        private Stack<GameObject> _tileStack;
+        private Stack<GameObject> _tileStackPlayer1;
+        private Stack<GameObject> _tileStackPlayer2;
 
         public int SpeedPlayer { get => speedPlayer; }
-        public Stack<GameObject> TilesStack
+        public Stack<GameObject> TilesStackPlayer1
         {
-            get => _tileStack;
-            set => value = _tileStack;
+            get => _tileStackPlayer1;
+            set => value = _tileStackPlayer1;
         }
+        public Stack<GameObject> TilesStackPlayer2
+        {
+            get => _tileStackPlayer2;
+            set => value = _tileStackPlayer2;
+        }
+
         public List<GameObject> NextMoveTiles
         {
             get => nextMoveTiles;
             set => value = nextMoveTiles;
         }
+        public IDPlayer IDPlayer
+        {
+            get => player;
+            set => player = value;
+        }
 
         private void Start()
         {
-            _tileStack = new Stack<GameObject>();
+            player = IDPlayer.Player1;
+            _tileStackPlayer1 = new Stack<GameObject>();
+            _tileStackPlayer2 = new Stack<GameObject>();
             nextMoveTiles = new List<GameObject>();
-            speedPlayer = 4; //TODO get player speed
+            //speedPlayer = 4; //TODO get player speed
         }
 
-        private void OnApplicationQuit()
+        private void OnDisable()
         {
-            _tileStack.Clear();
+            _tileStackPlayer1.Clear();
             nextMoveTiles.Clear();
         }
     }
