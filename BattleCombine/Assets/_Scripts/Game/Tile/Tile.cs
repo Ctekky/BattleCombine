@@ -73,6 +73,7 @@ namespace BattleCombine.Gameplay
             tileStack = FindObjectOfType<TileStack>();
             //TODO: change algorithm to set up modifier
             tileModifier = 5;
+            
             SetupTile();
         }
 
@@ -117,7 +118,7 @@ namespace BattleCombine.Gameplay
 
         public void Touch()
         {
-            if (StateMachine.CurrentState == ChosenState)
+            if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
             {
                 if (this.gameObject == tileStack.TilesStack.Peek())
                 {

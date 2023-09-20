@@ -1,5 +1,3 @@
-using System.Timers;
-using BattleCombine.Gameplay;
 using UnityEngine;
 
 namespace BattleCombine.Ai
@@ -21,10 +19,12 @@ namespace BattleCombine.Ai
             
             foreach (var tile in CurrentWay)
             {
-                Debug.Log(tile);
-                Debug.Log(tile.StateMachine);
-                Debug.Log(tile.ChosenState);
-                tile.StateMachine.ChangeState(tile.ChosenState);
+                //Debug.Log(tile);
+                //Debug.Log(tile.StateMachine);
+                Debug.Log(tile.StateMachine.CurrentState);
+                tile.gameObject.SetActive(false);
+                //Debug.Log(tile.ChosenState);
+                //tile.StateMachine.ChangeState(tile.ChosenState);
                 //tile.Touch();
             }
         }

@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Timers;
 using BattleCombine.Gameplay;
-using UnityEngine.Analytics;
-using Object = UnityEngine.Object;
 
 namespace BattleCombine.Ai
 {

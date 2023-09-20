@@ -80,20 +80,19 @@ namespace BattleCombine.Ai
         {
             //todo - find path and write it to dict
             AiSpeed = 4;
-            var count = 0;
-            foreach (var tile in _field.GetTileList.OrderBy(x => Guid.NewGuid()))
+            var count = -1;
+            foreach (var tile in _field.GetTileList)
             {
                 count++;
                 if (tile != _field.GetAiStartTile) continue;
                 FindPathsFromTile(count);
-                return;
+                break;
             }
         }
 
         //find path, and if its done - add to dict
         private void FindPathsFromTile(int startIndex)
         {
-            //var nextTiles = GetNextTiles(path.Last());
             var tileList = (new List<Tile>(_field.GetTileList));
             
             var gridSize = _field.GetFieldSize;
@@ -103,30 +102,30 @@ namespace BattleCombine.Ai
             for(var i = 0; i < AiSpeed; i++) {
                 newPath.Add(tileList[currentIndex]);
 
-                var candidateIndexes = new List<int>();
+               var candidateIndexes = new List<int>();
         
-                //Add tile from Left
-                if(currentIndex % gridSize != 0) 
-                    candidateIndexes.Add(currentIndex-1);
-                //Add tile from Right
-                if(currentIndex % gridSize != gridSize-1) 
-                    candidateIndexes.Add(currentIndex+1);
-                //Add tile from Top
-                if(currentIndex >= gridSize) 
-                    candidateIndexes.Add(currentIndex-gridSize);
-                //Add tile from Bottom
-                if(currentIndex < gridSize * (gridSize-1)) 
-                    candidateIndexes.Add(currentIndex+gridSize);
+               //Add tile from Left
+               if(currentIndex % gridSize != 0) 
+                   candidateIndexes.Add(currentIndex-1);
+               //Add tile from Right
+               if(currentIndex % gridSize != gridSize-1) 
+                   candidateIndexes.Add(currentIndex+1);
+               //Add tile from Top
+               if(currentIndex >= gridSize) 
+                   candidateIndexes.Add(currentIndex-gridSize);
+               //Add tile from Bottom
+               if(currentIndex < gridSize * (gridSize-1)) 
+                   candidateIndexes.Add(currentIndex+gridSize);
 
-                //Choose the one with the maximum weight
-                //todo - link the weights
-                var maxWeight = -1;
-                foreach(var index in candidateIndexes) {
-                    var weight = FindWeight(tileList[index]);
-                    if (weight <= maxWeight || newPath.Contains(tileList[index])) continue;
-                    maxWeight = weight;
-                    currentIndex = index;
-                }
+               //Choose the one with the maximum weight
+               //todo - link the weights
+               var maxWeight = -1;
+               foreach(var index in candidateIndexes) {
+                   var weight = FindWeight(tileList[index]);
+                   if (weight <= maxWeight || newPath.Contains(tileList[index])) continue;
+                   maxWeight = weight;
+                   currentIndex = index;
+               }
             }
             
             //todo - change path count to its weight

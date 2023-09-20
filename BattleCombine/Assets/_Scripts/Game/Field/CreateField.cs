@@ -57,7 +57,7 @@ namespace BattleCombine.Gameplay
         private int _fieldSize;
         private bool _isTileFullSetup;
 
-        public IEnumerable<Tile> GetTileList => _tileList;
+        public List<Tile> GetTileList => _tileList;
         public Tile GetAiStartTile { get; private set; }
         public int GetFieldSize => _fieldSize;
 
@@ -134,6 +134,8 @@ namespace BattleCombine.Gameplay
                         ApplyStartTileStatus(tileComponent);
                         GetAiStartTile = tileComponent;
                     }
+                    
+                    Debug.Log("tile status " + tileComponent.StateMachine.CurrentState);
                 }
             }
         }
