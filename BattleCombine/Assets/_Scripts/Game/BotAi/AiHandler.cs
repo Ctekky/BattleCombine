@@ -45,11 +45,11 @@ namespace BattleCombine.Ai
 
         private void Start()
         {
-            MakeAiTurn += ManualStart;
+            MakeAiTurn += RunAiPathMove;
         }
 
         [ContextMenu("START")]
-        private void ManualStart()
+        private void RunAiPathMove()
         {
             _maxOwnedTiles = AiSpeed * Rounds;
             CurrentWeights = new();
@@ -224,7 +224,6 @@ namespace BattleCombine.Ai
             }
 
             _currentEnemy._aiHandler = this;
-            //_currentEnemy.Init();
         }
 
         private void AddWeightToList(IEnumerable<int> arrayFirst, IEnumerable<int> arraySecond)
