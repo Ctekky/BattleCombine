@@ -25,7 +25,6 @@ namespace BattleCombine.Gameplay
             get => _tileStackPlayer2;
             set => value = _tileStackPlayer2;
         }
-
         public List<GameObject> NextMoveTiles
         {
             get => nextMoveTiles;
@@ -36,7 +35,6 @@ namespace BattleCombine.Gameplay
             get => player;
             set => player = value;
         }
-
         private void Start()
         {
             player = IDPlayer.Player1;
@@ -45,7 +43,6 @@ namespace BattleCombine.Gameplay
             nextMoveTiles = new List<GameObject>();
             //speedPlayer = 4; //TODO get player speed
         }
-
         private void OnDisable()
         {
             _tileStackPlayer1.Clear();

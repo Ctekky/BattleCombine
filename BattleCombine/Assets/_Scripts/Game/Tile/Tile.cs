@@ -128,7 +128,6 @@ namespace BattleCombine.Gameplay
             }
             
         }
-
         public void FindTileForAction(Tile tile, List<GameObject> list, TileState nameState) //change state for nearest tiles
         {
             Vector2 tilePosition = tile.transform.position;

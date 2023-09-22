@@ -23,10 +23,10 @@ namespace BattleCombine.Gameplay
 
         public override void Input()
         {
-            if (_tile.GetTileStack.TilesStackPlayer1.Count > 0)
-            {
-                _tile.ChangeTileStateInStack();
-            }
+           // if (_tile.GetTileStack.TilesStackPlayer1.Count > 0)
+            //{
+             //   _tile.ChangeTileStateInStack();
+            //}
             
             _tile.FindTileForAction(_tile, _tile.TilesForChoosing, TileState.EnabledState);
             foreach (GameObject tileGameObject in _tile.TilesForChoosing)
@@ -37,10 +37,18 @@ namespace BattleCombine.Gameplay
 
             switch (_tile.GetTileStack.IDPlayer)
             {
-                case IDPlayer.Player1:
+                case IDPlayer.Player1://TODO
+                    if (_tile.GetTileStack.TilesStackPlayer1.Count > 0)
+                    {
+                        _tile.ChangeTileStateInStack();
+                    }
                     _tile.GetTileStack.TilesStackPlayer1.Push(_tile.gameObject);
                     break;
-                case IDPlayer.Player2:
+                case IDPlayer.Player2://TODO
+                    if (_tile.GetTileStack.TilesStackPlayer2.Count > 0)
+                    {
+                        _tile.ChangeTileStateInStack();
+                    }
                     _tile.GetTileStack.TilesStackPlayer2.Push(_tile.gameObject);
                     break;
             }
