@@ -148,42 +148,6 @@ namespace BattleCombine.Gameplay
 
         public void Touch()
         {
-            /*
-            if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
-            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return;
-            if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
-            {
-                if (this.gameObject == tileStack.TilesStack.Peek())
-                {
-                    StateMachine.CurrentState.Input();
-                    StateMachine.CurrentState.LogicUpdate();
-                    if (tileStack.TilesStack.Count() < tileStack.SpeedPlayer)
-                    {
-                        _gameManager.SpeedIsOver(false);
-                    }
-                }
-                else
-                {
-                    Debug.Log("Pick another tile!");
-                }
-            }
-            else
-            {
-                if (tileStack.TilesStack.Count() < tileStack.SpeedPlayer)
-                {
-                    StateMachine.CurrentState.Input();
-                    StateMachine.CurrentState.LogicUpdate();
-                    if (tileStack.TilesStack.Count() == tileStack.SpeedPlayer)
-                    {
-                        _gameManager.SpeedIsOver(true);
-                    }
-                }
-                else
-                {
-                    _gameManager.SpeedIsOver(true);
-                    Debug.Log("Current move over");
-                }
-            */
             switch (tileStack.IDPlayer)
             {
                 case IDPlayer.Player1:
@@ -264,9 +228,45 @@ namespace BattleCombine.Gameplay
             }
         }
 
-        public void ActionForTile(Stack<GameObject> stack)
+        private void ActionForTile(Stack<GameObject> stack)
         {
+            if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
+            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return;
             if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
+            {
+                if (this.gameObject == stack.Peek())
+                {
+                    StateMachine.CurrentState.Input();
+                    StateMachine.CurrentState.LogicUpdate();
+                    if (stack.Count() < tileStack.SpeedPlayer)
+                    {
+                        _gameManager.SpeedIsOver(false);
+                    }
+                }
+                else
+                {
+                    Debug.Log("Pick another tile!");
+                }
+            }
+            else
+            {
+                if (stack.Count() < tileStack.SpeedPlayer)
+                {
+                    StateMachine.CurrentState.Input();
+                    StateMachine.CurrentState.LogicUpdate();
+                    if (stack.Count() == tileStack.SpeedPlayer)
+                    {
+                        _gameManager.SpeedIsOver(true);
+                    }
+                }
+                else
+                {
+                    _gameManager.SpeedIsOver(true);
+                    Debug.Log("Current move over");
+                }
+            }
+            /*
+             if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
             {
                 if (this.gameObject == stack.Peek())
                 {
@@ -290,6 +290,7 @@ namespace BattleCombine.Gameplay
                     Debug.Log("Current move over");
                 }
             }
+             */
         }
 
         private void OnDrawGizmos()
