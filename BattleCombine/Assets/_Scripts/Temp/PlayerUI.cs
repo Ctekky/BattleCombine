@@ -8,20 +8,21 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private SpriteRenderer shieldSprite;
 
     private bool _isShielded;
-    
+
     private void SetUpStat(TextMeshPro text, string value)
     {
         text.text = value;
     }
 
-    public void SetUpAllStats(string attackValue, string healthValue)
+    public void SetUpAllStats(string attackValue, string healthValue, bool isShielded)
     {
         SetUpStat(attackText, attackValue);
         SetUpStat(healthText, healthValue);
+        SetShield(isShielded);
         ChangeShieldSprite();
     }
 
-    public void SetShield(bool value)
+    private void SetShield(bool value)
     {
         _isShielded = value;
         ChangeShieldSprite();
