@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using BattleCombine.Enums;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -54,7 +56,7 @@ namespace BattleCombine.Gameplay
 
         private void ButtonPressed()
         {
-            var tileStack = gameField.GetComponent<TileStack>().TilesStack;
+            var tileStack = GetTileStack();
             foreach (var tileComponent in tileStack.Select(tile => tile.GetComponent<Tile>()))
             {
                 statsCollector.Add(tileComponent);
@@ -66,6 +68,18 @@ namespace BattleCombine.Gameplay
             _currentPlayer.UpdateStats();
             Debug.Log($"Stats to {_currentPlayer} suppose to raise");
             ChangePlayerTurn();
+        }
+
+        private Stack<GameObject> GetTileStack()
+        {
+            var tileStack = gameField.GetComponent<TileStack>();
+            return tileStack.IDPlayer switch
+            {
+                IDPlayer.Player1 => tileStack.TilesStackPlayer1,
+                IDPlayer.Player2 => tileStack.TilesStackPlayer2,
+                IDPlayer.AIPlayer => tileStack.TilesStackPlayer2,
+                _ => null
+            };
         }
 
         private void ChangePlayerTurn()
