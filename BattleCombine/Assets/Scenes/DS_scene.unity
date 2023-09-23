@@ -1057,6 +1057,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 388951235}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2745,6 +2749,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTouchable: 0
   spriteColor: {fileID: 2065769397}
+  tileStack: {fileID: 0}
+  tilesForNextMovePlayer1: []
+  tilesForNextMovePlayer2: []
 --- !u!61 &2065769400
 BoxCollider2D:
   m_ObjectHideFlags: 0

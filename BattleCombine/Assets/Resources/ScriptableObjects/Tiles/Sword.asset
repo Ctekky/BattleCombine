@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Sword
   cellType: 0
-  sprite: {fileID: 21300000, guid: c9ccf1a6055bbc743bf4c47f702258ee, type: 3}
+  sprite: {fileID: 21300000, guid: 8cc6c135146907b49b43e78c52b35ab8, type: 3}
