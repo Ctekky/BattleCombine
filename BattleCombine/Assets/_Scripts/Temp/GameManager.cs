@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 
 namespace BattleCombine.Gameplay
@@ -14,6 +14,9 @@ namespace BattleCombine.Gameplay
         [SerializeField] private StatsCollector statsCollector;
         [SerializeField] private IncreaseStats increaseStats;
         [SerializeField] private NextTurnButton nextTurnButton;
+        [SerializeField] private Fight fight;
+
+        [SerializeField] private TextMeshPro description;
 
         [SerializeField] public string _currentPlayerName;
         [SerializeField] private Player _currentPlayer;
@@ -38,6 +41,14 @@ namespace BattleCombine.Gameplay
                 return;
             }
 
+            if (fight == null)
+            {
+                Debug.Log("No fight script");
+                return;
+            }
+
+            fight.SetUpPlayers(player1.GetComponent<Player>(), player2.GetComponent<Player>());
+            fight.onGameOver += GameOver;
             _currentPlayerName = player1.GetComponent<Player>()?.GetPlayerName;
             _currentPlayer = player1.GetComponent<Player>();
             gameField.GetComponent<CreateField>().SetupGameManager(this);
@@ -52,6 +63,11 @@ namespace BattleCombine.Gameplay
 
             currentTurn = 1;
             currentStepInTurn = 1;
+        }
+
+        private void GameOver()
+        {
+            Debug.Log("Battle is over");
         }
 
         private void ButtonPressed()
@@ -100,10 +116,12 @@ namespace BattleCombine.Gameplay
                 Debug.Log($"Current step in turn {currentStepInTurn.ToString()}");
             }
 
-            if (currentStepInTurn > stepsInTurn)
-            {
-                Debug.Log("Round is over => Fight!!!");
-            }
+            description.text = _currentPlayerName;
+            if (currentStepInTurn <= stepsInTurn) return;
+            Debug.Log("Round is over => Fight!!!");
+            fight.Fighting();
+            player1.GetComponent<Player>().UpdateStats();
+            player2.GetComponent<Player>().UpdateStats();
         }
 
         public void SpeedIsOver(bool state)

@@ -17,7 +17,7 @@ namespace BattleCombine.Gameplay
             StartGame();
         }
 
-        public void StartGame()
+        private void StartGame()
         {
             NextMove();
             stats.shielded = false;
@@ -76,6 +76,11 @@ namespace BattleCombine.Gameplay
         public void AddShield()
         {
             stats.shielded = true;
+        }
+
+        public void RemoveShield()
+        {
+            stats.shielded = false;
         }
 
         public void MakeMove(int move)

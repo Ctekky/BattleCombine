@@ -11,12 +11,12 @@ namespace BattleCombine.Gameplay
         protected override void Start()
         {
             base.Start();
-            playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString());
+            playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString(), Shielded);
         }
 
         public void UpdateStats()
         {
-            playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString());
+            playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString(), Shielded);
         }
     }
 }

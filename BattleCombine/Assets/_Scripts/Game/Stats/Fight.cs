@@ -1,65 +1,49 @@
+using System;
 using UnityEngine;
 
 namespace BattleCombine.Gameplay
 {
     public class Fight : MonoBehaviour
     {
-        private Player player;
-        private Enemy enemy;
+        private Player _player1;
+        private Player _player2;
 
-        private void Awake()
+        public Action onGameOver;
+
+        public void SetUpPlayers(Player player1, Player player2)
         {
-            player = FindObjectOfType<Player>();
-            enemy = FindObjectOfType<Enemy>();
+            _player1 = player1;
+            _player2 = player2;
         }
-
 
         public void Fighting()
         {
-            if (gameOver) return;
-            PlayerTakeDamage();
-            if (gameOver) return;
-            EnemyTakeDamage();
+            if (_gameOver) return;
+            TakeDamage(_player1, _player2);
+            if (_gameOver) return;
+            TakeDamage(_player2, _player1);
+            if (_gameOver) onGameOver?.Invoke();
         }
 
-        private bool gameOver;
+        private bool _gameOver;
 
-        private void PlayerTakeDamage()
+        private void TakeDamage(Player player1, Player player2)
         {
-            if (player.Shielded)
+            switch (player1.Shielded)
             {
-                player.ChangeHealth(-(enemy.AttackValue / 2));
-            }
-            else if (player.Shielded == false)
-            {
-                player.ChangeHealth(-(enemy.AttackValue));
-            }
-
-            if (player.HealthValue <= 0)
-            {
-                print("игрок проиграл");
-                gameOver = true;
-                player.StartGame();
-            }
-        }
-
-        private void EnemyTakeDamage()
-        {
-            if (enemy.Shielded)
-            {
-                enemy.ChangeHealth(-(player.AttackValue / 2));
-            }
-            else if (enemy.Shielded == false)
-            {
-                enemy.ChangeHealth(-(player.AttackValue));
+                case true:
+                    player1.ChangeHealth(-(player2.AttackValue / 2));
+                    player1.RemoveShield();
+                    break;
+                case false:
+                    player1.ChangeHealth(-(player2.AttackValue));
+                    break;
             }
 
-            if (enemy.HealthValue <= 0)
-            {
-                print("враг проиграл");
-                gameOver = true;
-                enemy.StartGame();
-            }
+            if (player1.HealthValue > 0) return;
+            print($"{player1.GetPlayerName} lose");
+            _gameOver = true;
+            //player1.StartGame();
         }
     }
 }
