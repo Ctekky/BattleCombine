@@ -87,6 +87,7 @@ namespace BattleCombine.Gameplay
             tileStack = FindObjectOfType<TileStack>();
             //TODO: change algorithm to set up modifier
             tileModifier = 5;
+            
             SetupTile();
         }
 
@@ -181,11 +182,18 @@ namespace BattleCombine.Gameplay
                     _gameManager.SpeedIsOver(true);
                     Debug.Log("Current move over");
                 }
+            switch(tileStack.IDPlayer)
+            {
+                case IDPlayer.Player1:
+                    ActionForTile(tileStack.TilesStackPlayer1);
+                    break;
+                case IDPlayer.Player2:
+                    ActionForTile(tileStack.TilesStackPlayer2);
+                    break;
             }
+            
         }
-
-        public void
-            FindTileForAction(Tile tile, List<GameObject> list, TileState nameState) //change state for nearest tiles
+        public void FindTileForAction(Tile tile, List<GameObject> list, TileState nameState) //change state for nearest tiles
         {
             Vector2 tilePosition = tile.transform.position;
             var localScale = gameObject.transform.localScale;
@@ -199,22 +207,18 @@ namespace BattleCombine.Gameplay
             {
                 GameObject gameObjectTile = colliderTile.gameObject;
                 var tileState = gameObjectTile.GetComponent<Tile>().tileCurrentState;
-                if (colliderTile == thisTileCollider ||
-                    tileState != nameState)
+                if (colliderTile == thisTileCollider || tileState != nameState)
                 {
                     continue;
                 }
 
-                //GameObject gameObjectTile = colliderTile.gameObject;
                 if (!list.Contains(gameObjectTile)) list.Add(gameObjectTile);
             }
         }
-
         public void ClearTheTilesArray() //Clear tiles array
         {
             TilesForChoosing.Clear();
         }
-
         public void CheckTilesStateNearThisTile(Tile tile) //find near tile method
 
         {
@@ -237,7 +241,51 @@ namespace BattleCombine.Gameplay
                 TilesNearThisTile.Add(gameObjectTile);
             }
         }
+        public void ChangeTileStateInStack() //Change prefirst tlie state
+        {
+            GameObject gameObjectTile = this.gameObject;
+            foreach (GameObject tileGameObject in GetTileStack.NextMoveTiles)
+            {
+                
+                if(tileGameObject == this.gameObject)
+                {
+                    continue;
+                }
+                else
+                {
+                    Tile tile = tileGameObject.GetComponent<Tile>();
+                    tile.StateMachine.ChangeState(tile.EnabledState);
+                }
+            }
+        }
 
+        public void ActionForTile(Stack<GameObject> stack)
+        {
+            if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
+            {
+                if (this.gameObject == stack.Peek())
+                {
+                    StateMachine.CurrentState.Input();
+                    StateMachine.CurrentState.LogicUpdate();
+                }
+                else
+                {
+                    Debug.Log("Pick another tile!");
+                }
+            }
+            else
+            {
+                if (stack.Count() < tileStack.SpeedPlayer)
+                {
+                    StateMachine.CurrentState.Input();
+                    StateMachine.CurrentState.LogicUpdate();
+                }
+                else
+                {
+                    Debug.Log("Current move over");
+                }
+            }
+        }
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;

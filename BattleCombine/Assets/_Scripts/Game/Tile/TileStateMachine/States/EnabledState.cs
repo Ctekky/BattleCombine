@@ -11,7 +11,6 @@ namespace BattleCombine.Gameplay
         }
         public override void Enter()
         {
-            base.Enter();
             _tile.ChangeClolor(color);
             StateName = TileState.EnabledState;
             _tile.SetCurrentState(StateName);
@@ -27,7 +26,6 @@ namespace BattleCombine.Gameplay
         public override void Exit()
         {
             base.Exit();
-
         }
     }
 }
