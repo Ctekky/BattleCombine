@@ -7,7 +7,7 @@ namespace BattleCombine.Gameplay
     {
         protected bool TileStatusHelp;
         private readonly Color _color = Color.red;
-        
+
 
         public AvailableForSelectionState(Tile tile, StateMachine stateMachine) : base(tile, stateMachine)
         {
@@ -33,6 +33,8 @@ namespace BattleCombine.Gameplay
             {
                 Tile chosingTile = tileGameObject.GetComponent<Tile>();
                 chosingTile.StateMachine.ChangeState(chosingTile.AvailableForSelectionState);
+                chosingTile.SetAlignTileToPlayer1(_tile.IsAlignPlayer1);
+                chosingTile.SetAlignTileToPlayer2(_tile.IsAlignPlayer2);
             }
 
             switch (_tile.GetTileStack.IDPlayer)

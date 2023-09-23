@@ -27,6 +27,8 @@ namespace BattleCombine.Gameplay
 
         public void ChangeHealth(int addHealth)
         {
+            stats.healthValue = AddValue(stats.healthValue, addHealth);
+            /*
             int tmp = stats.healthValue + addHealth;
 
             if (tmp > stats.healthValueDefault)
@@ -41,10 +43,13 @@ namespace BattleCombine.Gameplay
             {
                 stats.healthValue = tmp;
             }
+            */
         }
 
         public void AddAttack(int addAttack)
         {
+            stats.attackValue = AddValue(stats.attackValue, addAttack);
+            /*
             int tmp = stats.attackValue + addAttack;
 
             if (tmp > stats.attackValueDefault)
@@ -59,6 +64,13 @@ namespace BattleCombine.Gameplay
             {
                 stats.attackValue = tmp;
             }
+            */
+        }
+
+        private int AddValue(int stat, int value)
+        {
+            var tmp = stat + value;
+            return tmp <= 0 ? 0 : tmp;
         }
 
         public void AddShield()

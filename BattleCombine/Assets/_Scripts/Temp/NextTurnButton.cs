@@ -17,6 +17,12 @@ public class NextTurnButton : MonoBehaviour, ITouchable
 
     public Action onButtonPressed;
 
+    public bool IsTouchable
+    {
+        get => isTouchable;
+        set => isTouchable = value;
+    }
+
     private void Start()
     {
         spriteColor.color = Color.red;

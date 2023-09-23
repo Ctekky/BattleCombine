@@ -22,8 +22,16 @@ namespace BattleCombine.Gameplay
 
         //TODO: set type and modifier to tile
         [SerializeField] private TileType tileType;
-        [SerializeField, Range(-100, 100)] private float tileModifier;
+        [SerializeField, Range(-100, 100)] private int tileModifier;
         [SerializeField] private TextMeshPro text;
+        [SerializeField] private bool isAlignPlayer1;
+        [SerializeField] private bool isAlignPlayer2;
+
+        public bool IsAlignPlayer1 => isAlignPlayer1;
+        public bool IsAlignPlayer2 => isAlignPlayer2;
+
+        //TODO: change this to proper algorithm
+        private GameManager _gameManager;
 
         public StateMachine StateMachine;
         public AvailableForSelectionState AvailableForSelectionState;
@@ -42,6 +50,12 @@ namespace BattleCombine.Gameplay
         {
             get => tilesNearThisTile;
             private set => tilesNearThisTile = value;
+        }
+
+        public int TileModifier
+        {
+            get => tileModifier;
+            private set => tileModifier = value;
         }
 
         public TileStack GetTileStack
@@ -77,12 +91,28 @@ namespace BattleCombine.Gameplay
             SetupTile();
         }
 
+        //TODO: change this to proper algorithm
+        public void SetGameManager(GameManager gameManager)
+        {
+            _gameManager = gameManager;
+        }
+
+        public void SetAlignTileToPlayer1(bool flag)
+        {
+            isAlignPlayer1 = flag;
+        }
+
+        public void SetAlignTileToPlayer2(bool flag)
+        {
+            isAlignPlayer2 = flag;
+        }
+
         public void ChangeTileType(TileType type)
         {
             tileType = type;
         }
 
-        public void ChangeTileModifier(float modifier)
+        public void ChangeTileModifier(int modifier)
         {
             tileModifier = modifier;
         }
@@ -118,6 +148,40 @@ namespace BattleCombine.Gameplay
 
         public void Touch()
         {
+            if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
+            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return;
+            if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
+            {
+                if (this.gameObject == tileStack.TilesStack.Peek())
+                {
+                    StateMachine.CurrentState.Input();
+                    StateMachine.CurrentState.LogicUpdate();
+                    if (tileStack.TilesStack.Count() < tileStack.SpeedPlayer)
+                    {
+                        _gameManager.SpeedIsOver(false);
+                    }
+                }
+                else
+                {
+                    Debug.Log("Pick another tile!");
+                }
+            }
+            else
+            {
+                if (tileStack.TilesStack.Count() < tileStack.SpeedPlayer)
+                {
+                    StateMachine.CurrentState.Input();
+                    StateMachine.CurrentState.LogicUpdate();
+                    if (tileStack.TilesStack.Count() == tileStack.SpeedPlayer)
+                    {
+                        _gameManager.SpeedIsOver(true);
+                    }
+                }
+                else
+                {
+                    _gameManager.SpeedIsOver(true);
+                    Debug.Log("Current move over");
+                }
             switch(tileStack.IDPlayer)
             {
                 case IDPlayer.Player1:

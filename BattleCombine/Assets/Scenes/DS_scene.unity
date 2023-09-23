@@ -424,6 +424,11 @@ Transform:
   - {fileID: 1204183371}
   m_Father: {fileID: 1273399798}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &233264111 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3026820357365931547, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+  m_PrefabInstance: {fileID: 554730016}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &238022124
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,6 +609,7 @@ GameObject:
   - component: {fileID: 388951234}
   - component: {fileID: 388951233}
   - component: {fileID: 388951232}
+  - component: {fileID: 388951235}
   m_Layer: 0
   m_Name: GameManager(Temp)
   m_TagString: Untagged
@@ -662,6 +668,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7090a5123f996bb43b03b60085e08545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &388951235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388951230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 392b324dfbe4aa74880d3877caad292c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1: {fileID: 1273399796}
+  player2: {fileID: 665053154}
+  gameField: {fileID: 233264111}
+  statsCollector: {fileID: 388951233}
+  increaseStats: {fileID: 388951234}
+  nextTurnButton: {fileID: 2065769399}
+  _currentPlayerName: 
+  _currentPlayer: {fileID: 0}
+  currentStepInTurn: 0
+  currentTurn: 0
+  stepsInTurn: 3
 --- !u!1 &429785972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1241,7 +1270,7 @@ MonoBehaviour:
     shielded: 0
   moveSpeedValue: 0
   playerUIScript: {fileID: 665053157}
-  playerName: 
+  playerName: Player2
 --- !u!1 &822180175
 GameObject:
   m_ObjectHideFlags: 0
@@ -1786,7 +1815,7 @@ MonoBehaviour:
     shielded: 0
   moveSpeedValue: 0
   playerUIScript: {fileID: 1273399799}
-  playerName: 
+  playerName: Player1
 --- !u!1 &1483434114
 GameObject:
   m_ObjectHideFlags: 0

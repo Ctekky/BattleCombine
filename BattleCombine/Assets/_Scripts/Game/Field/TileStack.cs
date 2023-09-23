@@ -41,7 +41,8 @@ namespace BattleCombine.Gameplay
             _tileStackPlayer1 = new Stack<GameObject>();
             _tileStackPlayer2 = new Stack<GameObject>();
             nextMoveTiles = new List<GameObject>();
-            //speedPlayer = 4; //TODO get player speed
+            //speedPlayer = 4; //TODO: get player speed
+
         }
         private void OnDisable()
         {
