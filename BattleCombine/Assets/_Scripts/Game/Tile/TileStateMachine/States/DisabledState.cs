@@ -12,6 +12,7 @@ namespace BattleCombine.Gameplay
 
         public override void Enter()
         {
+            _tile.ChangeClolor(color);
             StateName = TileState.DisabledState;
             _tile.SetCurrentState(StateName);
         }
