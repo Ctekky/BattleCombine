@@ -1,3 +1,4 @@
+using System;
 using BattleCombine.Enums;
 using UnityEngine;
 
@@ -8,6 +9,12 @@ namespace BattleCombine.Gameplay
         private Player _player;
         private StatsCollector _statsCollector;
 
+        public Player Player
+        {
+            get => _player;
+            set => _player = value;
+        }
+
         private void Awake()
         {
             _statsCollector = FindObjectOfType<StatsCollector>();
@@ -16,26 +23,26 @@ namespace BattleCombine.Gameplay
 
         public void Increase()
         {
-            while (_statsCollector.IsHasItem() && _player.moveSpeedValue == 0)
+            while (_statsCollector.IsHasItem())
             {
                 var tile = _statsCollector.Get();
-                if (CellType.Attack == tile.GetTileType)
+                switch (tile.GetTileType)
                 {
-                    //_player.AddAttack(tile.Tile_value);
-                }
-
-                else if (CellType.Health == tile.GetTileType)
-                {
-                    //_player.ChangeHealth(tile.Tile_value);
-                }
-
-                else if (CellType.Shield == tile.GetTileType)
-                {
-                    //_player.AddShield();
+                    case CellType.Attack:
+                        Debug.Log($"Added to {_player} value of Attack {tile.TileModifier.ToString()}");
+                        _player.AddAttack(tile.TileModifier);
+                        break;
+                    case CellType.Health:
+                        Debug.Log($"Added to {_player} value of Health {tile.TileModifier.ToString()}");
+                        _player.ChangeHealth(tile.TileModifier);
+                        break;
+                    case CellType.Shield:
+                        _player.AddShield();
+                        break;
+                    default:
+                        break;
                 }
             }
-
-            if (_player.moveSpeedValue == 0) _player.NextMove();
         }
     }
 }

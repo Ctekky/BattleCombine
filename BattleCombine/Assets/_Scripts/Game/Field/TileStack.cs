@@ -26,7 +26,7 @@ namespace BattleCombine.Gameplay
         {
             _tileStack = new Stack<GameObject>();
             nextMoveTiles = new List<GameObject>();
-            speedPlayer = 4; //TODO get player speed
+            //speedPlayer = 4; //TODO: get player speed
         }
 
         private void OnApplicationQuit()

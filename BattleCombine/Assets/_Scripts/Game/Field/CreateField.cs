@@ -50,6 +50,8 @@ namespace BattleCombine.Gameplay
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
 
+        [SerializeField] private GameManager gameManager;
+
         private List<Tile> _tileList;
         private Transform _fieldParent;
         private GameObject _mainField;
@@ -122,16 +124,21 @@ namespace BattleCombine.Gameplay
 
                     var tileComponent = currentTile.GetComponent<Tile>();
                     ChangeTileType(tileComponent);
+                    tileComponent.SetGameManager(gameManager);
                     _tileList.Add(tileComponent);
 
                     tileComponent.onTileTouched += touchedTile => onTileTouched?.Invoke(touchedTile);
 
                     if (i == 0 && j == startPlayerTile)
+                    {
                         ApplyStartTileStatus(tileComponent);
+                        tileComponent.SetAlignTileToPlayer1(true);
+                    }
                     if (i == _fieldSize - 1 && j == startAiTile)
                     {
                         ApplyStartTileStatus(tileComponent);
                         GetAiStartTile = tileComponent;
+                        tileComponent.SetAlignTileToPlayer2(true);
                     }
                 }
             }
@@ -179,6 +186,11 @@ namespace BattleCombine.Gameplay
                 defaultPlayerStartTilePos = _fieldSize - 1;
 
             return isPlayerRandomStart ? _rand.Next(0, _fieldSize) : defaultPlayerStartTilePos;
+        }
+
+        public void SetupGameManager(GameManager gm)
+        {
+            gameManager = gm;
         }
 
         private int SetAiStartTileIndex()

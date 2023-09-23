@@ -9,6 +9,12 @@ public class NextTurnButton : MonoBehaviour, ITouchable
     [SerializeField] private SpriteRenderer spriteColor;
     public Action onButtonPressed;
 
+    public bool IsTouchable
+    {
+        get => isTouchable;
+        set => isTouchable = value;
+    }
+
     private void Start()
     {
         spriteColor.color = Color.red;

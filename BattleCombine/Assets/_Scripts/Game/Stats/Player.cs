@@ -13,5 +13,10 @@ namespace BattleCombine.Gameplay
             base.Start();
             playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString());
         }
+
+        public void UpdateStats()
+        {
+            playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString());
+        }
     }
 }
