@@ -73,6 +73,7 @@ namespace BattleCombine.Gameplay
             tileStack = FindObjectOfType<TileStack>();
             //TODO: change algorithm to set up modifier
             tileModifier = 5;
+            
             SetupTile();
         }
 

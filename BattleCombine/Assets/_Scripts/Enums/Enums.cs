@@ -4,7 +4,8 @@ namespace BattleCombine.Enums
     {
         Attack,
         Health,
-        Shield
+        Shield,
+        Empty,
     }
     public enum FieldSize : byte
     {
@@ -16,7 +17,7 @@ namespace BattleCombine.Enums
     {
         Health,
         Attack,
-        Shield
+        Shield,
     }
 
     public enum TileState : byte
@@ -25,7 +26,7 @@ namespace BattleCombine.Enums
         ChosenState,
         DisabledState,
         EnabledState,
-        FinalChoiceState
+        FinalChoiceState,
     }
     public enum IDPlayer : byte
     {

@@ -14,8 +14,19 @@ namespace BattleCombine.Ai
         {
             Debug.Log("Ama Attakka!");
             Debug.Log(Weights + " Weight applied");
-            Debug.Log(CurrentWay + " No Path");
+            Debug.Log(CurrentWay.Count + " Path");
             Debug.Log(MoodHealthPercent + " Health to change mood");
+            
+            foreach (var tile in CurrentWay)
+            {
+                Debug.Log(tile.StateMachine.CurrentState);
+                
+                ////todo - BpeMeHHo (noka tile He 6ygym HopM pa6omamb)
+                //tile.gameObject.SetActive(false);
+                
+                //tile.StateMachine.ChangeState(tile.ChosenState);
+                tile.Touch();
+            }
         }
     }
 }
