@@ -187,9 +187,16 @@ namespace BattleCombine.Gameplay
 
         public void RefreshField()
         {
-            foreach (var currentTile in _tileList.Where(currentTile => currentTile.GetTileType == CellType.Empty))
+            foreach (var currentTile in _tileList)
             {
-                RefreshEmptyTile(currentTile);
+                if (currentTile.GetTileType == CellType.Empty)
+                {
+                    RefreshEmptyTile(currentTile);
+                }
+                else
+                {
+                    currentTile.ChangeTileModifier(currentTile.TileModifier + 1);
+                }
             }
         }
 
