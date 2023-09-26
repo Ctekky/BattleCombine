@@ -10,12 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0631f66b97de9546bd2dfc42e6b9798, type: 3}
-  m_Name: Shield
+  m_Name: Empty
   m_EditorClassIdentifier: 
-  name: Shield
-  cellType: 2
-  sprite: {fileID: 21300000, guid: 6d42a9eb1c89879488cd10472f61de08, type: 3}
-  modifierChances:
-  - Key: 9
-    Value: 0
-    Chance: 100
+  name: Empty
+  cellType: 3
+  sprite: {fileID: 21300000, guid: 115f0f9d55ad27a468dc52d6d04d889e, type: 3}
+  modifierChances: []

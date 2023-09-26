@@ -23,8 +23,7 @@ namespace BattleCombine.Gameplay
         [SerializeField] private bool isPlayerRandomStart;
         [SerializeField] private int defaultPlayerStartTilePos;
 
-        [Header("FieldSize")] [SerializeField] 
-        private FieldSize sizeType;
+        [Header("FieldSize")] [SerializeField] private FieldSize sizeType;
 
         [Header("TileParent")] [SerializeField]
         private GameObject tileParent;
@@ -49,6 +48,9 @@ namespace BattleCombine.Gameplay
 
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
+
+        [Header("Tile Refresh chance - %")] [SerializeField]
+        private int tileRefreshChance;
 
         [SerializeField] private GameManager gameManager;
 
@@ -135,6 +137,7 @@ namespace BattleCombine.Gameplay
                         ApplyStartTileStatus(tileComponent);
                         tileComponent.SetAlignTileToPlayer1(true);
                     }
+
                     if (i == _fieldSize - 1 && j == startAiTile)
                     {
                         ApplyStartTileStatus(tileComponent);
@@ -156,6 +159,40 @@ namespace BattleCombine.Gameplay
             };
         }
 
+        private void ChangeTileModifier(Tile currentTile, List<TileModifierDictionary> table)
+        {
+            _rand = new();
+            var totalWeight = table.Sum(dictionary => dictionary.Chance);
+
+            var roll = _rand.Next(0, totalWeight);
+            var cumulativeWeight = 0;
+
+            foreach (var dictionary in table)
+            {
+                cumulativeWeight += dictionary.Chance;
+                if (roll >= cumulativeWeight) continue;
+                currentTile.ChangeTileModifier(dictionary.Value);
+                return;
+            }
+        }
+
+        private void RefreshEmptyTile(Tile currentTile)
+        {
+            _rand = new Random();
+            var roll = _rand.Next(0, 100);
+            if (roll >= tileRefreshChance) return;
+            ChangeTileType(currentTile);
+            currentTile.StateMachine.ChangeState(currentTile.EnabledState);
+        }
+
+        public void RefreshField()
+        {
+            foreach (var currentTile in _tileList.Where(currentTile => currentTile.GetTileType == CellType.Empty))
+            {
+                RefreshEmptyTile(currentTile);
+            }
+        }
+
         private void ChangeTileType(Tile currentTile)
         {
             _rand = new();
@@ -163,13 +200,12 @@ namespace BattleCombine.Gameplay
 
             var roll = _rand.Next(0, totalWeight);
             var cumulativeWeight = 0;
-
             foreach (var dictionary in tileTypeChances)
             {
                 cumulativeWeight += dictionary.Value;
                 if (roll >= cumulativeWeight) continue;
                 currentTile.ChangeTileType(dictionary.Key);
-                currentTile.ChangeTileModifier(dictionary.Value);
+                ChangeTileModifier(currentTile, dictionary.Key.modifierChances);
                 return;
             }
         }
@@ -203,12 +239,5 @@ namespace BattleCombine.Gameplay
 
             return isAiRandomStart ? _rand.Next(0, _fieldSize) : defaultAiStartTilePos;
         }
-    }
-
-    [Serializable]
-    public class TileTypeDictionary
-    {
-        public TileType Key;
-        public int Value;
     }
 }

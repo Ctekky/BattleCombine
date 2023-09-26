@@ -145,6 +145,8 @@ MonoBehaviour:
     Value: 5
   - Key: {fileID: 11400000, guid: 3d80cea5bd433494fa6c47fc8f2fc20b, type: 2}
     Value: 35
+  tileRefreshChance: 90
+  gameManager: {fileID: 0}
 --- !u!114 &3865557558910741595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedPlayer: 3
   nextMoveTiles: []
+  player: 0
 --- !u!1 &5861258062984849538
 GameObject:
   m_ObjectHideFlags: 0

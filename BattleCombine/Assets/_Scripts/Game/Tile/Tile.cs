@@ -86,7 +86,7 @@ namespace BattleCombine.Gameplay
             CheckTilesStateNearThisTile(this);
             tileStack = FindObjectOfType<TileStack>();
             //TODO: change algorithm to set up modifier
-            tileModifier = 5;
+            //tileModifier = 5;
 
             SetupTile();
         }
@@ -110,6 +110,8 @@ namespace BattleCombine.Gameplay
         public void ChangeTileType(TileType type)
         {
             tileType = type;
+            spriteRenderer.sprite = tileType.sprite;
+            if (type.cellType == CellType.Empty) ChangeTileModifier(0);
         }
 
         public void ChangeTileModifier(int modifier)

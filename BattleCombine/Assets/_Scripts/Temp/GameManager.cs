@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
+using BattleCombine.ScriptableObjects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace BattleCombine.Gameplay
 {
@@ -14,6 +17,7 @@ namespace BattleCombine.Gameplay
         [SerializeField] private StatsCollector statsCollector;
         [SerializeField] private IncreaseStats increaseStats;
         [SerializeField] private NextTurnButton nextTurnButton;
+        [SerializeField] private TileType emptyTile;
         [SerializeField] private Fight fight;
 
         [SerializeField] private TextMeshPro description;
@@ -23,6 +27,8 @@ namespace BattleCombine.Gameplay
 
         [SerializeField] private int currentStepInTurn;
         [SerializeField] private int currentTurn;
+
+        [SerializeField] private string sceneName;
 
         [SerializeField] private int stepsInTurn;
 
@@ -49,6 +55,7 @@ namespace BattleCombine.Gameplay
 
             fight.SetUpPlayers(player1.GetComponent<Player>(), player2.GetComponent<Player>());
             fight.onGameOver += GameOver;
+            fight.onFighting += FightEnd;
             _currentPlayerName = player1.GetComponent<Player>()?.GetPlayerName;
             _currentPlayer = player1.GetComponent<Player>();
             gameField.GetComponent<CreateField>().SetupGameManager(this);
@@ -63,11 +70,19 @@ namespace BattleCombine.Gameplay
 
             currentTurn = 1;
             currentStepInTurn = 1;
+            description.text = _currentPlayerName + " turn " + currentTurn + " step " + currentStepInTurn;
+        }
+
+        private void FightEnd()
+        {
+            var fieldScript = gameField.GetComponent<CreateField>();
+            fieldScript.RefreshField();
         }
 
         private void GameOver()
         {
             Debug.Log("Battle is over");
+            SceneManager.LoadScene(sceneName);
         }
 
         private void ButtonPressed()
@@ -82,6 +97,11 @@ namespace BattleCombine.Gameplay
             increaseStats.Player = _currentPlayer;
             increaseStats.Increase();
             _currentPlayer.UpdateStats();
+            foreach (var tileComponent in tileStack.Select(tile => tile.GetComponent<Tile>()))
+            {
+                tileComponent.ChangeTileType(emptyTile);
+            }
+
             Debug.Log($"Stats to {_currentPlayer} suppose to raise");
             ChangePlayerTurn();
         }
@@ -116,7 +136,7 @@ namespace BattleCombine.Gameplay
                 Debug.Log($"Current step in turn {currentStepInTurn.ToString()}");
             }
 
-            description.text = _currentPlayerName;
+            description.text = _currentPlayerName + " turn " + currentTurn + " step " + currentStepInTurn;
             if (currentStepInTurn <= stepsInTurn) return;
             Debug.Log("Round is over => Fight!!!");
             fight.Fighting();
