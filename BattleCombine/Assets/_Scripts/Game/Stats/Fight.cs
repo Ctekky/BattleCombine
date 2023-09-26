@@ -9,6 +9,7 @@ namespace BattleCombine.Gameplay
         private Player _player2;
 
         public Action onGameOver;
+        public Action onFighting;
 
         public void SetUpPlayers(Player player1, Player player2)
         {
@@ -18,11 +19,27 @@ namespace BattleCombine.Gameplay
 
         public void Fighting()
         {
-            if (_gameOver) return;
+            if (_gameOver)
+            {
+                onGameOver?.Invoke();
+                return;
+            }
+
             TakeDamage(_player1, _player2);
-            if (_gameOver) return;
+            if (_gameOver)
+            {
+                onGameOver?.Invoke();
+                return;
+            }
+
             TakeDamage(_player2, _player1);
-            if (_gameOver) onGameOver?.Invoke();
+            if (_gameOver)
+            {
+                onGameOver?.Invoke();
+                return;
+            }
+
+            onFighting?.Invoke();
         }
 
         private bool _gameOver;

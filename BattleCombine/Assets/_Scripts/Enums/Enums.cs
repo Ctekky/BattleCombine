@@ -34,4 +34,27 @@ namespace BattleCombine.Enums
         Player2,
         AIPlayer
     }
+
+    public enum TileModifier : byte
+    {
+        MinusNine,
+        MinusEight,
+        MinusSeven,
+        MinusSix,
+        MinusFive,
+        MinusFour,
+        MinusThree,
+        MinusTwo,
+        MinusOne,
+        Zero,
+        One,
+        Two,
+        Three,
+        Four,
+        Five,
+        Six,
+        Seven,
+        Eight,
+        Nine
+    }
 }

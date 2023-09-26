@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using BattleCombine.Enums;
+using BattleCombine.Gameplay;
 using UnityEngine;
 
 namespace BattleCombine.ScriptableObjects
@@ -9,5 +11,6 @@ namespace BattleCombine.ScriptableObjects
         public new string name;
         public CellType cellType;
         public Sprite sprite;
+        public List<TileModifierDictionary> modifierChances;
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using BattleCombine;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
 using BattleCombine.Interfaces;
@@ -42,9 +41,7 @@ public class NextTurnButton : MonoBehaviour, ITouchable
     public void Touch()
     {
         if (!isTouchable) return;
-        onButtonPressed?.Invoke();
-        Debug.Log("Button pressed");
-
+        
         switch (tileStack.IDPlayer)
         {
             case IDPlayer.Player1:
@@ -55,6 +52,8 @@ public class NextTurnButton : MonoBehaviour, ITouchable
                 break;
         }
         isTouchable = false;
+        
+        Debug.Log("Button pressed");
     }
 
     public void ConfirmSelectedTiles(Stack<GameObject> stack, List<GameObject> list, List<GameObject> tileNextMove, List<GameObject> listNextMoveOpponent) //Confirm tile for add to characteristics
@@ -76,11 +75,11 @@ public class NextTurnButton : MonoBehaviour, ITouchable
             Tile tile = tileGameObjectListOpponent.GetComponent<Tile>();
             tile.StateMachine.ChangeState(tile.AvailableForSelectionState);
         }
+        onButtonPressed?.Invoke();
         stack.Clear();
         tileNextMove.Clear();
         tileNextMove.AddRange(tileStack.NextMoveTiles);
         tileStack.NextMoveTiles.Clear();
-
         PassingTheTurnToTheNextPayer();
     }
 
