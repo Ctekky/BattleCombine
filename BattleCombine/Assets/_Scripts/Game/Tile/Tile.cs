@@ -15,7 +15,6 @@ namespace BattleCombine.Gameplay
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private TileStack tileStack;
         [SerializeField] private bool startTile = false;
-        [SerializeField] private string stateName;
         [SerializeField] private TileState tileCurrentState;
         [SerializeField] private List<GameObject> tilesForChoosing;
         [SerializeField] private List<GameObject> tilesNearThisTile;
@@ -161,8 +160,7 @@ namespace BattleCombine.Gameplay
             }
         }
 
-        public void FindTileForAction(Tile tile, List<GameObject> list,
-            TileState nameState) //change state for nearest tiles
+        public void FindTileForAction(Tile tile, List<GameObject> list, TileState nameState) //change state for nearest tiles
         {
             Vector2 tilePosition = tile.transform.position;
             var localScale = gameObject.transform.localScale;
@@ -218,7 +216,7 @@ namespace BattleCombine.Gameplay
             GameObject gameObjectTile = this.gameObject;
             foreach (GameObject tileGameObject in GetTileStack.NextMoveTiles)
             {
-                if (tileGameObject == this.gameObject)
+                if (tileGameObject == this.gameObject || tileGameObject.GetComponent<Tile>().tileCurrentState == TileState.DisabledState)
                 {
                     continue;
                 }
@@ -267,32 +265,22 @@ namespace BattleCombine.Gameplay
                     Debug.Log("Current move over");
                 }
             }
-            /*
-             if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
+        }
+
+        public  List<GameObject> FindTileDisabledTileForNextMove(List<GameObject> list)
+        {
+            List<GameObject> listAfterSort = new List<GameObject>();
+            foreach (GameObject tileGameObject in list)
             {
-                if (this.gameObject == stack.Peek())
+                Tile tile = tileGameObject.GetComponent<Tile>();
+                if (tile.tileCurrentState == TileState.DisabledState || tile.tileCurrentState == TileState.FinalChoiceState)
                 {
-                    StateMachine.CurrentState.Input();
-                    StateMachine.CurrentState.LogicUpdate();
+                    continue;
                 }
-                else
-                {
-                    Debug.Log("Pick another tile!");
-                }
+
+                listAfterSort.Add(tileGameObject);
             }
-            else
-            {
-                if (stack.Count() < tileStack.SpeedPlayer)
-                {
-                    StateMachine.CurrentState.Input();
-                    StateMachine.CurrentState.LogicUpdate();
-                }
-                else
-                {
-                    Debug.Log("Current move over");
-                }
-            }
-             */
+            return listAfterSort;
         }
 
         private void OnDrawGizmos()

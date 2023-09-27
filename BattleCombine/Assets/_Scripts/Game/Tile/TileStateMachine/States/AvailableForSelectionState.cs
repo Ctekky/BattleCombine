@@ -19,15 +19,19 @@ namespace BattleCombine.Gameplay
             _tile.ChangeClolor(_color);
             StateName = TileState.AvailableForSelectionState;
             _tile.SetCurrentState(StateName);
-        }
 
+            switch (_tile.GetTileStack.IDPlayer)
+            {
+                case IDPlayer.Player1://TODO
+                    _tile.SetAlignTileToPlayer1(true);
+                    break;
+                case IDPlayer.Player2://TODO
+                    _tile.SetAlignTileToPlayer2(true);
+                    break;
+            }
+        }
         public override void Input()
         {
-           // if (_tile.GetTileStack.TilesStackPlayer1.Count > 0)
-            //{
-             //   _tile.ChangeTileStateInStack();
-            //}
-            
             _tile.FindTileForAction(_tile, _tile.TilesForChoosing, TileState.EnabledState);
             foreach (GameObject tileGameObject in _tile.TilesForChoosing)
             {
@@ -40,14 +44,14 @@ namespace BattleCombine.Gameplay
             switch (_tile.GetTileStack.IDPlayer)
             {
                 case IDPlayer.Player1://TODO
-                    if (_tile.GetTileStack.TilesStackPlayer1.Count > 0)
+                    if (_tile.GetTileStack.TilesStackPlayer1.Count > 0 || _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
                     {
                         _tile.ChangeTileStateInStack();
                     }
                     _tile.GetTileStack.TilesStackPlayer1.Push(_tile.gameObject);
                     break;
                 case IDPlayer.Player2://TODO
-                    if (_tile.GetTileStack.TilesStackPlayer2.Count > 0)
+                    if (_tile.GetTileStack.TilesStackPlayer2.Count > 0 || _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
                     {
                         _tile.ChangeTileStateInStack();
                     }
@@ -59,6 +63,7 @@ namespace BattleCombine.Gameplay
             _tile.GetTileStack.NextMoveTiles.AddRange(_tile.TilesForChoosing);
 
             _stateMachine.ChangeState(_tile.ChosenState);
+            //Debug.Log ("Count tile in steck " + (_tile.GetTileStack.TilesStackPlayer1.Count).ToString());
         }
 
         public override void LogicUpdate()

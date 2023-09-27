@@ -21,6 +21,8 @@ public class NextTurnButton : MonoBehaviour, ITouchable
         get => isTouchable;
         set => isTouchable = value;
     }
+    public List<GameObject> GetTilesForNextMovePlayer1 { get => tilesForNextMovePlayer1; }
+    public List<GameObject> GetTilesForNextMovePlayer2 { get => tilesForNextMovePlayer2; }
 
     private void Start()
     {
@@ -46,9 +48,13 @@ public class NextTurnButton : MonoBehaviour, ITouchable
         {
             case IDPlayer.Player1:
                 ConfirmSelectedTiles(tileStack.TilesStackPlayer1, tileStack.NextMoveTiles, tilesForNextMovePlayer1, tilesForNextMovePlayer2);
+                SetFlagOnTilePlayer2(tilesForNextMovePlayer2);
+                tileStack.NextMoveTiles.AddRange(tilesForNextMovePlayer2);
                 break;
             case IDPlayer.Player2:
                 ConfirmSelectedTiles(tileStack.TilesStackPlayer2, tileStack.NextMoveTiles, tilesForNextMovePlayer2, tilesForNextMovePlayer1);
+                SetFlagOnTilePlayer1(tilesForNextMovePlayer1);
+                tileStack.NextMoveTiles.AddRange(tilesForNextMovePlayer1);
                 break;
         }
         isTouchable = false;
@@ -98,6 +104,24 @@ public class NextTurnButton : MonoBehaviour, ITouchable
         else
         {
             Debug.Log("Player is not defined");
+        }
+    }
+    public void SetFlagOnTilePlayer1(List<GameObject> tileList) //TODO: implement in one method with SetFlagOnTilePlayer2
+    {
+
+        foreach(GameObject tileGameObject in tileList)
+        {
+            Tile tile = tileGameObject.GetComponent<Tile>();
+            tile.SetAlignTileToPlayer1(flag: true);
+        }
+    }
+    public void SetFlagOnTilePlayer2(List<GameObject> tileList)//TODO: implement in one method with SetFlagOnTilePlayer1
+    {
+
+        foreach (GameObject tileGameObject in tileList)
+        {
+            Tile tile = tileGameObject.GetComponent<Tile>();
+            tile.SetAlignTileToPlayer2(flag: true);
         }
     }
 }

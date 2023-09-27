@@ -14,6 +14,9 @@ namespace BattleCombine.Gameplay
             _tile.ChangeClolor(color);
             StateName = TileState.EnabledState;
             _tile.SetCurrentState(StateName);
+
+            _tile.SetAlignTileToPlayer1(false);
+            _tile.SetAlignTileToPlayer2(false);
         }
         public override void Input()
         {
