@@ -28,34 +28,60 @@ namespace BattleCombine.Gameplay
                 Tile chosingTile = tileGameObject.GetComponent<Tile>();
                 chosingTile.StateMachine.ChangeState(chosingTile.EnabledState);
             }
-            Stack<GameObject> tileGameObjectTile = new Stack<GameObject>();
+            Stack<GameObject> stackGameObjectTile = new Stack<GameObject>();
 
             switch (_tile.GetTileStack.IDPlayer)
             {
                 case IDPlayer.Player1:
-                    tileGameObjectTile = _tile.GetTileStack.TilesStackPlayer1;
+                    stackGameObjectTile = _tile.GetTileStack.TilesStackPlayer1;
                     break;
                 case IDPlayer.Player2:
-                    tileGameObjectTile = _tile.GetTileStack.TilesStackPlayer2;
+                    stackGameObjectTile = _tile.GetTileStack.TilesStackPlayer2;
                     break;
             }
 
-            tileGameObjectTile.Pop();
+            stackGameObjectTile.Pop();
 
             _stateMachine.ChangeState(_tile.AvailableForSelectionState);
 
-            if(tileGameObjectTile.Count > 0)
+            if(stackGameObjectTile.Count > 0)
             {
-                Tile tile = tileGameObjectTile.Peek().GetComponent<Tile>();
-                tile.FindTileForAction(tile, tile.TilesForChoosing, TileState.EnabledState);
+                //if (_tile.GetTileStack.GetGameManager.GetCurrentStepInTurn == 1)
+                //{
+                    Tile tile = stackGameObjectTile.Peek().GetComponent<Tile>();
+                    tile.FindTileForAction(tile, tile.TilesForChoosing, TileState.EnabledState);
 
-                foreach (GameObject tileGameObject in tile.TilesForChoosing)
+                    foreach (GameObject tileGameObject in tile.TilesForChoosing)
+                    {
+                        Tile chosingTile = tileGameObject.GetComponent<Tile>();
+                        chosingTile.StateMachine.ChangeState(chosingTile.AvailableForSelectionState);
+                    }
+                    tile.GetTileStack.NextMoveTiles.Clear();
+                    tile.GetTileStack.NextMoveTiles.AddRange(tile.TilesForChoosing);
+                //}
+            }
+
+            if(_tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1 && stackGameObjectTile.Count == 0)
+            {
+                List<GameObject> listTileGameObject  = new List<GameObject>();
+                switch (_tile.GetTileStack.IDPlayer)
                 {
-                    Tile chosingTile = tileGameObject.GetComponent<Tile>();
-                    chosingTile.StateMachine.ChangeState(chosingTile.AvailableForSelectionState);
+                    case IDPlayer.Player1:
+                        listTileGameObject = _tile.FindTileDisabledTileForNextMove(_tile.GetTileStack.GetNextTurnButton.GetTilesForNextMovePlayer1);
+                        break;
+                    case IDPlayer.Player2:
+                        listTileGameObject = _tile.FindTileDisabledTileForNextMove(_tile.GetTileStack.GetNextTurnButton.GetTilesForNextMovePlayer2);
+                        break;
                 }
-                tile.GetTileStack.NextMoveTiles.Clear();
-                tile.GetTileStack.NextMoveTiles.AddRange(tile.TilesForChoosing);
+
+                foreach (GameObject tileGameObject in listTileGameObject)
+                {
+                    Tile tile = tileGameObject.GetComponent<Tile>();
+                    tile.StateMachine.ChangeState(tile.AvailableForSelectionState);
+                }
+
+                _tile.GetTileStack.NextMoveTiles.Clear();
+                _tile.GetTileStack.NextMoveTiles.AddRange(listTileGameObject);
             }
         }
 

@@ -32,6 +32,9 @@ namespace BattleCombine.Gameplay
 
         [SerializeField] private int stepsInTurn;
 
+
+        public int GetCurrentStepInTurn { get => currentStepInTurn; }
+
         private void Start()
         {
             if (gameField == null)

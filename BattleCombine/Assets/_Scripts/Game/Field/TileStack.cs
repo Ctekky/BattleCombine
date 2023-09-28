@@ -7,6 +7,8 @@ namespace BattleCombine.Gameplay
 {
     public class TileStack : MonoBehaviour
     {
+        [SerializeField] private GameManager gameManager;
+        [SerializeField] private NextTurnButton nextTurnButton;
         [SerializeField] private int speedPlayer;
         [SerializeField] private List<GameObject> nextMoveTiles;
         [SerializeField] private IDPlayer player;
@@ -35,12 +37,17 @@ namespace BattleCombine.Gameplay
             get => player;
             set => player = value;
         }
+
+        public GameManager GetGameManager { get => gameManager; }
+        public NextTurnButton GetNextTurnButton { get => nextTurnButton; }
         private void Start()
         {
             player = IDPlayer.Player1;
             _tileStackPlayer1 = new Stack<GameObject>();
             _tileStackPlayer2 = new Stack<GameObject>();
             nextMoveTiles = new List<GameObject>();
+            gameManager = FindObjectOfType<GameManager>();
+            nextTurnButton = FindObjectOfType<NextTurnButton>();
             //speedPlayer = 4; //TODO: get player speed
 
         }
