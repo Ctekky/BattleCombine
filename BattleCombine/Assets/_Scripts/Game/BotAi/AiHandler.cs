@@ -15,6 +15,7 @@ namespace BattleCombine.Ai
         public static Action FindFirstPath;
         public static Action FindAiPath;
         public static Action ChangeEnemyStance;
+        //todo - if HP == X, then change stance;
 
         [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
 
