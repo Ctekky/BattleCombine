@@ -12,8 +12,7 @@ namespace BattleCombine.Ai
 {
     public class AiHandler : MonoBehaviour
     {
-        public static Action FindFirstPath;
-        public static Action FindAiPath;
+        public static Action StartAiMove;
         public static Action ChangeEnemyStance;
         //todo - if HP == X, then change stance;
 
@@ -57,8 +56,9 @@ namespace BattleCombine.Ai
 
         private void Start()
         {
-            FindFirstPath += FindFirstPathToAi;
-            FindAiPath += FindAllPaths;
+            //todo - link to smth;
+            StartAiMove += MovePath;
+            
             ChangeEnemyStance += ChangeAiStance;
             _nextTurn.onClick.AddListener(MovePath);
             
