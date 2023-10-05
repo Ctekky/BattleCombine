@@ -4,7 +4,7 @@ using BattleCombine.Gameplay;
 
 namespace BattleCombine.Ai
 {
-    public abstract class EnemyAi
+    public abstract class AiBaseEnemy
     {
         public AiHandler _aiHandler;
         public List<int> Weights { get; set; }
@@ -14,10 +14,12 @@ namespace BattleCombine.Ai
 
         public bool IsAiTurn;
         public bool IsAiLose;
+        public bool IsAiInitialised;
         
         protected static Timer timer;
-        protected int count;
+        protected int wayLength;
         protected int currentStep;
+        
 
         public virtual void Init()
         {
@@ -27,7 +29,19 @@ namespace BattleCombine.Ai
             CurrentWay = _aiHandler.CurrentWay;
             MoodHealthPercent = _aiHandler.GetMoodHealthPercent;
             Speed = _aiHandler.AiSpeed;
-            count = CurrentWay.Count;
+            wayLength = CurrentWay.Count;
+
+            IsAiInitialised = true;
+        }
+
+        public virtual void MakeStep()
+        {
+
+        }
+
+        public virtual void EndAiTurn()
+        {
+            
         }
     }
 }
