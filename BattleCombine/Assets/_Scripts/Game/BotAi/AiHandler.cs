@@ -13,6 +13,7 @@ namespace BattleCombine.Ai
     public class AiHandler : MonoBehaviour
     {
         public static Action StartAiMove;
+
         public static Action ChangeEnemyStance;
         //todo - if HP == X, then change stance;
 
@@ -35,16 +36,16 @@ namespace BattleCombine.Ai
 
         //todo - separate weights to data base and link it here
         private Dictionary<List<Tile>, int> _pathDictionary = new();
-        private List<int> _lastTilesToFindNewPath = new ();
+        private List<int> _lastTilesToFindNewPath = new();
         private Random _rand;
         private AiBaseEnemy _currentAiBaseEnemy;
         private CreateField _field;
         private Coroutine _movePathRoutine;
-        private int lastStepIndex;
+        private int lastStepIndex = -1;
 
         public List<int> CurrentWeights { get; private set; }
         public List<int> NextStanceWeights { get; private set; }
-        
+
         public List<Tile> CurrentWay { get; private set; }
         public int GetMoodHealthPercent { get; private set; }
         public int AiSpeed { get; private set; }
@@ -58,10 +59,10 @@ namespace BattleCombine.Ai
         {
             //todo - link to smth;
             StartAiMove += MovePath;
-            
+
             ChangeEnemyStance += ChangeAiStance;
             _nextTurn.onClick.AddListener(MovePath);
-            
+
             //todo - change to ai speed
             AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
         }
@@ -78,6 +79,8 @@ namespace BattleCombine.Ai
         private void MovePath()
         {
             FindFirstPathToAi();
+            if (lastStepIndex >= 0)
+                KeepLastPathStarts(lastStepIndex);
             if (_nextTurn != null)
                 _movePathRoutine = StartCoroutine(MovePathRoutine());
         }
@@ -126,7 +129,7 @@ namespace BattleCombine.Ai
                 FindPathsFromTile(count);
                 break;
             }
-            
+
             if (!_currentAiBaseEnemy.IsAiInitialised)
                 _currentAiBaseEnemy.Init();
         }
@@ -169,11 +172,12 @@ namespace BattleCombine.Ai
                         || newPath.Contains(tileList[index])
                         || tileList[index].StateMachine.CurrentState == tileList[index].DisabledState)
                         continue;
-                    
+
                     maxWeight = weight;
                     currentIndex = index;
                 }
             }
+
             //todo - change path count to its weight
             if (newPath.Count < AiSpeed)
                 return;
@@ -201,10 +205,20 @@ namespace BattleCombine.Ai
             if (currentIndex < gridSize * (gridSize - 1))
                 candidateIndexes.Add(currentIndex + gridSize);
 
-            foreach (var index in candidateIndexes.Where(index 
+            foreach (var index in candidateIndexes.Where(index
                          => tileList[index].StateMachine.CurrentState != tileList[index].DisabledState))
             {
                 _lastTilesToFindNewPath.Add(index);
+            }
+
+            if (_lastTilesToFindNewPath == null) return;
+            {
+                foreach (var index in _lastTilesToFindNewPath)
+                {
+                    FindPathsFromTile(index);
+                }
+
+                FindBestPath();
             }
         }
 
@@ -219,7 +233,7 @@ namespace BattleCombine.Ai
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-        
+
         private void AddSumOfWeights(List<Tile> pathKey)
         {
             var weightValue = pathKey.Sum(FindWeight);
@@ -227,11 +241,9 @@ namespace BattleCombine.Ai
             _pathDictionary.Add(pathKey, weightValue);
         }
 
-        //todo - no pathes, no best pathes 0))
         //take pathes weights, and choose best one
         private void FindBestPath()
         {
-            //var maxPosition = -1;
             var maxValue = int.MinValue;
             var path = new List<Tile>();
 
@@ -240,7 +252,6 @@ namespace BattleCombine.Ai
             {
                 maxValue = entry.Value;
                 path = entry.Key;
-                //maxPosition = _pathDictionary.Keys.ToList().IndexOf(entry.Key);
             }
 
             CurrentWay = new();
@@ -290,7 +301,6 @@ namespace BattleCombine.Ai
             while (currentStep < CurrentWay.Count)
             {
                 _currentAiBaseEnemy.MakeStep();
-                Debug.Log("RoutineStep" + currentStep);
                 //todo - addEffects
                 yield return new WaitForSeconds(1f);
                 currentStep++;
@@ -302,7 +312,6 @@ namespace BattleCombine.Ai
                 lastTileCount++;
                 if (tile == CurrentWay.Last())
                     lastStepIndex = lastTileCount;
-                Debug.Log("Routine" + lastTileCount);
             }
 
             _currentAiBaseEnemy.EndAiTurn();
@@ -312,17 +321,7 @@ namespace BattleCombine.Ai
             turnButton.Touch();
 
             _pathDictionary.Clear();
-            
-            KeepLastPathStarts(lastStepIndex);
-            
-            foreach (var index in _lastTilesToFindNewPath)
-            {
-                FindPathsFromTile(index);
-                Debug.Log("Routine (index)" + index);
-                yield return new WaitForSeconds(0.5f);
-            }
 
-            FindBestPath();
             StopCoroutine(_movePathRoutine);
         }
     }
