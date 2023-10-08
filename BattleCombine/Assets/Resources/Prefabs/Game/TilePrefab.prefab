@@ -286,7 +286,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3068339636670248365}
   tileStack: {fileID: 0}
   startTile: 0
-  stateName: 
   tileCurrentState: 0
   tilesForChoosing: []
   tilesNearThisTile: []
