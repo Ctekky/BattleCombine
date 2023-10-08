@@ -66,7 +66,10 @@ namespace BattleCombine.Gameplay
             }
             */
         }
-
+        public void SetAttackDefault()
+        {
+            stats.attackValue = stats.attackValueDefault;
+        }
         private int AddValue(int stat, int value)
         {
             var tmp = stat + value;

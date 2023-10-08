@@ -39,6 +39,7 @@ namespace BattleCombine.Gameplay
         }
 
         public GameManager GetGameManager { get => gameManager; }
+     
         public NextTurnButton GetNextTurnButton { get => nextTurnButton; }
         private void Start()
         {
