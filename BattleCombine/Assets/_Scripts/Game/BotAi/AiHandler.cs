@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
+using BattleCombine.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = System.Random;
@@ -13,15 +14,12 @@ namespace BattleCombine.Ai
     public class AiHandler : MonoBehaviour
     {
         public static Action StartAiMove;
-
         public static Action ChangeEnemyStance;
         //todo - if HP == X, then change stance;
 
         [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
-
         [Header("Weights and other")] [SerializeField]
         private int[] tankFullHealthWeights;
-
         [SerializeField] private int[] tankDamagedWeights;
         [SerializeField] private int tankHealthToChangeMood;
         [SerializeField] private int[] attackFullHealthWeights;
@@ -41,11 +39,11 @@ namespace BattleCombine.Ai
         private AiBaseEnemy _currentAiBaseEnemy;
         private CreateField _field;
         private Coroutine _movePathRoutine;
-        private int lastStepIndex = -1;
+        private int _lastStepIndex = -1;
+        private bool _isAiTurn;
 
         public List<int> CurrentWeights { get; private set; }
         public List<int> NextStanceWeights { get; private set; }
-
         public List<Tile> CurrentWay { get; private set; }
         public int GetMoodHealthPercent { get; private set; }
         public int AiSpeed { get; private set; }
@@ -59,12 +57,11 @@ namespace BattleCombine.Ai
         {
             //todo - link to smth;
             StartAiMove += MovePath;
-
             ChangeEnemyStance += ChangeAiStance;
-            _nextTurn.onClick.AddListener(MovePath);
-
             //todo - change to ai speed
             AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
+
+            _nextTurn.onClick.AddListener(MovePath);
         }
 
         private void FindFirstPathToAi()
@@ -78,9 +75,13 @@ namespace BattleCombine.Ai
 
         private void MovePath()
         {
+            _isAiTurn = !_isAiTurn;
+
+            if (!_isAiTurn) return;
+
             FindFirstPathToAi();
-            if (lastStepIndex >= 0)
-                KeepLastPathStarts(lastStepIndex);
+            if (_lastStepIndex >= 0)
+                KeepLastPathStarts(_lastStepIndex);
             if (_nextTurn != null)
                 _movePathRoutine = StartCoroutine(MovePathRoutine());
         }
@@ -138,7 +139,6 @@ namespace BattleCombine.Ai
         private void FindPathsFromTile(int startIndex)
         {
             var tileList = (new List<Tile>(_field.GetTileList));
-
             var gridSize = _field.GetFieldSize;
             var newPath = new List<Tile>();
             var currentIndex = startIndex;
@@ -146,22 +146,9 @@ namespace BattleCombine.Ai
             for (var i = 0; i < AiSpeed; i++)
             {
                 newPath.Add(tileList[currentIndex]);
-
                 var candidateIndexes = new List<int>();
 
-                //Add tile from Left
-                if (currentIndex % gridSize != 0)
-                    candidateIndexes.Add(currentIndex - 1);
-                //Add tile from Right
-                if (currentIndex % gridSize != gridSize - 1)
-                    candidateIndexes.Add(currentIndex + 1);
-                //Add tile from Top
-                if (currentIndex >= gridSize)
-                    candidateIndexes.Add(currentIndex - gridSize);
-                //Add tile from Bottom
-                if (currentIndex < gridSize * (gridSize - 1))
-                    candidateIndexes.Add(currentIndex + gridSize);
-
+                FindCandidates(candidateIndexes, gridSize, currentIndex);
                 //Choose the one with the maximum weight
                 //todo - link the weights
                 var maxWeight = -1;
@@ -181,10 +168,11 @@ namespace BattleCombine.Ai
             //todo - change path count to its weight
             if (newPath.Count < AiSpeed)
                 return;
+            
             AddSumOfWeights(newPath);
-
             CurrentWay ??= newPath;
         }
+
 
         private void KeepLastPathStarts(int currentIndex)
         {
@@ -192,18 +180,7 @@ namespace BattleCombine.Ai
             var gridSize = _field.GetFieldSize;
             var candidateIndexes = new List<int>();
 
-            //Add tile from Right
-            if (currentIndex % gridSize != 0)
-                candidateIndexes.Add(currentIndex - 1);
-            //Add tile from Right
-            if (currentIndex % gridSize != gridSize - 1)
-                candidateIndexes.Add(currentIndex + 1);
-            //Add tile from Top
-            if (currentIndex >= gridSize)
-                candidateIndexes.Add(currentIndex - gridSize);
-            //Add tile from Bottom
-            if (currentIndex < gridSize * (gridSize - 1))
-                candidateIndexes.Add(currentIndex + gridSize);
+            FindCandidates(candidateIndexes, gridSize, currentIndex);
 
             foreach (var index in candidateIndexes.Where(index
                          => tileList[index].StateMachine.CurrentState != tileList[index].DisabledState))
@@ -217,9 +194,24 @@ namespace BattleCombine.Ai
                 {
                     FindPathsFromTile(index);
                 }
-
                 FindBestPath();
             }
+        }
+
+        private void FindCandidates(List<int> candidateIndexes, int gridSize, int currentIndex)
+        {
+            //Add tile from Left
+            if (currentIndex % gridSize != 0)
+                candidateIndexes.Add(currentIndex - 1);
+            //Add tile from Right
+            if (currentIndex % gridSize != gridSize - 1)
+                candidateIndexes.Add(currentIndex + 1);
+            //Add tile from Top
+            if (currentIndex >= gridSize)
+                candidateIndexes.Add(currentIndex - gridSize);
+            //Add tile from Bottom
+            if (currentIndex < gridSize * (gridSize - 1))
+                candidateIndexes.Add(currentIndex + gridSize);
         }
 
         private int FindWeight(Tile tile)
@@ -237,7 +229,6 @@ namespace BattleCombine.Ai
         private void AddSumOfWeights(List<Tile> pathKey)
         {
             var weightValue = pathKey.Sum(FindWeight);
-
             _pathDictionary.Add(pathKey, weightValue);
         }
 
@@ -311,17 +302,14 @@ namespace BattleCombine.Ai
             {
                 lastTileCount++;
                 if (tile == CurrentWay.Last())
-                    lastStepIndex = lastTileCount;
+                    _lastStepIndex = lastTileCount;
             }
 
             _currentAiBaseEnemy.EndAiTurn();
-
             //todo - write it right :D
-            var turnButton = FindObjectOfType<NextTurnButton>();
-            turnButton.Touch();
-
+            var _turnButton = FindObjectOfType<NextTurnButton>();
+            _turnButton.Touch();
             _pathDictionary.Clear();
-
             StopCoroutine(_movePathRoutine);
         }
     }
