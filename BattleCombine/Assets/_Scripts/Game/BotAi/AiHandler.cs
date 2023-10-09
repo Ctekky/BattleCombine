@@ -28,8 +28,8 @@ namespace BattleCombine.Ai
         [SerializeField] private int[] balanceDamagedWeights;
         [SerializeField] private int balanceHealthToChangeMood;
 
-        [Header("TEST AITurnButton")] [SerializeField]
-        private Button _nextTurn;
+        //[Header("TEST AITurnButton")] [SerializeField]
+        //private Button _nextTurn;
 
         //todo - separate weights to data base and link it here
         private Dictionary<List<Tile>, int> _pathDictionary = new();
@@ -64,7 +64,7 @@ namespace BattleCombine.Ai
             ChangeEnemyStance += ChangeAiStance;
             //todo - change to ai speed
             _nextTurnButton.onButtonPressed += GiveAiTurn;
-            _nextTurn.onClick.AddListener(MovePath);
+            //_nextTurn.onClick.AddListener(MovePath);
         }
 
         private void FindFirstPathToAi()
@@ -89,7 +89,7 @@ namespace BattleCombine.Ai
             FindFirstPathToAi();
             if (_lastStepIndex >= 0)
                 KeepLastPathStarts(_lastStepIndex);
-            if (_nextTurn != null)
+            //if (_nextTurn != null)
                 _movePathRoutine = StartCoroutine(MovePathRoutine());
         }
 
