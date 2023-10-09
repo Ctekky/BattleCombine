@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
-using BattleCombine.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = System.Random;
@@ -15,9 +14,12 @@ namespace BattleCombine.Ai
     {
         public static Action StartAiMove;
         public static Action ChangeEnemyStance;
+
         //todo - if HP == X, then change stance;
 
         [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
+        [Header("AI Activation")]
+        [SerializeField] private bool _isAiActivated;
         [Header("Weights and other")] [SerializeField]
         private int[] tankFullHealthWeights;
         [SerializeField] private int[] tankDamagedWeights;
@@ -38,7 +40,9 @@ namespace BattleCombine.Ai
         private Random _rand;
         private AiBaseEnemy _currentAiBaseEnemy;
         private CreateField _field;
+        private NextTurnButton _nextTurnButton;
         private Coroutine _movePathRoutine;
+        private Coroutine _giveTurnToAiRoutine;
         private int _lastStepIndex = -1;
         private bool _isAiTurn;
 
@@ -55,12 +59,14 @@ namespace BattleCombine.Ai
 
         private void Start()
         {
+            AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
+            _nextTurnButton = FindObjectOfType<NextTurnButton>();
+            
             //todo - link to smth;
             StartAiMove += MovePath;
             ChangeEnemyStance += ChangeAiStance;
             //todo - change to ai speed
-            AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
-
+            _nextTurnButton.onButtonPressed += GiveAiTurn;
             _nextTurn.onClick.AddListener(MovePath);
         }
 
@@ -73,10 +79,14 @@ namespace BattleCombine.Ai
             FindAllPaths();
         }
 
-        private void MovePath()
+        private void GiveAiTurn()
         {
             _isAiTurn = !_isAiTurn;
+            _giveTurnToAiRoutine = StartCoroutine(GiveTurnToAiRoutine());
+        }
 
+        private void MovePath()
+        {
             if (!_isAiTurn) return;
 
             FindFirstPathToAi();
@@ -311,6 +321,14 @@ namespace BattleCombine.Ai
             _turnButton.Touch();
             _pathDictionary.Clear();
             StopCoroutine(_movePathRoutine);
+        }
+
+        private IEnumerator GiveTurnToAiRoutine()
+        {
+            yield return new WaitForSeconds(1f);
+            MovePath();
+            
+            StopCoroutine(_giveTurnToAiRoutine);
         }
     }
 }

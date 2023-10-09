@@ -1636,6 +1636,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: --TESTCANVAS--
       objectReference: {fileID: 0}
+    - target: {fileID: 9219633808517126006, guid: 78c095381b1e63f49bf624b783a4e3da, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2092,6 +2096,10 @@ PrefabInstance:
       propertyPath: _nextTurn
       value: 
       objectReference: {fileID: 1309517493}
+    - target: {fileID: 830942565227971313, guid: 384daa484734655429e4c406ff17f057, type: 3}
+      propertyPath: _isAiActivated
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.5059686
