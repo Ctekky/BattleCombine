@@ -16,10 +16,7 @@ namespace BattleCombine.Ai
         public static Action ChangeEnemyStance;
 
         //todo - if HP == X, then change stance;
-
         [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
-        [Header("AI Activation")]
-        [SerializeField] private bool _isAiActivated;
         [Header("Weights and other")] [SerializeField]
         private int[] tankFullHealthWeights;
         [SerializeField] private int[] tankDamagedWeights;
