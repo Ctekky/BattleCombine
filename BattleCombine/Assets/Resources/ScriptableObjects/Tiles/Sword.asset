@@ -18,55 +18,55 @@ MonoBehaviour:
   modifierChances:
   - Key: 0
     Value: -9
-    Chance: 1
+    Chance: 2
   - Key: 1
     Value: -8
     Chance: 2
   - Key: 2
     Value: -7
-    Chance: 3
+    Chance: 2
   - Key: 3
     Value: -6
-    Chance: 4
+    Chance: 2
   - Key: 4
     Value: -5
-    Chance: 5
+    Chance: 10
   - Key: 5
     Value: -4
-    Chance: 5
+    Chance: 10
   - Key: 6
     Value: -3
-    Chance: 6
+    Chance: 8
   - Key: 7
     Value: -2
     Chance: 7
   - Key: 8
     Value: -1
-    Chance: 10
+    Chance: 5
   - Key: 10
     Value: 1
-    Chance: 12
+    Chance: 5
   - Key: 11
     Value: 2
-    Chance: 10
+    Chance: 12
   - Key: 12
     Value: 3
-    Chance: 10
+    Chance: 12
   - Key: 13
     Value: 4
-    Chance: 10
+    Chance: 12
   - Key: 14
     Value: 5
-    Chance: 5
+    Chance: 7
   - Key: 15
     Value: 6
-    Chance: 4
+    Chance: 1
   - Key: 16
     Value: 7
-    Chance: 3
+    Chance: 1
   - Key: 17
     Value: 8
-    Chance: 2
+    Chance: 1
   - Key: 18
     Value: 9
     Chance: 1
