@@ -1449,7 +1449,7 @@ MonoBehaviour:
     attackValue: 0
     attackValueDefault: 3
     healthValue: 0
-    healthValueDefault: 100
+    healthValueDefault: 50
     moveSpeedValueDefault: 0
     shielded: 0
   moveSpeedValue: 0
@@ -1992,9 +1992,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     attackValue: 0
-    attackValueDefault: 3
+    attackValueDefault: 4
     healthValue: 0
-    healthValueDefault: 100
+    healthValueDefault: 50
     moveSpeedValueDefault: 3
     shielded: 0
   moveSpeedValue: 0
