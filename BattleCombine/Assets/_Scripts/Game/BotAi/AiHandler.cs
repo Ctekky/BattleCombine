@@ -167,6 +167,8 @@ namespace BattleCombine.Ai
                         || newPath.Contains(tileList[index])
                         || tileList[index].StateMachine.CurrentState == tileList[index].DisabledState)
                         continue;
+                    
+                    if(newPath.Contains(tileList[index])) continue;
 
                     maxWeight = weight;
                     currentIndex = index;
@@ -245,7 +247,36 @@ namespace BattleCombine.Ai
         private void FindBestPath()
         {
             var maxValue = int.MinValue;
+            var gridSize = _field.GetFieldSize;
+            var tileList = (new List<Tile>(_field.GetTileList));
             var path = new List<Tile>();
+            var candidateIndexes = new List<int>();
+            var count = -1;
+
+            foreach (var candidate in _pathDictionary.Where(candidate => candidate.Key.Count < AiSpeed))
+            {
+                _pathDictionary.Remove(candidate.Key);
+            }
+            
+            
+            foreach (var candidate in _pathDictionary)
+            {
+                foreach (var tile in tileList)
+                {
+                    count++;
+                    if (tile == candidate.Key.Last()) break;
+                }
+                
+                FindCandidates(candidateIndexes, gridSize, count);
+
+                var goodTiles 
+                    = candidateIndexes.Count(index => tileList[index].StateMachine.CurrentState != tileList[index].DisabledState);
+
+                if (goodTiles == 0)
+                    _pathDictionary.Remove(candidate.Key);
+
+                count = -1;
+            }
 
             foreach (var entry in _pathDictionary.Where(entry
                          => entry.Value > maxValue))
@@ -300,9 +331,14 @@ namespace BattleCombine.Ai
 
             while (currentStep < CurrentWay.Count)
             {
+                if (CurrentWay[currentStep].StateMachine.CurrentState == CurrentWay[currentStep].AvailableForSelectionState)
+                {
+                    CurrentWay[currentStep].StateMachine.ChangeState(CurrentWay[currentStep].AvailableForSelectionState);
+                }
+                
                 _currentAiBaseEnemy.MakeStep();
                 //todo - addEffects
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(.7f);
                 currentStep++;
             }
 
@@ -319,6 +355,8 @@ namespace BattleCombine.Ai
             var _turnButton = FindObjectOfType<NextTurnButton>();
             _turnButton.Touch();
             _pathDictionary.Clear();
+
+
             StopCoroutine(_movePathRoutine);
         }
 
