@@ -331,7 +331,7 @@ namespace BattleCombine.Ai
 
             while (currentStep < CurrentWay.Count)
             {
-                if (CurrentWay[currentStep].StateMachine.CurrentState == CurrentWay[currentStep].AvailableForSelectionState)
+                if (CurrentWay[currentStep].StateMachine.CurrentState != CurrentWay[currentStep].AvailableForSelectionState)
                 {
                     CurrentWay[currentStep].StateMachine.ChangeState(CurrentWay[currentStep].AvailableForSelectionState);
                 }
