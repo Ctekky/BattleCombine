@@ -5,7 +5,6 @@ using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = System.Random;
 
 namespace BattleCombine.Ai
@@ -17,8 +16,10 @@ namespace BattleCombine.Ai
 
         //todo - if HP == X, then change stance;
         [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
+
         [Header("Weights and other")] [SerializeField]
         private int[] tankFullHealthWeights;
+
         [SerializeField] private int[] tankDamagedWeights;
         [SerializeField] private int tankHealthToChangeMood;
         [SerializeField] private int[] attackFullHealthWeights;
@@ -27,9 +28,6 @@ namespace BattleCombine.Ai
         [SerializeField] private int[] balanceFullHealthWeights;
         [SerializeField] private int[] balanceDamagedWeights;
         [SerializeField] private int balanceHealthToChangeMood;
-
-        //[Header("TEST AITurnButton")] [SerializeField]
-        //private Button _nextTurn;
 
         //todo - separate weights to data base and link it here
         private Dictionary<List<Tile>, int> _pathDictionary = new();
@@ -54,17 +52,18 @@ namespace BattleCombine.Ai
             _field = FindObjectOfType<CreateField>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
-            _nextTurnButton = FindObjectOfType<NextTurnButton>();
-            
-            //todo - link to smth;
             StartAiMove += MovePath;
             ChangeEnemyStance += ChangeAiStance;
             //todo - change to ai speed
             _nextTurnButton.onButtonPressed += GiveAiTurn;
-            //_nextTurn.onClick.AddListener(MovePath);
+        }
+
+        private void Awake()
+        {
+            AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
+            _nextTurnButton = FindObjectOfType<NextTurnButton>();
         }
 
         private void FindFirstPathToAi()
@@ -73,7 +72,9 @@ namespace BattleCombine.Ai
             CurrentWeights = new();
             NextStanceWeights = new();
             ChooseArchetype();
-            FindAllPaths();
+
+            if (_lastStepIndex < 0)
+                FindAllPaths();
         }
 
         private void GiveAiTurn()
@@ -89,8 +90,8 @@ namespace BattleCombine.Ai
             FindFirstPathToAi();
             if (_lastStepIndex >= 0)
                 KeepLastPathStarts(_lastStepIndex);
-            //if (_nextTurn != null)
-                _movePathRoutine = StartCoroutine(MovePathRoutine());
+
+            _movePathRoutine = StartCoroutine(MovePathRoutine());
         }
 
         [ContextMenu("Change enemy stance")]
@@ -175,7 +176,7 @@ namespace BattleCombine.Ai
             //todo - change path count to its weight
             if (newPath.Count < AiSpeed)
                 return;
-            
+
             AddSumOfWeights(newPath);
             CurrentWay ??= newPath;
         }
@@ -201,6 +202,7 @@ namespace BattleCombine.Ai
                 {
                     FindPathsFromTile(index);
                 }
+
                 FindBestPath();
             }
         }
@@ -324,8 +326,15 @@ namespace BattleCombine.Ai
         {
             yield return new WaitForSeconds(1f);
             MovePath();
-            
+
             StopCoroutine(_giveTurnToAiRoutine);
+        }
+
+        private void OnDisable()
+        {
+            StartAiMove -= MovePath;
+            ChangeEnemyStance -= ChangeAiStance;
+            _nextTurnButton.onButtonPressed -= GiveAiTurn;
         }
     }
 }
