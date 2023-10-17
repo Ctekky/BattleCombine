@@ -13,7 +13,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace BattleCombine.Gameplay
 {
-    public class Tile : MonoBehaviour, ITouchable, IMovable//, IPointerExitHandler, IPointerEnterHandler
+    public class Tile : MonoBehaviour, ITouchable, IMovable //, IPointerExitHandler, IPointerEnterHandler
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private TileStack tileStack;
@@ -34,8 +34,7 @@ namespace BattleCombine.Gameplay
 
         //TODO: change this to proper algorithm
         private GameManager _gameManager;
-        
-        
+
 
         public StateMachine StateMachine;
         public AvailableForSelectionState AvailableForSelectionState;
@@ -98,7 +97,6 @@ namespace BattleCombine.Gameplay
         //TODO: change this to proper algorithm
         public void SetGameManager(GameManager gameManager)
         {
-            
             _gameManager = gameManager;
         }
 
@@ -178,6 +176,12 @@ namespace BattleCombine.Gameplay
                 }
             }
         }
+
+        public void EndTouch()
+        {
+            //TODO: endtouch check 
+        }
+
         public void FingerMoved()
         {
             if (tileStack.GetGameManager.GetInputMode == InputMod.Touch)
@@ -198,7 +202,8 @@ namespace BattleCombine.Gameplay
             }
         }
 
-        public void FindTileForAction(Tile tile, List<GameObject> list, TileState nameState) //change state for nearest tiles
+        public void FindTileForAction(Tile tile, List<GameObject> list,
+            TileState nameState) //change state for nearest tiles
         {
             Vector2 tilePosition = tile.transform.position;
             var localScale = gameObject.transform.localScale;
@@ -254,7 +259,8 @@ namespace BattleCombine.Gameplay
             GameObject gameObjectTile = this.gameObject;
             foreach (GameObject tileGameObject in GetTileStack.NextMoveTiles)
             {
-                if (tileGameObject == this.gameObject || tileGameObject.GetComponent<Tile>().tileCurrentState == TileState.DisabledState)
+                if (tileGameObject == this.gameObject ||
+                    tileGameObject.GetComponent<Tile>().tileCurrentState == TileState.DisabledState)
                 {
                     continue;
                 }
@@ -265,28 +271,30 @@ namespace BattleCombine.Gameplay
                 }
             }
         }
+
         public List<GameObject> FindTileDisabledTileForNextMove(List<GameObject> list)
         {
             List<GameObject> listAfterSort = new List<GameObject>();
             foreach (GameObject tileGameObject in list)
             {
                 Tile tile = tileGameObject.GetComponent<Tile>();
-                if (tile.tileCurrentState == TileState.DisabledState || tile.tileCurrentState == TileState.FinalChoiceState)
+                if (tile.tileCurrentState == TileState.DisabledState ||
+                    tile.tileCurrentState == TileState.FinalChoiceState)
                 {
                     continue;
                 }
 
                 listAfterSort.Add(tileGameObject);
             }
+
             return listAfterSort;
         }
 
         private void ActionForTileTouch(List<GameObject> list)
         {
-           
             if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
-            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return; 
-           
+            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return;
+
             if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
             {
                 if (this.gameObject == list.Last())
@@ -321,6 +329,7 @@ namespace BattleCombine.Gameplay
                 }
             }
         }
+
         private void ActionForTileFingerMove(List<GameObject> list)
         {
             if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
@@ -361,7 +370,7 @@ namespace BattleCombine.Gameplay
         }
         /*public void OnPointerEnter(PointerEventData eventData)
         {
-            
+
         }
         public void OnPointerExit(PointerEventData eventData)
         {
