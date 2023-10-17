@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BattleCombine.Interfaces;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace BattleCombine.Services.InputService
     public class InputService : MonoBehaviour, TouchAction.ITouchActions
     {
         private TouchAction _input;
+        private List<ITouchable> _touchables;
+        private List<IMovable> _movables;
 
         private void OnEnable()
         {
@@ -27,12 +30,16 @@ namespace BattleCombine.Services.InputService
 
             EnhancedTouch.Touch.onFingerDown -= FingerDown;
             EnhancedTouch.Touch.onFingerMove -= FingerMove;
+            EnhancedTouch.Touch.onFingerUp -= FingerUp;
         }
 
         private void Start()
         {
             EnhancedTouch.Touch.onFingerDown += FingerDown;
             EnhancedTouch.Touch.onFingerMove += FingerMove;
+            EnhancedTouch.Touch.onFingerUp += FingerUp;
+            _touchables = new List<ITouchable>();
+            _movables = new List<IMovable>();
         }
 
         private void FingerMove(EnhancedTouch.Finger finger)
@@ -45,28 +52,30 @@ namespace BattleCombine.Services.InputService
             DetectTouchOnObject(finger);
         }
 
+        private void FingerUp(EnhancedTouch.Finger finger)
+        {
+        }
+
         private void DetectTouchOnObject(EnhancedTouch.Finger finger)
         {
             var raycast = Camera.main.ScreenPointToRay(finger.screenPosition);
             var hit = Physics2D.Raycast(raycast.origin, raycast.direction);
             if (hit.collider == null) return;
             var obj = hit.transform.gameObject;
-            if (obj.GetComponent<ITouchable>() != null)
-            {
-                obj.GetComponent<ITouchable>().Touch();
-            }
+            if (obj.GetComponent<ITouchable>() == null) return;
+            _touchables.Add(obj.GetComponent<ITouchable>());
+            obj.GetComponent<ITouchable>().Touch();
         }
-        
+
         private void DetectMoveOnObject(EnhancedTouch.Finger finger)
         {
             var raycast = Camera.main.ScreenPointToRay(finger.screenPosition);
             var hit = Physics2D.Raycast(raycast.origin, raycast.direction);
             if (hit.collider == null) return;
             var obj = hit.transform.gameObject;
-            if (obj.GetComponent<IMovable>() != null)
-            {
-                obj.GetComponent<IMovable>().FingerMoved();
-            }
+            if (obj.GetComponent<IMovable>() == null) return;
+            _movables.Add(obj.GetComponent<IMovable>());
+            obj.GetComponent<IMovable>().FingerMoved();
         }
 
         public void OnPress(InputAction.CallbackContext context)
