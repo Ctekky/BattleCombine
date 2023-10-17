@@ -55,8 +55,17 @@ namespace BattleCombine.Services.InputService
 
         private void FingerUp(EnhancedTouch.Finger finger)
         {
-            if (_touchables.Count > 0) _touchables.Last().EndTouch();
-            if (_movables.Count > 0) _movables.Last().EndTouch();
+            if (_touchables.Count > 0)
+            {
+                _touchables.Last().EndTouch();
+                _touchables.Clear();
+            }
+
+            if (_movables.Count > 0)
+            {
+                _movables.Last().EndTouch();
+                _movables.Clear();
+            }
         }
 
         private void DetectTouchOnObject(EnhancedTouch.Finger finger)
