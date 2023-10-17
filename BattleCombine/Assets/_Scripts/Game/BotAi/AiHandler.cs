@@ -13,7 +13,11 @@ namespace BattleCombine.Ai
     {
         public static Action StartAiMove;
         public static Action ChangeEnemyStance;
-
+        
+        public List<Tile> CurrentWay { get; set; }
+        public int GetMoodHealthPercent { get; private set; }
+        public int AiSpeed { get; private set; }
+        
         //todo - if HP == X, then change stance;
         [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
 
@@ -29,28 +33,17 @@ namespace BattleCombine.Ai
         [SerializeField] private int[] balanceDamagedWeights;
         [SerializeField] private int balanceHealthToChangeMood;
 
-        //todo - separate weights to data base and link it here
-        private Dictionary<List<Tile>, int> _pathDictionary = new();
-        private List<int> _lastTilesToFindNewPath = new();
         private Random _rand;
         private AiBaseEnemy _currentAiBaseEnemy;
         private CreateField _field;
         private NextTurnButton _nextTurnButton;
+        private PathFinder _pathFinder;
         private Coroutine _movePathRoutine;
         private Coroutine _giveTurnToAiRoutine;
         private int _lastStepIndex = -1;
         private bool _isAiTurn;
-
-        public List<int> CurrentWeights { get; private set; }
-        public List<int> NextStanceWeights { get; private set; }
-        public List<Tile> CurrentWay { get; private set; }
-        public int GetMoodHealthPercent { get; private set; }
-        public int AiSpeed { get; private set; }
-
-        private void OnValidate()
-        {
-            _field = FindObjectOfType<CreateField>();
-        }
+        
+        private const int ArchetypeCount = 3;
 
         private void OnEnable()
         {
@@ -64,17 +57,26 @@ namespace BattleCombine.Ai
         {
             AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
             _nextTurnButton = FindObjectOfType<NextTurnButton>();
+            _field = FindObjectOfType<CreateField>();
+            
+            _pathFinder = new PathFinder();
+            
+            _pathFinder.AiSpeed = AiSpeed;
+            _pathFinder.Field = _field;
+            _pathFinder.AiHandler = this;
+        }
+
+        private void Start()
+        {
+            FindFirstPathToAi();
         }
 
         private void FindFirstPathToAi()
         {
-            if (_currentAiBaseEnemy != null) return;
-            CurrentWeights = new();
-            NextStanceWeights = new();
             ChooseArchetype();
-
+            
             if (_lastStepIndex < 0)
-                FindAllPaths();
+                _pathFinder.FindStartPath();
         }
 
         private void GiveAiTurn()
@@ -87,9 +89,11 @@ namespace BattleCombine.Ai
         {
             if (!_isAiTurn) return;
 
-            FindFirstPathToAi();
             if (_lastStepIndex >= 0)
-                KeepLastPathStarts(_lastStepIndex);
+                _pathFinder.KeepLastPathStarts(_lastStepIndex);
+            
+            if (!_currentAiBaseEnemy.IsAiInitialised)
+                _currentAiBaseEnemy.Init();
 
             _movePathRoutine = StartCoroutine(MovePathRoutine());
         }
@@ -98,17 +102,15 @@ namespace BattleCombine.Ai
         private void ChangeAiStance()
         {
             //todo - if enemy can return stance back - rewrite func!..
-            CurrentWeights = new();
-            CurrentWeights = NextStanceWeights;
+            _pathFinder.CurrentWeights = new();
+            _pathFinder.CurrentWeights = _pathFinder.NextStanceWeights;
         }
 
         private void ChooseArchetype()
         {
-            _rand = new();
+            _rand = new Random();
             //todo - take max value from enemy archetype count
-            var archetypeCount = 3;
-
-            switch (_rand.Next(0, archetypeCount))
+            switch (_rand.Next(0, ArchetypeCount))
             {
                 case 0:
                     currentArchetype = AiArchetypes.Tank;
@@ -124,171 +126,6 @@ namespace BattleCombine.Ai
             }
 
             ApplyAiArchetype(currentArchetype);
-        }
-
-        //find all exist pathes for current AiSpeed
-        private void FindAllPaths()
-        {
-            //todo - find path and write it to dict
-            var count = -1;
-            foreach (var tile in _field.GetTileList)
-            {
-                count++;
-                if (tile != _field.GetAiStartTile) continue;
-                FindPathsFromTile(count);
-                break;
-            }
-
-            if (!_currentAiBaseEnemy.IsAiInitialised)
-                _currentAiBaseEnemy.Init();
-        }
-
-        //find path, and if its done - add to dict
-        private void FindPathsFromTile(int startIndex)
-        {
-            var tileList = (new List<Tile>(_field.GetTileList));
-            var gridSize = _field.GetFieldSize;
-            var newPath = new List<Tile>();
-            var currentIndex = startIndex;
-
-            for (var i = 0; i < AiSpeed; i++)
-            {
-                newPath.Add(tileList[currentIndex]);
-                var candidateIndexes = new List<int>();
-
-                FindCandidates(candidateIndexes, gridSize, currentIndex);
-                //Choose the one with the maximum weight
-                //todo - link the weights
-                var maxWeight = -1;
-                foreach (var index in candidateIndexes)
-                {
-                    var weight = FindWeight(tileList[index]);
-                    if (weight <= maxWeight
-                        || newPath.Contains(tileList[index])
-                        || tileList[index].StateMachine.CurrentState == tileList[index].DisabledState)
-                        continue;
-                    
-                    if(newPath.Contains(tileList[index])) continue;
-
-                    maxWeight = weight;
-                    currentIndex = index;
-                }
-            }
-
-            //todo - change path count to its weight
-            if (newPath.Count < AiSpeed)
-                return;
-
-            AddSumOfWeights(newPath);
-            CurrentWay ??= newPath;
-        }
-
-
-        private void KeepLastPathStarts(int currentIndex)
-        {
-            var tileList = (new List<Tile>(_field.GetTileList));
-            var gridSize = _field.GetFieldSize;
-            var candidateIndexes = new List<int>();
-
-            FindCandidates(candidateIndexes, gridSize, currentIndex);
-
-            foreach (var index in candidateIndexes.Where(index
-                         => tileList[index].StateMachine.CurrentState != tileList[index].DisabledState))
-            {
-                _lastTilesToFindNewPath.Add(index);
-            }
-
-            if (_lastTilesToFindNewPath == null) return;
-            {
-                foreach (var index in _lastTilesToFindNewPath)
-                {
-                    FindPathsFromTile(index);
-                }
-
-                FindBestPath();
-            }
-        }
-
-        private void FindCandidates(List<int> candidateIndexes, int gridSize, int currentIndex)
-        {
-            //Add tile from Left
-            if (currentIndex % gridSize != 0)
-                candidateIndexes.Add(currentIndex - 1);
-            //Add tile from Right
-            if (currentIndex % gridSize != gridSize - 1)
-                candidateIndexes.Add(currentIndex + 1);
-            //Add tile from Top
-            if (currentIndex >= gridSize)
-                candidateIndexes.Add(currentIndex - gridSize);
-            //Add tile from Bottom
-            if (currentIndex < gridSize * (gridSize - 1))
-                candidateIndexes.Add(currentIndex + gridSize);
-        }
-
-        private int FindWeight(Tile tile)
-        {
-            return tile.GetTileType switch
-            {
-                CellType.Attack => CurrentWeights[0],
-                CellType.Health => CurrentWeights[1],
-                CellType.Shield => CurrentWeights[2],
-                CellType.Empty => 0,
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-
-        private void AddSumOfWeights(List<Tile> pathKey)
-        {
-            var weightValue = pathKey.Sum(FindWeight);
-            _pathDictionary.Add(pathKey, weightValue);
-        }
-
-        //take pathes weights, and choose best one
-        private void FindBestPath()
-        {
-            var maxValue = int.MinValue;
-            var gridSize = _field.GetFieldSize;
-            var tileList = (new List<Tile>(_field.GetTileList));
-            var path = new List<Tile>();
-            var candidateIndexes = new List<int>();
-            var count = -1;
-
-            foreach (var candidate in _pathDictionary.Where(candidate => candidate.Key.Count < AiSpeed))
-            {
-                _pathDictionary.Remove(candidate.Key);
-            }
-            
-            
-            foreach (var candidate in _pathDictionary)
-            {
-                foreach (var tile in tileList)
-                {
-                    count++;
-                    if (tile == candidate.Key.Last()) break;
-                }
-                
-                FindCandidates(candidateIndexes, gridSize, count);
-
-                var goodTiles 
-                    = candidateIndexes.Count(index => tileList[index].StateMachine.CurrentState != tileList[index].DisabledState);
-
-                if (goodTiles == 0)
-                    _pathDictionary.Remove(candidate.Key);
-
-                count = -1;
-            }
-
-            foreach (var entry in _pathDictionary.Where(entry
-                         => entry.Value > maxValue))
-            {
-                maxValue = entry.Value;
-                path = entry.Key;
-            }
-
-            CurrentWay = new();
-            CurrentWay = path;
-            _currentAiBaseEnemy.CurrentWay = path;
-            _lastTilesToFindNewPath = new();
         }
 
         private void ApplyAiArchetype(AiArchetypes enemyType)
@@ -317,12 +154,16 @@ namespace BattleCombine.Ai
             }
 
             _currentAiBaseEnemy._aiHandler = this;
+            _pathFinder.CurrentAiBaseEnemy = _currentAiBaseEnemy;
         }
 
         private void AddWeightToList(IEnumerable<int> arrayFirst, IEnumerable<int> arraySecond)
         {
-            CurrentWeights.AddRange(arrayFirst);
-            NextStanceWeights.AddRange(arraySecond);
+            _pathFinder.CurrentWeights = new List<int>();
+            _pathFinder.NextStanceWeights = new List<int>();
+            
+            _pathFinder.CurrentWeights.AddRange(arrayFirst);
+            _pathFinder.NextStanceWeights.AddRange(arraySecond);
         }
 
         private IEnumerator MovePathRoutine()
@@ -331,11 +172,13 @@ namespace BattleCombine.Ai
 
             while (currentStep < CurrentWay.Count)
             {
-                if (CurrentWay[currentStep].StateMachine.CurrentState != CurrentWay[currentStep].AvailableForSelectionState)
+                if (_currentAiBaseEnemy.CurrentWay[currentStep].StateMachine.CurrentState !=
+                    _currentAiBaseEnemy.CurrentWay[currentStep].AvailableForSelectionState)
                 {
-                    CurrentWay[currentStep].StateMachine.ChangeState(CurrentWay[currentStep].AvailableForSelectionState);
+                    _currentAiBaseEnemy.CurrentWay[currentStep].StateMachine
+                        .ChangeState(_currentAiBaseEnemy.CurrentWay[currentStep].AvailableForSelectionState);
                 }
-                
+
                 _currentAiBaseEnemy.MakeStep();
                 //todo - addEffects
                 yield return new WaitForSeconds(.7f);
@@ -354,8 +197,7 @@ namespace BattleCombine.Ai
             //todo - write it right :D
             var _turnButton = FindObjectOfType<NextTurnButton>();
             _turnButton.Touch();
-            _pathDictionary.Clear();
-
+            _pathFinder.PathDictionary.Clear();
 
             StopCoroutine(_movePathRoutine);
         }

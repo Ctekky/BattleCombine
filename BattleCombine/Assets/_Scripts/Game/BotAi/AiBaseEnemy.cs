@@ -7,7 +7,6 @@ namespace BattleCombine.Ai
     public abstract class AiBaseEnemy
     {
         public AiHandler _aiHandler;
-        public List<int> Weights { get; set; }
         public List<Tile> CurrentWay { get; set; }
         public int MoodHealthPercent { get; set; }
         public int Speed { get; set; }
@@ -23,8 +22,6 @@ namespace BattleCombine.Ai
 
         public virtual void Init()
         {
-            Weights = new();
-            Weights = _aiHandler.CurrentWeights;
             CurrentWay = new();
             CurrentWay = _aiHandler.CurrentWay;
             MoodHealthPercent = _aiHandler.GetMoodHealthPercent;
