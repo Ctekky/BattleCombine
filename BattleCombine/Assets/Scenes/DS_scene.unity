@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 388951233}
   - component: {fileID: 388951232}
   - component: {fileID: 388951235}
+  - component: {fileID: 388951236}
   m_Layer: 0
   m_Name: GameManager(Temp)
   m_TagString: Untagged
@@ -695,6 +696,18 @@ MonoBehaviour:
   currentTurn: 0
   sceneName: DS_scene
   stepsInTurn: 3
+--- !u!114 &388951236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388951230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60af3e08869269a4ead6ee2ec806a230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &429785972
 GameObject:
   m_ObjectHideFlags: 0

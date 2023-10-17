@@ -11,6 +11,17 @@ namespace BattleCombine.Gameplay
         public Action onGameOver;
         public Action onFighting;
 
+        
+        private Step step;
+        private bool isTypeStandart;
+        private int playerCurrentStepSimple;
+
+        private void Awake()
+        {
+            
+            step = FindObjectOfType<Step>();
+            isTypeStandart = step is StandartTypeStep;
+        }
         public void SetUpPlayers(Player player1, Player player2)
         {
             _player1 = player1;
@@ -19,6 +30,8 @@ namespace BattleCombine.Gameplay
 
         public void Fighting()
         {
+            playerCurrentStepSimple++;
+
             if (_gameOver)
             {
                 onGameOver?.Invoke();
@@ -38,8 +51,18 @@ namespace BattleCombine.Gameplay
                 onGameOver?.Invoke();
                 return;
             }
+            if (isTypeStandart)
+            {
 
-            onFighting?.Invoke();
+                onFighting?.Invoke();
+            }else if(playerCurrentStepSimple % 2 == 0)
+            {
+              
+                onFighting?.Invoke();
+              
+            }
+            _player1.SetAttackDefault();
+            _player2.SetAttackDefault();
         }
 
         private bool _gameOver;

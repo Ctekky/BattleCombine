@@ -424,11 +424,6 @@ Transform:
   - {fileID: 1204183371}
   m_Father: {fileID: 1273399798}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &233264111 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3026820357365931547, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
-  m_PrefabInstance: {fileID: 554730016}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &238022124
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,8 +604,8 @@ GameObject:
   - component: {fileID: 388951234}
   - component: {fileID: 388951233}
   - component: {fileID: 388951232}
-  - component: {fileID: 388951235}
-  - component: {fileID: 388951236}
+  - component: {fileID: 388951237}
+  - component: {fileID: 388951238}
   m_Layer: 0
   m_Name: GameManager(Temp)
   m_TagString: Untagged
@@ -669,7 +664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7090a5123f996bb43b03b60085e08545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &388951235
+--- !u!114 &388951237
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -683,7 +678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1: {fileID: 1273399796}
   player2: {fileID: 665053154}
-  gameField: {fileID: 233264111}
+  gameField: {fileID: 1944522090}
   statsCollector: {fileID: 388951233}
   increaseStats: {fileID: 388951234}
   nextTurnButton: {fileID: 2065769399}
@@ -694,9 +689,9 @@ MonoBehaviour:
   _currentPlayer: {fileID: 0}
   currentStepInTurn: 0
   currentTurn: 0
-  sceneName: DS_scene
+  sceneName: SimpleBattleCombine
   stepsInTurn: 3
---- !u!114 &388951236
+--- !u!114 &388951238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -705,7 +700,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 388951230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60af3e08869269a4ead6ee2ec806a230, type: 3}
+  m_Script: {fileID: 11500000, guid: 3afe7da3652e0e049ac293e9bd530f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &429785972
@@ -994,6 +989,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainField
       objectReference: {fileID: 0}
+    - target: {fileID: 3865557558910741595, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 388951237}
+    - target: {fileID: 3865557558910741595, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: simpleGameManager
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6874827942579107696, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1081,10 +1084,22 @@ PrefabInstance:
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: gameManager
       value: 
-      objectReference: {fileID: 388951235}
+      objectReference: {fileID: 388951237}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: simpleGameManager
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: tileModifierChances.Array.size
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: tileTypeChances.Array.data[0].Value
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: tileTypeChances.Array.data[2].Value
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: tileModifierChances.Array.data[1].Key
@@ -1434,7 +1449,7 @@ MonoBehaviour:
     attackValue: 0
     attackValueDefault: 3
     healthValue: 0
-    healthValueDefault: 3
+    healthValueDefault: 50
     moveSpeedValueDefault: 0
     shielded: 0
   moveSpeedValue: 0
@@ -1977,9 +1992,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     attackValue: 0
-    attackValueDefault: 3
+    attackValueDefault: 4
     healthValue: 0
-    healthValueDefault: 3
+    healthValueDefault: 50
     moveSpeedValueDefault: 3
     shielded: 0
   moveSpeedValue: 0
@@ -2253,67 +2268,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &1535406949
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 830942565227971313, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: _nextTurn
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -6.5059686
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.866026
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.0785902
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4266982126006808290, guid: 384daa484734655429e4c406ff17f057, type: 3}
-      propertyPath: m_Name
-      value: '[AiHandler]'
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 384daa484734655429e4c406ff17f057, type: 3}
 --- !u!1 &1642336195
 GameObject:
   m_ObjectHideFlags: 0
@@ -2791,6 +2745,11 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1944522090 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3026820357365931547, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+  m_PrefabInstance: {fileID: 554730016}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2037661314
 GameObject:
   m_ObjectHideFlags: 0
@@ -3102,4 +3061,3 @@ SceneRoots:
   - {fileID: 2065769398}
   - {fileID: 1878025277}
   - {fileID: 388951231}
-  - {fileID: 1535406949}

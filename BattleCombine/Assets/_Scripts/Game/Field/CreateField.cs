@@ -53,6 +53,7 @@ namespace BattleCombine.Gameplay
         private int tileRefreshChance;
 
         [SerializeField] private GameManager gameManager;
+       
 
         private List<Tile> _tileList;
         private Transform _fieldParent;
@@ -65,7 +66,7 @@ namespace BattleCombine.Gameplay
         public Tile GetAiStartTile { get; private set; }
         public int GetFieldSize => _fieldSize;
 
-        private void Start()
+        private void Awake()
         {
             _tileList = new List<Tile>();
             _mainField = this.gameObject;
@@ -127,7 +128,9 @@ namespace BattleCombine.Gameplay
 
                     var tileComponent = currentTile.GetComponent<Tile>();
                     ChangeTileType(tileComponent);
+                    
                     tileComponent.SetGameManager(gameManager);
+                   
                     _tileList.Add(tileComponent);
 
                     tileComponent.onTileTouched += touchedTile => onTileTouched?.Invoke(touchedTile);
@@ -233,9 +236,11 @@ namespace BattleCombine.Gameplay
         }
 
         public void SetupGameManager(GameManager gm)
-        {
+        {          
             gameManager = gm;
         }
+
+        
 
         private int SetAiStartTileIndex()
         {

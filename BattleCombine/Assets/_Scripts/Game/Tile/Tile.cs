@@ -34,6 +34,8 @@ namespace BattleCombine.Gameplay
 
         //TODO: change this to proper algorithm
         private GameManager _gameManager;
+        
+        
 
         public StateMachine StateMachine;
         public AvailableForSelectionState AvailableForSelectionState;
@@ -96,8 +98,10 @@ namespace BattleCombine.Gameplay
         //TODO: change this to proper algorithm
         public void SetGameManager(GameManager gameManager)
         {
+            
             _gameManager = gameManager;
         }
+
 
         public void SetAlignTileToPlayer1(bool flag)
         {
@@ -279,8 +283,10 @@ namespace BattleCombine.Gameplay
 
         private void ActionForTileTouch(List<GameObject> list)
         {
+           
             if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
-            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return;
+            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return; 
+           
             if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
             {
                 if (this.gameObject == list.Last())
