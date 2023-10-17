@@ -10,11 +10,14 @@ namespace BattleCombine.Gameplay
         [SerializeField] private GameManager gameManager;
         [SerializeField] private NextTurnButton nextTurnButton;
         [SerializeField] private int speedPlayer;
-        [SerializeField] private List<GameObject> nextMoveTiles;
         [SerializeField] private IDPlayer player;
+        [SerializeField] private List<GameObject> nextMoveTiles = new List<GameObject>();
 
-        private Stack<GameObject> _tileStackPlayer1;
-        private Stack<GameObject> _tileStackPlayer2;
+        [SerializeField] private List<GameObject> tileListPlayer1;
+        [SerializeField] private List<GameObject> tileListPlayer2;
+
+        private Stack<GameObject> _tileStackPlayer1 = new Stack<GameObject>();
+        private Stack<GameObject> _tileStackPlayer2 = new Stack<GameObject>();
 
         public int SpeedPlayer { get => speedPlayer; }
         public Stack<GameObject> TilesStackPlayer1
@@ -26,6 +29,16 @@ namespace BattleCombine.Gameplay
         {
             get => _tileStackPlayer2;
             set => value = _tileStackPlayer2;
+        }
+        public List<GameObject> TilesListPlayer1
+        {
+            get => tileListPlayer1;
+            set => tileListPlayer1 = value;
+        }
+        public List<GameObject> TilesListPlayer2
+        {
+            get => tileListPlayer2;
+            set => tileListPlayer2 = value;
         }
         public List<GameObject> NextMoveTiles
         {
@@ -43,9 +56,6 @@ namespace BattleCombine.Gameplay
         private void Start()
         {
             player = IDPlayer.Player1;
-            _tileStackPlayer1 = new Stack<GameObject>();
-            _tileStackPlayer2 = new Stack<GameObject>();
-            nextMoveTiles = new List<GameObject>();
             gameManager = FindObjectOfType<GameManager>();
             nextTurnButton = FindObjectOfType<NextTurnButton>();
             //speedPlayer = 4; //TODO: get player speed
