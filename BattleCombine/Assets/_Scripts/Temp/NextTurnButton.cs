@@ -62,6 +62,11 @@ public class NextTurnButton : MonoBehaviour, ITouchable
         Debug.Log("Button pressed");
     }
 
+    public void EndTouch()
+    {
+        
+    }
+
     public void ConfirmSelectedTiles(Stack<GameObject> stackChosenTile, List<GameObject> listChosenTile, List<GameObject> list, List<GameObject> tileNextMove, List<GameObject> listNextMoveOpponent) //Confirm tile for add to characteristics
     {
         foreach (GameObject tileGameObjectStack in stackChosenTile) //touch
