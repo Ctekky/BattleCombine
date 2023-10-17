@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
 using TMPro;
@@ -14,6 +15,7 @@ namespace BattleCombine.Gameplay
         [SerializeField] private GameObject player1;
         [SerializeField] private GameObject player2;
         [SerializeField] private GameObject gameField;
+        [SerializeField] private InputMod inputMode;
         [SerializeField] private StatsCollector statsCollector;
         [SerializeField] private IncreaseStats increaseStats;
         [SerializeField] private NextTurnButton nextTurnButton;
@@ -37,7 +39,8 @@ namespace BattleCombine.Gameplay
 
 
         public int GetCurrentStepInTurn { get => currentStepInTurn; }
-
+        
+        public InputMod GetInputMode { get => inputMode; }
         private void Awake()
         {
             stepChecker = GetComponent<Step>();
