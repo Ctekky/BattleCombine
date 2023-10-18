@@ -7,33 +7,32 @@ using BattleCombine.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.EventSystems;
-using System.Collections;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace BattleCombine.Gameplay
 {
-    public class Tile : MonoBehaviour, ITouchable, IMovable//, IPointerExitHandler, IPointerEnterHandler
+    public class Tile : MonoBehaviour, ITouchable //, IMovable
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private TileStack tileStack;
         [SerializeField] private bool startTile = false;
         [SerializeField] private TileState tileCurrentState;
-        [SerializeField] private List<GameObject> tilesForChoosing = new List<GameObject>();
-        [SerializeField] private List<GameObject> tilesNearThisTile = new List<GameObject>();
+        [SerializeField] private List<GameObject> tilesForChoosing;
+        [SerializeField] private List<GameObject> tilesNearThisTile;
 
         //TODO: set type and modifier to tile
         [SerializeField] private TileType tileType;
         [SerializeField, Range(-100, 100)] private int tileModifier;
         [SerializeField] private TextMeshPro text;
-        [SerializeField] private bool isAlignPlayer1 = false;
-        [SerializeField] private bool isAlignPlayer2 = false;
+        [SerializeField] private bool isAlignPlayer1;
+        [SerializeField] private bool isAlignPlayer2;
 
         public bool IsAlignPlayer1 => isAlignPlayer1;
         public bool IsAlignPlayer2 => isAlignPlayer2;
 
         //TODO: change this to proper algorithm
         private GameManager _gameManager;
+        
+        
 
         public StateMachine StateMachine;
         public AvailableForSelectionState AvailableForSelectionState;
@@ -96,8 +95,10 @@ namespace BattleCombine.Gameplay
         //TODO: change this to proper algorithm
         public void SetGameManager(GameManager gameManager)
         {
+            
             _gameManager = gameManager;
         }
+
 
         public void SetAlignTileToPlayer1(bool flag)
         {
@@ -145,11 +146,6 @@ namespace BattleCombine.Gameplay
             tileCurrentState = currentState;
         }
 
-        public TileState GetTileState
-        {
-            get => tileCurrentState;
-        }
-
         public void ChangeClolor(Color color)
         {
             spriteRenderer.color = color;
@@ -157,40 +153,14 @@ namespace BattleCombine.Gameplay
 
         public void Touch()
         {
-            if (tileStack.GetGameManager.GetInputMode == InputMod.TouchAndMove)
+            switch (tileStack.IDPlayer)
             {
-                return;
-            }
-            else
-            {
-                switch (tileStack.IDPlayer)
-                {
-                    case IDPlayer.Player1:
-                        ActionForTileTouch(tileStack.TilesListPlayer1);
-                        break;
-                    case IDPlayer.Player2:
-                        ActionForTileTouch(tileStack.TilesListPlayer2);
-                        break;
-                }
-            }
-        }
-        public void FingerMoved()
-        {
-            if (tileStack.GetGameManager.GetInputMode == InputMod.Touch)
-            {
-                return;
-            }
-            else
-            {
-                switch (tileStack.IDPlayer)
-                {
-                    case IDPlayer.Player1:
-                        ActionForTileFingerMove(tileStack.TilesListPlayer1);
-                        break;
-                    case IDPlayer.Player2:
-                        ActionForTileFingerMove(tileStack.TilesListPlayer2);
-                        break;
-                }
+                case IDPlayer.Player1:
+                    ActionForTile(tileStack.TilesStackPlayer1);
+                    break;
+                case IDPlayer.Player2:
+                    ActionForTile(tileStack.TilesStackPlayer2);
+                    break;
             }
         }
 
@@ -261,7 +231,49 @@ namespace BattleCombine.Gameplay
                 }
             }
         }
-        public List<GameObject> FindTileDisabledTileForNextMove(List<GameObject> list)
+
+        private void ActionForTile(Stack<GameObject> stack)
+        {
+           
+            if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
+            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return; 
+           
+            if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
+            {
+                if (this.gameObject == stack.Peek())
+                {
+                    StateMachine.CurrentState.Input();
+                    StateMachine.CurrentState.LogicUpdate();
+                    if (stack.Count() < tileStack.SpeedPlayer)
+                    {
+                        _gameManager.SpeedIsOver(false);
+                    }
+                }
+                else
+                {
+                    Debug.Log("Pick another tile!");
+                }
+            }
+            else
+            {
+                if (stack.Count() < tileStack.SpeedPlayer)
+                {
+                    StateMachine.CurrentState.Input();
+                    StateMachine.CurrentState.LogicUpdate();
+                    if (stack.Count() == tileStack.SpeedPlayer)
+                    {
+                        _gameManager.SpeedIsOver(true);
+                    }
+                }
+                else
+                {
+                    _gameManager.SpeedIsOver(true);
+                    Debug.Log("Current move over");
+                }
+            }
+        }
+
+        public  List<GameObject> FindTileDisabledTileForNextMove(List<GameObject> list)
         {
             List<GameObject> listAfterSort = new List<GameObject>();
             foreach (GameObject tileGameObject in list)
@@ -277,92 +289,7 @@ namespace BattleCombine.Gameplay
             return listAfterSort;
         }
 
-        private void ActionForTileTouch(List<GameObject> list)
-        {
-            if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
-            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return;
-            if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
-            {
-                if (this.gameObject == list.Last())
-                {
-                    StateMachine.CurrentState.Input();
-                    StateMachine.CurrentState.LogicUpdate();
-                    if (list.Count() < tileStack.SpeedPlayer)
-                    {
-                        _gameManager.SpeedIsOver(false);
-                    }
-                }
-                else
-                {
-                    Debug.Log("Pick another tile!");
-                }
-            }
-            else
-            {
-                if (list.Count() < tileStack.SpeedPlayer)
-                {
-                    StateMachine.CurrentState.Input();
-                    StateMachine.CurrentState.LogicUpdate();
-                    if (list.Count() == tileStack.SpeedPlayer)
-                    {
-                        _gameManager.SpeedIsOver(true);
-                    }
-                }
-                else
-                {
-                    _gameManager.SpeedIsOver(true);
-                    Debug.Log("Current move over");
-                }
-            }
-        }
-        private void ActionForTileFingerMove(List<GameObject> list)
-        {
-            if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
-            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return;
-            if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
-            {
-                if (this.gameObject == list.Last())
-                {
-                    return;
-                }
-                else if (this.gameObject == list[(list.Count - 2)]) //list.ElementAt(list.Count - 2))
-                {
-                    StateMachine.CurrentState.Input();
-                    StateMachine.CurrentState.LogicUpdate();
-                }
-                else
-                {
-                    Debug.Log("Pick another tile!");
-                }
-            }
-            else
-            {
-                if (list.Count() < tileStack.SpeedPlayer)
-                {
-                    StateMachine.CurrentState.Input();
-                    StateMachine.CurrentState.LogicUpdate();
-                    if (list.Count() == tileStack.SpeedPlayer)
-                    {
-                        _gameManager.SpeedIsOver(true);
-                    }
-                }
-                else
-                {
-                    _gameManager.SpeedIsOver(true);
-                    Debug.Log("Current move over");
-                }
-            }
-        }
-        /*public void OnPointerEnter(PointerEventData eventData)
-        {
-            
-        }
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            throw new NotImplementedException();
-        }*/
-
-        /*private void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
             Vector3 position = gameObject.transform.position;
@@ -375,6 +302,6 @@ namespace BattleCombine.Gameplay
             Gizmos.color = Color.green;
             float rangeOverlap = (float)((Math.Sqrt(Math.Pow(tileScaleX, 2) + Math.Pow(tileScaleY, 2))) / 2);
             Gizmos.DrawWireSphere(position, rangeOverlap);
-       }*/
+        }
     }
 }

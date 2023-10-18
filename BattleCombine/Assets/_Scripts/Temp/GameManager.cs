@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
 using TMPro;
@@ -15,7 +14,6 @@ namespace BattleCombine.Gameplay
         [SerializeField] private GameObject player1;
         [SerializeField] private GameObject player2;
         [SerializeField] private GameObject gameField;
-        [SerializeField] private InputMod inputMode;
         [SerializeField] private StatsCollector statsCollector;
         [SerializeField] private IncreaseStats increaseStats;
         [SerializeField] private NextTurnButton nextTurnButton;
@@ -34,13 +32,20 @@ namespace BattleCombine.Gameplay
 
         [SerializeField] private int stepsInTurn;
 
+        private Step stepChecker;
+
+
 
         public int GetCurrentStepInTurn { get => currentStepInTurn; }
 
-        public InputMod GetInputMode { get => inputMode; }
+        private void Awake()
+        {
+            stepChecker = GetComponent<Step>();
+        }
 
         private void Start()
         {
+           
             if (gameField == null)
             {
                 Debug.Log("No gamefield object");
@@ -61,7 +66,8 @@ namespace BattleCombine.Gameplay
             }
 
             fight.SetUpPlayers(player1.GetComponent<Player>(), player2.GetComponent<Player>());
-            fight.onGameOver += GameOver;
+           
+             fight.onGameOver += GameOver;
             fight.onFighting += FightEnd;
             _currentPlayerName = player1.GetComponent<Player>()?.GetPlayerName;
             _currentPlayer = player1.GetComponent<Player>();
@@ -79,6 +85,8 @@ namespace BattleCombine.Gameplay
             currentStepInTurn = 1;
             description.text = _currentPlayerName + " turn " + currentTurn + " step " + currentStepInTurn;
         }
+
+       
 
         private void FightEnd()
         {
@@ -125,6 +133,7 @@ namespace BattleCombine.Gameplay
             };
         }
 
+       
         private void ChangePlayerTurn()
         {
             var player1Name = player1.GetComponent<Player>().GetPlayerName;
@@ -144,7 +153,9 @@ namespace BattleCombine.Gameplay
             }
 
             description.text = _currentPlayerName + " turn " + currentTurn + " step " + currentStepInTurn;
-            if (currentStepInTurn <= stepsInTurn) return;
+            // if (currentStepInTurn <= stepsInTurn) return;  
+            stepChecker.GetVariables(currentStepInTurn, stepsInTurn);
+            if (stepChecker.MoveIsPassed() == false) return;
             Debug.Log("Round is over => Fight!!!");
             fight.Fighting();
             player1.GetComponent<Player>().UpdateStats();
