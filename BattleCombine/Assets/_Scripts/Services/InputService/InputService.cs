@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using BattleCombine.Interfaces;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -54,6 +55,17 @@ namespace BattleCombine.Services.InputService
 
         private void FingerUp(EnhancedTouch.Finger finger)
         {
+            if (_touchables.Count > 0)
+            {
+                _touchables.Last().EndTouch();
+                _touchables.Clear();
+            }
+
+            if (_movables.Count > 0)
+            {
+                _movables.Last().EndTouch();
+                _movables.Clear();
+            }
         }
 
         private void DetectTouchOnObject(EnhancedTouch.Finger finger)

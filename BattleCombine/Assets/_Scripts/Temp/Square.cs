@@ -14,7 +14,11 @@ namespace BattleCombine.Tests
             _isSelected = true;
             spriteRenderer.color = Color.green;
         }
-        
+
+        void IMovable.EndTouch()
+        {
+        }
+
         public void Touch()
         {
             if (_isSelected)
@@ -29,6 +33,8 @@ namespace BattleCombine.Tests
             }
         }
 
-
+        void ITouchable.EndTouch()
+        {
+        }
     }
 }
