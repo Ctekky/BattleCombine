@@ -1434,7 +1434,7 @@ MonoBehaviour:
     attackValue: 0
     attackValueDefault: 3
     healthValue: 0
-    healthValueDefault: 3
+    healthValueDefault: 100
     moveSpeedValueDefault: 0
     shielded: 0
   moveSpeedValue: 0
@@ -1979,7 +1979,7 @@ MonoBehaviour:
     attackValue: 0
     attackValueDefault: 3
     healthValue: 0
-    healthValueDefault: 3
+    healthValueDefault: 100
     moveSpeedValueDefault: 3
     shielded: 0
   moveSpeedValue: 0

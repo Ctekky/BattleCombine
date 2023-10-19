@@ -73,6 +73,7 @@ namespace BattleCombine.Gameplay
         private int AddValue(int stat, int value)
         {
             var tmp = stat + value;
+           
             return tmp <= 0 ? 0 : tmp;
         }
 

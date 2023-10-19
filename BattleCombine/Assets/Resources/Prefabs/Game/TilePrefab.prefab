@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.2363, y: -0.25}
+  m_AnchoredPosition: {x: 0.223, y: -0.25}
   m_SizeDelta: {x: 0.5275, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &9106044345038820947
@@ -289,7 +289,7 @@ MonoBehaviour:
   tileCurrentState: 0
   tilesForChoosing: []
   tilesNearThisTile: []
-  tileType: {fileID: 11400000, guid: 530c4220e922b5641b0bf732d90064de, type: 2}
+  tileType: {fileID: 11400000, guid: 0cbfd373c49892844a1b42ffb77a1168, type: 2}
   tileModifier: 5
   text: {fileID: 2226465790456060401}
   isAlignPlayer1: 0
