@@ -175,6 +175,7 @@ namespace BattleCombine.Gameplay
                 cumulativeWeight += dictionary.Chance;
                 if (roll >= cumulativeWeight) continue;
                 currentTile.ChangeTileModifier(dictionary.Value);
+                //print("dict" + dictionary.Value);
                 return;
             }
         }
@@ -196,9 +197,14 @@ namespace BattleCombine.Gameplay
                 {
                     RefreshEmptyTile(currentTile);
                 }
-                else
+                else if((currentTile.GetTileType != CellType.Shield && currentTile.TileModifier < 9))
                 {
+                    if (currentTile.TileModifier == -1)
+                    currentTile.ChangeTileModifier(currentTile.TileModifier + 2);
+
+                    else
                     currentTile.ChangeTileModifier(currentTile.TileModifier + 1);
+                    
                 }
             }
         }
@@ -206,8 +212,7 @@ namespace BattleCombine.Gameplay
         private void ChangeTileType(Tile currentTile)
         {
             _rand = new();
-            var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
-
+            var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);        
             var roll = _rand.Next(0, totalWeight);
             var cumulativeWeight = 0;
             foreach (var dictionary in tileTypeChances)

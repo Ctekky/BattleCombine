@@ -35,7 +35,8 @@ namespace BattleCombine.Gameplay
         [SerializeField] private int stepsInTurn;
 
         private Step stepChecker;
-
+        private SequenceMoves sequenceMoves;
+        private bool isTypeStandart;
 
 
         public int GetCurrentStepInTurn { get => currentStepInTurn; }
@@ -44,6 +45,9 @@ namespace BattleCombine.Gameplay
         private void Awake()
         {
             stepChecker = GetComponent<Step>();
+            isTypeStandart = false;
+            isTypeStandart = stepChecker is StandartTypeStep;
+            sequenceMoves = new SequenceMoves(player1.GetComponent<Player>(), player2.GetComponent<Player>());
         }
 
         private void Start()
@@ -71,7 +75,7 @@ namespace BattleCombine.Gameplay
             fight.SetUpPlayers(player1.GetComponent<Player>(), player2.GetComponent<Player>());
            
              fight.onGameOver += GameOver;
-            fight.onFighting += FightEnd;
+            fight.onFightEnd += FightEnd;
             _currentPlayerName = player1.GetComponent<Player>()?.GetPlayerName;
             _currentPlayer = player1.GetComponent<Player>();
             gameField.GetComponent<CreateField>().SetupGameManager(this);
@@ -136,11 +140,14 @@ namespace BattleCombine.Gameplay
             };
         }
 
-       
+      
         private void ChangePlayerTurn()
         {
+           
             var player1Name = player1.GetComponent<Player>().GetPlayerName;
             var player2Name = player2.GetComponent<Player>().GetPlayerName;
+
+
             if (_currentPlayerName == player1Name)
             {
                 _currentPlayer = player2.GetComponent<Player>();
@@ -154,13 +161,21 @@ namespace BattleCombine.Gameplay
 
                 Debug.Log($"Current step in turn {currentStepInTurn.ToString()}");
             }
-
+           
             description.text = _currentPlayerName + " turn " + currentTurn + " step " + currentStepInTurn;
             // if (currentStepInTurn <= stepsInTurn) return;  
             stepChecker.GetVariables(currentStepInTurn, stepsInTurn);
             if (stepChecker.MoveIsPassed() == false) return;
             Debug.Log("Round is over => Fight!!!");
-            fight.Fighting();
+            if (isTypeStandart)
+            {
+                fight.FightStandart();
+            }
+            else
+            {
+                fight.FightSimple(sequenceMoves.CurrentPlayer, sequenceMoves.NextPlayer);
+            }
+            sequenceMoves.Next();
             player1.GetComponent<Player>().UpdateStats();
             player2.GetComponent<Player>().UpdateStats();
         }
