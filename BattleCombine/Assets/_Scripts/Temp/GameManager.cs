@@ -46,7 +46,7 @@ namespace BattleCombine.Gameplay
         {
             stepChecker = GetComponent<Step>();
             isTypeStandart = false;
-            isTypeStandart = stepChecker is StandartTypeStep;
+            //isTypeStandart = stepChecker is StandartTypeStep;
             sequenceMoves = new SequenceMoves(player1.GetComponent<Player>(), player2.GetComponent<Player>());
         }
 

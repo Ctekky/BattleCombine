@@ -11,17 +11,17 @@ namespace BattleCombine.Gameplay
         public Action onGameOver;
         public Action onFightEnd;
 
-        
+
         private Step step;
         private bool isTypeStandart;
         private int playerCurrentStepSimple;
 
         private void Awake()
         {
-            
             step = FindObjectOfType<Step>();
             isTypeStandart = step is StandartTypeStep;
         }
+
         public void SetUpPlayers(Player player1, Player player2)
         {
             _player1 = player1;
@@ -37,9 +37,9 @@ namespace BattleCombine.Gameplay
                 onGameOver?.Invoke();
                 return;
             }
+
             if (isTypeStandart)
             {
-
                 TakeDamage(_player1, _player2);
                 if (_gameOver)
                 {
@@ -53,20 +53,17 @@ namespace BattleCombine.Gameplay
                     onGameOver?.Invoke();
                     return;
                 }
+
                 onFightEnd?.Invoke();
             }
             else if (playerCurrentStepSimple % 2 == 0)
             {
                 onFightEnd?.Invoke();
-
-
             }
-
 
 
             //_player1.SetAttackDefault();
             // _player2.SetAttackDefault();
-
         }
 
         public void FightStandart()
@@ -92,10 +89,11 @@ namespace BattleCombine.Gameplay
                 onGameOver?.Invoke();
                 return;
             }
+
             onFightEnd?.Invoke();
 
             _player1.SetAttackDefault();
-           _player2.SetAttackDefault();
+            _player2.SetAttackDefault();
 
             // }
         }
@@ -116,21 +114,19 @@ namespace BattleCombine.Gameplay
             if (playerCurrentStepSimple % 2 == 0)
             {
                 onFightEnd?.Invoke();
-
             }
-          
         }
 
         private bool _gameOver;
 
         private void TakeDamage(Player defender, Player attacker)
         {
-           // if (isTypeStandart)
+            // if (isTypeStandart)
             {
                 switch (defender.Shielded)
                 {
                     case true:
-                       
+
                         defender.ChangeHealth(-(attacker.AttackValue / 2));
                         defender.RemoveShield();
 
@@ -141,7 +137,6 @@ namespace BattleCombine.Gameplay
                         break;
                 }
             }
-
 
 
             if (defender.HealthValue > 0) return;
