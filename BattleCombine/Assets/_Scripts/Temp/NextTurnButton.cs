@@ -47,12 +47,12 @@ public class NextTurnButton : MonoBehaviour, ITouchable
         switch (tileStack.IDPlayer)
         {
             case IDPlayer.Player1:
-                ConfirmSelectedTiles(tileStack.TilesStackPlayer1, tileStack.NextMoveTiles, tilesForNextMovePlayer1, tilesForNextMovePlayer2);
+                ConfirmSelectedTiles(tileStack.TilesStackPlayer1, tileStack.TilesListPlayer1, tileStack.NextMoveTiles, tilesForNextMovePlayer1, tilesForNextMovePlayer2);
                 SetFlagOnTilePlayer2(tilesForNextMovePlayer2);
                 tileStack.NextMoveTiles.AddRange(tilesForNextMovePlayer2);
                 break;
             case IDPlayer.Player2:
-                ConfirmSelectedTiles(tileStack.TilesStackPlayer2, tileStack.NextMoveTiles, tilesForNextMovePlayer2, tilesForNextMovePlayer1);
+                ConfirmSelectedTiles(tileStack.TilesStackPlayer2, tileStack.TilesListPlayer2, tileStack.NextMoveTiles, tilesForNextMovePlayer2, tilesForNextMovePlayer1);
                 SetFlagOnTilePlayer1(tilesForNextMovePlayer1);
                 tileStack.NextMoveTiles.AddRange(tilesForNextMovePlayer1);
                 break;
@@ -62,9 +62,20 @@ public class NextTurnButton : MonoBehaviour, ITouchable
         Debug.Log("Button pressed");
     }
 
-    public void ConfirmSelectedTiles(Stack<GameObject> stack, List<GameObject> list, List<GameObject> tileNextMove, List<GameObject> listNextMoveOpponent) //Confirm tile for add to characteristics
+    public void EndTouch()
     {
-        foreach(GameObject tileGameObjectStack in stack)
+        
+    }
+
+    public void ConfirmSelectedTiles(Stack<GameObject> stackChosenTile, List<GameObject> listChosenTile, List<GameObject> list, List<GameObject> tileNextMove, List<GameObject> listNextMoveOpponent) //Confirm tile for add to characteristics
+    {
+        foreach (GameObject tileGameObjectStack in stackChosenTile) //touch
+        {
+            Tile tile = tileGameObjectStack.GetComponent<Tile>();
+            tile.StateMachine.ChangeState(tile.FinalChoiceState);
+        }
+
+        foreach (GameObject tileGameObjectStack in listChosenTile) //move
         {
             Tile tile = tileGameObjectStack.GetComponent<Tile>();
             tile.StateMachine.ChangeState(tile.FinalChoiceState);
@@ -79,17 +90,27 @@ public class NextTurnButton : MonoBehaviour, ITouchable
         foreach(GameObject tileGameObjectListOpponent in listNextMoveOpponent)
         {
             Tile tile = tileGameObjectListOpponent.GetComponent<Tile>();
-            tile.StateMachine.ChangeState(tile.AvailableForSelectionState);
+            if (tile.GetTileState == TileState.DisabledState)
+            {
+                continue;
+            }
+            else
+            {
+                tile.StateMachine.ChangeState(tile.AvailableForSelectionState);
+            }
         }
+
         onButtonPressed?.Invoke();
-        stack.Clear();
+        stackChosenTile.Clear();
+        listChosenTile.Clear();
         tileNextMove.Clear();
         tileNextMove.AddRange(tileStack.NextMoveTiles);
         tileStack.NextMoveTiles.Clear();
-        PassingTheTurnToTheNextPayer();
+
+        PassingTheTurnToTheNextPlayer();
     }
 
-    public void PassingTheTurnToTheNextPayer()
+    public void PassingTheTurnToTheNextPlayer()
     {
         if (tileStack.IDPlayer == IDPlayer.Player1)
         {
@@ -106,7 +127,7 @@ public class NextTurnButton : MonoBehaviour, ITouchable
             Debug.Log("Player is not defined");
         }
     }
-    public void SetFlagOnTilePlayer1(List<GameObject> tileList) //TODO: implement in one method with SetFlagOnTilePlayer2
+    public void SetFlagOnTilePlayer1(List<GameObject> tileList)
     {
 
         foreach(GameObject tileGameObject in tileList)
@@ -115,7 +136,7 @@ public class NextTurnButton : MonoBehaviour, ITouchable
             tile.SetAlignTileToPlayer1(flag: true);
         }
     }
-    public void SetFlagOnTilePlayer2(List<GameObject> tileList)//TODO: implement in one method with SetFlagOnTilePlayer1
+    public void SetFlagOnTilePlayer2(List<GameObject> tileList)
     {
 
         foreach (GameObject tileGameObject in tileList)

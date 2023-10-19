@@ -66,7 +66,7 @@ namespace BattleCombine.Gameplay
         public Tile GetAiStartTile { get; private set; }
         public int GetFieldSize => _fieldSize;
 
-        private void Start()
+        private void Awake()
         {
             _tileList = new List<Tile>();
             _mainField = this.gameObject;

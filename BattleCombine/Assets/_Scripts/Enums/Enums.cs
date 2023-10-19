@@ -57,4 +57,9 @@ namespace BattleCombine.Enums
         Eight,
         Nine
     }
+    public enum InputMod : byte
+    {
+        Touch,
+        TouchAndMove
+    }
 }
