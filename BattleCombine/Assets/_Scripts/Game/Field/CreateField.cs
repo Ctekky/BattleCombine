@@ -197,11 +197,14 @@ namespace BattleCombine.Gameplay
                 {
                     RefreshEmptyTile(currentTile);
                 }
-                else
+                else if((currentTile.GetTileType != CellType.Shield && currentTile.TileModifier < 9))
                 {
+                    if (currentTile.TileModifier == -1)
+                    currentTile.ChangeTileModifier(currentTile.TileModifier + 2);
 
-                    currentTile.ChangeTileModifier(currentTile.TileModifier);// + 1);
-                  
+                    else
+                    currentTile.ChangeTileModifier(currentTile.TileModifier + 1);
+                    
                 }
             }
         }
