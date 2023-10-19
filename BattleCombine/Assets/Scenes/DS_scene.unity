@@ -684,6 +684,7 @@ MonoBehaviour:
   player1: {fileID: 1273399796}
   player2: {fileID: 665053154}
   gameField: {fileID: 233264111}
+  inputMode: 1
   statsCollector: {fileID: 388951233}
   increaseStats: {fileID: 388951234}
   nextTurnButton: {fileID: 2065769399}

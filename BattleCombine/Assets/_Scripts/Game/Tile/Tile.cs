@@ -122,7 +122,6 @@ namespace BattleCombine.Gameplay
         {
             tileModifier = modifier;
             text.text = tileModifier.ToString(CultureInfo.CurrentCulture);
-
         }
 
         public void ChangeStartFlag(bool isStartTile)
@@ -132,7 +131,6 @@ namespace BattleCombine.Gameplay
 
         private void SetupTile()
         {
-           
             text.text = tileModifier.ToString(CultureInfo.CurrentCulture);
             spriteRenderer.sprite = tileType.sprite;
             if (startTile)

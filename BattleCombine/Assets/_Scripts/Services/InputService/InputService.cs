@@ -55,16 +55,16 @@ namespace BattleCombine.Services.InputService
 
         private void FingerUp(EnhancedTouch.Finger finger)
         {
-            if (_touchables.Count > 0)
-            {
-                _touchables.Last().EndTouch();
-                _touchables.Clear();
-            }
-
             if (_movables.Count > 0)
             {
                 _movables.Last().EndTouch();
                 _movables.Clear();
+            }
+            else
+            {
+                if (_touchables.Count <= 0) return;
+                _touchables.Last().EndTouch();
+                _touchables.Clear();
             }
         }
 
