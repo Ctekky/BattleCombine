@@ -681,6 +681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392b324dfbe4aa74880d3877caad292c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputService: {fileID: 1653408436}
   player1: {fileID: 1273399796}
   player2: {fileID: 665053154}
   gameField: {fileID: 233264111}
@@ -706,7 +707,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 388951230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60af3e08869269a4ead6ee2ec806a230, type: 3}
+  m_Script: {fileID: 11500000, guid: 3afe7da3652e0e049ac293e9bd530f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &429785972
