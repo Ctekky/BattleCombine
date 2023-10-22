@@ -52,7 +52,6 @@ namespace BattleCombine.Services.InputService
         {
             DetectTouchOnObject(finger);
         }
-
         private void FingerUp(EnhancedTouch.Finger finger)
         {
             if (_movables.Count > 0 || _touchables.Count > 0)
@@ -62,7 +61,6 @@ namespace BattleCombine.Services.InputService
                 onFingerUp?.Invoke();
             }
         }
-
         private void DetectTouchOnObject(EnhancedTouch.Finger finger)
         {
             var raycast = Camera.main.ScreenPointToRay(finger.screenPosition);

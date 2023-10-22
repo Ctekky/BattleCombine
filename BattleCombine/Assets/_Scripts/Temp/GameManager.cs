@@ -119,10 +119,32 @@ namespace BattleCombine.Gameplay
         {
             var tileStack = gameField.GetComponent<TileStack>();
             var list = tileStack.GetCurrentPlayerTileList();
-            if(list.Count < _currentPlayer.moveSpeedValue) return;
-            tileStack.ConfirmTiles();
-            ButtonPressed();
-            Debug.Log("Finger up event invoked");
+
+            if (list.Count == 1)
+            {
+                Tile tile = list[0].GetComponent<Tile>();
+                if (tile.GetTileState == TileState.ChosenState)
+                {
+                    tile.TouchOnTile();
+                    Debug.Log("One tile in list, CHANGE STATE");
+                }
+                else
+                {
+                    Debug.Log("One tile in list");
+                    return;
+                }
+            }
+            else if (list.Count < _currentPlayer.moveSpeedValue)
+            {
+                Debug.Log("Need more tile for end move or one tile in list for change state");
+                return;
+            }
+            else if (list.Count == _currentPlayer.moveSpeedValue)
+            {
+                tileStack.ConfirmTiles();
+                ButtonPressed();
+                Debug.Log("Finger up event invoked");
+            }
         }
 
         private void FightEnd()

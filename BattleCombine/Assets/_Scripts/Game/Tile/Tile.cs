@@ -7,10 +7,11 @@ using BattleCombine.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using BattleCombine.Services.InputService;
 
 namespace BattleCombine.Gameplay
 {
-    public class Tile : MonoBehaviour, ITouchable, IMovable //, IPointerExitHandler, IPointerEnterHandler
+    public class Tile : MonoBehaviour, ITouchable, IMovable
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private TileStack tileStack;
@@ -18,6 +19,7 @@ namespace BattleCombine.Gameplay
         [SerializeField] private TileState tileCurrentState;
         [SerializeField] private List<GameObject> tilesForChoosing = new List<GameObject>();
         [SerializeField] private List<GameObject> tilesNearThisTile = new List<GameObject>();
+        
 
         //TODO: set type and modifier to tile
         [SerializeField] private TileType tileType;
@@ -90,7 +92,6 @@ namespace BattleCombine.Gameplay
 
             SetupTile();
         }
-
         //TODO: change this to proper algorithm
         public void SetGameManager(GameManager gameManager)
         {
@@ -195,6 +196,18 @@ namespace BattleCombine.Gameplay
             }
         }
 
+        public void TouchOnTile()
+        {
+            switch (tileStack.IDPlayer)
+            {
+                case IDPlayer.Player1:
+                    ActionForTileTouch(tileStack.TilesListPlayer1);
+                    break;
+                case IDPlayer.Player2:
+                    ActionForTileTouch(tileStack.TilesListPlayer2);
+                    break;
+            }
+        }
         public void FindTileForAction(Tile tile, List<GameObject> list,
             TileState nameState) //change state for nearest tiles
         {
