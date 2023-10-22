@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace BattleCombine.Gameplay
@@ -17,63 +18,37 @@ namespace BattleCombine.Gameplay
             StartGame();
         }
 
-        private void StartGame()
+        private void Awake()
         {
-            NextMove();
             stats.shielded = false;
             stats.attackValue = stats.attackValueDefault;
             stats.healthValue = stats.healthValueDefault;
+            moveSpeedValue = stats.moveSpeedValueDefault;
+        }
+
+        private void StartGame()
+        {
+            NextMove();
         }
 
         public void ChangeHealth(int addHealth)
         {
             stats.healthValue = AddValue(stats.healthValue, addHealth);
-            /*
-            int tmp = stats.healthValue + addHealth;
-
-            if (tmp > stats.healthValueDefault)
-            {
-                stats.healthValue = stats.healthValueDefault;
-            }
-            else if (tmp <= 0)
-            {
-                stats.healthValue = 0;
-            }
-            else
-            {
-                stats.healthValue = tmp;
-            }
-            */
         }
 
         public void AddAttack(int addAttack)
         {
             stats.attackValue = AddValue(stats.attackValue, addAttack);
-            /*
-            int tmp = stats.attackValue + addAttack;
-
-            if (tmp > stats.attackValueDefault)
-            {
-                stats.attackValue = stats.attackValueDefault;
-            }
-            else if (tmp <= 0)
-            {
-                stats.attackValue = 0;
-            }
-            else
-            {
-                stats.attackValue = tmp;
-            }
-            */
         }
+
         public void SetAttackDefault()
         {
             stats.attackValue = stats.attackValueDefault;
         }
+
         private int AddValue(int stat, int value)
         {
             var tmp = stat + value;
-           
             return tmp <= 0 ? 0 : tmp;
         }
 

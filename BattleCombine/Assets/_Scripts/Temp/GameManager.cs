@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
@@ -72,6 +71,7 @@ namespace BattleCombine.Gameplay
             }
 
             var fieldScript = gameField.GetComponent<CreateField>();
+            var tileStackScript = gameField.GetComponent<TileStack>();
             if (fieldScript == null)
             {
                 Debug.Log("No field script");
@@ -95,8 +95,10 @@ namespace BattleCombine.Gameplay
 
             fight.onGameOver += GameOver;
             fight.onFightEnd += FightEnd;
+            tileStackScript.onTileChoose += TileChoose;
             _currentPlayerName = player1.GetComponent<Player>()?.GetPlayerName;
             _currentPlayer = player1.GetComponent<Player>();
+            _currentPlayer.UpdateStats();
             gameField.GetComponent<CreateField>().SetupGameManager(this);
             if (nextTurnButton == null)
             {
@@ -109,11 +111,17 @@ namespace BattleCombine.Gameplay
 
             currentTurn = 1;
             currentStepInTurn = 1;
+            tileStackScript.SpeedPlayer = _currentPlayer.moveSpeedValue;
             description.text = _currentPlayerName + " turn " + currentTurn + " step " + currentStepInTurn;
         }
 
         private void InputFingerUp()
         {
+            var tileStack = gameField.GetComponent<TileStack>();
+            var list = tileStack.GetCurrentPlayerTileList();
+            if(list.Count < _currentPlayer.moveSpeedValue) return;
+            tileStack.ConfirmTiles();
+            ButtonPressed();
             Debug.Log("Finger up event invoked");
         }
 
@@ -129,45 +137,25 @@ namespace BattleCombine.Gameplay
             SceneManager.LoadScene(sceneName);
         }
 
-        private void ButtonPressed()
+        private void TileChoose(Tile tile)
         {
-            var tileStack = GetTileList();
-            foreach (var tileComponent in tileStack.Select(tile => tile.GetComponent<Tile>()))
-            {
-                statsCollector.Add(tileComponent);
-                tileComponent.StateMachine.ChangeState(tileComponent.FinalChoiceState);
-            }
-
+            statsCollector.Add(tile);
             increaseStats.Player = _currentPlayer;
             increaseStats.Increase();
             _currentPlayer.UpdateStats();
-            //foreach (var tileComponent in tileStack.Select(tile => tile.GetComponent<Tile>()))
-            //{
-            //    tileComponent.ChangeTileType(emptyTile);
-            //}
-
+            tile.ChangeTileType(emptyTile);
             Debug.Log($"Stats to {_currentPlayer} suppose to raise");
+        }
+
+        private void ButtonPressed()
+        {
             ChangePlayerTurn();
         }
-
-        private List<GameObject> GetTileList()
-        {
-            var tileStack = gameField.GetComponent<TileStack>();
-            return tileStack.IDPlayer switch
-            {
-                IDPlayer.Player1 => tileStack.TilesListPlayer1,
-                IDPlayer.Player2 => tileStack.TilesListPlayer2,
-                IDPlayer.AIPlayer => tileStack.TilesListPlayer2,
-                _ => null
-            };
-        }
-
 
         private void ChangePlayerTurn()
         {
             var player1Name = player1.GetComponent<Player>().GetPlayerName;
             var player2Name = player2.GetComponent<Player>().GetPlayerName;
-
 
             if (_currentPlayerName == player1Name)
             {
@@ -183,8 +171,8 @@ namespace BattleCombine.Gameplay
                 Debug.Log($"Current step in turn {currentStepInTurn.ToString()}");
             }
 
+            gameField.GetComponent<TileStack>().SpeedPlayer = _currentPlayer.moveSpeedValue;
             description.text = _currentPlayerName + " turn " + currentTurn + " step " + currentStepInTurn;
-            // if (currentStepInTurn <= stepsInTurn) return;  
             stepChecker.GetVariables(currentStepInTurn, stepsInTurn);
             if (stepChecker.MoveIsPassed() == false) return;
             Debug.Log("Round is over => Fight!!!");

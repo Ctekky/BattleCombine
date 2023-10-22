@@ -1,25 +1,21 @@
 using BattleCombine.Gameplay;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class SequenceMoves 
+public class SequenceMoves
 {
-    private Player currentPlayer;
-    private Player nextPlayer;
+    private Player _currentPlayer;
+    private Player _nextPlayer;
 
-    public Player CurrentPlayer => currentPlayer;
-    public Player NextPlayer => nextPlayer;
+    public Player CurrentPlayer => _currentPlayer;
+    public Player NextPlayer => _nextPlayer;
 
     public SequenceMoves(Player currentPlayer, Player nextPlayer)
     {
-        this.currentPlayer = currentPlayer;
-        this.nextPlayer = nextPlayer;
+        _currentPlayer = currentPlayer;
+        _nextPlayer = nextPlayer;
     }
+
     public void Next()
     {
-        Player tmp = currentPlayer;
-        currentPlayer = nextPlayer;
-        nextPlayer = tmp;
+        (_currentPlayer, _nextPlayer) = (_nextPlayer, _currentPlayer);
     }
 }
