@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
-using BattleCombine.ScriptableObjects;
-using BattleCombine.Gameplay;
 using UnityEngine;
 using Random = System.Random;
 
@@ -53,7 +51,7 @@ namespace BattleCombine.Gameplay
         private int tileRefreshChance;
 
         [SerializeField] private GameManager gameManager;
-       
+
 
         private List<Tile> _tileList;
         private Transform _fieldParent;
@@ -128,9 +126,9 @@ namespace BattleCombine.Gameplay
 
                     var tileComponent = currentTile.GetComponent<Tile>();
                     ChangeTileType(tileComponent);
-                    
+
                     tileComponent.SetGameManager(gameManager);
-                   
+
                     _tileList.Add(tileComponent);
 
                     tileComponent.onTileTouched += touchedTile => onTileTouched?.Invoke(touchedTile);
@@ -175,6 +173,7 @@ namespace BattleCombine.Gameplay
                 cumulativeWeight += dictionary.Chance;
                 if (roll >= cumulativeWeight) continue;
                 currentTile.ChangeTileModifier(dictionary.Value);
+                //print("dict" + dictionary.Value);
                 return;
             }
         }
@@ -192,13 +191,17 @@ namespace BattleCombine.Gameplay
         {
             foreach (var currentTile in _tileList)
             {
-                if (currentTile.GetTileType == CellType.Empty)
+                if (currentTile.GetTileState == TileState.DisabledState)
                 {
                     RefreshEmptyTile(currentTile);
                 }
-                else
+                else if ((currentTile.GetTileType != CellType.Shield && currentTile.TileModifier < 9))
                 {
-                    currentTile.ChangeTileModifier(currentTile.TileModifier + 1);
+                    if (currentTile.TileModifier == -1)
+                        currentTile.ChangeTileModifier(currentTile.TileModifier + 2);
+
+                    else
+                        currentTile.ChangeTileModifier(currentTile.TileModifier + 1);
                 }
             }
         }
@@ -207,7 +210,6 @@ namespace BattleCombine.Gameplay
         {
             _rand = new();
             var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
-
             var roll = _rand.Next(0, totalWeight);
             var cumulativeWeight = 0;
             foreach (var dictionary in tileTypeChances)
@@ -236,11 +238,10 @@ namespace BattleCombine.Gameplay
         }
 
         public void SetupGameManager(GameManager gm)
-        {          
+        {
             gameManager = gm;
         }
 
-        
 
         private int SetAiStartTileIndex()
         {

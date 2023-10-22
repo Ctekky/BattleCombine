@@ -7,9 +7,6 @@ using BattleCombine.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.EventSystems;
-using System.Collections;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace BattleCombine.Gameplay
 {
@@ -121,6 +118,7 @@ namespace BattleCombine.Gameplay
         public void ChangeTileModifier(int modifier)
         {
             tileModifier = modifier;
+            text.text = tileModifier.ToString(CultureInfo.CurrentCulture);
         }
 
         public void ChangeStartFlag(bool isStartTile)
@@ -176,12 +174,7 @@ namespace BattleCombine.Gameplay
                 }
             }
         }
-
-        public void EndTouch()
-        {
-            //TODO: endtouch check 
-        }
-
+        
         public void FingerMoved()
         {
             if (tileStack.GetGameManager.GetInputMode == InputMod.Touch)

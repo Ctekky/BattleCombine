@@ -681,9 +681,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392b324dfbe4aa74880d3877caad292c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputService: {fileID: 1653408436}
   player1: {fileID: 1273399796}
   player2: {fileID: 665053154}
   gameField: {fileID: 233264111}
+  inputMode: 0
   statsCollector: {fileID: 388951233}
   increaseStats: {fileID: 388951234}
   nextTurnButton: {fileID: 2065769399}
@@ -705,7 +707,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 388951230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60af3e08869269a4ead6ee2ec806a230, type: 3}
+  m_Script: {fileID: 11500000, guid: 3afe7da3652e0e049ac293e9bd530f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &429785972
@@ -993,6 +995,10 @@ PrefabInstance:
     - target: {fileID: 3026820357365931547, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: m_Name
       value: MainField
+      objectReference: {fileID: 0}
+    - target: {fileID: 3865557558910741595, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: speedPlayer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6874827942579107696, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: m_Pivot.x
@@ -1434,8 +1440,8 @@ MonoBehaviour:
     attackValue: 0
     attackValueDefault: 3
     healthValue: 0
-    healthValueDefault: 3
-    moveSpeedValueDefault: 0
+    healthValueDefault: 100
+    moveSpeedValueDefault: 3
     shielded: 0
   moveSpeedValue: 0
   playerUIScript: {fileID: 665053157}
@@ -1979,7 +1985,7 @@ MonoBehaviour:
     attackValue: 0
     attackValueDefault: 3
     healthValue: 0
-    healthValueDefault: 3
+    healthValueDefault: 100
     moveSpeedValueDefault: 3
     shielded: 0
   moveSpeedValue: 0
@@ -2915,8 +2921,6 @@ MonoBehaviour:
   isTouchable: 0
   spriteColor: {fileID: 2065769397}
   tileStack: {fileID: 0}
-  tilesForNextMovePlayer1: []
-  tilesForNextMovePlayer2: []
 --- !u!61 &2065769400
 BoxCollider2D:
   m_ObjectHideFlags: 0

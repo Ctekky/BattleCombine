@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
+using BattleCombine.Services.InputService;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +11,7 @@ namespace BattleCombine.Gameplay
 {
     public class GameManager : MonoBehaviour
     {
+        [SerializeField] private InputService inputService;
         [SerializeField] private GameObject player1;
         [SerializeField] private GameObject player2;
         [SerializeField] private GameObject gameField;
@@ -35,20 +35,35 @@ namespace BattleCombine.Gameplay
         [SerializeField] private int stepsInTurn;
 
         private Step stepChecker;
+        private SequenceMoves sequenceMoves;
+        private bool isTypeStandart;
 
 
+        public int GetCurrentStepInTurn
+        {
+            get => currentStepInTurn;
+        }
 
-        public int GetCurrentStepInTurn { get => currentStepInTurn; }
-        
-        public InputMod GetInputMode { get => inputMode; }
+        public InputMod GetInputMode
+        {
+            get => inputMode;
+        }
+
+        private void OnDisable()
+        {
+            inputService.onFingerUp -= InputFingerUp;
+        }
+
         private void Awake()
         {
             stepChecker = GetComponent<Step>();
+            isTypeStandart = false;
+            isTypeStandart = stepChecker is StandartTypeStep;
+            sequenceMoves = new SequenceMoves(player1.GetComponent<Player>(), player2.GetComponent<Player>());
         }
 
         private void Start()
         {
-           
             if (gameField == null)
             {
                 Debug.Log("No gamefield object");
@@ -56,6 +71,7 @@ namespace BattleCombine.Gameplay
             }
 
             var fieldScript = gameField.GetComponent<CreateField>();
+            var tileStackScript = gameField.GetComponent<TileStack>();
             if (fieldScript == null)
             {
                 Debug.Log("No field script");
@@ -68,12 +84,21 @@ namespace BattleCombine.Gameplay
                 return;
             }
 
+            if (inputService == null)
+            {
+                Debug.Log("No input service");
+                return;
+            }
+
+            inputService.onFingerUp += InputFingerUp;
             fight.SetUpPlayers(player1.GetComponent<Player>(), player2.GetComponent<Player>());
-           
-             fight.onGameOver += GameOver;
-            fight.onFighting += FightEnd;
+
+            fight.onGameOver += GameOver;
+            fight.onFightEnd += FightEnd;
+            tileStackScript.onTileChoose += TileChoose;
             _currentPlayerName = player1.GetComponent<Player>()?.GetPlayerName;
             _currentPlayer = player1.GetComponent<Player>();
+            _currentPlayer.UpdateStats();
             gameField.GetComponent<CreateField>().SetupGameManager(this);
             if (nextTurnButton == null)
             {
@@ -86,10 +111,19 @@ namespace BattleCombine.Gameplay
 
             currentTurn = 1;
             currentStepInTurn = 1;
+            tileStackScript.SpeedPlayer = _currentPlayer.moveSpeedValue;
             description.text = _currentPlayerName + " turn " + currentTurn + " step " + currentStepInTurn;
         }
 
-       
+        private void InputFingerUp()
+        {
+            var tileStack = gameField.GetComponent<TileStack>();
+            var list = tileStack.GetCurrentPlayerTileList();
+            if(list.Count < _currentPlayer.moveSpeedValue) return;
+            tileStack.ConfirmTiles();
+            ButtonPressed();
+            Debug.Log("Finger up event invoked");
+        }
 
         private void FightEnd()
         {
@@ -103,44 +137,26 @@ namespace BattleCombine.Gameplay
             SceneManager.LoadScene(sceneName);
         }
 
-        private void ButtonPressed()
+        private void TileChoose(Tile tile)
         {
-            var tileStack = GetTileStack();
-            foreach (var tileComponent in tileStack.Select(tile => tile.GetComponent<Tile>()))
-            {
-                statsCollector.Add(tileComponent);
-                tileComponent.StateMachine.ChangeState(tileComponent.FinalChoiceState);
-            }
-
+            statsCollector.Add(tile);
             increaseStats.Player = _currentPlayer;
             increaseStats.Increase();
             _currentPlayer.UpdateStats();
-            foreach (var tileComponent in tileStack.Select(tile => tile.GetComponent<Tile>()))
-            {
-                tileComponent.ChangeTileType(emptyTile);
-            }
-
+            tile.ChangeTileType(emptyTile);
             Debug.Log($"Stats to {_currentPlayer} suppose to raise");
+        }
+
+        private void ButtonPressed()
+        {
             ChangePlayerTurn();
         }
 
-        private Stack<GameObject> GetTileStack()
-        {
-            var tileStack = gameField.GetComponent<TileStack>();
-            return tileStack.IDPlayer switch
-            {
-                IDPlayer.Player1 => tileStack.TilesStackPlayer1,
-                IDPlayer.Player2 => tileStack.TilesStackPlayer2,
-                IDPlayer.AIPlayer => tileStack.TilesStackPlayer2,
-                _ => null
-            };
-        }
-
-       
         private void ChangePlayerTurn()
         {
             var player1Name = player1.GetComponent<Player>().GetPlayerName;
             var player2Name = player2.GetComponent<Player>().GetPlayerName;
+
             if (_currentPlayerName == player1Name)
             {
                 _currentPlayer = player2.GetComponent<Player>();
@@ -155,14 +171,21 @@ namespace BattleCombine.Gameplay
                 Debug.Log($"Current step in turn {currentStepInTurn.ToString()}");
             }
 
+            gameField.GetComponent<TileStack>().SpeedPlayer = _currentPlayer.moveSpeedValue;
             description.text = _currentPlayerName + " turn " + currentTurn + " step " + currentStepInTurn;
-            // if (currentStepInTurn <= stepsInTurn) return;  
             stepChecker.GetVariables(currentStepInTurn, stepsInTurn);
             if (stepChecker.MoveIsPassed() == false) return;
             Debug.Log("Round is over => Fight!!!");
-            fight.Fighting();
-            player1.GetComponent<Player>().UpdateStats();
-            player2.GetComponent<Player>().UpdateStats();
+            if (isTypeStandart)
+            {
+                fight.FightStandart();
+            }
+            else
+            {
+                fight.FightSimple(sequenceMoves.CurrentPlayer, sequenceMoves.NextPlayer);
+            }
+
+            sequenceMoves.Next();
         }
 
         public void SpeedIsOver(bool state)

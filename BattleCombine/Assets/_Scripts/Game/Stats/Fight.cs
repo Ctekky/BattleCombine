@@ -9,19 +9,19 @@ namespace BattleCombine.Gameplay
         private Player _player2;
 
         public Action onGameOver;
-        public Action onFighting;
+        public Action onFightEnd;
 
-        
+
         private Step step;
         private bool isTypeStandart;
         private int playerCurrentStepSimple;
 
         private void Awake()
         {
-            
             step = FindObjectOfType<Step>();
             isTypeStandart = step is StandartTypeStep;
         }
+
         public void SetUpPlayers(Player player1, Player player2)
         {
             _player1 = player1;
@@ -38,6 +38,44 @@ namespace BattleCombine.Gameplay
                 return;
             }
 
+            if (isTypeStandart)
+            {
+                TakeDamage(_player1, _player2);
+                if (_gameOver)
+                {
+                    onGameOver?.Invoke();
+                    return;
+                }
+
+                TakeDamage(_player2, _player1);
+                if (_gameOver)
+                {
+                    onGameOver?.Invoke();
+                    return;
+                }
+
+                onFightEnd?.Invoke();
+            }
+            else if (playerCurrentStepSimple % 2 == 0)
+            {
+                onFightEnd?.Invoke();
+            }
+
+
+            //_player1.SetAttackDefault();
+            // _player2.SetAttackDefault();
+        }
+
+        public void FightStandart()
+        {
+            if (_gameOver)
+            {
+                onGameOver?.Invoke();
+                return;
+            }
+            //if (isTypeStandart)
+            // {
+
             TakeDamage(_player1, _player2);
             if (_gameOver)
             {
@@ -51,39 +89,54 @@ namespace BattleCombine.Gameplay
                 onGameOver?.Invoke();
                 return;
             }
-            if (isTypeStandart)
-            {
 
-                onFighting?.Invoke();
-            }else if(playerCurrentStepSimple % 2 == 0)
-            {
-              
-                onFighting?.Invoke();
-              
-            }
+            onFightEnd?.Invoke();
+
             _player1.SetAttackDefault();
             _player2.SetAttackDefault();
+
+            // }
+        }
+
+        public void FightSimple(Player currentPlayer, Player nextPlayer)
+        {
+            playerCurrentStepSimple++;
+            TakeDamage(nextPlayer, currentPlayer);
+            currentPlayer.SetAttackDefault();
+            if (_gameOver)
+            {
+                onGameOver?.Invoke();
+                return;
+            }
+
+            if (playerCurrentStepSimple % 2 == 0)
+            {
+                onFightEnd?.Invoke();
+            }
         }
 
         private bool _gameOver;
 
-        private void TakeDamage(Player player1, Player player2)
+        private void TakeDamage(Player defender, Player attacker)
         {
-            switch (player1.Shielded)
             {
-                case true:
-                    player1.ChangeHealth(-(player2.AttackValue / 2));
-                    player1.RemoveShield();
-                    break;
-                case false:
-                    player1.ChangeHealth(-(player2.AttackValue));
-                    break;
+                switch (defender.Shielded)
+                {
+                    case true:
+                        defender.ChangeHealth(-(attacker.AttackValue / 2));
+                        defender.RemoveShield();
+                        break;
+                    case false:
+                        print(-(attacker.AttackValue));
+                        defender.ChangeHealth(-(attacker.AttackValue));
+                        break;
+                }
             }
-
-            if (player1.HealthValue > 0) return;
-            print($"{player1.GetPlayerName} lose");
+            defender.UpdateStats();
+            attacker.UpdateStats();
+            if (defender.HealthValue > 0) return;
+            print($"{defender.GetPlayerName} lose");
             _gameOver = true;
-            //player1.StartGame();
         }
     }
 }

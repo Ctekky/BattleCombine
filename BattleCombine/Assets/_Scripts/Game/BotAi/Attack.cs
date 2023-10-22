@@ -16,6 +16,7 @@ namespace BattleCombine.Ai
 
         public override void MakeStep()
         {
+            base.MakeStep();
             CurrentWay[_count].Touch();
             _count++;
         }

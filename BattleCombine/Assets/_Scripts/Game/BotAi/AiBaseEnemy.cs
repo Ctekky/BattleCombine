@@ -1,17 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.Timers;
 using BattleCombine.Gameplay;
+using UnityEngine;
 
 namespace BattleCombine.Ai
 {
     public abstract class AiBaseEnemy
     {
+        //Event to link sound *poon'k* to selection
+        public static Action OnTileSelect;
+
         public AiHandler _aiHandler;
         public List<Tile> CurrentWay { get; set; }
         public int MoodHealthPercent { get; set; }
         public int Speed { get; set; }
 
-        public bool IsAiTurn;
         public bool IsAiLose;
         public bool IsAiInitialised;
         
@@ -33,7 +37,7 @@ namespace BattleCombine.Ai
 
         public virtual void MakeStep()
         {
-
+            OnTileSelect?.Invoke();
         }
 
         public virtual void EndAiTurn()

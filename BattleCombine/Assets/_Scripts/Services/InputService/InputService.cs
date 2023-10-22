@@ -1,7 +1,6 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using BattleCombine.Interfaces;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
@@ -13,6 +12,7 @@ namespace BattleCombine.Services.InputService
         private TouchAction _input;
         private List<ITouchable> _touchables;
         private List<IMovable> _movables;
+        public Action onFingerUp;
 
         private void OnEnable()
         {
@@ -55,16 +55,11 @@ namespace BattleCombine.Services.InputService
 
         private void FingerUp(EnhancedTouch.Finger finger)
         {
-            if (_touchables.Count > 0)
+            if (_movables.Count > 0 || _touchables.Count > 0)
             {
-                _touchables.Last().EndTouch();
-                _touchables.Clear();
-            }
-
-            if (_movables.Count > 0)
-            {
-                _movables.Last().EndTouch();
                 _movables.Clear();
+                _touchables.Clear();
+                onFingerUp?.Invoke();
             }
         }
 
