@@ -10,7 +10,6 @@ namespace BattleCombine.Ai
     {
         public CreateField Field { get; set; }
         public AiHandler AiHandler { get; set; }
-        private List<int> CurrentWayIndexes { get; set; }
         public List<Tile> CurrentWay { get; set; }
         public List<int> CurrentWeights { get; set; }
         public List<int> NextStanceWeights { get; set; }
@@ -21,15 +20,6 @@ namespace BattleCombine.Ai
 
         //todo - separate weights to data base and link it here
         public Dictionary<List<Tile>, int> PathDictionary = new();
-
-        public void ConvertIndexToTiles()
-        {
-            foreach (var index in CurrentWayIndexes)
-            {
-                CurrentWay.Clear();
-                CurrentWay.Add(Field.GetTileList[index]);
-            }
-        }
 
         //find all exist pathes for current AiSpeed
         public void FindStartPath()
