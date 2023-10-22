@@ -14,12 +14,14 @@ namespace BattleCombine.Gameplay
         public ChosenState(Tile tile, StateMachine stateMachine) : base(tile, stateMachine)
         {
         }
+
         public override void Enter()
         {
             _tile.ChangeClolor(color);
             StateName = TileState.ChosenState;
             _tile.SetCurrentState(StateName);
         }
+
         public override void Input()
         {
             if (_tile.GetTileStack.GetGameManager.GetInputMode == InputMod.Touch)
@@ -31,10 +33,11 @@ namespace BattleCombine.Gameplay
                 InputMoveMod();
             }
         }
+
         public override void LogicUpdate()
         {
-
         }
+
         public override void Exit()
         {
             _tile.ClearTheTilesArray();
@@ -49,6 +52,7 @@ namespace BattleCombine.Gameplay
                 Tile chosingTile = tileGameObject.GetComponent<Tile>();
                 chosingTile.StateMachine.ChangeState(chosingTile.EnabledState);
             }
+
             List<GameObject> listGameObjectTile = new List<GameObject>();
 
             switch (_tile.GetTileStack.IDPlayer)
@@ -60,7 +64,8 @@ namespace BattleCombine.Gameplay
                     listGameObjectTile = _tile.GetTileStack.TilesListPlayer2;
                     break;
             }
-            listGameObjectTile.RemoveAt(listGameObjectTile.Count-1);
+
+            listGameObjectTile.RemoveAt(listGameObjectTile.Count - 1);
             _stateMachine.ChangeState(_tile.AvailableForSelectionState);
 
             if (listGameObjectTile.Count > 0)
@@ -73,6 +78,7 @@ namespace BattleCombine.Gameplay
                     Tile chosingTile = tileGameObject.GetComponent<Tile>();
                     chosingTile.StateMachine.ChangeState(chosingTile.AvailableForSelectionState);
                 }
+
                 tile.GetTileStack.NextMoveTiles.Clear();
                 tile.GetTileStack.NextMoveTiles.AddRange(tile.TilesForChoosing);
             }
@@ -83,10 +89,12 @@ namespace BattleCombine.Gameplay
                 switch (_tile.GetTileStack.IDPlayer)
                 {
                     case IDPlayer.Player1:
-                        listTileGameObject = _tile.FindTileDisabledTileForNextMove(_tile.GetTileStack.GetNextTurnButton.GetTilesForNextMovePlayer1);
+                        listTileGameObject =
+                            _tile.FindTileDisabledTileForNextMove(_tile.GetTileStack.GetTilesForNextMovePlayer1);
                         break;
                     case IDPlayer.Player2:
-                        listTileGameObject = _tile.FindTileDisabledTileForNextMove(_tile.GetTileStack.GetNextTurnButton.GetTilesForNextMovePlayer2);
+                        listTileGameObject =
+                            _tile.FindTileDisabledTileForNextMove(_tile.GetTileStack.GetTilesForNextMovePlayer2);
                         break;
                 }
 
@@ -100,6 +108,7 @@ namespace BattleCombine.Gameplay
                 _tile.GetTileStack.NextMoveTiles.AddRange(listTileGameObject);
             }
         }
+
         private void InputMoveMod()
         {
             TileStack tileStack = _tile.GetTileStack;
@@ -116,6 +125,7 @@ namespace BattleCombine.Gameplay
             }
 
             #region Ñhange state (EnabledState) of the tiles for the next move for the last tile in list (NextMoveTiles)
+
             GameObject lastTileGameObjectInList = listCurrentPlayer.Last();
             List<GameObject> tileListNextMove = new List<GameObject>();
 
@@ -126,11 +136,14 @@ namespace BattleCombine.Gameplay
                 Tile chagngeTile = tileGameObject.GetComponent<Tile>();
                 chagngeTile.StateMachine.ChangeState(chagngeTile.EnabledState);
             }
+
             listCurrentPlayer.Remove(lastTileGameObjectInList);
             tileListNextMove.Clear();
+
             #endregion
 
             #region Ñhange state (AvailableForSelectionState) of the tiles for the next move for the last tile in list (NextMoveTiles)
+
             tileListNextMove = listCurrentPlayer.Last().GetComponent<Tile>().TilesForChoosing;
             _tile.GetTileStack.NextMoveTiles.Clear();
             _tile.GetTileStack.NextMoveTiles.AddRange(tileListNextMove);
@@ -140,6 +153,7 @@ namespace BattleCombine.Gameplay
                 Tile chagngeTile = tileGameObject.GetComponent<Tile>();
                 chagngeTile.StateMachine.ChangeState(chagngeTile.AvailableForSelectionState);
             }
+
             #endregion
         }
     }
