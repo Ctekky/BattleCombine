@@ -101,10 +101,8 @@ namespace BattleCombine.Gameplay
         public void FightSimple(Player currentPlayer, Player nextPlayer)
         {
             playerCurrentStepSimple++;
-
             TakeDamage(nextPlayer, currentPlayer);
             currentPlayer.SetAttackDefault();
-
             if (_gameOver)
             {
                 onGameOver?.Invoke();
@@ -121,15 +119,12 @@ namespace BattleCombine.Gameplay
 
         private void TakeDamage(Player defender, Player attacker)
         {
-            // if (isTypeStandart)
             {
                 switch (defender.Shielded)
                 {
                     case true:
-
                         defender.ChangeHealth(-(attacker.AttackValue / 2));
                         defender.RemoveShield();
-
                         break;
                     case false:
                         print(-(attacker.AttackValue));
@@ -137,12 +132,11 @@ namespace BattleCombine.Gameplay
                         break;
                 }
             }
-
-
+            defender.UpdateStats();
+            attacker.UpdateStats();
             if (defender.HealthValue > 0) return;
             print($"{defender.GetPlayerName} lose");
             _gameOver = true;
-            //player1.StartGame();
         }
     }
 }
