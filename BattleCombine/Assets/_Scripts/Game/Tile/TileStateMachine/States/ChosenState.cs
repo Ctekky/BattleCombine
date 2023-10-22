@@ -30,7 +30,14 @@ namespace BattleCombine.Gameplay
             }
             else
             {
-                InputMoveMod();
+                if (_tile.GetTileStack.GetCurrentPlayerTileList().Count == 1)
+                {
+                    InputTouchMod();
+                }
+                else
+                {
+                    InputMoveMod();
+                }
             }
         }
 
