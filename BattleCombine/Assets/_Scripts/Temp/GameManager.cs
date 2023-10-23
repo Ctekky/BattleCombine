@@ -42,7 +42,9 @@ namespace BattleCombine.Gameplay
         private SequenceMoves sequenceMoves;
         private bool isTypeStandart;
 
-
+        //todo - (temp) Kirill Add to control ai hp status (to change state)
+        public int GetPlayerAiHealth => player2.GetComponent<Player>().HealthValue;
+        
         public int GetCurrentStepInTurn
         {
             get => currentStepInTurn;

@@ -36,6 +36,7 @@ namespace BattleCombine.Ai
 
         private Random _rand;
         private InputService _inputService;
+        private GameManager _gameManager;
         private AiBaseEnemy _currentAiBaseEnemy;
         private CreateField _field;
         private NextTurnButton _nextTurnButton;
@@ -50,7 +51,8 @@ namespace BattleCombine.Ai
         private void OnEnable()
         {
             _inputService = FindObjectOfType<InputService>();
-            
+            _gameManager = FindObjectOfType<GameManager>();
+
             StartAiMove += MovePath;
             ChangeEnemyStance += ChangeAiStance;
             //todo - change to ai speed
@@ -87,6 +89,13 @@ namespace BattleCombine.Ai
         private void GiveAiTurn()
         {
             _isAiTurn = !_isAiTurn;
+
+            if (_gameManager.GetPlayerAiHealth < GetMoodHealthPercent)
+            {
+                ChangeEnemyStance();
+                Debug.Log("Stance Changed");
+            }
+
             _giveTurnToAiRoutine = StartCoroutine(GiveTurnToAiRoutine());
         }
 
