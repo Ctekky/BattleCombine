@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
@@ -11,6 +12,9 @@ namespace BattleCombine.Gameplay
 {
     public class GameManager : MonoBehaviour
     {
+        //добавил, чтоб ловить боту момент смены хода
+        public static Action OnPlayerChange;
+
         [SerializeField] private InputService inputService;
         [SerializeField] private GameObject player1;
         [SerializeField] private GameObject player2;
@@ -38,7 +42,9 @@ namespace BattleCombine.Gameplay
         private SequenceMoves sequenceMoves;
         private bool isTypeStandart;
 
-
+        //todo - (temp) Kirill Add to control ai hp status (to change state)
+        public int GetPlayerAiHealth => player2.GetComponent<Player>().HealthValue;
+        
         public int GetCurrentStepInTurn
         {
             get => currentStepInTurn;
@@ -208,6 +214,8 @@ namespace BattleCombine.Gameplay
             }
 
             sequenceMoves.Next();
+            //Kirill Add for AI
+            OnPlayerChange?.Invoke();
         }
 
         public void SpeedIsOver(bool state)

@@ -26,7 +26,7 @@ namespace BattleCombine.Ai
 
         public virtual void Init()
         {
-            CurrentWay = new();
+            CurrentWay = new List<Tile>();
             CurrentWay = _aiHandler.CurrentWay;
             MoodHealthPercent = _aiHandler.GetMoodHealthPercent;
             Speed = _aiHandler.AiSpeed;
@@ -38,6 +38,13 @@ namespace BattleCombine.Ai
         public virtual void MakeStep()
         {
             OnTileSelect?.Invoke();
+            
+            if (CurrentWay[currentStep].StateMachine.CurrentState ==
+                CurrentWay[currentStep].EnabledState)
+            {
+                CurrentWay[currentStep].StateMachine
+                    .ChangeState(CurrentWay[currentStep].AvailableForSelectionState);
+            }
         }
 
         public virtual void EndAiTurn()

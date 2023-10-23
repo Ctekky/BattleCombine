@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
+using BattleCombine.Services.InputService;
 using UnityEngine;
 using Random = System.Random;
 
@@ -34,6 +35,8 @@ namespace BattleCombine.Ai
         [SerializeField] private int balanceHealthToChangeMood;
 
         private Random _rand;
+        private InputService _inputService;
+        private GameManager _gameManager;
         private AiBaseEnemy _currentAiBaseEnemy;
         private CreateField _field;
         private NextTurnButton _nextTurnButton;
@@ -47,10 +50,14 @@ namespace BattleCombine.Ai
 
         private void OnEnable()
         {
+            _inputService = FindObjectOfType<InputService>();
+            _gameManager = FindObjectOfType<GameManager>();
+
             StartAiMove += MovePath;
             ChangeEnemyStance += ChangeAiStance;
             //todo - change to ai speed
-            _nextTurnButton.onButtonPressed += GiveAiTurn;
+            //_nextTurnButton.onButtonPressed += GiveAiTurn;
+            GameManager.OnPlayerChange += GiveAiTurn;
         }
 
         private void Awake()
@@ -82,6 +89,13 @@ namespace BattleCombine.Ai
         private void GiveAiTurn()
         {
             _isAiTurn = !_isAiTurn;
+
+            if (_gameManager.GetPlayerAiHealth < GetMoodHealthPercent)
+            {
+                ChangeEnemyStance();
+                Debug.Log("Stance Changed");
+            }
+
             _giveTurnToAiRoutine = StartCoroutine(GiveTurnToAiRoutine());
         }
 
@@ -172,16 +186,9 @@ namespace BattleCombine.Ai
 
             while (currentStep < CurrentWay.Count)
             {
-                if (_currentAiBaseEnemy.CurrentWay[currentStep].StateMachine.CurrentState !=
-                    _currentAiBaseEnemy.CurrentWay[currentStep].AvailableForSelectionState)
-                {
-                    _currentAiBaseEnemy.CurrentWay[currentStep].StateMachine
-                        .ChangeState(_currentAiBaseEnemy.CurrentWay[currentStep].AvailableForSelectionState);
-                }
-
                 _currentAiBaseEnemy.MakeStep();
                 //todo - addEffects
-                yield return new WaitForSeconds(.7f);
+                yield return new WaitForSeconds(.5f);
                 currentStep++;
             }
 
@@ -195,8 +202,9 @@ namespace BattleCombine.Ai
 
             _currentAiBaseEnemy.EndAiTurn();
             //todo - write it right :D
-            var _turnButton = FindObjectOfType<NextTurnButton>();
-            _turnButton.Touch();
+            //var _turnButton = FindObjectOfType<NextTurnButton>();
+            //_turnButton.Touch();
+            _inputService.onFingerUp?.Invoke();
             _pathFinder.PathDictionary.Clear();
 
             StopCoroutine(_movePathRoutine);
@@ -214,7 +222,9 @@ namespace BattleCombine.Ai
         {
             StartAiMove -= MovePath;
             ChangeEnemyStance -= ChangeAiStance;
-            _nextTurnButton.onButtonPressed -= GiveAiTurn;
+            //_nextTurnButton.onButtonPressed -= GiveAiTurn;
+            GameManager.OnPlayerChange -= GiveAiTurn;
+            StopAllCoroutines();
         }
     }
 }

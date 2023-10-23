@@ -685,7 +685,7 @@ MonoBehaviour:
   player1: {fileID: 1273399796}
   player2: {fileID: 665053154}
   gameField: {fileID: 233264111}
-  inputMode: 0
+  inputMode: 1
   statsCollector: {fileID: 388951233}
   increaseStats: {fileID: 388951234}
   nextTurnButton: {fileID: 2065769399}
@@ -998,7 +998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3865557558910741595, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: speedPlayer
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6874827942579107696, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: m_Pivot.x
