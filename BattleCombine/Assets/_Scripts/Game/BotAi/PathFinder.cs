@@ -59,6 +59,7 @@ namespace BattleCombine.Ai
 
                 FindBestPath();
             }
+            _lastTilesToFindNewPath.Clear();
         }
 
         //find path, and if its done - add to dict
@@ -147,13 +148,12 @@ namespace BattleCombine.Ai
                 path = entry.Key;
             }
 
-            CurrentWay = new List<Tile>();
+            CurrentWay.Clear();
             CurrentWay = path;
-            AiHandler.CurrentWay = new List<Tile>();
+            AiHandler.CurrentWay.Clear();
             AiHandler.CurrentWay = path;
-            CurrentAiBaseEnemy.CurrentWay = new List<Tile>();
+            CurrentAiBaseEnemy.CurrentWay.Clear();
             CurrentAiBaseEnemy.CurrentWay = path;
-            _lastTilesToFindNewPath = new List<int>();
         }
 
         private static void FindCandidates(List<int> candidateIndexes, int gridSize, int currentIndex)

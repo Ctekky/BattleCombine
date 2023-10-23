@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
@@ -11,6 +12,9 @@ namespace BattleCombine.Gameplay
 {
     public class GameManager : MonoBehaviour
     {
+        //добавил, чтоб ловить боту момент смены хода
+        public static Action OnPlayerChange;
+
         [SerializeField] private InputService inputService;
         [SerializeField] private GameObject player1;
         [SerializeField] private GameObject player2;
@@ -208,6 +212,8 @@ namespace BattleCombine.Gameplay
             }
 
             sequenceMoves.Next();
+            //Kirill Add for AI
+            OnPlayerChange?.Invoke();
         }
 
         public void SpeedIsOver(bool state)
