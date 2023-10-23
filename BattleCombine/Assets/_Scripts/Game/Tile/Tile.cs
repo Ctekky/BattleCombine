@@ -158,21 +158,14 @@ namespace BattleCombine.Gameplay
 
         public void Touch()
         {
-            if (tileStack.GetGameManager.GetInputMode == InputMod.TouchAndMove)
+            switch (tileStack.IDPlayer)
             {
-                return;
-            }
-            else
-            {
-                switch (tileStack.IDPlayer)
-                {
-                    case IDPlayer.Player1:
-                        ActionForTileTouch(tileStack.TilesListPlayer1);
-                        break;
-                    case IDPlayer.Player2:
-                        ActionForTileTouch(tileStack.TilesListPlayer2);
-                        break;
-                }
+                case IDPlayer.Player1:
+                    ActionForTileTouch(tileStack.TilesListPlayer1);
+                    break;
+                case IDPlayer.Player2:
+                    ActionForTileTouch(tileStack.TilesListPlayer2);
+                    break;
             }
         }
         

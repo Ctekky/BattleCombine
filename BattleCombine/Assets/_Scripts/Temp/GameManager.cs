@@ -125,7 +125,12 @@ namespace BattleCombine.Gameplay
         {
             var tileStack = gameField.GetComponent<TileStack>();
             var list = tileStack.GetCurrentPlayerTileList();
-
+            if(list.Count < _currentPlayer.moveSpeedValue) return;
+            tileStack.ConfirmTiles();
+            ButtonPressed();
+            Debug.Log("Finger up event invoked");
+            return;
+            //TODO - Anton move this code if you need it
             if (list.Count == 1)
             {
                 Tile tile = list[0].GetComponent<Tile>();
