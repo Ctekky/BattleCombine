@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleCombine.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -52,15 +53,26 @@ namespace BattleCombine.Services.InputService
         {
             DetectTouchOnObject(finger);
         }
+
         private void FingerUp(EnhancedTouch.Finger finger)
         {
-            if (_movables.Count > 0 || _touchables.Count > 0)
+            switch (_movables.Count)
             {
-                _movables.Clear();
-                _touchables.Clear();
-                onFingerUp?.Invoke();
+                case <= 0 when _touchables.Count <= 0:
+                    return;
+                case <= 0:
+                    _touchables.Last().Touch();
+                    onFingerUp?.Invoke();
+                    _touchables.Clear();
+                    break;
+                default:
+                    _movables.Clear();
+                    _touchables.Clear();
+                    onFingerUp?.Invoke();
+                    break;
             }
         }
+
         private void DetectTouchOnObject(EnhancedTouch.Finger finger)
         {
             var raycast = Camera.main.ScreenPointToRay(finger.screenPosition);
@@ -69,7 +81,6 @@ namespace BattleCombine.Services.InputService
             var obj = hit.transform.gameObject;
             if (obj.GetComponent<ITouchable>() == null) return;
             _touchables.Add(obj.GetComponent<ITouchable>());
-            obj.GetComponent<ITouchable>().Touch();
         }
 
         private void DetectMoveOnObject(EnhancedTouch.Finger finger)
@@ -78,7 +89,15 @@ namespace BattleCombine.Services.InputService
             var hit = Physics2D.Raycast(raycast.origin, raycast.direction);
             if (hit.collider == null) return;
             var obj = hit.transform.gameObject;
-            if (obj.GetComponent<IMovable>() == null) return;
+            var iMovableObj = obj.GetComponent<IMovable>();
+            if (iMovableObj == null) return;
+            if (_movables.Contains(iMovableObj))
+            {
+                iMovableObj.FingerMoved();
+                _movables.Remove(iMovableObj);
+                return;
+            }
+
             _movables.Add(obj.GetComponent<IMovable>());
             obj.GetComponent<IMovable>().FingerMoved();
         }
