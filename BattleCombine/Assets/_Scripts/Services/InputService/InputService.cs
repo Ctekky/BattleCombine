@@ -65,6 +65,12 @@ namespace BattleCombine.Services.InputService
                     onFingerUp?.Invoke();
                     _touchables.Clear();
                     break;
+                case 1:
+                    _touchables.Last().Touch();
+                    onFingerUp?.Invoke();
+                    _movables.Clear();
+                    _touchables.Clear();
+                    break;
                 default:
                     _movables.Clear();
                     _touchables.Clear();
