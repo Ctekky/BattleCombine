@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Shield
   cellType: 2
-  sprite: {fileID: 21300000, guid: 6d42a9eb1c89879488cd10472f61de08, type: 3}
+  spriteUp: {fileID: 21300000, guid: 3124a9e48aca8b44dadea8ce9870f500, type: 3}
+  spriteDown: {fileID: 21300000, guid: 3124a9e48aca8b44dadea8ce9870f500, type: 3}
   modifierChances:
   - Key: 9
     Value: 0

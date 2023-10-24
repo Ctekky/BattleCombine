@@ -173,7 +173,6 @@ namespace BattleCombine.Gameplay
                 cumulativeWeight += dictionary.Chance;
                 if (roll >= cumulativeWeight) continue;
                 currentTile.ChangeTileModifier(dictionary.Value);
-                //print("dict" + dictionary.Value);
                 return;
             }
         }

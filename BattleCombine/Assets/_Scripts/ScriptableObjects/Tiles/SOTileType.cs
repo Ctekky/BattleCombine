@@ -10,7 +10,8 @@ namespace BattleCombine.ScriptableObjects
     {
         public new string name;
         public CellType cellType;
-        public Sprite sprite;
+        public Sprite spriteUp;
+        public Sprite spriteDown;
         public List<TileModifierDictionary> modifierChances;
     }
 }

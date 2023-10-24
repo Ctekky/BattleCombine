@@ -4,6 +4,7 @@ using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
 using BattleCombine.Services.InputService;
+using BattleCombine.Services.Other;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,7 @@ namespace BattleCombine.Gameplay
         public static Action OnPlayerChange;
 
         [SerializeField] private InputService inputService;
+        [SerializeField] private ColorSettings colorSettings;
         [SerializeField] private GameObject player1;
         [SerializeField] private GameObject player2;
         [SerializeField] private GameObject gameField;
@@ -53,6 +55,16 @@ namespace BattleCombine.Gameplay
         public InputMod GetInputMode
         {
             get => inputMode;
+        }
+
+        public Color GetTileColorSetting()
+        {
+            return colorSettings.tileColor;
+        }
+        
+        public Color GetBorderColorSetting()
+        {
+            return colorSettings.borderColor;
         }
 
         private void OnDisable()
