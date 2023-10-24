@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Empty
   cellType: 3
-  sprite: {fileID: 21300000, guid: 115f0f9d55ad27a468dc52d6d04d889e, type: 3}
+  sprite: {fileID: 21300000, guid: 8f07ead69fd01124c858073276759c86, type: 3}
+  spriteUp: {fileID: 21300000, guid: 8f07ead69fd01124c858073276759c86, type: 3}
+  spriteDown: {fileID: 21300000, guid: 8f07ead69fd01124c858073276759c86, type: 3}
   modifierChances: []
