@@ -1209,6 +1209,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 388951235}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: tileRefreshChance
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: tileModifierChances.Array.size
       value: 18
       objectReference: {fileID: 0}
@@ -1562,9 +1566,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     attackValue: 0
-    attackValueDefault: 3
+    attackValueDefault: 0
     healthValue: 0
-    healthValueDefault: 100
+    healthValueDefault: 20
     moveSpeedValueDefault: 3
     shielded: 0
   moveSpeedValue: 0
@@ -2107,9 +2111,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     attackValue: 0
-    attackValueDefault: 3
+    attackValueDefault: 0
     healthValue: 0
-    healthValueDefault: 100
+    healthValueDefault: 20
     moveSpeedValueDefault: 3
     shielded: 0
   moveSpeedValue: 0
