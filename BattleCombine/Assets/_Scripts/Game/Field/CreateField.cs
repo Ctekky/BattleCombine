@@ -49,6 +49,9 @@ namespace BattleCombine.Gameplay
 
         [Header("Tile Refresh chance - %")] [SerializeField]
         private int tileRefreshChance;
+        
+        [Header("Tile Update chance - %")] [SerializeField]
+        private int tileUpdateChance;
 
         [SerializeField] private GameManager gameManager;
 
@@ -196,6 +199,9 @@ namespace BattleCombine.Gameplay
                 }
                 else if ((currentTile.GetTileType != CellType.Shield && currentTile.TileModifier < 9))
                 {
+                    _rand = new Random();
+                    var roll = _rand.Next(0, 100);
+                    if (roll >= tileRefreshChance) continue;
                     if (currentTile.TileModifier == -1)
                         currentTile.ChangeTileModifier(currentTile.TileModifier + 2);
 

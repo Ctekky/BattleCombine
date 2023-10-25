@@ -1209,6 +1209,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 388951235}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
+      propertyPath: tileUpdateChance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: tileRefreshChance
       value: 70
       objectReference: {fileID: 0}
