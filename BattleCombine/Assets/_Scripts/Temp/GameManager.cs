@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
 using BattleCombine.Services.InputService;
+using BattleCombine.Services.Other;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +13,11 @@ namespace BattleCombine.Gameplay
 {
     public class GameManager : MonoBehaviour
     {
+        //добавил, чтоб ловить боту момент смены хода
+        public static Action OnPlayerChange;
+
         [SerializeField] private InputService inputService;
+        [SerializeField] private ColorSettings colorSettings;
         [SerializeField] private GameObject player1;
         [SerializeField] private GameObject player2;
         [SerializeField] private GameObject gameField;
@@ -38,7 +44,9 @@ namespace BattleCombine.Gameplay
         private SequenceMoves sequenceMoves;
         private bool isTypeStandart;
 
-
+        //todo - (temp) Kirill Add to control ai hp status (to change state)
+        public int GetPlayerAiHealth => player2.GetComponent<Player>().HealthValue;
+        
         public int GetCurrentStepInTurn
         {
             get => currentStepInTurn;
@@ -47,6 +55,16 @@ namespace BattleCombine.Gameplay
         public InputMod GetInputMode
         {
             get => inputMode;
+        }
+
+        public Color GetTileColorSetting()
+        {
+            return colorSettings.tileColor;
+        }
+        
+        public Color GetBorderColorSetting()
+        {
+            return colorSettings.borderColor;
         }
 
         private void OnDisable()
@@ -119,7 +137,12 @@ namespace BattleCombine.Gameplay
         {
             var tileStack = gameField.GetComponent<TileStack>();
             var list = tileStack.GetCurrentPlayerTileList();
-
+            if(list.Count < _currentPlayer.moveSpeedValue) return;
+            tileStack.ConfirmTiles();
+            ButtonPressed();
+            Debug.Log("Finger up event invoked");
+            return;
+            //TODO - Anton move this code if you need it
             if (list.Count == 1)
             {
                 Tile tile = list[0].GetComponent<Tile>();
@@ -208,6 +231,8 @@ namespace BattleCombine.Gameplay
             }
 
             sequenceMoves.Next();
+            //Kirill Add for AI
+            OnPlayerChange?.Invoke();
         }
 
         public void SpeedIsOver(bool state)

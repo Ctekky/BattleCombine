@@ -8,7 +8,6 @@ namespace BattleCombine.Gameplay
         protected bool TileStatusHelp;
         private readonly Color _color = Color.red;
 
-
         public AvailableForSelectionState(Tile tile, StateMachine stateMachine) : base(tile, stateMachine)
         {
         }
@@ -16,23 +15,25 @@ namespace BattleCombine.Gameplay
         public override void Enter()
         {
             TileStatusHelp = true;
-            _tile.ChangeClolor(_color);
+            _tile.SetTileColor(false);
+            _tile.SetBorderColor(true);
             StateName = TileState.AvailableForSelectionState;
             _tile.SetCurrentState(StateName);
 
             //if (_tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
             //{
-                switch (_tile.GetTileStack.IDPlayer)
-                {
-                    case IDPlayer.Player1:
-                        _tile.SetAlignTileToPlayer1(true);
-                        break;
-                    case IDPlayer.Player2:
-                        _tile.SetAlignTileToPlayer2(true);
-                        break;
-                }
+            switch (_tile.GetTileStack.IDPlayer)
+            {
+                case IDPlayer.Player1:
+                    _tile.SetAlignTileToPlayer1(true);
+                    break;
+                case IDPlayer.Player2:
+                    _tile.SetAlignTileToPlayer2(true);
+                    break;
+            }
             //}
         }
+
         public override void Input()
         {
             if (_tile.GetTileStack.GetGameManager.GetInputMode == InputMod.Touch)
@@ -47,7 +48,6 @@ namespace BattleCombine.Gameplay
 
         public override void LogicUpdate()
         {
-
         }
 
         public override void Exit()
@@ -68,18 +68,22 @@ namespace BattleCombine.Gameplay
 
             switch (_tile.GetTileStack.IDPlayer)
             {
-                case IDPlayer.Player1://TODO
-                    if (_tile.GetTileStack.TilesListPlayer1.Count > 0 || _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
+                case IDPlayer.Player1: //TODO
+                    if (_tile.GetTileStack.TilesListPlayer1.Count > 0 ||
+                        _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
                     {
                         _tile.ChangeTileStateInStack();
                     }
+
                     _tile.GetTileStack.TilesListPlayer1.Add(_tile.gameObject);
                     break;
-                case IDPlayer.Player2://TODO
-                    if (_tile.GetTileStack.TilesListPlayer2.Count > 0 || _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
+                case IDPlayer.Player2: //TODO
+                    if (_tile.GetTileStack.TilesListPlayer2.Count > 0 ||
+                        _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
                     {
                         _tile.ChangeTileStateInStack();
                     }
+
                     _tile.GetTileStack.TilesListPlayer2.Add(_tile.gameObject);
                     break;
             }
@@ -89,6 +93,7 @@ namespace BattleCombine.Gameplay
 
             _stateMachine.ChangeState(_tile.ChosenState);
         }
+
         private void InputMoveMod()
         {
             _tile.FindTileForAction(_tile, _tile.TilesForChoosing, TileState.EnabledState);
@@ -102,18 +107,22 @@ namespace BattleCombine.Gameplay
 
             switch (_tile.GetTileStack.IDPlayer)
             {
-                case IDPlayer.Player1://TODO
-                    if (_tile.GetTileStack.TilesListPlayer1.Count > 0 || _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
+                case IDPlayer.Player1: //TODO
+                    if (_tile.GetTileStack.TilesListPlayer1.Count > 0 ||
+                        _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
                     {
                         _tile.ChangeTileStateInStack();
                     }
+
                     _tile.GetTileStack.TilesListPlayer1.Add(_tile.gameObject);
                     break;
-                case IDPlayer.Player2://TODO
-                    if (_tile.GetTileStack.TilesListPlayer2.Count > 0 || _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
+                case IDPlayer.Player2: //TODO
+                    if (_tile.GetTileStack.TilesListPlayer2.Count > 0 ||
+                        _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
                     {
                         _tile.ChangeTileStateInStack();
                     }
+
                     _tile.GetTileStack.TilesListPlayer2.Add(_tile.gameObject);
                     break;
             }

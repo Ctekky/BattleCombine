@@ -7,19 +7,25 @@ using BattleCombine.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using System.Linq;
-using BattleCombine.Services.InputService;
 
 namespace BattleCombine.Gameplay
 {
     public class Tile : MonoBehaviour, ITouchable, IMovable
     {
-        [SerializeField] private SpriteRenderer spriteRenderer;
+        //[SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private SpriteRenderer borderSprite;
+        [SerializeField] private SpriteRenderer tileSprite;
+        [SerializeField] private SpriteRenderer typeSprite;
+        [SerializeField] private Color tileNormalColor;
+        [SerializeField] private Color tileChosenColor;
+        [SerializeField] private Color tileNormalBorder;
+        [SerializeField] private Color tileChosenBorder;
         [SerializeField] private TileStack tileStack;
         [SerializeField] private bool startTile = false;
         [SerializeField] private TileState tileCurrentState;
         [SerializeField] private List<GameObject> tilesForChoosing = new List<GameObject>();
         [SerializeField] private List<GameObject> tilesNearThisTile = new List<GameObject>();
-        
+
 
         //TODO: set type and modifier to tile
         [SerializeField] private TileType tileType;
@@ -87,11 +93,9 @@ namespace BattleCombine.Gameplay
         {
             CheckTilesStateNearThisTile(this);
             tileStack = FindObjectOfType<TileStack>();
-            //TODO: change algorithm to set up modifier
-            //tileModifier = 5;
-
             SetupTile();
         }
+
         //TODO: change this to proper algorithm
         public void SetGameManager(GameManager gameManager)
         {
@@ -112,14 +116,40 @@ namespace BattleCombine.Gameplay
         public void ChangeTileType(TileType type)
         {
             tileType = type;
-            spriteRenderer.sprite = tileType.sprite;
-            if (type.cellType == CellType.Empty) ChangeTileModifier(0);
+            switch (type.cellType)
+            {
+                case CellType.Empty:
+                    ChangeTileModifier(0);
+                    break;
+                case CellType.Shield:
+                    ChangeTileModifier(0);
+                    break;
+            }
         }
 
         public void ChangeTileModifier(int modifier)
         {
             tileModifier = modifier;
-            text.text = tileModifier.ToString(CultureInfo.CurrentCulture);
+            switch (tileModifier)
+            {
+                case > 0:
+                    text.text = "+" + tileModifier.ToString(CultureInfo.CurrentCulture);
+                    ChangeTileSprite(tileType.spriteUp);
+                    break;
+                case 0:
+                    text.text = "";
+                    ChangeTileSprite(tileType.spriteUp);
+                    break;
+                case < 0:
+                    text.text = tileModifier.ToString(CultureInfo.CurrentCulture);
+                    ChangeTileSprite(tileType.spriteDown);
+                    break;
+            }
+        }
+
+        private void ChangeTileSprite(Sprite newSprite)
+        {
+            typeSprite.sprite = newSprite;
         }
 
         public void ChangeStartFlag(bool isStartTile)
@@ -129,8 +159,13 @@ namespace BattleCombine.Gameplay
 
         private void SetupTile()
         {
-            text.text = tileModifier.ToString(CultureInfo.CurrentCulture);
-            spriteRenderer.sprite = tileType.sprite;
+            tileNormalColor = Color.white;
+            tileNormalBorder = new Color(255, 255, 255, 0);
+            tileChosenColor = _gameManager.GetTileColorSetting();
+            tileChosenBorder = _gameManager.GetBorderColorSetting();
+            tileSprite.color = tileNormalColor;
+            borderSprite.color = tileNormalBorder;
+            ChangeTileModifier(tileModifier);
             if (startTile)
             {
                 StateMachine.Initialize(AvailableForSelectionState);
@@ -151,31 +186,29 @@ namespace BattleCombine.Gameplay
             get => tileCurrentState;
         }
 
-        public void ChangeClolor(Color color)
+        public void SetBorderColor(bool state)
         {
-            spriteRenderer.color = color;
+            borderSprite.color = state ? tileChosenBorder : tileNormalBorder;
+        }
+
+        public void SetTileColor(bool state)
+        {
+            tileSprite.color = state ? tileChosenBorder : tileNormalColor;
         }
 
         public void Touch()
         {
-            if (tileStack.GetGameManager.GetInputMode == InputMod.TouchAndMove)
+            switch (tileStack.IDPlayer)
             {
-                return;
-            }
-            else
-            {
-                switch (tileStack.IDPlayer)
-                {
-                    case IDPlayer.Player1:
-                        ActionForTileTouch(tileStack.TilesListPlayer1);
-                        break;
-                    case IDPlayer.Player2:
-                        ActionForTileTouch(tileStack.TilesListPlayer2);
-                        break;
-                }
+                case IDPlayer.Player1:
+                    ActionForTileTouch(tileStack.TilesListPlayer1);
+                    break;
+                case IDPlayer.Player2:
+                    ActionForTileTouch(tileStack.TilesListPlayer2);
+                    break;
             }
         }
-        
+
         public void FingerMoved()
         {
             if (tileStack.GetGameManager.GetInputMode == InputMod.Touch)
@@ -208,6 +241,7 @@ namespace BattleCombine.Gameplay
                     break;
             }
         }
+
         public void FindTileForAction(Tile tile, List<GameObject> list,
             TileState nameState) //change state for nearest tiles
         {
