@@ -4,7 +4,7 @@ namespace BattleCombine.Ai
 {
     public class Attack : AiBaseEnemy
     {
-        public string _name = "Attack";
+        private string _name = "Attack";
 
         private int _count = 0;
 
@@ -18,7 +18,7 @@ namespace BattleCombine.Ai
         {
             base.MakeStep();
 
-            CurrentWay[_count].FingerMoved();//Touch();
+            CurrentWay[_count].FingerMoved();
             _count++;
         }
 

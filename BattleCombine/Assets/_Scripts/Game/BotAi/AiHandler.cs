@@ -12,7 +12,6 @@ namespace BattleCombine.Ai
 {
     public class AiHandler : MonoBehaviour
     {
-        public static Action StartAiMove;
         public static Action ChangeEnemyStance;
         
         public List<Tile> CurrentWay { get; set; }
@@ -53,10 +52,7 @@ namespace BattleCombine.Ai
             _inputService = FindObjectOfType<InputService>();
             _gameManager = FindObjectOfType<GameManager>();
 
-            StartAiMove += MovePath;
             ChangeEnemyStance += ChangeAiStance;
-            //todo - change to ai speed
-            //_nextTurnButton.onButtonPressed += GiveAiTurn;
             GameManager.OnPlayerChange += GiveAiTurn;
         }
 
@@ -66,11 +62,12 @@ namespace BattleCombine.Ai
             _nextTurnButton = FindObjectOfType<NextTurnButton>();
             _field = FindObjectOfType<CreateField>();
             
-            _pathFinder = new PathFinder();
-            
-            _pathFinder.AiSpeed = AiSpeed;
-            _pathFinder.Field = _field;
-            _pathFinder.AiHandler = this;
+            _pathFinder = new PathFinder
+            {
+                AiSpeed = AiSpeed,
+                Field = _field,
+                AiHandler = this
+            };
         }
 
         private void Start()
@@ -116,7 +113,7 @@ namespace BattleCombine.Ai
         private void ChangeAiStance()
         {
             //todo - if enemy can return stance back - rewrite func!..
-            _pathFinder.CurrentWeights = new();
+            _pathFinder.CurrentWeights = new List<int>();
             _pathFinder.CurrentWeights = _pathFinder.NextStanceWeights;
         }
 
@@ -167,7 +164,7 @@ namespace BattleCombine.Ai
                     throw new ArgumentOutOfRangeException();
             }
 
-            _currentAiBaseEnemy._aiHandler = this;
+            _currentAiBaseEnemy.AiHandler = this;
             _pathFinder.CurrentAiBaseEnemy = _currentAiBaseEnemy;
         }
 
@@ -188,7 +185,7 @@ namespace BattleCombine.Ai
             {
                 _currentAiBaseEnemy.MakeStep();
                 //todo - addEffects
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(.4f);
                 currentStep++;
             }
 
@@ -201,9 +198,6 @@ namespace BattleCombine.Ai
             }
 
             _currentAiBaseEnemy.EndAiTurn();
-            //todo - write it right :D
-            //var _turnButton = FindObjectOfType<NextTurnButton>();
-            //_turnButton.Touch();
             _inputService.onFingerUp?.Invoke();
             _pathFinder.PathDictionary.Clear();
 
@@ -220,9 +214,7 @@ namespace BattleCombine.Ai
 
         private void OnDisable()
         {
-            StartAiMove -= MovePath;
             ChangeEnemyStance -= ChangeAiStance;
-            //_nextTurnButton.onButtonPressed -= GiveAiTurn;
             GameManager.OnPlayerChange -= GiveAiTurn;
             StopAllCoroutines();
         }

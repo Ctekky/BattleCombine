@@ -13,7 +13,6 @@ namespace BattleCombine.Gameplay
 
         [Header("Scale or not on start")] [SerializeField]
         private bool makeScale;
-
         [Header("Start Tile set")] [SerializeField]
         private bool isAiRandomStart;
 
@@ -21,37 +20,30 @@ namespace BattleCombine.Gameplay
         [SerializeField] private bool isPlayerRandomStart;
         [SerializeField] private int defaultPlayerStartTilePos;
 
-        [Header("FieldSize")] [SerializeField] private FieldSize sizeType;
-
+        [Header("FieldSize")] [SerializeField] 
+        private FieldSize sizeType;
         [Header("TileParent")] [SerializeField]
         private GameObject tileParent;
-
         [Header("Tile prefab")] [SerializeField]
         private Tile tile;
 
         [Header("Offsets & scales (test values)")] [SerializeField, Tooltip("Отступы от края")]
         private float edgeOffset = 0.5f;
-
         [SerializeField, Tooltip("Отступы между тайлами")]
         private float tileOffset = 1.1f;
-
         [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
         private float smallFieldScale = 1.45f;
-
         [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
         private float mediumFieldScale = 1.2f;
-
         [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
         private float largeFieldScale = 1.04f;
 
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
-
         [Header("Tile Refresh chance - %")] [SerializeField]
         private int tileRefreshChance;
 
         [SerializeField] private GameManager gameManager;
-
 
         private List<Tile> _tileList;
         private Transform _fieldParent;
@@ -162,7 +154,7 @@ namespace BattleCombine.Gameplay
 
         private void ChangeTileModifier(Tile currentTile, List<TileModifierDictionary> table)
         {
-            _rand = new();
+            _rand = new Random();
             var totalWeight = table.Sum(dictionary => dictionary.Chance);
 
             var roll = _rand.Next(0, totalWeight);
@@ -207,7 +199,7 @@ namespace BattleCombine.Gameplay
 
         private void ChangeTileType(Tile currentTile)
         {
-            _rand = new();
+            _rand = new Random();
             var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
             var roll = _rand.Next(0, totalWeight);
             var cumulativeWeight = 0;
@@ -223,6 +215,7 @@ namespace BattleCombine.Gameplay
 
         private void ApplyStartTileStatus(Tile currentTile)
         {
+            //todo - change flaging, to AiLink
             currentTile.ChangeStartFlag(true);
         }
 

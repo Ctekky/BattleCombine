@@ -4,7 +4,7 @@ namespace BattleCombine.Ai
 {
     public class Balance : AiBaseEnemy
     {
-        public string _name = "Balance";
+        private string _name = "Balance";
         
         private int _count = 0;
         
@@ -18,7 +18,7 @@ namespace BattleCombine.Ai
         {
             base.MakeStep();
 
-            CurrentWay[_count].FingerMoved();//.Touch();
+            CurrentWay[_count].FingerMoved();
             _count++;
         }
         
