@@ -4,7 +4,7 @@ namespace BattleCombine.Ai
 {
     public class Tank : AiBaseEnemy
     {
-        public string _name = "Tank";
+        private string _name = "Tank";
 
         private int _count = 0;
         
@@ -18,7 +18,7 @@ namespace BattleCombine.Ai
         {
             base.MakeStep();
             
-            CurrentWay[_count].FingerMoved();//.Touch();
+            CurrentWay[_count].FingerMoved();
             _count++;
         }
 

@@ -105,7 +105,7 @@ namespace BattleCombine.Ai
             AiHandler.CurrentWay = newPath;
         }
 
-        //take pathes weights, and choose best one
+        //take paths weights, and choose best one
         private void FindBestPath()
         {
             var maxValue = int.MinValue;
@@ -156,7 +156,7 @@ namespace BattleCombine.Ai
             CurrentAiBaseEnemy.CurrentWay = path;
         }
 
-        private static void FindCandidates(List<int> candidateIndexes, int gridSize, int currentIndex)
+        private static void FindCandidates(ICollection<int> candidateIndexes, int gridSize, int currentIndex)
         {
             //Add tile from Left
             if (currentIndex % gridSize != 0)
