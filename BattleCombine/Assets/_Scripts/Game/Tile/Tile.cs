@@ -7,10 +7,11 @@ using BattleCombine.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 namespace BattleCombine.Gameplay
 {
-    public class Tile : MonoBehaviour, ITouchable, IMovable
+    public class Tile : MonoBehaviour, IMovable, ITouchable, IPointerExitHandler//, IPointerEnterHandler
     {
         //[SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private SpriteRenderer borderSprite;
@@ -23,6 +24,7 @@ namespace BattleCombine.Gameplay
         [SerializeField] private TileStack tileStack;
         [SerializeField] private bool startTile = false;
         [SerializeField] private TileState tileCurrentState;
+        [SerializeField] private bool _cantUse = false;
         [SerializeField] private List<GameObject> tilesForChoosing = new List<GameObject>();
         [SerializeField] private List<GameObject> tilesNearThisTile = new List<GameObject>();
 
@@ -58,6 +60,11 @@ namespace BattleCombine.Gameplay
         {
             get => tilesNearThisTile;
             private set => tilesNearThisTile = value;
+        }
+        public bool CantUse
+        {
+            get => _cantUse;
+            set => _cantUse = value;
         }
 
         public int TileModifier
@@ -228,20 +235,6 @@ namespace BattleCombine.Gameplay
                 }
             }
         }
-
-        public void TouchOnTile()
-        {
-            switch (tileStack.IDPlayer)
-            {
-                case IDPlayer.Player1:
-                    ActionForTileTouch(tileStack.TilesListPlayer1);
-                    break;
-                case IDPlayer.Player2:
-                    ActionForTileTouch(tileStack.TilesListPlayer2);
-                    break;
-            }
-        }
-
         public void FindTileForAction(Tile tile, List<GameObject> list,
             TileState nameState) //change state for nearest tiles
         {
@@ -408,13 +401,20 @@ namespace BattleCombine.Gameplay
                 }
             }
         }
-        /*public void OnPointerEnter(PointerEventData eventData)
-        {
 
-        }
         public void OnPointerExit(PointerEventData eventData)
         {
-            throw new NotImplementedException();
+            _cantUse = false;
+            //Debug.Log("Exit");
+        }
+
+        /*public void OnPointerEnter(PointerEventData eventData)
+        {
+            if(tileCurrentState == TileState.ChosenState)
+            {
+                _cantUse = true;
+                Debug.Log("Enter");
+            }
         }*/
 
         /*private void OnDrawGizmos()
