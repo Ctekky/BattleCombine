@@ -17,6 +17,7 @@ namespace BattleCombine.Gameplay
 
         public override void Enter()
         {
+            //_tile.CantUse = true;
             _tile.SetTileColor(true);
             _tile.SetBorderColor(false);
             StateName = TileState.ChosenState;
@@ -33,6 +34,7 @@ namespace BattleCombine.Gameplay
             {
                 if (_tile.GetTileStack.GetCurrentPlayerTileList().Count == 1)
                 {
+                    //return;
                     InputTouchMod();
                 }
                 else
@@ -48,7 +50,9 @@ namespace BattleCombine.Gameplay
 
         public override void Exit()
         {
+            _tile.CantUse = false;
             _tile.ClearTheTilesArray();
+           
         }
 
         private void InputTouchMod()

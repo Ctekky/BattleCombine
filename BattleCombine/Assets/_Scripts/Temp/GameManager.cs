@@ -148,7 +148,7 @@ namespace BattleCombine.Gameplay
                 Tile tile = list[0].GetComponent<Tile>();
                 if (tile.GetTileState == TileState.ChosenState)
                 {
-                    tile.TouchOnTile();
+                    //tile.EndTouchOnTile();
                     Debug.Log("One tile in list, CHANGE STATE");
                 }
                 else
