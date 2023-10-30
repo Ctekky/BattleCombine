@@ -9,6 +9,7 @@ namespace BattleCombine.Enums
     }
     public enum FieldSize : byte
     {
+        UltraSmall,
         Small,
         Medium,
         Large,

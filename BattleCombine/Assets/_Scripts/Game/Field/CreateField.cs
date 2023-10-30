@@ -32,6 +32,8 @@ namespace BattleCombine.Gameplay
         [SerializeField, Tooltip("Отступы между тайлами")]
         private float tileOffset = 1.1f;
         [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
+        private float tutorFieldScale = 1.8f;        
+        [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
         private float smallFieldScale = 1.45f;
         [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
         private float mediumFieldScale = 1.2f;
@@ -75,6 +77,7 @@ namespace BattleCombine.Gameplay
         {
             _fieldSize = sizeType switch
             {
+                FieldSize.UltraSmall => 5,
                 FieldSize.Small => 6,
                 FieldSize.Medium => 7,
                 FieldSize.Large => 8,
@@ -83,7 +86,6 @@ namespace BattleCombine.Gameplay
 
             AddTileToField();
             ModifyTitleSize();
-
 
             if (!makeScale) return;
             FieldScaler scaler = new();
@@ -131,12 +133,11 @@ namespace BattleCombine.Gameplay
                         tileComponent.SetAlignTileToPlayer1(true);
                     }
 
-                    if (i == _fieldSize - 1 && j == startAiTile)
-                    {
-                        ApplyStartTileStatus(tileComponent);
-                        GetAiStartTile = tileComponent;
-                        tileComponent.SetAlignTileToPlayer2(true);
-                    }
+                    if (i != _fieldSize - 1 || j != startAiTile) continue;
+                    
+                    ApplyStartTileStatus(tileComponent);
+                    GetAiStartTile = tileComponent;
+                    tileComponent.SetAlignTileToPlayer2(true);
                 }
             }
         }
@@ -145,6 +146,7 @@ namespace BattleCombine.Gameplay
         {
             tileParent.transform.localScale = _fieldSize switch
             {
+                5 => new Vector3(tutorFieldScale, 0, tutorFieldScale),
                 6 => new Vector3(smallFieldScale, 0, smallFieldScale),
                 7 => new Vector3(mediumFieldScale, 0, mediumFieldScale),
                 8 => new Vector3(largeFieldScale, 0, largeFieldScale),
