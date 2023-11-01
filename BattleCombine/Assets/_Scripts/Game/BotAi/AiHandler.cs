@@ -17,6 +17,7 @@ namespace BattleCombine.Ai
         public PathFinder GetPathFinder { get; private set; }
         public int GetMoodHealthPercent { get; private set; }
         public int AiSpeed { get; private set; }
+        public AiArchetypes GetCurrentArchetype => currentArchetype;
         
         //todo - if HP == X, then change stance;
         [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
@@ -109,7 +110,7 @@ namespace BattleCombine.Ai
                 _pathFinder.KeepLastPathStarts(_lastStepIndex);
             }
 
-            if (!_currentAiBaseEnemy.IsAiInitialised)
+            if (!_currentAiBaseEnemy.GetStance)
                 _currentAiBaseEnemy.Init();
 
             _movePathRoutine = StartCoroutine(MovePathRoutine());

@@ -15,19 +15,19 @@ namespace BattleCombine.Ai
         public List<Tile> CurrentWay { get; set; } = new ();
         public int MoodHealthPercent { get; set; }
         public int Speed { get; set; }
+        public bool GetStance => _isAiInitialised;
 
         public bool IsAiLose;
-        public bool IsAiInitialised;
         
         protected int _currentStep;
-        
+        private bool _isAiInitialised;
 
         public virtual void Init()
         {
             MoodHealthPercent = AiHandler.GetMoodHealthPercent;
             Speed = AiHandler.AiSpeed;
 
-            IsAiInitialised = true;
+            _isAiInitialised = true;
         }
 
         public virtual void MakeStep()

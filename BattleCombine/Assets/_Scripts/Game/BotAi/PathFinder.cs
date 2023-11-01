@@ -56,7 +56,6 @@ namespace BattleCombine.Ai
             FindPaths(startIndex, _aiSpeed);
             
             ChooseBestPath();
-            Debug.Log(allPaths.Count + " - All Available paths");
         }
         
         public void KeepLastPathStarts(int currentIndex)
@@ -78,7 +77,8 @@ namespace BattleCombine.Ai
                 {
                     FindPaths(index, _aiSpeed);
                 }
-
+                
+                
                 ChooseBestPath();
             }
             _lastTilesToFindNewPath.Clear();
@@ -119,6 +119,7 @@ namespace BattleCombine.Ai
         
         private void ChooseBestPath()
         {
+            Debug.Log(allPaths.Count + " - Available paths");
             List<int> chosenList = new();
             
             var maxWeight = int.MinValue;
@@ -148,12 +149,16 @@ namespace BattleCombine.Ai
 
         private void PathDebugger(int maxWeight)
         {
-            Debug.Log($"============ \n"+ maxWeight+ " - sum of path weight: ");
+            Debug.Log("===================================" +
+                      " \n #Current Archetype = " + _aiHandler.GetCurrentArchetype);
+            Debug.Log("Defence stance activated: " + CurrentAiBaseEnemy.GetStance);
+            Debug.Log("Sum of path weight: " + maxWeight);
             foreach (var index in CurrentWay)
             {
-                Debug.Log(index + " (weight =" + GetTileWeight(index) +")");
+                Debug.Log(index + " (weight = " + GetTileWeight(index) +"): " +
+                          "Tile type = " + _field.GetTileList[index].GetTileType);
             }
-            Debug.Log($" current steps \n ============");
+            Debug.Log($"==================================");
         }
 
         private int GetTileWeight(int tile)
