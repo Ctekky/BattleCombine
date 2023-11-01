@@ -8,6 +8,8 @@ using TMPro;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.Universal;
+using Unity.VisualScripting;
 
 namespace BattleCombine.Gameplay
 {
@@ -28,7 +30,6 @@ namespace BattleCombine.Gameplay
         [SerializeField] private List<GameObject> tilesForChoosing = new List<GameObject>();
         [SerializeField] private List<GameObject> tilesNearThisTile = new List<GameObject>();
 
-
         //TODO: set type and modifier to tile
         [SerializeField] private TileType tileType;
         [SerializeField, Range(-100, 100)] private int tileModifier;
@@ -41,6 +42,8 @@ namespace BattleCombine.Gameplay
 
         //TODO: change this to proper algorithm
         private GameManager _gameManager;
+        private float _firstTilePosScaleX;
+        private float _firstTilePosScaleZ;
 
 
         public StateMachine StateMachine;
@@ -82,7 +85,6 @@ namespace BattleCombine.Gameplay
 
         //set tile mask
         [SerializeField] private LayerMask tileLayerMask;
-        [SerializeField] float range; // set player speed
 
         public Action<Tile> onTileTouched;
 
@@ -101,6 +103,8 @@ namespace BattleCombine.Gameplay
             CheckTilesStateNearThisTile(this);
             tileStack = FindObjectOfType<TileStack>();
             SetupTile();
+            _firstTilePosScaleX = transform.parent.localScale.x;
+            _firstTilePosScaleZ = transform.parent.localScale.z;
         }
 
         //TODO: change this to proper algorithm
@@ -235,13 +239,12 @@ namespace BattleCombine.Gameplay
                 }
             }
         }
-        public void FindTileForAction(Tile tile, List<GameObject> list,
-            TileState nameState) //change state for nearest tiles
+        public void FindTileForAction(Tile tile, List<GameObject> list, TileState nameState) //change state for nearest tiles
         {
             Vector2 tilePosition = tile.transform.position;
             var localScale = gameObject.transform.localScale;
-            float tileOverlapScaleX = localScale.x + range;
-            float tileOverlapScaleY = localScale.y + range;
+            float tileOverlapScaleX = localScale.x * _firstTilePosScaleX;
+            float tileOverlapScaleY = localScale.y * _firstTilePosScaleZ;
             Vector2 tileScale = new Vector2(tileOverlapScaleX, tileOverlapScaleY);
             Collider2D[] tileColliderForChoosing = Physics2D.OverlapBoxAll(tilePosition, tileScale, 45f, tileLayerMask);
 
@@ -269,8 +272,8 @@ namespace BattleCombine.Gameplay
         {
             Vector2 tilePosition = tile.transform.position;
             var localScale = gameObject.transform.localScale;
-            float tileOverlapScaleX = localScale.x + range;
-            float tileOverlapScaleY = localScale.y + range;
+            float tileOverlapScaleX = localScale.x * _firstTilePosScaleX;
+            float tileOverlapScaleY = localScale.y * _firstTilePosScaleZ;
             Vector2 tileScale = new Vector2(tileOverlapScaleX, tileOverlapScaleY);
             Collider2D[] tileColliderForChoosing = Physics2D.OverlapBoxAll(tilePosition, tileScale, 45f, tileLayerMask);
 
@@ -417,19 +420,19 @@ namespace BattleCombine.Gameplay
             }
         }*/
 
-        /*private void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
             Vector3 position = gameObject.transform.position;
             var localScale = gameObject.transform.localScale;
-            float tileScaleX = localScale.x + range;
-            float tileScaleY = localScale.y + range;
+            float tileScaleX = localScale.x * _firstTilePosScaleX;
+            float tileScaleY = localScale.y * _firstTilePosScaleZ;
             Vector2 tileScale = new Vector2(tileScaleX, tileScaleY);
             Gizmos.DrawWireCube(position, tileScale);
 
             Gizmos.color = Color.green;
             float rangeOverlap = (float)((Math.Sqrt(Math.Pow(tileScaleX, 2) + Math.Pow(tileScaleY, 2))) / 2);
             Gizmos.DrawWireSphere(position, rangeOverlap);
-       }*/
+       }
     }
 }

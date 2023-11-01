@@ -464,6 +464,7 @@ MonoBehaviour:
   tileStack: {fileID: 0}
   startTile: 0
   tileCurrentState: 0
+  _cantUse: 0
   tilesForChoosing: []
   tilesNearThisTile: []
   tileType: {fileID: 11400000, guid: 0cbfd373c49892844a1b42ffb77a1168, type: 2}
@@ -474,7 +475,7 @@ MonoBehaviour:
   tileLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  range: 0.3
+  range: 0.5
 --- !u!61 &3806609544471234140
 BoxCollider2D:
   m_ObjectHideFlags: 0
