@@ -123,19 +123,15 @@ namespace BattleCombine.Ai
             List<int> chosenList = new();
             
             var maxWeight = int.MinValue;
-            var minNegativeModifier = int.MaxValue;
 
             foreach (var kvp in allPaths)
             {
                 var sumWeight = kvp.Value.Sum(GetTileWeight);
-                var negativeModifier = kvp.Value.Min(tile => _field.GetTileList[tile].TileModifier);
 
-                if (sumWeight <= maxWeight &&
-                    (sumWeight != maxWeight || negativeModifier <= minNegativeModifier)) continue;
+                if (sumWeight <= maxWeight) continue;
                 
                 chosenList = kvp.Value;
                 maxWeight = sumWeight;
-                minNegativeModifier = negativeModifier;
             }
             
             CurrentWay.Clear();
@@ -170,7 +166,7 @@ namespace BattleCombine.Ai
                 CellType.Shield => CurrentWeights[2],
                 CellType.Empty => 0,
                 _ => throw new ArgumentOutOfRangeException()
-            };
+            } * _field.GetTileList[tile].TileModifier;
         }
         
         private List<int> FindCandidates(int currentIndex)
