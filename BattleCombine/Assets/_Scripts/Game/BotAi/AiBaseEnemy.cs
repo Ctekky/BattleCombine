@@ -12,24 +12,22 @@ namespace BattleCombine.Ai
         public static Action OnTileSelectPlaySfx;
 
         public AiHandler AiHandler;
-        public List<Tile> CurrentWay { get; set; }
+        public List<Tile> CurrentWay { get; set; } = new ();
         public int MoodHealthPercent { get; set; }
         public int Speed { get; set; }
+        public bool GetStance => _isAiInitialised;
 
         public bool IsAiLose;
-        public bool IsAiInitialised;
         
         protected int _currentStep;
-        
+        private bool _isAiInitialised;
 
         public virtual void Init()
         {
-            CurrentWay = new List<Tile>();
-            CurrentWay = AiHandler.CurrentWay;
             MoodHealthPercent = AiHandler.GetMoodHealthPercent;
             Speed = AiHandler.AiSpeed;
 
-            IsAiInitialised = true;
+            _isAiInitialised = true;
         }
 
         public virtual void MakeStep()

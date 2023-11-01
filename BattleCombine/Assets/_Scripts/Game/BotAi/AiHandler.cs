@@ -13,13 +13,17 @@ namespace BattleCombine.Ai
     public class AiHandler : MonoBehaviour
     {
         public static Action ChangeEnemyStance;
-        
-        public List<Tile> CurrentWay { get; set; }
+
+        public PathFinder GetPathFinder { get; private set; }
         public int GetMoodHealthPercent { get; private set; }
         public int AiSpeed { get; private set; }
+        public AiArchetypes GetCurrentArchetype => currentArchetype;
         
         //todo - if HP == X, then change stance;
         [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
+
+        [Header("AI Move Animation Speed")] [SerializeField]
+        private float speed = 0.5f;
 
         [Header("Weights and other")] [SerializeField]
         private int[] tankFullHealthWeights;
@@ -44,6 +48,7 @@ namespace BattleCombine.Ai
         private Coroutine _giveTurnToAiRoutine;
         private int _lastStepIndex = -1;
         private bool _isAiTurn;
+        private bool _isStanceChanged;
         
         private const int ArchetypeCount = 3;
 
@@ -61,13 +66,10 @@ namespace BattleCombine.Ai
             AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
             _nextTurnButton = FindObjectOfType<NextTurnButton>();
             _field = FindObjectOfType<CreateField>();
-            
-            _pathFinder = new PathFinder
-            {
-                AiSpeed = AiSpeed,
-                Field = _field,
-                AiHandler = this
-            };
+
+            _pathFinder = new PathFinder(AiSpeed, _field, this);
+            GetPathFinder = _pathFinder;
+            _isStanceChanged = false;
         }
 
         private void Start()
@@ -78,19 +80,22 @@ namespace BattleCombine.Ai
         private void FindFirstPathToAi()
         {
             ChooseArchetype();
-            
+
             if (_lastStepIndex < 0)
+            {
                 _pathFinder.FindStartPath();
+            }
         }
 
         private void GiveAiTurn()
         {
             _isAiTurn = !_isAiTurn;
 
-            if (_gameManager.GetPlayerAiHealth < GetMoodHealthPercent)
+            if (HealthToChangeStance() && !_isStanceChanged)
             {
                 ChangeEnemyStance();
                 Debug.Log("Stance Changed");
+                _isStanceChanged = true;
             }
 
             _giveTurnToAiRoutine = StartCoroutine(GiveTurnToAiRoutine());
@@ -101,9 +106,11 @@ namespace BattleCombine.Ai
             if (!_isAiTurn) return;
 
             if (_lastStepIndex >= 0)
+            {
                 _pathFinder.KeepLastPathStarts(_lastStepIndex);
-            
-            if (!_currentAiBaseEnemy.IsAiInitialised)
+            }
+
+            if (!_currentAiBaseEnemy.GetStance)
                 _currentAiBaseEnemy.Init();
 
             _movePathRoutine = StartCoroutine(MovePathRoutine());
@@ -181,25 +188,18 @@ namespace BattleCombine.Ai
         {
             var currentStep = 0;
 
-            while (currentStep < CurrentWay.Count)
+            while (currentStep < _pathFinder.CurrentWay.Count)
             {
                 _currentAiBaseEnemy.MakeStep();
                 //todo - addEffects
-                yield return new WaitForSeconds(.4f);
+                yield return new WaitForSeconds(speed);
                 currentStep++;
             }
 
-            var lastTileCount = -1;
-            foreach (var tile in _field.GetTileList)
-            {
-                lastTileCount++;
-                if (tile == CurrentWay.Last())
-                    _lastStepIndex = lastTileCount;
-            }
+            _lastStepIndex = _pathFinder.CurrentWay.Last();  
 
             _currentAiBaseEnemy.EndAiTurn();
             _inputService.onFingerUp?.Invoke();
-            _pathFinder.PathDictionary.Clear();
 
             StopCoroutine(_movePathRoutine);
         }
@@ -217,6 +217,11 @@ namespace BattleCombine.Ai
             ChangeEnemyStance -= ChangeAiStance;
             GameManager.OnPlayerChange -= GiveAiTurn;
             StopAllCoroutines();
+        }
+
+        private bool HealthToChangeStance()
+        {
+            return _gameManager.GetPlayerAiHealth < Convert.ToInt32(20 * GetMoodHealthPercent)/100;
         }
     }
 }

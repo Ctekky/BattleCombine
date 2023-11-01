@@ -54,8 +54,8 @@ namespace BattleCombine.Gameplay
         private int _fieldSize;
         private bool _isTileFullSetup;
 
-        public List<Tile> GetTileList => _tileList;
         public Tile GetAiStartTile { get; private set; }
+        public List<Tile> GetTileList => _tileList;
         public int GetFieldSize => _fieldSize;
 
         private void Awake()
@@ -223,7 +223,7 @@ namespace BattleCombine.Gameplay
 
         private int SetPlayerStartTileIndex()
         {
-            _rand = new();
+            _rand = new Random();
 
             if (defaultPlayerStartTilePos >= _fieldSize)
                 defaultPlayerStartTilePos = _fieldSize - 1;
@@ -239,7 +239,7 @@ namespace BattleCombine.Gameplay
 
         private int SetAiStartTileIndex()
         {
-            _rand = new();
+            _rand = new Random();
 
             if (defaultAiStartTilePos >= _fieldSize)
                 defaultAiStartTilePos = _fieldSize - 1;
