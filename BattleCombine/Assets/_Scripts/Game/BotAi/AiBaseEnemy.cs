@@ -12,7 +12,7 @@ namespace BattleCombine.Ai
         public static Action OnTileSelectPlaySfx;
 
         public AiHandler AiHandler;
-        public List<Tile> CurrentWay { get; set; }
+        public List<Tile> CurrentWay { get; set; } = new ();
         public int MoodHealthPercent { get; set; }
         public int Speed { get; set; }
 
@@ -24,8 +24,6 @@ namespace BattleCombine.Ai
 
         public virtual void Init()
         {
-            CurrentWay = new List<Tile>();
-            CurrentWay = AiHandler.CurrentWay;
             MoodHealthPercent = AiHandler.GetMoodHealthPercent;
             Speed = AiHandler.AiSpeed;
 

@@ -3,46 +3,68 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
+using UnityEngine;
 
 namespace BattleCombine.Ai
 {
     public class PathFinder
     {
-        public CreateField Field { get; set; }
-        public AiHandler AiHandler { get; set; }
-        public List<Tile> CurrentWay { get; set; }
-        public List<int> CurrentWeights { get; set; }
-        public List<int> NextStanceWeights { get; set; }
+        public List<int> CurrentWay { get; private set; } = new ();
+        public List<int> CurrentWeights { get; set; } = new ();
+        public List<int> NextStanceWeights { get; set; } = new ();
         public AiBaseEnemy CurrentAiBaseEnemy { get; set; }
-        public int AiSpeed { get; set; }
 
-        private List<int> _lastTilesToFindNewPath = new();
+        private int _aiSpeed;
+        private int _pathID;
+        private int _gridSize;
+        private CreateField _field;
+        private AiHandler _aiHandler;
+        private List<int> _lastTilesToFindNewPath = new ();
 
-        //todo - separate weights to data base and link it here
-        public Dictionary<List<Tile>, int> PathDictionary = new();
+        private readonly Dictionary<int, List<int>> allPaths;
 
-        //find all exist pathes for current AiSpeed
+        public PathFinder(int aiSpeed, CreateField field, AiHandler aiHandler)
+        {
+            _aiSpeed = aiSpeed;
+            _field = field;
+            _aiHandler = aiHandler;
+            _gridSize = _field.GetFieldSize;
+            _pathID = 0;
+
+            allPaths = new Dictionary<int, List<int>>();
+        }
+
         public void FindStartPath()
         {
-            //todo - find path and write it to dict
             var count = -1;
 
-            foreach (var tile in Field.GetTileList)
+            CurrentWay = new List<int>();
+
+            foreach (var tile in _field.GetTileList)
             {
                 count++;
-                if (tile != Field.GetAiStartTile) continue;
-                FindPathsFromTile(count);
+                if (tile != _field.GetAiStartTile) continue;
+                FindAllPathsFromStart(count);
                 break;
             }
         }
 
+        public void FindAllPathsFromStart(int startIndex)
+        {
+            allPaths.Clear();
+
+            FindPaths(startIndex, _aiSpeed);
+            
+            ChooseBestPath();
+            Debug.Log(allPaths.Count + " - All Available paths");
+        }
+        
         public void KeepLastPathStarts(int currentIndex)
         {
-            var tileList = (new List<Tile>(Field.GetTileList));
-            var gridSize = Field.GetFieldSize;
-            var candidateIndexes = new List<int>();
-
-            FindCandidates(candidateIndexes, gridSize, currentIndex);
+            var tileList = (new List<Tile>(_field.GetTileList));
+            var gridSize = _field.GetFieldSize;
+            
+            var candidateIndexes  = FindCandidates(currentIndex);
 
             foreach (var index in candidateIndexes.Where(index
                          => tileList[index].StateMachine.CurrentState != tileList[index].DisabledState))
@@ -54,127 +76,89 @@ namespace BattleCombine.Ai
             {
                 foreach (var index in _lastTilesToFindNewPath)
                 {
-                    FindPathsFromTile(index);
+                    FindPaths(index, _aiSpeed);
                 }
 
-                FindBestPath();
+                ChooseBestPath();
             }
             _lastTilesToFindNewPath.Clear();
         }
 
-        //find path, and if its done - add to dict
-        private void FindPathsFromTile(int startIndex)
+        private void FindPaths(int startIndex, int speed)
         {
-            var tileList = (new List<Tile>(Field.GetTileList));
-            var gridSize = Field.GetFieldSize;
-            var newPath = new List<Tile>();
-            var currentIndex = startIndex;
+            Stack<(int currentIndex, List<int> currentPath, int remainingSpeed)> stack = new();
 
-            for (var i = 0; i < AiSpeed; i++)
+            stack.Push((startIndex, new List<int> { startIndex }, speed-1));
+
+            while (stack.Count > 0)
             {
-                newPath.Add(tileList[currentIndex]);
-                var candidateIndexes = new List<int>();
+                var (currentIndex, currentPath, remainingSpeed) = stack.Pop();
 
-                FindCandidates(candidateIndexes, gridSize, currentIndex);
-                //Choose the one with the maximum weight
-                //todo - link the weights
-                var maxWeight = -1;
-                foreach (var index in candidateIndexes)
+                if (remainingSpeed <= 0)
                 {
-                    var weight = FindWeight(tileList[index]);
-                    if (weight <= maxWeight
-                        || newPath.Contains(tileList[index])
-                        || tileList[index].StateMachine.CurrentState == tileList[index].DisabledState)
-                        continue;
+                    AddPathToDictionary(new List<int>(currentPath));
+                    continue;
+                }
 
-                    if (newPath.Contains(tileList[index])) continue;
+                var neighborIndices = FindCandidates(currentIndex);
 
-                    maxWeight = weight;
-                    currentIndex = index;
+                foreach (var neighborIndex in neighborIndices)
+                {
+                    if (_field.GetTileList[neighborIndex].StateMachine.CurrentState
+                        == _field.GetTileList[neighborIndex].ChosenState
+                        && _field.GetTileList[neighborIndex].StateMachine.CurrentState
+                        == _field.GetTileList[neighborIndex].DisabledState) continue;
+                    
+                    if(currentPath.Contains(neighborIndex)) continue;
+                    
+                    var newPath = new List<int>(currentPath) { neighborIndex };
+                    stack.Push((neighborIndex, newPath, remainingSpeed - 1));
                 }
             }
-
-            //todo - change path count to its weight
-            if (newPath.Count < AiSpeed)
-                return;
-
-            AddSumOfWeights(newPath);
+        }
+        
+        private void ChooseBestPath()
+        {
+            List<int> chosenList = new();
             
-            if (CurrentWay != null) return;
-            CurrentWay = newPath;
-            AiHandler.CurrentWay = newPath;
-        }
+            var maxWeight = int.MinValue;
+            var minNegativeModifier = int.MaxValue;
 
-        //take paths weights, and choose best one
-        private void FindBestPath()
-        {
-            var maxValue = int.MinValue;
-            var gridSize = Field.GetFieldSize;
-            var tileList = (new List<Tile>(Field.GetTileList));
-            var path = new List<Tile>();
-            var candidateIndexes = new List<int>();
-            var count = -1;
-
-            foreach (var candidate in PathDictionary.Where(candidate => candidate.Key.Count < AiSpeed))
+            foreach (var kvp in allPaths)
             {
-                PathDictionary.Remove(candidate.Key);
+                var sumWeight = kvp.Value.Sum(GetTileWeight);
+                var negativeModifier = kvp.Value.Min(tile => _field.GetTileList[tile].TileModifier);
+
+                if (sumWeight <= maxWeight &&
+                    (sumWeight != maxWeight || negativeModifier <= minNegativeModifier)) continue;
+                
+                chosenList = kvp.Value;
+                maxWeight = sumWeight;
+                minNegativeModifier = negativeModifier;
             }
-
-
-            foreach (var candidate in PathDictionary)
-            {
-                foreach (var tile in tileList)
-                {
-                    count++;
-                    if (tile == candidate.Key.Last()) break;
-                }
-
-                FindCandidates(candidateIndexes, gridSize, count);
-
-                var goodTiles
-                    = candidateIndexes.Count(index =>
-                        tileList[index].StateMachine.CurrentState != tileList[index].DisabledState);
-
-                if (goodTiles == 0)
-                    PathDictionary.Remove(candidate.Key);
-
-                count = -1;
-            }
-
-            foreach (var entry in PathDictionary.Where(entry
-                         => entry.Value > maxValue))
-            {
-                maxValue = entry.Value;
-                path = entry.Key;
-            }
-
+            
             CurrentWay.Clear();
-            CurrentWay = path;
-            AiHandler.CurrentWay.Clear();
-            AiHandler.CurrentWay = path;
+            CurrentWay = chosenList;
             CurrentAiBaseEnemy.CurrentWay.Clear();
-            CurrentAiBaseEnemy.CurrentWay = path;
+            CurrentAiBaseEnemy.CurrentWay = MakeTileList(chosenList);
+            allPaths.Clear();
+
+            PathDebugger(maxWeight);
         }
 
-        private static void FindCandidates(ICollection<int> candidateIndexes, int gridSize, int currentIndex)
+        private void PathDebugger(int maxWeight)
         {
-            //Add tile from Left
-            if (currentIndex % gridSize != 0)
-                candidateIndexes.Add(currentIndex - 1);
-            //Add tile from Right
-            if (currentIndex % gridSize != gridSize - 1)
-                candidateIndexes.Add(currentIndex + 1);
-            //Add tile from Top
-            if (currentIndex >= gridSize)
-                candidateIndexes.Add(currentIndex - gridSize);
-            //Add tile from Bottom
-            if (currentIndex < gridSize * (gridSize - 1))
-                candidateIndexes.Add(currentIndex + gridSize);
+            Debug.Log($"============ \n"+ maxWeight+ " - sum of path weight: ");
+            foreach (var index in CurrentWay)
+            {
+                Debug.Log(index + " (weight =" + GetTileWeight(index) +")");
+            }
+            Debug.Log($" current steps \n ============");
         }
 
-        private int FindWeight(Tile tile)
+        private int GetTileWeight(int tile)
         {
-            return tile.GetTileType switch
+            return _field.GetTileList[tile].GetTileType switch
             {
                 CellType.Attack => CurrentWeights[0],
                 CellType.Health => CurrentWeights[1],
@@ -183,11 +167,42 @@ namespace BattleCombine.Ai
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-
-        private void AddSumOfWeights(List<Tile> pathKey)
+        
+        private List<int> FindCandidates(int currentIndex)
         {
-            var weightValue = pathKey.Sum(FindWeight);
-            PathDictionary.Add(pathKey, weightValue);
+            var candidateIndexes = new List<int>();
+
+            //Add tile from Left
+            if (currentIndex % _gridSize != 0)
+                candidateIndexes.Add(currentIndex - 1);
+            //Add tile from Right
+            if (currentIndex % _gridSize != _gridSize - 1)
+                candidateIndexes.Add(currentIndex + 1);
+            //Add tile from Top
+            if (currentIndex >= _gridSize)
+                candidateIndexes.Add(currentIndex - _gridSize);
+            //Add tile from Bottom
+            if (currentIndex < _gridSize * (_gridSize - 1))
+                candidateIndexes.Add(currentIndex + _gridSize);
+
+            return candidateIndexes;
+        }
+
+        private void AddPathToDictionary(List<int> path)
+        {
+            var count = 0;
+            
+            if (path.Count == _aiSpeed)
+            {
+                allPaths.Add(_pathID++, path);
+            }
+        }
+
+        private List<Tile> MakeTileList(IEnumerable<int> tempList)
+        {
+            var finalList = tempList.Select(tile => _field.GetTileList[tile]).ToList();
+
+            return finalList;
         }
     }
 }
