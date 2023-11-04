@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
+using BattleCombine.ScriptableObjects;
 using UnityEngine;
 
 namespace BattleCombine.Ai
@@ -120,12 +121,20 @@ namespace BattleCombine.Ai
         private void ChooseBestPath()
         {
             Debug.Log(allPaths.Count + " - Available paths");
-            List<int> chosenList = new();
+            var chosenList = new List<int>();
             
             var maxWeight = int.MinValue;
 
             foreach (var kvp in allPaths)
             {
+                
+                var shieldCount = kvp.Value.Count(tile => 
+                    _field.GetTileList[tile].GetTileType == CellType.Shield);
+                if (shieldCount > 1)
+                {
+                    continue;
+                }
+                
                 var sumWeight = kvp.Value.Sum(GetTileWeight);
 
                 if (sumWeight <= maxWeight) continue;
