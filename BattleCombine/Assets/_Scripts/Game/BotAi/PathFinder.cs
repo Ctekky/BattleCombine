@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
-using BattleCombine.ScriptableObjects;
 using UnityEngine;
 
 namespace BattleCombine.Ai
@@ -74,11 +73,11 @@ namespace BattleCombine.Ai
 
 			if(_lastTilesToFindNewPath == null) return;
 			{
-				foreach (var index in _lastTilesToFindNewPath)
+				foreach (var index in _lastTilesToFindNewPath.Where(index => 
+					         _field.GetTileList[index].StateMachine.CurrentState != tileList[index].DisabledState))
 				{
 					FindPaths(index, _aiSpeed);
 				}
-
 
 				ChooseBestPath();
 			}
@@ -110,7 +109,7 @@ namespace BattleCombine.Ai
 				{
 					if(_field.GetTileList[neighborIndex].StateMachine.CurrentState
 					   == _field.GetTileList[neighborIndex].ChosenState
-					   && _field.GetTileList[neighborIndex].StateMachine.CurrentState
+					   || _field.GetTileList[neighborIndex].StateMachine.CurrentState
 					   == _field.GetTileList[neighborIndex].DisabledState) continue;
 
 					if(currentPath.Contains(neighborIndex)) continue;
@@ -175,6 +174,8 @@ namespace BattleCombine.Ai
 		{
 			var candidateIndexes = new List<int>();
 
+			Debug.Log(_gridSize);
+			
 			//Add tile from Left
 			if(currentIndex % _gridSize != 0)
 				candidateIndexes.Add(currentIndex - 1);

@@ -66,14 +66,14 @@ namespace BattleCombine.Ai
             AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
             _nextTurnButton = FindObjectOfType<NextTurnButton>();
             _field = FindObjectOfType<CreateField>();
-
-            _pathFinder = new PathFinder(AiSpeed, _field, this);
-            GetPathFinder = _pathFinder;
-            _isStanceChanged = false;
         }
 
         private void Start()
         {
+            _pathFinder = new PathFinder(AiSpeed, _field, this);
+            GetPathFinder = _pathFinder;
+            _isStanceChanged = false;
+            
             FindFirstPathToAi();
         }
 
