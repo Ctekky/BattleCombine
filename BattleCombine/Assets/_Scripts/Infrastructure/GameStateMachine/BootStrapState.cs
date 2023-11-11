@@ -25,7 +25,7 @@ namespace BattleCombine.Infrastructure
 
         private void EnterLoadLevel()
         {
-            _stateMachine.Enter<LoadLevelState, string>("Game_LoopDS");
+            _stateMachine.Enter<MenuState, string>("Menu");//("Game_LoopDS");
         }
 
         private void RegistryServices()

@@ -15,10 +15,14 @@ namespace BattleCombine.Infrastructure
             {
                 [typeof(BootStrapState)] =
                     new BootStrapState(this, sceneLoader),
+                [typeof(MenuState)] =
+                    new MenuState(this, sceneLoader),
                 [typeof(LoadLevelState)] =
                     new LoadLevelState(this, sceneLoader),
                 [typeof(GameLoopState)] =
                     new GameLoopState(this),
+                [typeof(PauseState)] =
+                    new PauseState(this),
             };
         }
 
