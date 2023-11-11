@@ -7,244 +7,258 @@ using Random = System.Random;
 
 namespace BattleCombine.Gameplay
 {
-    public class CreateField : MonoBehaviour
-    {
-        public Action<Tile> onTileTouched;
+	public class CreateField : MonoBehaviour
+	{
+		public Action<Tile> onTileTouched;
 
-        [Header("Scale or not on start")] [SerializeField]
-        private bool makeScale;
-        [Header("Start Tile set")] [SerializeField]
-        private bool isAiRandomStart;
+		[Header("Scale or not on start")] [SerializeField]
+		private bool makeScale;
+		[Header("Start Tile set")] [SerializeField]
+		private bool isAiRandomStart;
 
-        [SerializeField] private int defaultAiStartTilePos;
-        [SerializeField] private bool isPlayerRandomStart;
-        [SerializeField] private int defaultPlayerStartTilePos;
+		[SerializeField] private int defaultAiStartTilePos;
+		[SerializeField] private bool isPlayerRandomStart;
+		
+		private List<int> defaultPlayerStartTilePos;
 
-        [Header("FieldSize")] [SerializeField] 
-        private FieldSize sizeType;
-        [Header("TileParent")] [SerializeField]
-        private GameObject tileParent;
-        [Header("Tile prefab")] [SerializeField]
-        private Tile tile;
+		[Header("FieldSize")] [SerializeField]
+		private FieldSize sizeType;
+		[Header("TileParent")] [SerializeField]
+		private GameObject tileParent;
+		[Header("Tile prefab")] [SerializeField]
+		private Tile tile;
 
-        [Header("Offsets & scales (test values)")] [SerializeField, Tooltip("Отступы от края")]
-        private float edgeOffset = 0.5f;
-        [SerializeField, Tooltip("Отступы между тайлами")]
-        private float tileOffset = 1.1f;
-        [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
-        private float tutorFieldScale = 1.8f;        
-        [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
-        private float smallFieldScale = 1.45f;
-        [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
-        private float mediumFieldScale = 1.2f;
-        [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
-        private float largeFieldScale = 1.04f;
+		[Header("Offsets & scales (test values)")] [SerializeField, Tooltip("Отступы от края")]
+		private float edgeOffset = 0.5f;
+		[SerializeField, Tooltip("Отступы между тайлами")]
+		private float tileOffset = 1.1f;
+		[SerializeField, Tooltip("Скейл в зависимости от размера поля")]
+		private float tutorFieldScale = 1.8f;
+		[SerializeField, Tooltip("Скейл в зависимости от размера поля")]
+		private float smallFieldScale = 1.45f;
+		[SerializeField, Tooltip("Скейл в зависимости от размера поля")]
+		private float mediumFieldScale = 1.2f;
+		[SerializeField, Tooltip("Скейл в зависимости от размера поля")]
+		private float largeFieldScale = 1.04f;
 
-        [Header("TileTypes & Chances - %")] [SerializeField]
-        private List<TileTypeDictionary> tileTypeChances;
-        [Header("Tile Refresh chance - %")] [SerializeField]
-        private int tileRefreshChance;
+		[Header("TileTypes & Chances - %")] [SerializeField]
+		private List<TileTypeDictionary> tileTypeChances;
+		[Header("Tile Refresh chance - %")] [SerializeField]
+		private int tileRefreshChance;
 
-        [SerializeField] private GameManager gameManager;
+		[SerializeField] private GameManager gameManager;
 
-        private List<Tile> _tileList;
-        private Transform _fieldParent;
-        private GameObject _mainField;
-        private Random _rand;
-        private int _fieldSize;
-        private bool _isTileFullSetup;
+		private List<Tile> _tileList;
+		private Transform _fieldParent;
+		private GameObject _mainField;
+		private Random _rand;
+		private int _fieldSize;
+		private bool _isTileFullSetup;
 
-        public Tile GetAiStartTile { get; private set; }
-        public List<Tile> GetTileList => _tileList;
-        public int GetFieldSize => _fieldSize;
+		public Tile GetAiStartTile {get; private set;}
+		public List<Tile> GetTileList => _tileList;
+		public int GetFieldSize => _fieldSize;
 
-        private void Awake()
-        {
-            _tileList = new List<Tile>();
-            _mainField = this.gameObject;
-            _fieldParent = tileParent.transform;
-            _isTileFullSetup = false;
+		private void Awake()
+		{
+			_tileList = new List<Tile>();
+			_mainField = this.gameObject;
+			_fieldParent = tileParent.transform;
+			_isTileFullSetup = false;
 
-            ChangeFieldSize();
-        }
+			ChangeFieldSize();
+		}
 
-        private void Update()
-        {
-            if (!_isTileFullSetup) SetupTileOnField();
-        }
+		private void Update()
+		{
+			if(!_isTileFullSetup) SetupTileOnField();
+		}
 
-        private void ChangeFieldSize()
-        {
-            _fieldSize = sizeType switch
-            {
-                FieldSize.UltraSmall => 5,
-                FieldSize.Small => 6,
-                FieldSize.Medium => 7,
-                FieldSize.Large => 8,
-                _ => throw new ArgumentOutOfRangeException()
-            };
+		private void ChangeFieldSize()
+		{
+			_fieldSize = sizeType switch {
+				FieldSize.UltraSmall => 5,
+				FieldSize.Small => 6,
+				FieldSize.Medium => 7,
+				FieldSize.Large => 8,
+				_ => throw new ArgumentOutOfRangeException()
+			};
 
-            AddTileToField();
-            ModifyTitleSize();
+			defaultPlayerStartTilePos = new List<int>() {
+				0, _fieldSize
+			};
 
-            if (!makeScale) return;
-            FieldScaler scaler = new();
-            scaler.ScaleMainField(this.gameObject, edgeOffset);
-        }
+			AddTileToField();
+			ModifyTitleSize();
 
-        private void SetupTileOnField()
-        {
-            foreach (var tileInList in _tileList)
-            {
-                tileInList.CheckTilesStateNearThisTile(tileInList);
-            }
+			if(!makeScale) return;
+			var scaler = new FieldScaler();
+			scaler.ScaleMainField(this.gameObject, edgeOffset);
+		}
 
-            _isTileFullSetup = true;
-        }
+		private void SetupTileOnField()
+		{
+			foreach (var tileInList in _tileList)
+			{
+				tileInList.CheckTilesStateNearThisTile(tileInList);
+			}
 
-        private void AddTileToField()
-        {
-            var startPlayerTile = SetPlayerStartTileIndex();
-            var startAiTile = SetAiStartTileIndex();
+			_isTileFullSetup = true;
+		}
 
-            var newTile = new FieldCreateFactory(tile.gameObject);
+		private void AddTileToField()
+		{
+			var startPlayerTile = SetPlayerStartTileIndex();
+			var startAiTile = SetAiStartTileIndex();
 
-            for (var i = 0; i < _fieldSize; i++)
-            {
-                for (var j = 0; j < _fieldSize; j++)
-                {
-                    var currentTile = newTile.Create(_fieldParent);
-                    currentTile.transform.position = tileParent.transform.position
-                                                     + new Vector3(j * tileOffset, i * tileOffset, 0);
-                    currentTile.transform.Rotate(90, 180, 0);
+			var newTile = new FieldCreateFactory(tile.gameObject);
+	
+			for(var i = 0; i < _fieldSize; i++)
+			{
+				for(var j = 0; j < _fieldSize; j++)
+				{
+					var currentTile = newTile.Create(_fieldParent);
+					currentTile.transform.position = tileParent.transform.position
+					                                 + new Vector3(j * tileOffset, i * tileOffset, 0);
 
-                    var tileComponent = currentTile.GetComponent<Tile>();
-                    ChangeTileType(tileComponent);
+					currentTile.transform.Rotate(90, 180, 0);
 
-                    tileComponent.SetGameManager(gameManager);
+					var tileComponent = currentTile.GetComponent<Tile>();
+					ChangeTileType(tileComponent);
 
-                    _tileList.Add(tileComponent);
+					tileComponent.SetGameManager(gameManager);
 
-                    tileComponent.onTileTouched += touchedTile => onTileTouched?.Invoke(touchedTile);
+					_tileList.Add(tileComponent);
 
-                    if (i == 0 && j == startPlayerTile)
-                    {
-                        ApplyStartTileStatus(tileComponent);
-                        tileComponent.SetAlignTileToPlayer1(true);
-                    }
+					tileComponent.onTileTouched += touchedTile => onTileTouched?.Invoke(touchedTile);
 
-                    if (i != _fieldSize - 1 || j != startAiTile) continue;
-                    
-                    ApplyStartTileStatus(tileComponent);
-                    GetAiStartTile = tileComponent;
-                    tileComponent.SetAlignTileToPlayer2(true);
-                }
-            }
-        }
+					if(i != _fieldSize - 1 || j != startAiTile) continue;
 
-        private void ModifyTitleSize()
-        {
-            tileParent.transform.localScale = _fieldSize switch
-            {
-                5 => new Vector3(tutorFieldScale, 0, tutorFieldScale),
-                6 => new Vector3(smallFieldScale, 0, smallFieldScale),
-                7 => new Vector3(mediumFieldScale, 0, mediumFieldScale),
-                8 => new Vector3(largeFieldScale, 0, largeFieldScale),
-                _ => tileParent.transform.localScale
-            };
-        }
+					//ApplyStartTileStatus(tileComponent);
+					GetAiStartTile = tileComponent;
+					tileComponent.SetAlignTileToPlayer2(true);
+				}
+			}
 
-        private void ChangeTileModifier(Tile currentTile, List<TileModifierDictionary> table)
-        {
-            _rand = new Random();
-            var totalWeight = table.Sum(dictionary => dictionary.Chance);
+			var index = -1;
+			foreach (var tile in _tileList)
+			{
+				index++;
+				if(index != startPlayerTile[0] && index != startPlayerTile[1])
+					continue;
 
-            var roll = _rand.Next(0, totalWeight);
-            var cumulativeWeight = 0;
+				ApplyStartTileStatus(tile);
+				tile.SetAlignTileToPlayer2(true);
+			}
+		}
 
-            foreach (var dictionary in table)
-            {
-                cumulativeWeight += dictionary.Chance;
-                if (roll >= cumulativeWeight) continue;
-                currentTile.ChangeTileModifier(dictionary.Value);
-                return;
-            }
-        }
+		private void ModifyTitleSize()
+		{
+			tileParent.transform.localScale = _fieldSize switch {
+				5 => new Vector3(tutorFieldScale, 0, tutorFieldScale),
+				6 => new Vector3(smallFieldScale, 0, smallFieldScale),
+				7 => new Vector3(mediumFieldScale, 0, mediumFieldScale),
+				8 => new Vector3(largeFieldScale, 0, largeFieldScale),
+				_ => tileParent.transform.localScale
+			};
+		}
 
-        private void RefreshEmptyTile(Tile currentTile)
-        {
-            _rand = new Random();
-            var roll = _rand.Next(0, 100);
-            if (roll >= tileRefreshChance) return;
-            ChangeTileType(currentTile);
-            currentTile.StateMachine.ChangeState(currentTile.EnabledState);
-        }
+		private void ChangeTileModifier(Tile currentTile, List<TileModifierDictionary> table)
+		{
+			_rand = new Random();
+			var totalWeight = table.Sum(dictionary => dictionary.Chance);
 
-        public void RefreshField()
-        {
-            foreach (var currentTile in _tileList)
-            {
-                if (currentTile.GetTileState == TileState.DisabledState)
-                {
-                    RefreshEmptyTile(currentTile);
-                }
-                else if ((currentTile.GetTileType != CellType.Shield && currentTile.TileModifier < 9))
-                {
-                    if (currentTile.TileModifier == -1)
-                        currentTile.ChangeTileModifier(currentTile.TileModifier + 2);
+			var roll = _rand.Next(0, totalWeight);
+			var cumulativeWeight = 0;
 
-                    else
-                        currentTile.ChangeTileModifier(currentTile.TileModifier + 1);
-                }
-            }
-        }
+			foreach (var dictionary in table)
+			{
+				cumulativeWeight += dictionary.Chance;
+				if(roll >= cumulativeWeight) continue;
+				currentTile.ChangeTileModifier(dictionary.Value);
+				return;
+			}
+		}
 
-        private void ChangeTileType(Tile currentTile)
-        {
-            _rand = new Random();
-            var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
-            var roll = _rand.Next(0, totalWeight);
-            var cumulativeWeight = 0;
-            foreach (var dictionary in tileTypeChances)
-            {
-                cumulativeWeight += dictionary.Value;
-                if (roll >= cumulativeWeight) continue;
-                currentTile.ChangeTileType(dictionary.Key);
-                ChangeTileModifier(currentTile, dictionary.Key.modifierChances);
-                return;
-            }
-        }
+		private void RefreshEmptyTile(Tile currentTile)
+		{
+			_rand = new Random();
+			var roll = _rand.Next(0, 100);
+			if(roll >= tileRefreshChance) return;
+			ChangeTileType(currentTile);
+			currentTile.StateMachine.ChangeState(currentTile.EnabledState);
+		}
 
-        private void ApplyStartTileStatus(Tile currentTile)
-        {
-            //todo - change flaging, to AiLink
-            currentTile.ChangeStartFlag(true);
-        }
+		public void RefreshField()
+		{
+			foreach (var currentTile in _tileList)
+			{
+				if(currentTile.GetTileState == TileState.DisabledState)
+				{
+					RefreshEmptyTile(currentTile);
+				}
+				else if((currentTile.GetTileType != CellType.Shield && currentTile.TileModifier < 9))
+				{
+					if(currentTile.TileModifier == -1)
+						currentTile.ChangeTileModifier(currentTile.TileModifier + 2);
 
-        private int SetPlayerStartTileIndex()
-        {
-            _rand = new Random();
+					else
+						currentTile.ChangeTileModifier(currentTile.TileModifier + 1);
+				}
+			}
+		}
 
-            if (defaultPlayerStartTilePos >= _fieldSize)
-                defaultPlayerStartTilePos = _fieldSize - 1;
+		private void ChangeTileType(Tile currentTile)
+		{
+			_rand = new Random();
+			var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
+			var roll = _rand.Next(0, totalWeight);
+			var cumulativeWeight = 0;
+			foreach (var dictionary in tileTypeChances)
+			{
+				cumulativeWeight += dictionary.Value;
+				if(roll >= cumulativeWeight) continue;
+				currentTile.ChangeTileType(dictionary.Key);
+				ChangeTileModifier(currentTile, dictionary.Key.modifierChances);
+				return;
+			}
+		}
 
-            return isPlayerRandomStart ? _rand.Next(0, _fieldSize) : defaultPlayerStartTilePos;
-        }
+		private void ApplyStartTileStatus(Tile currentTile)
+		{
+			//todo - change flaging, to AiLink
+			currentTile.ChangeStartFlag(true);
+		}
 
-        public void SetupGameManager(GameManager gm)
-        {
-            gameManager = gm;
-        }
+		private List<int> SetPlayerStartTileIndex()
+		{
+			_rand = new Random();
+
+			//return isPlayerRandomStart ? _rand.Next(0, _fieldSize) : defaultPlayerStartTilePos;
+
+			if(!isPlayerRandomStart)
+				return defaultPlayerStartTilePos;
+
+			defaultPlayerStartTilePos[0] = _rand.Next(0, _fieldSize / 2);
+			defaultPlayerStartTilePos[1] = _rand.Next(defaultPlayerStartTilePos[0]+2, _fieldSize);
+
+			return defaultPlayerStartTilePos;
+		}
+
+		public void SetupGameManager(GameManager gm)
+		{
+			gameManager = gm;
+		}
 
 
-        private int SetAiStartTileIndex()
-        {
-            _rand = new Random();
+		private int SetAiStartTileIndex()
+		{
+			_rand = new Random();
 
-            if (defaultAiStartTilePos >= _fieldSize)
-                defaultAiStartTilePos = _fieldSize - 1;
+			if(defaultAiStartTilePos >= _fieldSize)
+				defaultAiStartTilePos = _fieldSize - 1;
 
-            return isAiRandomStart ? _rand.Next(0, _fieldSize) : defaultAiStartTilePos;
-        }
-    }
+			return isAiRandomStart ? _rand.Next(0, _fieldSize) : defaultAiStartTilePos;
+		}
+	}
 }

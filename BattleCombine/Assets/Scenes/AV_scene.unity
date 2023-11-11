@@ -1202,7 +1202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: sizeType
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: gameManager
@@ -2611,6 +2611,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0059829a7689fbf42863c3857e856930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _touchGO: []
+  _moveGO: []
 --- !u!1 &1692887358
 GameObject:
   m_ObjectHideFlags: 0
