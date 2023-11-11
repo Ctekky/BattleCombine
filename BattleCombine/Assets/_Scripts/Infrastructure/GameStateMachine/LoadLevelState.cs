@@ -23,7 +23,7 @@ namespace BattleCombine.Infrastructure
 
         private void OnLoaded()
         {
-            Instantiate("Prefabs/MainField");
+            Instantiate("Prefabs/Game/MainField");
             _gameStateMachine.Enter<GameLoopState>();
         }
 

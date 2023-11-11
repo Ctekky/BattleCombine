@@ -28,7 +28,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3026820357365931547}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -130,11 +130,12 @@ MonoBehaviour:
   defaultAiStartTilePos: 2
   isPlayerRandomStart: 1
   defaultPlayerStartTilePos: 4
-  sizeType: 0
+  sizeType: 2
   tileParent: {fileID: 5861258062984849538}
   tile: {fileID: 105925409287168891, guid: b5cffa0cdebd1814b8fa0e06cd2967e8, type: 3}
   edgeOffset: 0.5
   tileOffset: 1.1
+  tutorFieldScale: 1.8
   smallFieldScale: 1.45
   mediumFieldScale: 1.2
   largeFieldScale: 1.04
@@ -143,9 +144,9 @@ MonoBehaviour:
     Value: 60
   - Key: {fileID: 11400000, guid: 0cbfd373c49892844a1b42ffb77a1168, type: 2}
     Value: 5
-  - Key: {fileID: 11400000, guid: 3d80cea5bd433494fa6c47fc8f2fc20b, type: 2}
+  - Key: {fileID: 11400000, guid: 2f75529d751daf74e969c5d2e461e21d, type: 2}
     Value: 35
-  tileRefreshChance: 90
+  tileRefreshChance: 70
   gameManager: {fileID: 0}
 --- !u!114 &3865557558910741595
 MonoBehaviour:
@@ -159,9 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddd86cd3d9e98f44b1a368d9168cd1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   speedPlayer: 3
-  nextMoveTiles: []
   player: 0
+  nextMoveTiles: []
+  tilesForNextMovePlayer1: []
+  tilesForNextMovePlayer2: []
+  tileListPlayer1: []
+  tileListPlayer2: []
 --- !u!1 &5861258062984849538
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +192,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5861258062984849538}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 4}
+  m_LocalPosition: {x: 0, y: 0, z: 4.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

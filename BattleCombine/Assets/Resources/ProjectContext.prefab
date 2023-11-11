@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3838139759549436945}
   - component: {fileID: 1682304240950476023}
   - component: {fileID: 9085562327757662330}
+  - component: {fileID: 1000134709591292839}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 9085562327757662330}
+  - {fileID: 1000134709591292839}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
@@ -75,7 +77,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-    audioClip: {fileID: 0}
     iconSword: {fileID: 21300000, guid: c9ccf1a6055bbc743bf4c47f702258ee, type: 3}
     iconHeart: {fileID: 21300000, guid: 1767288b576d0374d8417e80745d2d4a, type: 3}
     iconShild: {fileID: 21300000, guid: 68171d120c6a0ff41aa46eced9069479, type: 3}
@@ -87,3 +88,21 @@ MonoBehaviour:
       array: []
     portraits:
       array: []
+    bg:
+      array: []
+    music:
+      array: []
+    sfx:
+      array: []
+--- !u!114 &1000134709591292839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997406811881113241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3abf14f07efca3b42b52472871265b3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
