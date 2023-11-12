@@ -8,7 +8,7 @@ namespace BattleCombine.Gameplay
         private Player _player1;
         private Player _player2;
 
-        public Action onGameOver;
+        public Action<Player> onGameOver;
         public Action onFightEnd;
 
 
@@ -34,7 +34,7 @@ namespace BattleCombine.Gameplay
 
             if (_gameOver)
             {
-                onGameOver?.Invoke();
+                onGameOver?.Invoke(_player1);
                 return;
             }
 
@@ -43,14 +43,14 @@ namespace BattleCombine.Gameplay
                 TakeDamage(_player1, _player2);
                 if (_gameOver)
                 {
-                    onGameOver?.Invoke();
+                    onGameOver?.Invoke(_player1);
                     return;
                 }
 
                 TakeDamage(_player2, _player1);
                 if (_gameOver)
                 {
-                    onGameOver?.Invoke();
+                    onGameOver?.Invoke(_player2);
                     return;
                 }
 
@@ -70,7 +70,7 @@ namespace BattleCombine.Gameplay
         {
             if (_gameOver)
             {
-                onGameOver?.Invoke();
+                onGameOver?.Invoke(_player1);
                 return;
             }
             //if (isTypeStandart)
@@ -79,14 +79,14 @@ namespace BattleCombine.Gameplay
             TakeDamage(_player1, _player2);
             if (_gameOver)
             {
-                onGameOver?.Invoke();
+                onGameOver?.Invoke(_player1);
                 return;
             }
 
             TakeDamage(_player2, _player1);
             if (_gameOver)
             {
-                onGameOver?.Invoke();
+                onGameOver?.Invoke(_player2);
                 return;
             }
 
@@ -105,7 +105,7 @@ namespace BattleCombine.Gameplay
             currentPlayer.SetAttackDefault();
             if (_gameOver)
             {
-                onGameOver?.Invoke();
+                onGameOver?.Invoke(nextPlayer);
                 return;
             }
 
@@ -116,19 +116,21 @@ namespace BattleCombine.Gameplay
         }
 
         private bool _gameOver;
+        private bool _nextBattle;
 
         private void TakeDamage(Player defender, Player attacker)
         {
+            var attack = attacker.AttackValue;
+            if (attacker.AttackValue <= 0) attack = 0;
             {
                 switch (defender.Shielded)
                 {
                     case true:
-                        defender.ChangeHealth(-(attacker.AttackValue / 2));
+                        defender.ChangeHealth(-(attack / 2));
                         defender.RemoveShield();
                         break;
                     case false:
-                        print(-(attacker.AttackValue));
-                        defender.ChangeHealth(-(attacker.AttackValue));
+                        defender.ChangeHealth(-(attack));
                         break;
                 }
             }

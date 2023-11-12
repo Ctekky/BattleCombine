@@ -57,6 +57,7 @@ namespace BattleCombine.Gameplay
 
         private void InputTouchMod()
         {
+            
             _tile.FindTileForAction(_tile, _tile.TilesForChoosing, TileState.EnabledState);
             foreach (GameObject tileGameObject in _tile.TilesForChoosing)
             {
@@ -90,8 +91,13 @@ namespace BattleCombine.Gameplay
 
             _tile.GetTileStack.NextMoveTiles.Clear();
             _tile.GetTileStack.NextMoveTiles.AddRange(_tile.TilesForChoosing);
-
+            if (_tile.GetTileStack.CheckForStartingTile(_tile))
+            {
+                if(_tile.GetTileStack.CheckAnotherTileForState(_tile) != TileState.ChosenState)
+                    _tile.GetTileStack.ChangeStartingTileState(_tile, true);
+            }
             _stateMachine.ChangeState(_tile.ChosenState);
+            
         }
 
         private void InputMoveMod()
@@ -129,8 +135,13 @@ namespace BattleCombine.Gameplay
 
             _tile.GetTileStack.NextMoveTiles.Clear();
             _tile.GetTileStack.NextMoveTiles.AddRange(_tile.TilesForChoosing);
-
+            if (_tile.GetTileStack.CheckForStartingTile(_tile))
+            {
+                if(_tile.GetTileStack.CheckAnotherTileForState(_tile) != TileState.ChosenState)
+                    _tile.GetTileStack.ChangeStartingTileState(_tile, true);
+            }
             _stateMachine.ChangeState(_tile.ChosenState);
+            
         }
     }
 }
