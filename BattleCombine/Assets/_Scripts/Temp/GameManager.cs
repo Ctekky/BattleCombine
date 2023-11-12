@@ -7,6 +7,7 @@ using BattleCombine.Services.InputService;
 using BattleCombine.Services.Other;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
 namespace BattleCombine.Gameplay
@@ -43,6 +44,10 @@ namespace BattleCombine.Gameplay
         private Step stepChecker;
         private SequenceMoves sequenceMoves;
         private bool isTypeStandart;
+        private int maxPossibleMove;
+        private GameObject previousTile;
+        private GameObject currentTile;
+        private bool canMove = false;
 
         //todo - (temp) Kirill Add to control ai hp status (to change state)
         public int GetPlayerAiHealth => player2.GetComponent<Player>().HealthValue;
@@ -142,32 +147,6 @@ namespace BattleCombine.Gameplay
             ButtonPressed();
             Debug.Log("Finger up event invoked");
             return;
-            //TODO - Anton move this code if you need it
-            if (list.Count == 1)
-            {
-                Tile tile = list[0].GetComponent<Tile>();
-                if (tile.GetTileState == TileState.ChosenState)
-                {
-                    //tile.EndTouchOnTile();
-                    Debug.Log("One tile in list, CHANGE STATE");
-                }
-                else
-                {
-                    Debug.Log("One tile in list");
-                    return;
-                }
-            }
-            else if (list.Count < _currentPlayer.moveSpeedValue)
-            {
-                Debug.Log("Need more tile for end move or one tile in list for change state");
-                return;
-            }
-            else if (list.Count == _currentPlayer.moveSpeedValue)
-            {
-                tileStack.ConfirmTiles();
-                ButtonPressed();
-                Debug.Log("Finger up event invoked");
-            }
         }
 
         private void FightEnd()
@@ -195,6 +174,27 @@ namespace BattleCombine.Gameplay
         private void ButtonPressed()
         {
             ChangePlayerTurn();
+
+            if (currentStepInTurn == 1)
+            {
+                return;
+            }
+            else
+            {
+                if (gameField.GetComponent<TileStack>().NextMoveTiles.Count == 0)
+                {
+                    Debug.LogWarning("At the start of the turn there are no tiles to move, the field MUST be reloaded");
+                }
+                else if (gameField.GetComponent<TileStack>().NextMoveTiles.Count == 1)
+                {
+                    maxPossibleMove++;
+                    PathCheck();
+                }
+                else
+                {
+                    return;
+                }
+            }
         }
 
         private void ChangePlayerTurn()
@@ -239,5 +239,66 @@ namespace BattleCombine.Gameplay
         {
             nextTurnButton.IsTouchable = state;
         }
+        #region Checking the possibility of movement
+        public List<GameObject> TilesCheck(GameObject tileForNextMove)
+        {
+            List<GameObject> listTileForMovement = new List<GameObject>();
+
+            List<GameObject> listNearTilesGameObject = tileForNextMove.GetComponent<Tile>().TilesNearThisTile;
+            if (maxPossibleMove > 0)
+            {
+                listNearTilesGameObject.Remove(previousTile);
+            }
+            foreach (GameObject tileGameObject in listNearTilesGameObject)
+            {
+                if (tileGameObject.GetComponent<Tile>().GetTileState == TileState.EnabledState)
+                {
+                    listTileForMovement.Add(tileGameObject);
+                }
+            }
+            if (listTileForMovement.Count == 1)
+            {
+                previousTile = currentTile;
+                currentTile = listTileForMovement[0];
+                maxPossibleMove++;
+                return null;
+            }
+            else if (listTileForMovement.Count > 1)
+            {
+                canMove = true;
+                maxPossibleMove++;
+                return listTileForMovement;
+
+            }
+            else
+            {
+                maxPossibleMove = 0;
+                return null;
+            }
+        }
+        public void PathCheck()
+        {
+            List<GameObject> countTile = null;
+            currentTile = gameField.GetComponent<TileStack>().NextMoveTiles[0];
+
+            for (int i = 0; i <= _currentPlayer.moveSpeedValue; i++)
+            {
+                if(canMove == true)
+                {
+                    Debug.LogWarning("At speed " + i.ToString()+ " there are " + countTile.Count.ToString() + " tiles available to choose from");
+                    canMove = false;
+                    break;
+                }
+
+                if (maxPossibleMove == 0)
+                {
+                    Debug.LogWarning("There are no tiles left for a move on step " + i.ToString()+ ", the field MUST be reloaded");
+                    break;
+                }
+                countTile = TilesCheck(currentTile);
+            }
+        }
+        #endregion
+
     }
 }
