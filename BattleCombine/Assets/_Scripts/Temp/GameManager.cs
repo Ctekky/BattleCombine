@@ -40,6 +40,8 @@ namespace BattleCombine.Gameplay
 
         [SerializeField] private int stepsInTurn;
 
+        [SerializeField] private int currentBattleIndex;
+
         private Step stepChecker;
         private SequenceMoves sequenceMoves;
         private bool isTypeStandart;
@@ -82,6 +84,7 @@ namespace BattleCombine.Gameplay
 
         private void Start()
         {
+            currentBattleIndex = 0;
             if (gameField == null)
             {
                 Debug.Log("No gamefield object");
@@ -118,6 +121,7 @@ namespace BattleCombine.Gameplay
             _currentPlayer = player1.GetComponent<Player>();
             _currentPlayer.UpdateStats();
             gameField.GetComponent<CreateField>().SetupGameManager(this);
+            NextBattle();
             if (nextTurnButton == null)
             {
                 Debug.Log("No button object");
@@ -176,10 +180,25 @@ namespace BattleCombine.Gameplay
             fieldScript.RefreshField();
         }
 
-        private void GameOver()
+        private void GameOver(Player player)
         {
-            Debug.Log("Battle is over");
-            SceneManager.LoadScene(sceneName);
+            if(player.GetPlayerName == player1.GetComponent<Player>().GetPlayerName)
+                Debug.Log("Game over");
+            else
+            {
+                Debug.Log("Next battle");
+                NextBattle();
+            }
+            //SceneManager.LoadScene(sceneName);
+        }
+
+        private void NextBattle()
+        {
+            currentBattleIndex++;
+            //TODO: load lastbattle index from savefile
+            gameField.GetComponent<CreateField>().SetupField(false, FieldSize.Large);
+            //TODO: change AI Type behavior
+            //TODO: calculate stats and get next AI type
         }
 
         private void TileChoose(Tile tile)

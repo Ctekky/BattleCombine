@@ -21,6 +21,8 @@ namespace BattleCombine.Gameplay
 		
 		private List<int> defaultPlayerStartTilePos;
 
+		[SerializeField] private TileStack tileStack;
+
 		[Header("FieldSize")] [SerializeField]
 		private FieldSize sizeType;
 		[Header("TileParent")] [SerializeField]
@@ -65,7 +67,13 @@ namespace BattleCombine.Gameplay
 			_mainField = this.gameObject;
 			_fieldParent = tileParent.transform;
 			_isTileFullSetup = false;
+			tileStack.DescribeStartingTileList();
+			
+		}
 
+		public void SetupField(bool changeFieldSize, FieldSize fieldSize)
+		{
+			if (changeFieldSize) sizeType = fieldSize;
 			ChangeFieldSize();
 		}
 
@@ -148,6 +156,7 @@ namespace BattleCombine.Gameplay
 					continue;
 
 				ApplyStartTileStatus(tile);
+				tileStack.AddTileToStartingList(tile);
 				tile.SetAlignTileToPlayer2(true);
 			}
 		}
@@ -241,7 +250,6 @@ namespace BattleCombine.Gameplay
 
 			defaultPlayerStartTilePos[0] = _rand.Next(0, _fieldSize / 2);
 			defaultPlayerStartTilePos[1] = _rand.Next(defaultPlayerStartTilePos[0]+2, _fieldSize);
-
 			return defaultPlayerStartTilePos;
 		}
 

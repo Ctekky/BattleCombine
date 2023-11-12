@@ -129,7 +129,7 @@ MonoBehaviour:
   isAiRandomStart: 1
   defaultAiStartTilePos: 2
   isPlayerRandomStart: 1
-  defaultPlayerStartTilePos: 4
+  tileStack: {fileID: 3865557558910741595}
   sizeType: 2
   tileParent: {fileID: 5861258062984849538}
   tile: {fileID: 105925409287168891, guid: b5cffa0cdebd1814b8fa0e06cd2967e8, type: 3}

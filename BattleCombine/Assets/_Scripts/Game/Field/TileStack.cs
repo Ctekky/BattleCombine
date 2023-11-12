@@ -18,6 +18,8 @@ namespace BattleCombine.Gameplay
         [SerializeField] private List<GameObject> tileListPlayer1;
         [SerializeField] private List<GameObject> tileListPlayer2;
 
+        [SerializeField] private List<Tile> startingPlayerTiles;
+
         public int SpeedPlayer
         {
             get => speedPlayer;
@@ -42,6 +44,35 @@ namespace BattleCombine.Gameplay
             set => tileListPlayer2 = value;
         }
 
+        public void AddTileToStartingList(Tile tile)
+        {
+            startingPlayerTiles.Add(tile);
+        }
+
+        public bool CheckForStartingTile(Tile tile)
+        {
+            return startingPlayerTiles.Contains(tile);
+        }
+
+        public void ChangeStartingTileState(Tile currentTile, bool status)
+        {
+            foreach (var tile in startingPlayerTiles.Where(tile => currentTile != tile))
+            {
+                if(status) tile.StateMachine.ChangeState(tile.EnabledState);
+                else tile.StateMachine.ChangeState(tile.AvailableForSelectionState);
+            }
+        }
+
+        public TileState CheckAnotherTileForState(Tile currentTile)
+        {
+            foreach (var tile in startingPlayerTiles.Where(tile => currentTile != tile))
+            {
+                return tile.GetTileState;
+            }
+
+            return TileState.DisabledState;
+        }
+
         public List<GameObject> NextMoveTiles
         {
             get => nextMoveTiles;
@@ -58,6 +89,12 @@ namespace BattleCombine.Gameplay
         {
             player = IDPlayer.Player1;
             gameManager = FindObjectOfType<GameManager>();
+            
+        }
+
+        public void DescribeStartingTileList()
+        {
+            startingPlayerTiles = new List<Tile>();
         }
 
         private void OnDisable()
