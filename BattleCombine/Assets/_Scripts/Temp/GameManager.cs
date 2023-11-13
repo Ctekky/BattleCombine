@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
 using BattleCombine.Services.InputService;
 using BattleCombine.Services.Other;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace BattleCombine.Gameplay
 {
@@ -37,10 +34,8 @@ namespace BattleCombine.Gameplay
         [SerializeField] private int currentTurn;
 
         [SerializeField] private string sceneName;
-
         [SerializeField] private int stepsInTurn;
-
-        [SerializeField] private int currentBattleIndex;
+		[SerializeField] private int score;
 
         private Step stepChecker;
         private SequenceMoves sequenceMoves;
@@ -84,7 +79,7 @@ namespace BattleCombine.Gameplay
 
         private void Start()
         {
-            currentBattleIndex = 0;
+            score = 0;
             if (gameField == null)
             {
                 Debug.Log("No gamefield object");
@@ -194,7 +189,7 @@ namespace BattleCombine.Gameplay
 
         private void NextBattle()
         {
-            currentBattleIndex++;
+            score++;
             //TODO: load lastbattle index from savefile
             gameField.GetComponent<CreateField>().SetupField(false, FieldSize.Large);
             //TODO: change AI Type behavior
