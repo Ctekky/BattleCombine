@@ -46,6 +46,7 @@ namespace BattleCombine.Ai
         private PathFinder _pathFinder;
         private Coroutine _movePathRoutine;
         private Coroutine _giveTurnToAiRoutine;
+        private Coroutine _fieldCheckRoutine;
         private int _lastStepIndex = -1;
         private bool _isAiTurn;
         private bool _isStanceChanged;
@@ -70,11 +71,9 @@ namespace BattleCombine.Ai
 
         private void Start()
         {
-            _pathFinder = new PathFinder(AiSpeed, _field, this);
-            GetPathFinder = _pathFinder;
             _isStanceChanged = false;
             
-            FindFirstPathToAi();
+            _fieldCheckRoutine = StartCoroutine(FieldCheckRoutine());
         }
 
         private void FindFirstPathToAi()
@@ -222,6 +221,24 @@ namespace BattleCombine.Ai
         private bool HealthToChangeStance()
         {
             return _gameManager.GetPlayerAiHealth < Convert.ToInt32(20 * GetMoodHealthPercent)/100;
+        }
+        
+        private IEnumerator FieldCheckRoutine()
+        {
+            var isFieldNull = false;
+            
+            while (!isFieldNull)
+            {
+                yield return new WaitForSeconds(0.5f);
+                if(_field.GetAiStartTileIndex > 0)
+                    isFieldNull = true;
+            }
+            
+            _pathFinder = new PathFinder(AiSpeed, _field, this);
+            GetPathFinder = _pathFinder;
+            
+            FindFirstPathToAi();
+            StopCoroutine(_fieldCheckRoutine);
         }
     }
 }
