@@ -58,6 +58,7 @@ namespace BattleCombine.Gameplay
 		private bool _isTileFullSetup;
 
 		public Tile GetAiStartTile {get; private set;}
+		public int GetAiStartTileIndex {get; private set;}
 		public List<Tile> GetTileList => _tileList;
 		public int GetFieldSize => _fieldSize;
 
@@ -144,6 +145,8 @@ namespace BattleCombine.Gameplay
 
 					//ApplyStartTileStatus(tileComponent);
 					GetAiStartTile = tileComponent;
+					FindStartTileIndex(tileComponent);
+					
 					tileComponent.SetAlignTileToPlayer2(true);
 				}
 			}
@@ -258,7 +261,6 @@ namespace BattleCombine.Gameplay
 			gameManager = gm;
 		}
 
-
 		private int SetAiStartTileIndex()
 		{
 			_rand = new Random();
@@ -267,6 +269,20 @@ namespace BattleCombine.Gameplay
 				defaultAiStartTilePos = _fieldSize - 1;
 
 			return isAiRandomStart ? _rand.Next(0, _fieldSize) : defaultAiStartTilePos;
+		}
+		
+		private void FindStartTileIndex(Tile startTile)
+		{
+			var count = -1;
+			foreach (var tile in _tileList)
+			{
+				count++;
+				if(tile != startTile)
+					continue;
+
+				GetAiStartTileIndex = count;
+				break;
+			}
 		}
 	}
 }
