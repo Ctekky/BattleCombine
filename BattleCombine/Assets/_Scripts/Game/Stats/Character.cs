@@ -10,8 +10,7 @@ namespace BattleCombine.Gameplay
         public bool Shielded => stats.shielded;
         public int AttackValue => stats.attackValue;
         public int HealthValue => stats.healthValue;
-
-
+        
         protected virtual void Start()
         {
             StartGame();
