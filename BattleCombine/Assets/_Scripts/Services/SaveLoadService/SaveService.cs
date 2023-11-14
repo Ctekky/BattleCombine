@@ -37,7 +37,7 @@ namespace BattleCombine.Services
         {
             _gameData = new GameData
             {
-                playerName = "New Player"
+                PlayerName = "New Player"
             };
         }
 

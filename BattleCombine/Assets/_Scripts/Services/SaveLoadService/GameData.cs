@@ -2,21 +2,23 @@ namespace BattleCombine.Data
 {
     public class GameData
     {
-        public string playerID;
-        public string playerName;
-        public int exp;
-        public int gold;
-        public int score;
-        public SerializableDictionary<string, float> audioVolume;
+        public string PlayerID;
+        public string PlayerName;
+        public int Exp;
+        public int Gold;
+        public int CurrentScore;
+        public int MaxScore;
+        public SerializableDictionary<string, float> AudioSettings;
 
         public GameData()
         {
-            playerID = "testPlayerID";
-            playerName = "Kachachar";
-            exp = 0;
-            gold = 0;
-            score = 0;
-            audioVolume = new SerializableDictionary<string, float>();
+            PlayerID = "testPlayerID";
+            PlayerName = "Kachachar";
+            Exp = 0;
+            Gold = 0;
+            CurrentScore = 0;
+            MaxScore = 0;
+            AudioSettings = new SerializableDictionary<string, float>();
         }
     }
 }
