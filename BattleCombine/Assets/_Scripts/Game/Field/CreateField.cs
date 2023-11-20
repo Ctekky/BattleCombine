@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleCombine.Data;
 using BattleCombine.Enums;
 using UnityEngine;
 using Random = System.Random;
@@ -178,16 +179,16 @@ namespace BattleCombine.Gameplay
 		private void ChangeTileModifier(Tile currentTile, List<TileModifierDictionary> table)
 		{
 			_rand = new Random();
-			var totalWeight = table.Sum(dictionary => dictionary.Chance);
+			var totalWeight = table.Sum(dictionary => dictionary.chance);
 
 			var roll = _rand.Next(0, totalWeight);
 			var cumulativeWeight = 0;
 
 			foreach (var dictionary in table)
 			{
-				cumulativeWeight += dictionary.Chance;
+				cumulativeWeight += dictionary.chance;
 				if(roll >= cumulativeWeight) continue;
-				currentTile.ChangeTileModifier(dictionary.Value);
+				currentTile.ChangeTileModifier(dictionary.value);
 				return;
 			}
 		}
