@@ -1,12 +1,12 @@
 using System.Collections.Generic;
+using BattleCombine.Data;
 using BattleCombine.Enums;
-using BattleCombine.Gameplay;
 using UnityEngine;
 
 namespace BattleCombine.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "New BattleTable", menuName = "BattleTable")]
-    public class BattleDataTable : ScriptableObject
+    [CreateAssetMenu(fileName = "New BattleTable", menuName = "Battle table")]
+    public class SOBattleDataTable : ScriptableObject
     {
         public new string name;
         public CellType cellType;

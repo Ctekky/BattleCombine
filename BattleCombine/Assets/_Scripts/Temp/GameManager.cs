@@ -6,8 +6,6 @@ using BattleCombine.Services.InputService;
 using BattleCombine.Services.Other;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
-using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace BattleCombine.Gameplay

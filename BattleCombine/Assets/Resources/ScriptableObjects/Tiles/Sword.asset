@@ -14,61 +14,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Sword
   cellType: 0
-  sprite: {fileID: 21300000, guid: 83d77ce7737247a4a9acf4510d33bd3f, type: 3}
   spriteUp: {fileID: 21300000, guid: 0d141e5e9938c144e83acd1197599262, type: 3}
   spriteDown: {fileID: 21300000, guid: 83d77ce7737247a4a9acf4510d33bd3f, type: 3}
   modifierChances:
-  - Key: 0
-    Value: -9
-    Chance: 2
-  - Key: 1
-    Value: -8
-    Chance: 2
-  - Key: 2
-    Value: -7
-    Chance: 2
-  - Key: 3
-    Value: -6
-    Chance: 2
-  - Key: 4
-    Value: -5
-    Chance: 10
-  - Key: 5
-    Value: -4
-    Chance: 10
-  - Key: 6
-    Value: -3
-    Chance: 8
-  - Key: 7
-    Value: -2
-    Chance: 7
-  - Key: 8
-    Value: -1
-    Chance: 5
-  - Key: 10
-    Value: 1
-    Chance: 5
-  - Key: 11
-    Value: 2
-    Chance: 12
-  - Key: 12
-    Value: 3
-    Chance: 12
-  - Key: 13
-    Value: 4
-    Chance: 12
-  - Key: 14
-    Value: 5
-    Chance: 7
-  - Key: 15
-    Value: 6
-    Chance: 1
-  - Key: 16
-    Value: 7
-    Chance: 1
-  - Key: 17
-    Value: 8
-    Chance: 1
-  - Key: 18
-    Value: 9
-    Chance: 1
+  - key: 0
+    value: -9
+    chance: 2
+  - key: 1
+    value: -8
+    chance: 2
+  - key: 2
+    value: -7
+    chance: 2
+  - key: 3
+    value: -6
+    chance: 2
+  - key: 4
+    value: -5
+    chance: 10
+  - key: 5
+    value: -4
+    chance: 10
+  - key: 6
+    value: -3
+    chance: 8
+  - key: 7
+    value: -2
+    chance: 7
+  - key: 8
+    value: -1
+    chance: 5
+  - key: 10
+    value: 1
+    chance: 5
+  - key: 11
+    value: 2
+    chance: 12
+  - key: 12
+    value: 3
+    chance: 12
+  - key: 13
+    value: 4
+    chance: 12
+  - key: 14
+    value: 5
+    chance: 7
+  - key: 15
+    value: 6
+    chance: 1
+  - key: 16
+    value: 7
+    chance: 1
+  - key: 17
+    value: 8
+    chance: 1
+  - key: 18
+    value: 9
+    chance: 1
