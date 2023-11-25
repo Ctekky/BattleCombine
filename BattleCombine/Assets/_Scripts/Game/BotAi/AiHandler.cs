@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
+using BattleCombine.Services;
 using BattleCombine.Services.InputService;
 using UnityEngine;
 using Random = System.Random;
@@ -39,7 +40,7 @@ namespace BattleCombine.Ai
 
         private Random _rand;
         private InputService _inputService;
-        private GameManager _gameManager;
+        private ArcadeGameService _gameManager;
         private AiBaseEnemy _currentAiBaseEnemy;
         private CreateField _field;
         private NextTurnButton _nextTurnButton;
@@ -52,14 +53,13 @@ namespace BattleCombine.Ai
         private bool _isStanceChanged;
         
         private const int ArchetypeCount = 3;
-
-        private void OnEnable()
+        
+        public void SetupAIHandler(ArcadeGameService arcadeGameService, InputService inputService)
         {
-            _inputService = FindObjectOfType<InputService>();
-            _gameManager = FindObjectOfType<GameManager>();
-
+            _gameManager = arcadeGameService;
+            _inputService = inputService;
             ChangeEnemyStance += ChangeAiStance;
-            GameManager.OnPlayerChange += GiveAiTurn;
+            _gameManager.onPlayerChange += GiveAiTurn;
         }
 
         private void Awake()

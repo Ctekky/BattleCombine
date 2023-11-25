@@ -11,7 +11,7 @@ namespace _Scripts.UI
 	{
 		private const string initialScene = "Initial";
 		private const string arcadeScene = "EnemySelectionScene";
-		private const string gameLoopScene = "DS_scene";
+		private const string gameLoopScene = "ArcadeGameLoop";
 
 		[FormerlySerializedAs("_menuButton")]
 		[Header("Buttons")]

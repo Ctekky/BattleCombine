@@ -6,6 +6,7 @@ namespace BattleCombine.Gameplay
     public class FinalChoiceState : State
     {
         private readonly Color color = Color.cyan;
+
         public FinalChoiceState(Tile tile, StateMachine stateMachine) : base(tile, stateMachine)
         {
         }
@@ -22,16 +23,14 @@ namespace BattleCombine.Gameplay
 
         public override void Input()
         {
-            
-        }
-        public override void LogicUpdate()
-        {
-            
         }
 
-        public override void Exit() 
+        public override void LogicUpdate()
         {
-            
+        }
+
+        public override void Exit()
+        {
         }
     }
 }
