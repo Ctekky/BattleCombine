@@ -63,4 +63,11 @@ namespace BattleCombine.Enums
         Touch,
         TouchAndMove
     }
+    public enum GameMod : byte
+    {
+        ArcadeMod,
+        StoryMod,
+        PvPMod
+
+    }
 }

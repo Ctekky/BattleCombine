@@ -7,9 +7,22 @@ namespace BattleCombine.Gameplay
         [SerializeField] private Stats stats;
         public int moveSpeedValue;
 
-        public bool Shielded => stats.shielded;
-        public int AttackValue => stats.attackValue;
-        public int HealthValue => stats.healthValue;
+        public bool Shielded
+        {
+            get => stats.shielded;
+            set => stats.shielded = value;
+        }
+        public int AttackValue
+        {
+            get => stats.attackValue;
+            set => stats.attackValue = value;
+        }
+        public int HealthValue
+        {
+            get => stats.healthValue;
+            set => stats.healthValue = value;
+        }
+   
         
         protected virtual void Start()
         {
