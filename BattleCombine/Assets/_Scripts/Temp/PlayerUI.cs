@@ -1,35 +1,39 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayerUI : MonoBehaviour
+namespace _Scripts.Temp
 {
-    [SerializeField] private TextMeshPro attackText;
-    [SerializeField] private TextMeshPro healthText;
-    [SerializeField] private SpriteRenderer shieldSprite;
-
-    private bool _isShielded;
-
-    private void SetUpStat(TextMeshPro text, string value)
+    public class PlayerUI : MonoBehaviour
     {
-        text.text = value;
-    }
+        [SerializeField] private TMP_Text attackText;
+        [SerializeField] private TMP_Text healthText;
+        [SerializeField] private Image shieldSprite;
 
-    public void SetUpAllStats(string attackValue, string healthValue, bool isShielded)
-    {
-        SetUpStat(attackText, attackValue);
-        SetUpStat(healthText, healthValue);
-        SetShield(isShielded);
-        ChangeShieldSprite();
-    }
+        private bool _isShielded;
 
-    private void SetShield(bool value)
-    {
-        _isShielded = value;
-        ChangeShieldSprite();
-    }
+        private void SetUpStat(TMP_Text text, string value)
+        {
+            text.text = value;
+        }
 
-    private void ChangeShieldSprite()
-    {
-        shieldSprite.enabled = _isShielded;
+        public void SetUpAllStats(string attackValue, string healthValue, bool isShielded)
+        {
+            SetUpStat(attackText, attackValue);
+            SetUpStat(healthText, healthValue);
+            SetShield(isShielded);
+            ChangeShieldSprite();
+        }
+
+        private void SetShield(bool value)
+        {
+            _isShielded = value;
+            ChangeShieldSprite();
+        }
+
+        private void ChangeShieldSprite()
+        {
+            shieldSprite.enabled = _isShielded;
+        }
     }
 }

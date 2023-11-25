@@ -17,6 +17,6 @@ MonoBehaviour:
   spriteUp: {fileID: 21300000, guid: 3124a9e48aca8b44dadea8ce9870f500, type: 3}
   spriteDown: {fileID: 21300000, guid: 3124a9e48aca8b44dadea8ce9870f500, type: 3}
   modifierChances:
-  - Key: 9
-    Value: 0
-    Chance: 100
+  - key: 9
+    value: 0
+    chance: 100

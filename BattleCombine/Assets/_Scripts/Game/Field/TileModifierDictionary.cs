@@ -1,13 +1,13 @@
 ﻿using System;
 using BattleCombine.Enums;
 
-namespace BattleCombine.Gameplay
+namespace BattleCombine.Data
 {
     [Serializable]
     public class TileModifierDictionary
     {
-        public TileModifier Key;
-        public int Value;
-        public int Chance;
+        public TileModifier key;
+        public int value;
+        public int chance;
     }
 }
