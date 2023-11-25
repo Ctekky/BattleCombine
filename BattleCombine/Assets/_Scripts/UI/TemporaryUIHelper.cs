@@ -39,8 +39,6 @@ namespace _Scripts.UI
 		[SerializeField] private GameObject _initialPanel;
 		[SerializeField] private GameObject _walletPanel;
 		[SerializeField] private GameObject _curtain;
-		[Header("Toggles")]
-		[SerializeField] private Toggle[] _enemyToggle;
 
 		[Header("Hero Avatars")]
 		[SerializeField] private Image _playerAvatar;
@@ -75,10 +73,6 @@ namespace _Scripts.UI
 		[SerializeField] private TMP_Text _inMatchEnemyAttackText;
 		[SerializeField] private TMP_Text _inMatchPlayerHealthText;
 		[SerializeField] private TMP_Text _inMatchPlayerAttackText;
-
-		[Header("Toggle Sprites")]
-		[SerializeField] private Sprite _toggleOff;
-		[SerializeField] private Sprite _toggleOn;
 
 		private Coroutine _sceneLoad;
 
@@ -228,14 +222,6 @@ namespace _Scripts.UI
 
 		private void CheckToggleGroup(int number)
 		{
-			foreach (var enemy in _enemyToggle)
-			{
-				enemy.isOn = false;
-				enemy.GetComponent<Image>().sprite = _toggleOff;
-			}
-
-			_enemyToggle[number].isOn = true;
-			_enemyToggle[number].GetComponent<Image>().sprite = _toggleOn;
 			Debug.Log("Enemy " + number + " is Selected!");
 		}
 

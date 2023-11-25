@@ -176,23 +176,6 @@ namespace BattleCombine.Gameplay
 			};
 		}
 
-		private void ChangeTileModifier(Tile currentTile, List<TileModifierDictionary> table)
-		{
-			_rand = new Random();
-			var totalWeight = table.Sum(dictionary => dictionary.chance);
-
-			var roll = _rand.Next(0, totalWeight);
-			var cumulativeWeight = 0;
-
-			foreach (var dictionary in table)
-			{
-				cumulativeWeight += dictionary.chance;
-				if(roll >= cumulativeWeight) continue;
-				currentTile.ChangeTileModifier(dictionary.value);
-				return;
-			}
-		}
-
 		private void RefreshEmptyTile(Tile currentTile)
 		{
 			_rand = new Random();
@@ -218,22 +201,6 @@ namespace BattleCombine.Gameplay
 					else
 						currentTile.ChangeTileModifier(currentTile.TileModifier + 1);
 				}
-			}
-		}
-
-		private void ChangeTileType(Tile currentTile)
-		{
-			_rand = new Random();
-			var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
-			var roll = _rand.Next(0, totalWeight);
-			var cumulativeWeight = 0;
-			foreach (var dictionary in tileTypeChances)
-			{
-				cumulativeWeight += dictionary.Value;
-				if(roll >= cumulativeWeight) continue;
-				currentTile.ChangeTileType(dictionary.Key);
-				ChangeTileModifier(currentTile, dictionary.Key.modifierChances);
-				return;
 			}
 		}
 
@@ -284,6 +251,75 @@ namespace BattleCombine.Gameplay
 				GetAiStartTileIndex = count;
 				break;
 			}
+		}
+
+		//todo - delete old func and comments!
+		//Хотел порефакторить метод, чтобы избавиться от повторящихся значений в довольно страшненьком классе...
+		//Чисто ради эексперимента попробовал использовать Linq, который я почти не знаю!
+		//First - возвращает первое значение, которое соответствует требованиям -
+		//В данном случае, это "значение - меньше чем Рол". т.е. именно тот вес, который требуется...
+		//Как уже объяснял ранее, событие соответствует требованиям по шансу выпадения в % записанных в инспекторе.
+		//в итоге сэкономил меньше строчек, чем потратил на этот коммент :D Зато выглядит симпатичнее, да...
+		
+		#region OldChangeTileType
+		//private void ChangeTileType(Tile currentTile)
+		//{
+		//	_rand = new Random();
+		//	var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
+		//	var roll = _rand.Next(0, totalWeight);
+		//	var cumulativeWeight = 0;
+		//	foreach (var dictionary in tileTypeChances)
+		//	{
+		//		cumulativeWeight += dictionary.Value;
+		//		if(roll >= cumulativeWeight) continue;
+		//		currentTile.ChangeTileType(dictionary.Key);
+		//		ChangeTileModifier(currentTile, dictionary.Key.modifierChances);
+		//		return;
+		//	}
+		//}
+		#endregion
+		private void ChangeTileType(Tile currentTile)
+		{
+			var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
+			var roll = new Random().Next(0, totalWeight);
+			var selectedType = tileTypeChances.First(dictionary =>
+			{
+				roll -= dictionary.Value;
+				return roll < 0;
+			}).Key;
+
+			currentTile.ChangeTileType(selectedType);
+			ChangeTileModifier(currentTile, selectedType.modifierChances);
+		}
+		#region OldChangeTileModificator
+		//private void ChangeTileModifier(Tile currentTile, List<TileModifierDictionary> table)
+		//{
+		//	_rand = new Random();
+		//	var totalWeight = table.Sum(dictionary => dictionary.chance);
+		//
+		//	var roll = _rand.Next(0, totalWeight);
+		//	var cumulativeWeight = 0;
+		//
+		//	foreach (var dictionary in table)
+		//	{
+		//		cumulativeWeight += dictionary.chance;
+		//		if(roll >= cumulativeWeight) continue;
+		//		currentTile.ChangeTileModifier(dictionary.value);
+		//		return;
+		//	}
+		//}
+		#endregion
+		private void ChangeTileModifier(Tile currentTile, IReadOnlyCollection<TileModifierDictionary> table)
+		{
+			var totalWeight = table.Sum(dictionary => dictionary.chance);
+			var roll = new Random().Next(0, totalWeight);
+			var selectedModifier = table.First(dictionary =>
+			{
+				roll -= dictionary.chance;
+				return roll < 0;
+			}).value;
+
+			currentTile.ChangeTileModifier(selectedModifier);
 		}
 	}
 }
