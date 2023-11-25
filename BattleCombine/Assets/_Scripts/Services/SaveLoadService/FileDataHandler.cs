@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace BattleCombine.Data
 {
@@ -29,7 +30,7 @@ namespace BattleCombine.Data
             return modifiedData; 
         }
 
-        public void Save(GameData gameData)
+        /*public void Save(GameData gameData)
         {
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
             try
@@ -51,12 +52,13 @@ namespace BattleCombine.Data
                 Debug.Log($"Error on trying to save data to file {fullPath} \n {e}");
             }
             
-        }
+        }*/
 
-        public GameData Load()
+        /*public GameData Load()
         {
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
             GameData loadData = null;
+
             if (!File.Exists(fullPath))
             {
                 Debug.Log($"There is no save file {fullPath}");
@@ -81,12 +83,58 @@ namespace BattleCombine.Data
                 Debug.Log($"Error on trying to load data from file {fullPath} \n {e}");
             }
             return loadData;
-        }
+        }*/
 
         public void Delete()
         {
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
             if(File.Exists(fullPath)) File.Delete(fullPath);
+        }
+
+        public void Save(GameDataNew gameDataNew)
+        {
+            var fullPath = Path.Combine(_dataDirPath, _dataFileName);
+            try
+            {
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    Formatting = Formatting.None
+                };
+
+                File.WriteAllText(fullPath, JsonConvert.SerializeObject(gameDataNew, settings));
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"Error on trying to save data to file {fullPath} \n {e}");
+            }
+        }
+
+        public GameDataNew Load()
+        {
+            var fullPath = Path.Combine(_dataDirPath, _dataFileName);
+            GameDataNew loadData = null;
+            if (!File.Exists(fullPath))
+            {
+                Debug.Log($"There is no save file {fullPath}");
+                return null;
+            }
+            try
+            {
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All,
+                    ObjectCreationHandling = ObjectCreationHandling.Replace
+                };
+
+                loadData = JsonConvert.DeserializeObject<GameDataNew>(File.ReadAllText(fullPath), settings);
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"Error on trying to load data from file {fullPath} \n {e}");
+            }
+            return loadData;
         }
         
     }

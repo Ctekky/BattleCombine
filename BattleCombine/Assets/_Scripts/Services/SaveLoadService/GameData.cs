@@ -10,6 +10,8 @@ namespace BattleCombine.Data
         public int MaxScore;
         public SerializableDictionary<string, float> AudioSettings;
 
+        public PlayerAccount playerAccount;
+
         public GameData()
         {
             PlayerID = "testPlayerID";
