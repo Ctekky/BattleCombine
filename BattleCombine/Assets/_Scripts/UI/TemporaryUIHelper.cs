@@ -12,7 +12,7 @@ namespace _Scripts.UI
 	{
 		private const string initialScene = "Initial";
 		private const string arcadeScene = "EnemySelectionScene";
-		private const string battleScene = "DS_scene";
+		private const string battleScene = "ArcadeGameLoop";
 
 		[Header("Universal Buttons")]
 		[SerializeField] private Button _menuButton;

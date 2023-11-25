@@ -1,55 +1,79 @@
 using System;
 using System.Collections.Generic;
+using BattleCombine.Ai;
 using BattleCombine.Enums;
+using BattleCombine.Gameplay;
 using BattleCombine.ScriptableObjects;
-using BattleCombine.Services.InputService;
-using BattleCombine.Services.Other;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using Zenject;
 
-namespace BattleCombine.Gameplay
+namespace BattleCombine.Services
 {
-    public class GameManager : MonoBehaviour
+    public class ArcadeGameService : MonoBehaviour
     {
-        
-        //добавил, чтоб ловить боту момент смены хода
-        public static Action OnPlayerChange;
-        [SerializeField] private InputService inputService;
+        #region Dependency
+
+        //TODO: change gameService on INJECT obj
+        [SerializeField] private GameService _gameService;
+        [SerializeField] private InputService.InputService inputService;
+        //TODO: need inject UI to work with
+
+        #endregion
+
+        #region GameField
+
+        [SerializeField] private FieldSize fieldSize;
+        [SerializeField] private GameObject gameField;
+        [SerializeField] private TileType emptyTile;
+
+        #endregion
+
+        #region Players
+
         [SerializeField] private GameObject player1;
         [SerializeField] private GameObject player2;
-        [SerializeField] private GameObject gameField;
-        [SerializeField] private InputMod inputMode;
+
+        [SerializeField] public string currentPlayerName;
+        [SerializeField] private Player currentPlayer;
+
+        #endregion
+
+        #region Bot
+
+        //добавил, чтоб ловить боту момент смены хода
+        public Action onPlayerChange;
+        [SerializeField] private AiHandler aiHandler;
+
+        #endregion
+
+        #region battle and stats
+
         [SerializeField] private StatsCollector statsCollector;
         [SerializeField] private IncreaseStats increaseStats;
-        [SerializeField] private NextTurnButton nextTurnButton;
-        [SerializeField] private TileType emptyTile;
         [SerializeField] private Fight fight;
 
-        [SerializeField] private TextMeshPro description;
+        #endregion
 
-        [SerializeField] public string _currentPlayerName;
-        [SerializeField] private Player _currentPlayer;
+        #region Moves
+
+        private Step _stepChecker;
+        private SequenceMoves _sequenceMoves;
+
+        #endregion
 
         [SerializeField] private int currentStepInTurn;
         [SerializeField] private int currentTurn;
-
-        [SerializeField] private string sceneName;
-
         [SerializeField] private int stepsInTurn;
 
-        [SerializeField] private int score;
 
-        [SerializeField] private ColorSettings tileColorSettings;
-
-        private Step stepChecker;
-        private SequenceMoves sequenceMoves;
-        private bool isTypeStandart;
-        private int maxPossibleMove;
-        private GameObject previousTile;
-        private GameObject currentTile;
-        private bool canMove = false;
-        private bool isFirstRun = true;
+        private bool _isTypeStandart;
+        private int _maxPossibleMove;
+        private GameObject _previousTile;
+        private GameObject _currentTile;
+        private bool _canMove = false;
+        private bool _isFirstRun = true;
 
         //todo - (temp) Kirill Add to control ai hp status (to change state)
         public int GetPlayerAiHealth => player2.GetComponent<Player>().HealthValue;
@@ -59,35 +83,38 @@ namespace BattleCombine.Gameplay
             get => currentStepInTurn;
         }
 
-        public InputMod GetInputMode
-        {
-            get => inputMode;
-        }
+
+        #region System functions
 
         private void OnDisable()
         {
             inputService.onFingerUp -= InputFingerUp;
         }
 
+        #endregion
+
+
         private void Awake()
         {
-            stepChecker = GetComponent<Step>();
-            isTypeStandart = false;
-            isTypeStandart = stepChecker is StandartTypeStep;
-            sequenceMoves = new SequenceMoves(player1.GetComponent<Player>(), player2.GetComponent<Player>());
+            _stepChecker = GetComponent<Step>();
+            _isTypeStandart = false;
+            _isTypeStandart = _stepChecker is StandartTypeStep;
+            _sequenceMoves = new SequenceMoves(player1.GetComponent<Player>(), player2.GetComponent<Player>());
         }
 
         private void Start()
         {
-            score = 0;
             if (gameField == null)
             {
-                Debug.Log("No gamefield object");
+                Debug.Log("No game field object");
                 return;
             }
 
-            var fieldScript = gameField.GetComponent<CreateField>();
             var tileStackScript = gameField.GetComponent<TileStack>();
+            tileStackScript.SetupArcadeGameService(this);
+            tileStackScript.onTileChoose += TileChoose;
+            tileStackScript.SetupPlayer();
+            var fieldScript = gameField.GetComponent<CreateField>();
             if (fieldScript == null)
             {
                 Debug.Log("No field script");
@@ -106,41 +133,37 @@ namespace BattleCombine.Gameplay
                 return;
             }
 
-            inputService.onFingerUp += InputFingerUp;
-            fight.SetUpPlayers(player1.GetComponent<Player>(), player2.GetComponent<Player>());
+            if (aiHandler == null)
+            {
+                Debug.Log("No AI Handler object");
+                return;
+            }
 
+            aiHandler.SetupAIHandler(this, inputService);
+            fight.SetUpPlayers(player1.GetComponent<Player>(), player2.GetComponent<Player>());
+            fieldScript.SetupArcadeGameService(this);
+            fieldScript.SetupField(false, fieldSize, _gameService.GetCurrentColorSettings());
+            currentPlayerName = player1.GetComponent<Player>()?.GetPlayerName;
+            currentPlayer = player1.GetComponent<Player>();
+            currentPlayer.UpdateStats();
+
+            inputService.onFingerUp += InputFingerUp;
             fight.onGameOver += GameOver;
             fight.onFightEnd += FightEnd;
-            tileStackScript.onTileChoose += TileChoose;
-            _currentPlayerName = player1.GetComponent<Player>()?.GetPlayerName;
-            _currentPlayer = player1.GetComponent<Player>();
-            _currentPlayer.UpdateStats();
-            gameField.GetComponent<CreateField>().SetupGameManager(this);
-            NextBattle();
-            if (nextTurnButton == null)
-            {
-                Debug.Log("No button object");
-            }
-            else
-            {
-                nextTurnButton.onButtonPressed += ButtonPressed;
-            }
 
             currentTurn = 1;
             currentStepInTurn = 1;
-            tileStackScript.SpeedPlayer = _currentPlayer.moveSpeedValue;
-            //description.text = _currentPlayerName + " turn " + currentTurn + " step " + currentStepInTurn;
+            tileStackScript.SpeedPlayer = currentPlayer.moveSpeedValue;
         }
 
         private void InputFingerUp()
         {
             var tileStack = gameField.GetComponent<TileStack>();
             var list = tileStack.GetCurrentPlayerTileList();
-            if (list.Count < _currentPlayer.moveSpeedValue) return;
+            if (list.Count < currentPlayer.moveSpeedValue) return;
             tileStack.ConfirmTiles();
             ButtonPressed();
             Debug.Log("Finger up event invoked");
-            return;
         }
 
         private void FightEnd()
@@ -152,36 +175,26 @@ namespace BattleCombine.Gameplay
         private void GameOver(Player player)
         {
             if (player.GetPlayerName == player1.GetComponent<Player>().GetPlayerName)
+            {
                 Debug.Log("Game over");
+                SceneManager.LoadScene("Initial");
+            }
             else
             {
                 Debug.Log("Next battle");
-                NextBattle();
+                SceneManager.LoadScene("EnemySelectionScene");
             }
-            //SceneManager.LoadScene(sceneName);
         }
 
-        private void NextBattle()
-        {
-            score++;
-            //TODO: load lastbattle index from savefile
-            if (!isFirstRun)
-                return;
-            //чисто для проверки добавлял булку
-            isFirstRun = false;
-            gameField.GetComponent<CreateField>().SetupField(false, FieldSize.Large, tileColorSettings);
-            //TODO: change AI Type behavior
-            //TODO: calculate stats and get next AI type
-        }
 
         private void TileChoose(Tile tile)
         {
             statsCollector.Add(tile);
-            increaseStats.Player = _currentPlayer;
+            increaseStats.Player = currentPlayer;
             increaseStats.Increase();
-            _currentPlayer.UpdateStats();
+            currentPlayer.UpdateStats();
             tile.ChangeTileType(emptyTile);
-            Debug.Log($"Stats to {_currentPlayer} suppose to raise");
+            Debug.Log($"Stats to {currentPlayer} suppose to raise");
         }
 
         private void ButtonPressed()
@@ -200,7 +213,7 @@ namespace BattleCombine.Gameplay
                 }
                 else if (gameField.GetComponent<TileStack>().NextMoveTiles.Count == 1)
                 {
-                    maxPossibleMove++;
+                    _maxPossibleMove++;
                     PathCheck();
                 }
                 else
@@ -215,42 +228,37 @@ namespace BattleCombine.Gameplay
             var player1Name = player1.GetComponent<Player>().GetPlayerName;
             var player2Name = player2.GetComponent<Player>().GetPlayerName;
 
-            if (_currentPlayerName == player1Name)
+            if (currentPlayerName == player1Name)
             {
-                _currentPlayer = player2.GetComponent<Player>();
-                _currentPlayerName = player2Name;
+                currentPlayer = player2.GetComponent<Player>();
+                currentPlayerName = player2Name;
             }
-            else if (_currentPlayerName == player2Name)
+            else if (currentPlayerName == player2Name)
             {
-                _currentPlayer = player1.GetComponent<Player>();
-                _currentPlayerName = player1Name;
+                currentPlayer = player1.GetComponent<Player>();
+                currentPlayerName = player1Name;
                 currentStepInTurn++;
 
                 Debug.Log($"Current step in turn {currentStepInTurn.ToString()}");
             }
 
-            gameField.GetComponent<TileStack>().SpeedPlayer = _currentPlayer.moveSpeedValue;
-            //description.text = _currentPlayerName + " turn " + currentTurn + " step " + currentStepInTurn;
-            stepChecker.GetVariables(currentStepInTurn, stepsInTurn);
-            if (stepChecker.MoveIsPassed() == false) return;
+            gameField.GetComponent<TileStack>().SpeedPlayer = currentPlayer.moveSpeedValue;
+;
+            _stepChecker.GetVariables(currentStepInTurn, stepsInTurn);
+            if (_stepChecker.MoveIsPassed() == false) return;
             Debug.Log("Round is over => Fight!!!");
-            if (isTypeStandart)
+            if (_isTypeStandart)
             {
                 fight.FightStandart();
             }
             else
             {
-                fight.FightSimple(sequenceMoves.CurrentPlayer, sequenceMoves.NextPlayer);
+                fight.FightSimple(_sequenceMoves.CurrentPlayer, _sequenceMoves.NextPlayer);
             }
 
-            sequenceMoves.Next();
+            _sequenceMoves.Next();
             //Kirill Add for AI
-            OnPlayerChange?.Invoke();
-        }
-
-        public void SpeedIsOver(bool state)
-        {
-            nextTurnButton.IsTouchable = state;
+            onPlayerChange?.Invoke();
         }
 
         #region Checking the possibility of movement
@@ -260,9 +268,9 @@ namespace BattleCombine.Gameplay
             List<GameObject> listTileForMovement = new List<GameObject>();
 
             List<GameObject> listNearTilesGameObject = tileForNextMove.GetComponent<Tile>().TilesNearThisTile;
-            if (maxPossibleMove > 0)
+            if (_maxPossibleMove > 0)
             {
-                listNearTilesGameObject.Remove(previousTile);
+                listNearTilesGameObject.Remove(_previousTile);
             }
 
             foreach (GameObject tileGameObject in listNearTilesGameObject)
@@ -275,20 +283,20 @@ namespace BattleCombine.Gameplay
 
             if (listTileForMovement.Count == 1)
             {
-                previousTile = currentTile;
-                currentTile = listTileForMovement[0];
-                maxPossibleMove++;
+                _previousTile = _currentTile;
+                _currentTile = listTileForMovement[0];
+                _maxPossibleMove++;
                 return null;
             }
             else if (listTileForMovement.Count > 1)
             {
-                canMove = true;
-                maxPossibleMove++;
+                _canMove = true;
+                _maxPossibleMove++;
                 return listTileForMovement;
             }
             else
             {
-                maxPossibleMove = 0;
+                _maxPossibleMove = 0;
                 return null;
             }
         }
@@ -296,30 +304,44 @@ namespace BattleCombine.Gameplay
         public void PathCheck()
         {
             List<GameObject> countTile = null;
-            currentTile = gameField.GetComponent<TileStack>().NextMoveTiles[0];
+            _currentTile = gameField.GetComponent<TileStack>().NextMoveTiles[0];
 
-            for (int i = 0; i <= _currentPlayer.moveSpeedValue; i++)
+            for (int i = 0; i <= currentPlayer.moveSpeedValue; i++)
             {
-                if (canMove == true)
+                if (_canMove == true)
                 {
                     Debug.LogWarning("At speed " + i.ToString() + " there are " + countTile.Count.ToString() +
                                      " tiles available to choose from");
-                    canMove = false;
+                    _canMove = false;
                     break;
                 }
 
-                if (maxPossibleMove == 0)
+                if (_maxPossibleMove == 0)
                 {
                     Debug.LogWarning("There are no tiles left for a move on step " + i.ToString() +
                                      ", the field MUST be reloaded");
                     break;
                 }
 
-                countTile = TilesCheck(currentTile);
+                countTile = TilesCheck(_currentTile);
             }
         }
 
         #endregion
-        
+
+        #region EndBattle functions
+
+        private void ChangeCurrentScoreOnWin()
+        {
+            var currentScore = _gameService.ArcadeCurrentScore++;
+            if (currentScore > _gameService.ArcadeBestScore)
+            {
+                _gameService.ArcadeBestScore = currentScore;
+            }
+
+            _gameService.ArcadeCurrentScore = currentScore;
+        }
+
+        #endregion
     }
 }
