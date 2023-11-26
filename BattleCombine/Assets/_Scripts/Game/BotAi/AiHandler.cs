@@ -19,7 +19,7 @@ namespace BattleCombine.Ai
         public int GetMoodHealthPercent { get; private set; }
         public int AiSpeed { get; private set; }
         public AiArchetypes GetCurrentArchetype => currentArchetype;
-        
+
         //todo - if HP == X, then change stance;
         [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
 
@@ -51,9 +51,9 @@ namespace BattleCombine.Ai
         private int _lastStepIndex = -1;
         private bool _isAiTurn;
         private bool _isStanceChanged;
-        
+
         private const int ArchetypeCount = 3;
-        
+
         public void SetupAIHandler(ArcadeGameService arcadeGameService, InputService inputService)
         {
             _gameManager = arcadeGameService;
@@ -72,7 +72,7 @@ namespace BattleCombine.Ai
         private void Start()
         {
             _isStanceChanged = false;
-            
+
             _fieldCheckRoutine = StartCoroutine(FieldCheckRoutine());
         }
 
@@ -178,7 +178,7 @@ namespace BattleCombine.Ai
         {
             _pathFinder.CurrentWeights = new List<int>();
             _pathFinder.NextStanceWeights = new List<int>();
-            
+
             _pathFinder.CurrentWeights.AddRange(arrayFirst);
             _pathFinder.NextStanceWeights.AddRange(arraySecond);
         }
@@ -195,7 +195,7 @@ namespace BattleCombine.Ai
                 currentStep++;
             }
 
-            _lastStepIndex = _pathFinder.CurrentWay.Last();  
+            _lastStepIndex = _pathFinder.CurrentWay.Last();
 
             _currentAiBaseEnemy.EndAiTurn();
             _inputService.onFingerUp?.Invoke();
@@ -220,23 +220,23 @@ namespace BattleCombine.Ai
 
         private bool HealthToChangeStance()
         {
-            return _gameManager.GetPlayerAiHealth < Convert.ToInt32(20 * GetMoodHealthPercent)/100;
+            return _gameManager.GetPlayerAiHealth < Convert.ToInt32(20 * GetMoodHealthPercent) / 100;
         }
-        
+
         private IEnumerator FieldCheckRoutine()
         {
             var isFieldNull = false;
-            
+
             while (!isFieldNull)
             {
                 yield return new WaitForSeconds(0.5f);
-                if(_field.GetAiStartTileIndex > 0)
+                if (_field.GetAiStartTileIndex > 0)
                     isFieldNull = true;
             }
-            
+
             _pathFinder = new PathFinder(AiSpeed, _field, this);
             GetPathFinder = _pathFinder;
-            
+
             FindFirstPathToAi();
             StopCoroutine(_fieldCheckRoutine);
         }

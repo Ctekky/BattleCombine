@@ -13,13 +13,13 @@ namespace BattleCombine.Services
         public int ArcadeCurrentScore
         {
             get => arcadeCurrentScore;
-            set => value = arcadeCurrentScore;
+            set => arcadeCurrentScore = value;
         }
 
         public int ArcadeBestScore
         {
             get => arcadeBestScore;
-            set => value = arcadeBestScore;
+            set => arcadeBestScore = value;
         }
 
         #endregion

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a506652aeb0cb479679db36e33f17a, type: 3}
+  m_Name: EnemyAvatarsTable
+  m_EditorClassIdentifier: 
+  avatarList:
+  - enableSprite: {fileID: 21300000, guid: ecb362b07f607e04a801f8612e2f8a70, type: 3}
+    disableSprite: {fileID: 21300000, guid: ace198dc4a3240644a04a6f8ec0a738c, type: 3}
+  - enableSprite: {fileID: 21300000, guid: 0c16ad3f15be50842afd27b666f9b7bd, type: 3}
+    disableSprite: {fileID: 21300000, guid: 8969aa8d186f571469970f7e1afeeef1, type: 3}
+  - enableSprite: {fileID: 21300000, guid: 99d89c801eff0d644a76e14b24acad14, type: 3}
+    disableSprite: {fileID: 21300000, guid: 26c9e070bb1921d40ac0802a13d22b2b, type: 3}
+  - enableSprite: {fileID: 21300000, guid: 3c9083763f797374fb572124fa9dc4f6, type: 3}
+    disableSprite: {fileID: 21300000, guid: a4eda67863c13b442bf3e61dc4142e08, type: 3}
