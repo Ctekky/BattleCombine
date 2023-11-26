@@ -8,18 +8,14 @@ using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
-	public class TemporaryUIHelper : MonoBehaviour
+	public class TemporaryEnemySelectUIHelper : MonoBehaviour
 	{
 		private const string initialScene = "Initial";
 		private const string arcadeScene = "EnemySelectionScene";
 		private const string battleScene = "ArcadeGameLoop";
 
-		[Header("Universal Buttons")]
+		[Header("Buttons")]
 		[SerializeField] private Button _menuButton;
-		[FormerlySerializedAs("_infiniteGameButton")]
-		[Header("Initial Buttons")]
-		[SerializeField] private Button _ArcadeGameButton;
-		[Header("Arcade Buttons")]
 		[SerializeField] private Button _nextButton;
 		[SerializeField] private Button _firstEnemyButton;
 		[SerializeField] private Button _secondEnemyButton;
@@ -35,10 +31,7 @@ namespace _Scripts.UI
 		[SerializeField] private GameObject _optionPanel;
 		[SerializeField] private GameObject _boostPanel;
 		[SerializeField] private GameObject _matchPanel;
-		[SerializeField] private GameObject _arcadePanel;
-		[SerializeField] private GameObject _initialPanel;
 		[SerializeField] private GameObject _walletPanel;
-		[SerializeField] private GameObject _curtain;
 
 		[Header("Hero Avatars")]
 		[SerializeField] private Image _playerAvatar;
@@ -47,16 +40,15 @@ namespace _Scripts.UI
 		[SerializeField] private Image _enemyThirdAvatar;
 		[SerializeField] private Image _playerAvatarMatchPanel;
 		[SerializeField] private Image _enemyChosenAvatar;
-		[Header("Text panels (Init+Arcade)")]
+		[Header("Text panels")]
 		[SerializeField] private TMP_Text _coinCountText;
 		[SerializeField] private TMP_Text _diamondCountText;
-		[Header("Text panels(Arcade)")]
 		[SerializeField] private TMP_Text _reRollPriceText;
 		[SerializeField] private TMP_Text _playerLevelArcadeText;
 		[SerializeField] private TMP_Text _playerLevelMatchPanelText;
 		[SerializeField] private TMP_Text _scoreCountText;
 		[SerializeField] private TMP_Text _bestScoreCountText;
-		[Header("Stat Values (Arcade)")]
+		[Header("Stat Values")]
 		[SerializeField] private TMP_Text _playerExpText;
 
 		[SerializeField] private TMP_Text _playerHealthText;
@@ -74,7 +66,13 @@ namespace _Scripts.UI
 		[SerializeField] private TMP_Text _inMatchPlayerHealthText;
 		[SerializeField] private TMP_Text _inMatchPlayerAttackText;
 
+		[Header("Sliders")]
+		[SerializeField] private Slider _sfxVolumeSlider;
+		[SerializeField] private Slider _musicVolumeSlider;
+		[SerializeField] private Slider _playerExpSlider;
+
 		private Coroutine _sceneLoad;
+		private Curtain _curtain;
 
 		private bool _isMatchPanelActive = false;
 		private bool _isOptionsPanelActive = false;
@@ -84,7 +82,6 @@ namespace _Scripts.UI
 		private void Awake()
 		{
 			_menuButton.onClick.AddListener(OnOptionsButtonClick);
-			_ArcadeGameButton.onClick.AddListener(OnArcadeButtonClick);
 			_nextButton.onClick.AddListener(OnNextButtonClick);
 			_firstEnemyButton.onClick.AddListener(() => CheckToggleGroup(0));
 			_secondEnemyButton.onClick.AddListener(() => CheckToggleGroup(1));
@@ -96,7 +93,7 @@ namespace _Scripts.UI
 			_startBattleButton.onClick.AddListener(OnBattleButtonClick);
 			_boostContinueButton.onClick.AddListener(OnCloseButtonClick);
 
-			DontDestroyOnLoad(this);
+			_curtain = FindObjectOfType<Curtain>();
 		}
 
 		private void OnCloseButtonClick()
@@ -118,13 +115,6 @@ namespace _Scripts.UI
 			_optionPanel.SetActive(_isOptionsPanelActive);
 		}
 		
-		private void OnArcadeButtonClick()
-		{
-			//todo - add functional to switch scenes
-			Debug.Log("Arcade button click!");
-			_sceneLoad = StartCoroutine(OnSceneLoadRoutine(arcadeScene));
-		}
-
 		private void OnNextButtonClick()
 		{
 			_isMatchPanelActive = !_isMatchPanelActive;
@@ -148,82 +138,12 @@ namespace _Scripts.UI
 		{
 			Debug.Log("BattleButton Clicked!");
 			//todo - Scene switch to GameLoopScene
-			StartCoroutine(OnSceneLoadRoutine(battleScene));
-
-		}
-
-		private void SwitchToArcadeUI()
-		{
-			Debug.Log("Scene loaded = " + arcadeScene);
-			_initialPanel.SetActive(false);
-			_arcadePanel.SetActive(true);
-		}
-
-		private void SwitchToBattleUI()
-		{
-			Debug.Log("Scene loaded = " + battleScene);
-			_arcadePanel.SetActive(false);
-			_walletPanel.SetActive(false);
-		}
-
-		private IEnumerator OnSceneLoadRoutine(string sceneName)
-		{
-			//извращение, как оно есть... :D
-			_curtain.SetActive(true);
-			var panel = _curtain.GetComponent<Image>();
-			var changeRate = 0.01f;
-
-			panel.raycastTarget = true;
-
-			panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, 0);
-			while (panel.color.a < 1.0f)
-			{
-				var newColor = panel.color;
-				newColor.a += changeRate;
-				panel.color = newColor;
-				yield return new WaitForEndOfFrame();
-			}
-
-			SwitchScene(sceneName);
-
-			while (panel.color.a > 0f)
-			{
-				var newColor = panel.color;
-				newColor.a -= changeRate;
-				panel.color = newColor;
-				yield return new WaitForEndOfFrame();
-			}
-
-			panel.raycastTarget = false;
-
-			StopCoroutine(_sceneLoad);
-			_curtain.SetActive(false);
-			if(SceneManager.GetActiveScene().name == battleScene)
-				Destroy(this.gameObject);
-		}
-
-		private void SwitchScene(string sceneName)
-		{
-			SceneManager.LoadScene(sceneName);
-
-			switch (SceneManager.GetActiveScene().name)
-			{
-				case initialScene:
-					SwitchToArcadeUI();
-					break;
-				case arcadeScene:
-					SwitchToBattleUI();
-					break;
-				default:
-					Debug.Log("No scene available");
-					break;
-			}
+			_curtain.MoveToAnotherScene(battleScene);
 		}
 
 		private void CheckToggleGroup(int number)
 		{
 			Debug.Log("Enemy " + number + " is Selected!");
 		}
-
 	}
 }
