@@ -12,7 +12,7 @@ public class Curtain : MonoBehaviour
 
 	[SerializeField] private GameObject _curtainPanel;
 
-	private Coroutine _sceneLoad;
+	private Coroutine _curtainRoutine;
 	private Image _curtainImage;
 	private float _changeRate = 0.01f;
 
@@ -23,12 +23,12 @@ public class Curtain : MonoBehaviour
 
 	private void Start()
 	{
-		StartCoroutine(OnStartSceneRoutine());
+		_curtainRoutine = StartCoroutine(OnStartSceneRoutine());
 	}
 
 	public void MoveToAnotherScene(string arcadeScene)
 	{
-		_sceneLoad = StartCoroutine(OnSceneLoadRoutine(arcadeScene));
+		_curtainRoutine = StartCoroutine(OnSceneLoadRoutine(arcadeScene));
 	}
 
 	private IEnumerator OnStartSceneRoutine()
@@ -47,6 +47,7 @@ public class Curtain : MonoBehaviour
 		_curtainImage.raycastTarget = false;
 
 		_curtainPanel.SetActive(false);
+		StopCoroutine(_curtainRoutine);
 	}
 
 	private IEnumerator OnSceneLoadRoutine(string sceneName)
@@ -64,6 +65,6 @@ public class Curtain : MonoBehaviour
 		}
 
 		SceneManager.LoadScene(sceneName);
-		StopCoroutine(_sceneLoad);
+		StopCoroutine(_curtainRoutine);
 	}
 }
