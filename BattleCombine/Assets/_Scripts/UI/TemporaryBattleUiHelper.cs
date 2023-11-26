@@ -48,10 +48,13 @@ namespace _Scripts.UI
 		[Header("Stat Values (Battle)")]
 		[SerializeField] private TMP_Text _inBattleEnemyHealthText;
 		[SerializeField] private TMP_Text _inBattleEnemyAttackText;
-		//[SerializeField] private TMP_Text _inBattleEnemySpeedText;
 		[SerializeField] private TMP_Text _inBattlePlayerHealthText;
 		[SerializeField] private TMP_Text _inBattlePlayerAttackText;
-		//[SerializeField] private TMP_Text _inBattlePlayerSpeedText;
+		
+		[Header("Sliders")]
+		[SerializeField] private Slider _sfxVolumeSlider;
+		[SerializeField] private Slider _musicVolumeSlider;
+		[SerializeField] private Slider _playerExpSlider;
 
 		[Header("Boost Toggle")]
 		[SerializeField] private Toggle[] _boostToggles;

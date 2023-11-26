@@ -66,6 +66,11 @@ namespace _Scripts.UI
 		[SerializeField] private TMP_Text _inMatchPlayerHealthText;
 		[SerializeField] private TMP_Text _inMatchPlayerAttackText;
 
+		[Header("Sliders")]
+		[SerializeField] private Slider _sfxVolumeSlider;
+		[SerializeField] private Slider _musicVolumeSlider;
+		[SerializeField] private Slider _playerExpSlider;
+
 		private Coroutine _sceneLoad;
 		private Curtain _curtain;
 
