@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 7212187325769046588}
   - component: {fileID: 5761775876259838569}
   - component: {fileID: 690414835090078614}
+  - component: {fileID: 7274690653936066884}
   m_Layer: 5
   m_Name: Avatar
   m_TagString: Untagged
@@ -228,6 +229,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7274690653936066884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940831715400170277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8416fbb0d9040264080effa17181ea60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteStateTrue: {fileID: 21300000, guid: 3c9083763f797374fb572124fa9dc4f6, type: 3}
+  spriteStateFalse: {fileID: 21300000, guid: a4eda67863c13b442bf3e61dc4142e08, type: 3}
+  image: {fileID: 690414835090078614}
 --- !u!1 &1235321009549229846
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,6 +583,10 @@ MonoBehaviour:
   attackText: {fileID: 391256988933076069}
   healthText: {fileID: 3891456478708367733}
   shieldSprite: {fileID: 1340349462757451475}
+  avatarGameObject: {fileID: 940831715400170277}
+  speedArea: {fileID: 656335605052970440}
+  speedPrefab: {fileID: 2188382078495627210, guid: d9bd76b31418c024c94e0a42c1cc8544, type: 3}
+  createdSpeedObjectList: []
 --- !u!114 &4627782776612342393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1602,6 +1622,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}
+--- !u!1 &656335605052970440 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3506144685774206656, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}
+  m_PrefabInstance: {fileID: 4157827145788187400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8693965600495819676 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4689578051282581652, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}

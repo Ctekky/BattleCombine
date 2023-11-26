@@ -78,11 +78,7 @@ namespace BattleCombine.Services
         //todo - (temp) Kirill Add to control ai hp status (to change state)
         public int GetPlayerAiHealth => player2.GetComponent<Player>().HealthValue;
 
-        public int GetCurrentStepInTurn
-        {
-            get => currentStepInTurn;
-        }
-
+        public int GetCurrentStepInTurn => currentStepInTurn;
 
         #region System functions
 
@@ -243,7 +239,7 @@ namespace BattleCombine.Services
             }
 
             gameField.GetComponent<TileStack>().SpeedPlayer = currentPlayer.moveSpeedValue;
-;
+            ;
             _stepChecker.GetVariables(currentStepInTurn, stepsInTurn);
             if (_stepChecker.MoveIsPassed() == false) return;
             Debug.Log("Round is over => Fight!!!");

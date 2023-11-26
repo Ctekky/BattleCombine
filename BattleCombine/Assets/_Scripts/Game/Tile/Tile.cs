@@ -76,10 +76,7 @@ namespace BattleCombine.Gameplay
             private set => tileModifier = value;
         }
 
-        public TileStack GetTileStack
-        {
-            get => tileStack;
-        }
+        public TileStack GetTileStack => tileStack;
 
         public CellType GetTileType => tileType.cellType;
 
@@ -111,7 +108,7 @@ namespace BattleCombine.Gameplay
             _firstTilePosScaleX = localScale.x;
             _firstTilePosScaleZ = localScale.z;
         }
-        
+
         public void SetAlignTileToPlayer1(bool flag)
         {
             isAlignPlayer1 = flag;

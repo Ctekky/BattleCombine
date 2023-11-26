@@ -82,13 +82,13 @@ namespace BattleCombine.Gameplay
         public List<GameObject> NextMoveTiles
         {
             get => nextMoveTiles;
-            set => value = nextMoveTiles;
+            set => nextMoveTiles = value;
         }
 
         public IDPlayer IDPlayer
         {
             get => player;
-            set => player = value;
+            private set => player = value;
         }
 
         private void Start()
