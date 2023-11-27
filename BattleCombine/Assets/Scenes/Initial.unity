@@ -2248,6 +2248,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 487053882181261098, guid: 55bcd076f587ca241805ffb9ea3a069c, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 1194619105150865436, guid: 55bcd076f587ca241805ffb9ea3a069c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2379,7 +2383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2157680945086992415, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2214206336947216868, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
       propertyPath: m_Color.a
