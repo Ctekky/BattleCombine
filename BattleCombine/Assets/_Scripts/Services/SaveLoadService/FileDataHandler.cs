@@ -29,69 +29,13 @@ namespace BattleCombine.Data
 
             return modifiedData; 
         }
-
-        /*public void Save(GameData gameData)
-        {
-            var fullPath = Path.Combine(_dataDirPath, _dataFileName);
-            try
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-                var dataToStore = JsonUtility.ToJson(gameData, true);
-                if (_encryptData) dataToStore = EncryptDecrypt(dataToStore);
-                using (var stream = new FileStream(fullPath, FileMode.Create))
-                {
-                    using (var writer = new StreamWriter(stream))
-                    {
-                        writer.Write(dataToStore);
-                    }
-                }
-
-            }
-            catch (Exception e)
-            {
-                Debug.Log($"Error on trying to save data to file {fullPath} \n {e}");
-            }
-            
-        }*/
-
-        /*public GameData Load()
-        {
-            var fullPath = Path.Combine(_dataDirPath, _dataFileName);
-            GameData loadData = null;
-
-            if (!File.Exists(fullPath))
-            {
-                Debug.Log($"There is no save file {fullPath}");
-                return null;
-            }
-            try
-            {
-                var dataToLoad = "";
-                using (var stream = new FileStream(fullPath, FileMode.Open))
-                {
-                    using (var reader = new StreamReader(stream))
-                    {
-                        dataToLoad = reader.ReadToEnd();
-                    }
-                }
-                if (_encryptData) dataToLoad = EncryptDecrypt(dataToLoad);
-                loadData = JsonUtility.FromJson<GameData>(dataToLoad);
-                
-            }
-            catch (Exception e)
-            {
-                Debug.Log($"Error on trying to load data from file {fullPath} \n {e}");
-            }
-            return loadData;
-        }*/
-
         public void Delete()
         {
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
             if(File.Exists(fullPath)) File.Delete(fullPath);
         }
 
-        public void Save(GameDataNew gameDataNew)
+        public void Save(GameData gameDataNew)
         {
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
             try
@@ -111,10 +55,10 @@ namespace BattleCombine.Data
             }
         }
 
-        public GameDataNew Load()
+        public GameData Load()
         {
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
-            GameDataNew loadData = null;
+            GameData loadData = null;
             if (!File.Exists(fullPath))
             {
                 Debug.Log($"There is no save file {fullPath}");
@@ -128,7 +72,7 @@ namespace BattleCombine.Data
                     ObjectCreationHandling = ObjectCreationHandling.Replace
                 };
 
-                loadData = JsonConvert.DeserializeObject<GameDataNew>(File.ReadAllText(fullPath), settings);
+                loadData = JsonConvert.DeserializeObject<GameData>(File.ReadAllText(fullPath), settings);
             }
             catch (Exception e)
             {

@@ -1,6 +1,7 @@
 using BattleCombine.Data;
 using BattleCombine.Interfaces;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
 namespace BattleCombine.Gameplay
 {
@@ -21,33 +22,49 @@ namespace BattleCombine.Gameplay
             playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString(), Shielded);
         }
 
-        public void LoadData(GameDataNew gameDataNew)
+        public void LoadData(GameData gameData, bool newGameBattle, bool firstStart)
         {
+            var gdBs = gameData.battleStatsData;
+
             int i = 1;
             if (playerName == "Player2")
             {
                 i = 0;
             }
-            var gdBs = gameDataNew.battleStats;
+            if (newGameBattle == true)
+            {
+                HealthValue = HealthValueDefault + gdBs[i].HealthModifier;
+                AttackValue = DamageValueDefault + gdBs[i].DamageModifier;
+                moveSpeedValue = SpeedValueDefault + gdBs[i].SpeedModifier;
+            }
+            else
+            {
+                HealthValue = gdBs[i].CurrentHealth;
+                AttackValue = gdBs[i].CurrentDamage;
+                moveSpeedValue = gdBs[i].CurrentSpeed;
+            }
             playerName = gdBs[i].Name;
-            HealthValue = gdBs[i].Health;
-            AttackValue = gdBs[i].Damage;
-            moveSpeedValue = gdBs[i].Speed;
             Shielded = gdBs[i].Shield;
         }
 
-        public void SaveData(ref GameDataNew gameDataNew)
+        public void SaveData(ref GameData gameData, bool newGameBattle, bool firstStart)
         {
+            var gdBs = gameData.battleStatsData;
+
             int i = 1;
             if (playerName == "Player2")
             {
                 i = 0;
             }
-            var gdBs = gameDataNew.battleStats;
             gdBs[i].Name = playerName;
-            gdBs[i].Health = HealthValue;
-            gdBs[i].Damage = AttackValue;
-            gdBs[i].Speed = moveSpeedValue;
+            gdBs[i].CurrentHealth = HealthValue;
+            gdBs[i].HealthModifier = HealthValueModifier;
+            gdBs[i].HealthDefault = HealthValueDefault;
+            gdBs[i].CurrentDamage = AttackValue;
+            gdBs[i].DamageModifier = DamageValueModifier;
+            gdBs[i].DamageDefault = DamageValueDefault;
+            gdBs[i].CurrentSpeed = moveSpeedValue;
+            gdBs[i].SpeedModifier = SpeedValueModifier;
             gdBs[i].Shield = Shielded;
         }
     }
