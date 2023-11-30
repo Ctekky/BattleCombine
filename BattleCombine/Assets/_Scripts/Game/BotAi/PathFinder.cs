@@ -197,8 +197,6 @@ namespace BattleCombine.Ai
 
 		private void AddPathToDictionary(List<int> path)
 		{
-			var count = 0;
-
 			if(path.Count == _aiSpeed)
 			{
 				allPaths.Add(_pathID++, path);
