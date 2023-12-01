@@ -23,12 +23,6 @@ namespace _Scripts.UI
 		[SerializeField] private Button _closePausePanelButton;
 		[SerializeField] private Button _optionsInPauseButton;
 
-		[Header("Boosters")]
-		[SerializeField] private Button _lHeartBooster;
-		[SerializeField] private Button _heartBooster;
-		[SerializeField] private Button _shieldBooster;
-		[SerializeField] private Button _speedBooster;
-
 		[Header("Game Panels")]
 		[SerializeField] private GameObject _boostPanel;
 		[SerializeField] private GameObject _optionPanel;
@@ -77,11 +71,6 @@ namespace _Scripts.UI
 			_closeOptionsPanelButton.onClick.AddListener(OnCloseButtonClick);
 			_closePausePanelButton.onClick.AddListener(OnCloseButtonClick);
 			_optionsInPauseButton.onClick.AddListener(OnOptionsButtonInPauseClick);
-
-			_lHeartBooster.onClick.AddListener(() => CheckToggleGroup(0));
-			_heartBooster.onClick.AddListener(() => CheckToggleGroup(1));
-			_shieldBooster.onClick.AddListener(() => CheckToggleGroup(2));
-			_speedBooster.onClick.AddListener(() => CheckToggleGroup(3));
 		}
 
 		private void OnCloseButtonClick()
@@ -165,19 +154,6 @@ namespace _Scripts.UI
 			StopCoroutine(_sceneLoad);
 			SceneManager.LoadScene(initialScene);
 			_curtain.SetActive(false);
-		}
-
-		private void CheckToggleGroup(int number)
-		{
-			foreach (var boost in _boostToggles)
-			{
-				boost.isOn = false;
-				boost.GetComponent<Image>().sprite = _toggleOff;
-			}
-
-			_boostToggles[number].isOn = true;
-			_boostToggles[number].GetComponent<Image>().sprite = _toggleOn;
-			Debug.Log("Boost " + number + " is Selected!");
 		}
 	}
 }
