@@ -4,22 +4,25 @@ using System.Linq;
 using BattleCombine.Data;
 using BattleCombine.Gameplay;
 using BattleCombine.Interfaces;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Video;
 
 namespace BattleCombine.Services
 {
     public class SaveManager : MonoBehaviour
     {
-        //private GameData _gameData;
-        private GameDataNew _gameDataNew;
-        private PlayerAccount _playerAccount;
-        private BattleStats _battleStats;
+        [SerializeField] private bool encryptData;
+        [SerializeField] private bool firstStart;
+        [SerializeField] private bool newGameBattle;
+
+        private GameData _gameData;
         private FileDataHandler _dataHandler;
         private string _fileName;
         private List<ISaveLoad> _saveInterfacesInScripts;
-        [SerializeField] private bool encryptData;
-        public string sceneName;
-        public bool firstSave; //TODO
+        
+
+        public bool NewGameBattle { get => newGameBattle; set => newGameBattle = value; }
 
         private void Awake()
         {
@@ -41,21 +44,21 @@ namespace BattleCombine.Services
 
         private void NewGame()
         {
-            _gameDataNew = new GameDataNew();
+            _gameData = new GameData();
         }
 
         public bool CheckForSavedData()
         {
-            _gameDataNew = _dataHandler.Load();
-            return _gameDataNew != null;
+            _gameData = _dataHandler.Load();
+            return _gameData != null;
         }
 
         public void LoadGame()
         {
-            _gameDataNew = _dataHandler.Load();
-            if (_gameDataNew == null)
+            _gameData = _dataHandler.Load();
+            if (_gameData == null)
             {
-                firstSave = true;
+                firstStart = true;
                 Debug.Log("No save data found!");
                 NewGame();
                 return;
@@ -63,22 +66,22 @@ namespace BattleCombine.Services
 
             foreach (var loadScript in _saveInterfacesInScripts)
             {
-                loadScript.LoadData(_gameDataNew);
-                firstSave = false;
+                loadScript.LoadData(_gameData, NewGameBattle, firstStart);
+                firstStart = false;
             }
         }
         public void SaveGame()
         {
             foreach (var saveScript in _saveInterfacesInScripts)
             {
-                if(firstSave == true)
+                if (firstStart == true & saveScript is Player)
                 {
-                    _gameDataNew.battleStats.Add(new BattleStats());
+                    _gameData.battleStatsData.Add(new BattleStatsData());
                 }
                 
-                saveScript.SaveData(ref _gameDataNew);
+                saveScript.SaveData(ref _gameData, NewGameBattle, firstStart);
             }
-            _dataHandler.Save(_gameDataNew);
+            _dataHandler.Save(_gameData);
         }
 
         private void OnApplicationQuit()
@@ -86,9 +89,14 @@ namespace BattleCombine.Services
             SaveGame();
         }
 
-        private List<ISaveLoad> FindAllSaveAndLoadInterfaces()
+        private List<ISaveLoad> FindAllSaveAndLoadInterfaces() //TODO
         {
-            var  saveInterfacesInScripts = FindObjectsOfType<Character>().OfType<ISaveLoad>(); //TODO
+            List<ISaveLoad> saveInterfacesInScripts = new List<ISaveLoad>();
+
+            var saveBattleStats = FindObjectsOfType<Character>().OfType<ISaveLoad>();
+            var saveOthers = FindObjectsOfType<PlayerAccount>().OfType<ISaveLoad>();
+            saveInterfacesInScripts.AddRange(saveBattleStats);
+            saveInterfacesInScripts.AddRange(saveOthers);
             return new List<ISaveLoad>(saveInterfacesInScripts);
         }
 

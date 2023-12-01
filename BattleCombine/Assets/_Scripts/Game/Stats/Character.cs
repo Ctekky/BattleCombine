@@ -12,18 +12,48 @@ namespace BattleCombine.Gameplay
             get => stats.shielded;
             set => stats.shielded = value;
         }
-        public int AttackValue
-        {
-            get => stats.attackValue;
-            set => stats.attackValue = value;
-        }
         public int HealthValue
         {
             get => stats.healthValue;
             set => stats.healthValue = value;
         }
-   
-        
+        public int HealthValueDefault
+        {
+            get => stats.healthValueDefault;
+            set => stats.healthValueDefault = value;
+        }
+        public int HealthValueModifier
+        {
+            get => stats.healthValueModifier;
+            set => stats.healthValueModifier = value;
+        }
+        public int AttackValue
+        {
+            get => stats.attackValue;
+            set => stats.attackValue = value;
+        }
+        public int DamageValueModifier
+        {
+            get => stats.attackValueModifier;
+            set => stats.attackValueModifier = value;
+        }
+        public int DamageValueDefault
+        {
+            get => stats.attackValueDefault;
+            set => stats.attackValueDefault = value;
+        }
+        public int SpeedValueDefault
+        {
+            get => stats.moveSpeedValueDefault;
+            set => stats.moveSpeedValueDefault = value;
+        }
+        public int SpeedValueModifier
+        {
+            get => stats.moveSpeedValueModifier;
+            set => stats.moveSpeedValueModifier = value;
+        }
+
+
         protected virtual void Start()
         {
             StartGame();

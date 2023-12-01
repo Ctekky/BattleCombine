@@ -4,8 +4,8 @@ namespace BattleCombine.Interfaces
 {
     public interface ISaveLoad
     {
-        void LoadData(GameDataNew gameDataNew);
-        void SaveData(ref GameDataNew gameDataNew);
+        void LoadData(GameData gameData, bool newGameBattle, bool firstStart);
+        void SaveData(ref GameData gameData, bool newGameBattle, bool firstStart);
     }
 
 }
