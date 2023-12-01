@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2131724487741539700}
   - component: {fileID: 8749455314990348768}
   - component: {fileID: 3046005838853098421}
+  - component: {fileID: 1261525808016758035}
   m_Layer: 5
   m_Name: PurpleSpeedBall
   m_TagString: Untagged
@@ -75,3 +76,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1261525808016758035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2188382078495627210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8416fbb0d9040264080effa17181ea60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteStateTrue: {fileID: 21300000, guid: ae081196f7736a74aac6e7ad9f936368, type: 3}
+  spriteStateFalse: {fileID: 21300000, guid: 193005a9e12f56c48a30545c9fa4920d, type: 3}
+  image: {fileID: 3046005838853098421}

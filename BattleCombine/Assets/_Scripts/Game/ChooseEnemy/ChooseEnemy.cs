@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Data;
@@ -10,8 +11,10 @@ public class ChooseEnemy : MonoBehaviour
 {
     [SerializeField] private List<EnemyStatsStruct> chosenList;
     [SerializeField] private List<EnemyStatsStruct> finalEnemyStatsList;
+    [SerializeField] private List<EnemyAvatarStruct> chosenAvatarList;
     [SerializeField] private SOEnemyStatsTable enemyStatsTable;
     [SerializeField] private SOStatsModifierTable statModifierTable;
+    [SerializeField] private SOEnemyAvatarTable enemyAvatarTable;
     [SerializeField] private int enemyCountToChoose;
     [SerializeField] private int currentScore;
 
@@ -30,11 +33,26 @@ public class ChooseEnemy : MonoBehaviour
             do
             {
                 index = Random.Range(0, baseTable.Count);
-                Debug.Log(usedIndex.Contains(index));
             } while (usedIndex.Contains(index));
 
             usedIndex.Add(index);
             chosenList.Add(baseTable[index]);
+        }
+    }
+
+    private void GetSomeAvatars(List<EnemyAvatarStruct> baseTable, int count)
+    {
+        var usedIndex = new List<int>();
+        for (var i = 0; i < count; i++)
+        {
+            var index = 0;
+            do
+            {
+                index = Random.Range(0, baseTable.Count);
+            } while (usedIndex.Contains(index));
+
+            usedIndex.Add(index);
+            chosenAvatarList.Add(baseTable[index]);
         }
     }
 
@@ -57,16 +75,27 @@ public class ChooseEnemy : MonoBehaviour
         finalEnemyStatsList.Add(finalEnemyStats);
     }
 
-    private void Start()
+    public void CalculateEnemies(int score)
     {
         finalEnemyStatsList = new List<EnemyStatsStruct>();
         GetSomeEnemies(enemyStatsTable.enemyStatsStruct, enemyCountToChoose);
-        var weakEnemyScore = currentScore - 1;
+        var weakEnemyScore = score - 1;
         if (weakEnemyScore <= 0) weakEnemyScore = 1;
-        var normalEnemyScore = currentScore;
-        var strongEnemyScore = currentScore + 1;
+        var strongEnemyScore = score + 1;
         ApplyStatModifiers(0, weakEnemyScore);
-        ApplyStatModifiers(1, normalEnemyScore);
+        ApplyStatModifiers(1, score);
         ApplyStatModifiers(2, strongEnemyScore);
+    }
+
+    public List<EnemyAvatarStruct> GetFinalAvatars()
+    {
+        chosenAvatarList = new List<EnemyAvatarStruct>();
+        GetSomeAvatars(enemyAvatarTable.avatarList, enemyCountToChoose);
+        return chosenAvatarList;
+    }
+
+    public List<EnemyStatsStruct> GetFinalEnemies()
+    {
+        return finalEnemyStatsList;
     }
 }

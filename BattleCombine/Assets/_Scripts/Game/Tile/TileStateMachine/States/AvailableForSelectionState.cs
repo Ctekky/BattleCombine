@@ -19,9 +19,9 @@ namespace BattleCombine.Gameplay
             _tile.SetBorderColor(true);
             StateName = TileState.AvailableForSelectionState;
             _tile.SetCurrentState(StateName);
-
-            //if (_tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
-            //{
+            
+            Debug.Log(_tile.GetTileStack.ToString());
+            Debug.Log(_tile.GetTileStack.IDPlayer.ToString());
             switch (_tile.GetTileStack.IDPlayer)
             {
                 case IDPlayer.Player1:
@@ -36,14 +36,7 @@ namespace BattleCombine.Gameplay
 
         public override void Input()
         {
-            if (_tile.GetTileStack.GetGameManager.GetInputMode == InputMod.Touch)
-            {
-                InputTouchMod();
-            }
-            else
-            {
-                InputMoveMod();
-            }
+            InputMoveMod();
         }
 
         public override void LogicUpdate()
@@ -57,7 +50,6 @@ namespace BattleCombine.Gameplay
 
         private void InputTouchMod()
         {
-            
             _tile.FindTileForAction(_tile, _tile.TilesForChoosing, TileState.EnabledState);
             foreach (GameObject tileGameObject in _tile.TilesForChoosing)
             {
@@ -71,7 +63,7 @@ namespace BattleCombine.Gameplay
             {
                 case IDPlayer.Player1: //TODO
                     if (_tile.GetTileStack.TilesListPlayer1.Count > 0 ||
-                        _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
+                        _tile.GetTileStack.GetArcadeGameService.GetCurrentStepInTurn > 1)
                     {
                         _tile.ChangeTileStateInStack();
                     }
@@ -80,7 +72,7 @@ namespace BattleCombine.Gameplay
                     break;
                 case IDPlayer.Player2: //TODO
                     if (_tile.GetTileStack.TilesListPlayer2.Count > 0 ||
-                        _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
+                        _tile.GetTileStack.GetArcadeGameService.GetCurrentStepInTurn > 1)
                     {
                         _tile.ChangeTileStateInStack();
                     }
@@ -93,11 +85,11 @@ namespace BattleCombine.Gameplay
             _tile.GetTileStack.NextMoveTiles.AddRange(_tile.TilesForChoosing);
             if (_tile.GetTileStack.CheckForStartingTile(_tile))
             {
-                if(_tile.GetTileStack.CheckAnotherTileForState(_tile) != TileState.ChosenState)
+                if (_tile.GetTileStack.CheckAnotherTileForState(_tile) != TileState.ChosenState)
                     _tile.GetTileStack.ChangeStartingTileState(_tile, true);
             }
+
             _stateMachine.ChangeState(_tile.ChosenState);
-            
         }
 
         private void InputMoveMod()
@@ -115,7 +107,7 @@ namespace BattleCombine.Gameplay
             {
                 case IDPlayer.Player1: //TODO
                     if (_tile.GetTileStack.TilesListPlayer1.Count > 0 ||
-                        _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
+                        _tile.GetTileStack.GetArcadeGameService.GetCurrentStepInTurn > 1)
                     {
                         _tile.ChangeTileStateInStack();
                     }
@@ -124,7 +116,7 @@ namespace BattleCombine.Gameplay
                     break;
                 case IDPlayer.Player2: //TODO
                     if (_tile.GetTileStack.TilesListPlayer2.Count > 0 ||
-                        _tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1)
+                        _tile.GetTileStack.GetArcadeGameService.GetCurrentStepInTurn > 1)
                     {
                         _tile.ChangeTileStateInStack();
                     }
@@ -137,11 +129,11 @@ namespace BattleCombine.Gameplay
             _tile.GetTileStack.NextMoveTiles.AddRange(_tile.TilesForChoosing);
             if (_tile.GetTileStack.CheckForStartingTile(_tile))
             {
-                if(_tile.GetTileStack.CheckAnotherTileForState(_tile) != TileState.ChosenState)
+                if (_tile.GetTileStack.CheckAnotherTileForState(_tile) != TileState.ChosenState)
                     _tile.GetTileStack.ChangeStartingTileState(_tile, true);
             }
+
             _stateMachine.ChangeState(_tile.ChosenState);
-            
         }
     }
 }

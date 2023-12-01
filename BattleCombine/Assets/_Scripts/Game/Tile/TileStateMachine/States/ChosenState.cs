@@ -26,21 +26,13 @@ namespace BattleCombine.Gameplay
 
         public override void Input()
         {
-            if (_tile.GetTileStack.GetGameManager.GetInputMode == InputMod.Touch)
+            if (_tile.GetTileStack.GetCurrentPlayerTileList().Count == 1)
             {
                 InputTouchMod();
             }
             else
             {
-                if (_tile.GetTileStack.GetCurrentPlayerTileList().Count == 1)
-                {
-                    //return;
-                    InputTouchMod();
-                }
-                else
-                {
-                    InputMoveMod();
-                }
+                InputMoveMod();
             }
         }
 
@@ -52,7 +44,6 @@ namespace BattleCombine.Gameplay
         {
             _tile.CantUse = false;
             _tile.ClearTheTilesArray();
-           
         }
 
         private void InputTouchMod()
@@ -78,7 +69,8 @@ namespace BattleCombine.Gameplay
             }
 
             listGameObjectTile.RemoveAt(listGameObjectTile.Count - 1);
-            if(_tile.GetTileStack.CheckForStartingTile(_tile)) _tile.GetTileStack.ChangeStartingTileState(_tile, false);
+            if (_tile.GetTileStack.CheckForStartingTile(_tile))
+                _tile.GetTileStack.ChangeStartingTileState(_tile, false);
             _stateMachine.ChangeState(_tile.AvailableForSelectionState);
 
             if (listGameObjectTile.Count > 0)
@@ -96,7 +88,7 @@ namespace BattleCombine.Gameplay
                 tile.GetTileStack.NextMoveTiles.AddRange(tile.TilesForChoosing);
             }
 
-            if (_tile.GetTileStack.GetGameManager.GetCurrentStepInTurn > 1 && listGameObjectTile.Count == 0)
+            if (_tile.GetTileStack.GetArcadeGameService.GetCurrentStepInTurn > 1 && listGameObjectTile.Count == 0)
             {
                 List<GameObject> listTileGameObject = new List<GameObject>();
                 switch (_tile.GetTileStack.IDPlayer)
@@ -124,7 +116,6 @@ namespace BattleCombine.Gameplay
 
         private void InputMoveMod()
         {
-            
             TileStack tileStack = _tile.GetTileStack;
             List<GameObject> listCurrentPlayer = new List<GameObject>();
 
@@ -137,7 +128,10 @@ namespace BattleCombine.Gameplay
                     listCurrentPlayer = tileStack.TilesListPlayer2;
                     break;
             }
-            if(_tile.GetTileStack.CheckForStartingTile(_tile)) _tile.GetTileStack.ChangeStartingTileState(_tile, false);
+
+            if (_tile.GetTileStack.CheckForStartingTile(_tile))
+                _tile.GetTileStack.ChangeStartingTileState(_tile, false);
+
             #region Ñhange state (EnabledState) of the tiles for the next move for the last tile in list (NextMoveTiles)
 
             GameObject lastTileGameObjectInList = listCurrentPlayer.Last();
@@ -169,8 +163,6 @@ namespace BattleCombine.Gameplay
             }
 
             #endregion
-            
-            
         }
     }
 }

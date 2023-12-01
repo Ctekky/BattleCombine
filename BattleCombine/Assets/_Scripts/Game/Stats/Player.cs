@@ -22,6 +22,33 @@ namespace BattleCombine.Gameplay
         {
             playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString(), Shielded);
         }
+        
+        public void SetupAvatar(EnemyAvatarStruct avatarStruct)
+        {
+            playerUIScript.SetupAvatar(avatarStruct.enableSprite, avatarStruct.disableSprite);
+        }
+
+        public EnemyAvatarStruct GetAvatar()
+        {
+            var avatarStruct = new EnemyAvatarStruct
+            {
+                enableSprite = playerUIScript.GetSprite(true),
+                disableSprite = playerUIScript.GetSprite(false)
+            };
+            return avatarStruct;
+        }
+
+        public void ChangeAvatarState(bool state)
+        {
+            playerUIScript.ChangeAvatarState(state);
+        }
+
+        public void SetStats(int attack, int health, int speed, bool shielded)
+        {
+            SetupStats(attack, health, speed, shielded);
+            UpdateStats();
+            playerUIScript.SetupSpeed(speed);
+        }
 
         public void LoadData(GameData gameData, bool newGameBattle, bool firstStart)
         {

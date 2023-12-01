@@ -9,16 +9,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Initial.unity
     guid: 2c82d1f5052d2684dad796aa8baed724
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
-    guid: 57f3b7c9bc6e0e74fa3af33317103e2c
-  - enabled: 1
     path: Assets/Scenes/EnemySelectionScene.unity
     guid: be37067190f2701458c0891d2913b9e1
   - enabled: 1
-    path: Assets/Scenes/DS_scene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/Scenes/Game_LoopDS.unity
-    guid: b631f54243a333548a0d20f0a1710b83
+    path: Assets/Scenes/ArcadeGameLoop.unity
+    guid: 1118d7f3a5a7b2043b7ba0b3a2b9e187
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: e9ae5eda0bcff934eaa524dd06295370, type: 2}

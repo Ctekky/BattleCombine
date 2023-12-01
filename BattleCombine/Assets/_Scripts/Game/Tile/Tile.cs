@@ -7,13 +7,14 @@ using BattleCombine.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using BattleCombine.Services.Other;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
 using Unity.VisualScripting;
 
 namespace BattleCombine.Gameplay
 {
-    public class Tile : MonoBehaviour, IMovable, ITouchable, IPointerExitHandler//, IPointerEnterHandler
+    public class Tile : MonoBehaviour, IMovable, ITouchable, IPointerExitHandler //, IPointerEnterHandler
     {
         //[SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private SpriteRenderer borderSprite;
@@ -41,10 +42,8 @@ namespace BattleCombine.Gameplay
         public bool IsAlignPlayer2 => isAlignPlayer2;
 
         //TODO: change this to proper algorithm
-        private GameManager _gameManager;
         private float _firstTilePosScaleX;
         private float _firstTilePosScaleZ;
-
 
         public StateMachine StateMachine;
         public AvailableForSelectionState AvailableForSelectionState;
@@ -64,6 +63,7 @@ namespace BattleCombine.Gameplay
             get => tilesNearThisTile;
             private set => tilesNearThisTile = value;
         }
+
         public bool CantUse
         {
             get => _cantUse;
@@ -76,17 +76,20 @@ namespace BattleCombine.Gameplay
             private set => tileModifier = value;
         }
 
-        public TileStack GetTileStack
-        {
-            get => tileStack;
-        }
+        public TileStack GetTileStack => tileStack;
 
         public CellType GetTileType => tileType.cellType;
 
         //set tile mask
         [SerializeField] private LayerMask tileLayerMask;
 
+        #region Events
+
         public Action<Tile> onTileTouched;
+        public Action<bool> onSpeedEnded;
+
+        #endregion
+
 
         private void Awake()
         {
@@ -101,18 +104,10 @@ namespace BattleCombine.Gameplay
         private void Start()
         {
             CheckTilesStateNearThisTile(this);
-            tileStack = FindObjectOfType<TileStack>();
-            SetupTile();
-            _firstTilePosScaleX = transform.parent.localScale.x;
-            _firstTilePosScaleZ = transform.parent.localScale.z;
+            var localScale = transform.parent.localScale;
+            _firstTilePosScaleX = localScale.x;
+            _firstTilePosScaleZ = localScale.z;
         }
-
-        //TODO: change this to proper algorithm
-        public void SetGameManager(GameManager gameManager)
-        {
-            _gameManager = gameManager;
-        }
-
 
         public void SetAlignTileToPlayer1(bool flag)
         {
@@ -168,15 +163,16 @@ namespace BattleCombine.Gameplay
             startTile = isStartTile;
         }
 
-        private void SetupTile()
+        public void SetupTile(TileStack mainTileStack, ColorSettings tileColorSettings)
         {
+            tileStack = mainTileStack;
             tileNormalColor = Color.white;
             tileNormalBorder = new Color(255, 255, 255, 0);
-            tileChosenColor = _gameManager.GetTileColorSetting();
-            tileChosenBorder = _gameManager.GetBorderColorSetting();
+            tileChosenColor = tileColorSettings.tileColor;
+            tileChosenBorder = tileColorSettings.borderColor;
             tileSprite.color = tileNormalColor;
             borderSprite.color = tileNormalBorder;
-            ChangeTileModifier(tileModifier);
+            //ÑhangeTileModifier(tileModifier);
             if (startTile)
             {
                 StateMachine.Initialize(AvailableForSelectionState);
@@ -222,24 +218,19 @@ namespace BattleCombine.Gameplay
 
         public void FingerMoved()
         {
-            if (tileStack.GetGameManager.GetInputMode == InputMod.Touch)
+            switch (tileStack.IDPlayer)
             {
-                return;
-            }
-            else
-            {
-                switch (tileStack.IDPlayer)
-                {
-                    case IDPlayer.Player1:
-                        ActionForTileFingerMove(tileStack.TilesListPlayer1);
-                        break;
-                    case IDPlayer.Player2:
-                        ActionForTileFingerMove(tileStack.TilesListPlayer2);
-                        break;
-                }
+                case IDPlayer.Player1:
+                    ActionForTileFingerMove(tileStack.TilesListPlayer1);
+                    break;
+                case IDPlayer.Player2:
+                    ActionForTileFingerMove(tileStack.TilesListPlayer2);
+                    break;
             }
         }
-        public void FindTileForAction(Tile tile, List<GameObject> list, TileState nameState) //change state for nearest tiles
+
+        public void FindTileForAction(Tile tile, List<GameObject> list,
+            TileState nameState) //change state for nearest tiles
         {
             Vector2 tilePosition = tile.transform.position;
             var localScale = gameObject.transform.localScale;
@@ -328,8 +319,8 @@ namespace BattleCombine.Gameplay
 
         private void ActionForTileTouch(List<GameObject> list)
         {
-            if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
-            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return;
+            //if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
+            //if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return;
 
             if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
             {
@@ -339,7 +330,8 @@ namespace BattleCombine.Gameplay
                     StateMachine.CurrentState.LogicUpdate();
                     if (list.Count() < tileStack.SpeedPlayer)
                     {
-                        _gameManager.SpeedIsOver(false);
+                        onSpeedEnded?.Invoke(false);
+                        //_gameManager.SpeedIsOver(false);
                     }
                 }
                 else
@@ -355,12 +347,14 @@ namespace BattleCombine.Gameplay
                     StateMachine.CurrentState.LogicUpdate();
                     if (list.Count() == tileStack.SpeedPlayer)
                     {
-                        _gameManager.SpeedIsOver(true);
+                        onSpeedEnded?.Invoke(true);
+                        //_gameManager.SpeedIsOver(true);
                     }
                 }
                 else
                 {
-                    _gameManager.SpeedIsOver(true);
+                    onSpeedEnded?.Invoke(true);
+                    //_gameManager.SpeedIsOver(true);
                     Debug.Log("Current move over");
                 }
             }
@@ -368,8 +362,8 @@ namespace BattleCombine.Gameplay
 
         private void ActionForTileFingerMove(List<GameObject> list)
         {
-            if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
-            if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return;
+            //if (_gameManager._currentPlayerName == "Player1" & !isAlignPlayer1) return;
+            //if (_gameManager._currentPlayerName == "Player2" & !isAlignPlayer2) return;
             if (StateMachine.CurrentState.ToString() == ChosenState.ToString())
             {
                 if (this.gameObject == list.Last())
@@ -394,12 +388,14 @@ namespace BattleCombine.Gameplay
                     StateMachine.CurrentState.LogicUpdate();
                     if (list.Count() == tileStack.SpeedPlayer)
                     {
-                        _gameManager.SpeedIsOver(true);
+                        onSpeedEnded?.Invoke(true);
+                        //_gameManager.SpeedIsOver(true);
                     }
                 }
                 else
                 {
-                    _gameManager.SpeedIsOver(true);
+                    onSpeedEnded?.Invoke(true);
+                    //_gameManager.SpeedIsOver(true);
                     Debug.Log("Current move over");
                 }
             }
@@ -433,6 +429,6 @@ namespace BattleCombine.Gameplay
             Gizmos.color = Color.green;
             float rangeOverlap = (float)((Math.Sqrt(Math.Pow(tileScaleX, 2) + Math.Pow(tileScaleY, 2))) / 2);
             Gizmos.DrawWireSphere(position, rangeOverlap);
-       }
+        }
     }
 }

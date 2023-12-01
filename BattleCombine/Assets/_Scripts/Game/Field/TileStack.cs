@@ -2,15 +2,16 @@ using System;
 using BattleCombine.Enums;
 using System.Collections.Generic;
 using System.Linq;
+using BattleCombine.Services;
 using UnityEngine;
 
 namespace BattleCombine.Gameplay
 {
     public class TileStack : MonoBehaviour
     {
-        [SerializeField] private GameManager gameManager;
         [SerializeField] private int speedPlayer;
         [SerializeField] private IDPlayer player;
+        [SerializeField] ArcadeGameService _arcadeGameService;
         [SerializeField] private List<GameObject> nextMoveTiles;
         [SerializeField] private List<GameObject> tilesForNextMovePlayer1;
         [SerializeField] private List<GameObject> tilesForNextMovePlayer2;
@@ -28,7 +29,7 @@ namespace BattleCombine.Gameplay
 
         public List<GameObject> GetTilesForNextMovePlayer1 => tilesForNextMovePlayer1;
         public List<GameObject> GetTilesForNextMovePlayer2 => tilesForNextMovePlayer2;
-        public GameManager GetGameManager => gameManager;
+        public ArcadeGameService GetArcadeGameService => _arcadeGameService;
 
         public Action<Tile> onTileChoose;
 
@@ -54,11 +55,16 @@ namespace BattleCombine.Gameplay
             return startingPlayerTiles.Contains(tile);
         }
 
+        public void SetupArcadeGameService(ArcadeGameService arcadeGameService)
+        {
+            _arcadeGameService = arcadeGameService;
+        }
+
         public void ChangeStartingTileState(Tile currentTile, bool status)
         {
             foreach (var tile in startingPlayerTiles.Where(tile => currentTile != tile))
             {
-                if(status) tile.StateMachine.ChangeState(tile.EnabledState);
+                if (status) tile.StateMachine.ChangeState(tile.EnabledState);
                 else tile.StateMachine.ChangeState(tile.AvailableForSelectionState);
             }
         }
@@ -76,20 +82,23 @@ namespace BattleCombine.Gameplay
         public List<GameObject> NextMoveTiles
         {
             get => nextMoveTiles;
-            set => value = nextMoveTiles;
+            set => nextMoveTiles = value;
         }
 
         public IDPlayer IDPlayer
         {
             get => player;
-            set => player = value;
+            private set => player = value;
         }
 
         private void Start()
         {
             player = IDPlayer.Player1;
-            gameManager = FindObjectOfType<GameManager>();
-            
+        }
+
+        public void SetupPlayer()
+        {
+            player = IDPlayer.Player1;
         }
 
         public void DescribeStartingTileList()
