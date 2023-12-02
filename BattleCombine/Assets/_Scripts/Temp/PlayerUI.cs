@@ -34,12 +34,14 @@ namespace _Scripts.Temp
         private bool _isShielded;
         private bool _isPlayerBoostCooldownOn;
 
+#if UNITY_EDITOR
         //todo - timers and cooldowns
         [ContextMenu("TESTCooldown")]
         public void TestCooldown()
         {
             ChangeImageInCooldown(6);
         }
+#endif
         
         public void ChangeImageInCooldown(int value)
         {
