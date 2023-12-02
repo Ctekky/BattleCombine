@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using BattleCombine.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Scripts.Temp
@@ -16,11 +18,53 @@ namespace _Scripts.Temp
         [SerializeField] private GameObject speedArea;
         [SerializeField] private GameObject speedPrefab;
         [SerializeField] private List<GameObject> createdSpeedObjectList;
+
+        [Header("BoostTimer")]
+        [SerializeField] private Image _heartImg;
+        [SerializeField] private Image _swordsImg;
+        [SerializeField] private Image _heartsBackImg;
+        [FormerlySerializedAs("_swordsBAckImg")]
+        [SerializeField] private Image _swordsBackImg;
+        [SerializeField] private List<Sprite> _cooldownSprites;
+        [SerializeField] private GameObject _healthCooldownObj;
+        [SerializeField] private GameObject _attackCooldownObj;
+        [SerializeField] private TMP_Text _healthTimerText;
+        [SerializeField] private TMP_Text _attackTimerText;
+
         private bool _isShielded;
-        
-        private void OnDisable()
+        private bool _isPlayerBoostCooldownOn;
+
+        //todo - timers and cooldowns
+        [ContextMenu("TESTCooldown")]
+        public void TestCooldown()
         {
-            DeleteAllSpeedObject();
+            ChangeImageInCooldown(6);
+        }
+        
+        public void ChangeImageInCooldown(int value)
+        {
+            _isPlayerBoostCooldownOn = !_isPlayerBoostCooldownOn;
+            
+            _healthCooldownObj.SetActive(_isPlayerBoostCooldownOn);
+            _attackCooldownObj.SetActive(_isPlayerBoostCooldownOn);
+            
+            if(_isPlayerBoostCooldownOn)
+            {
+                _heartImg.sprite = _cooldownSprites[1];
+                _heartsBackImg.sprite = _cooldownSprites[5];
+                _healthTimerText.text = value + "h";
+
+                _swordsImg.sprite = _cooldownSprites[3];
+                _swordsBackImg.sprite = _cooldownSprites[5];
+                _attackTimerText.text = value + "h";
+            }
+            else
+            {
+                _heartImg.sprite = _cooldownSprites[0];
+                _swordsImg.sprite = _cooldownSprites[2];
+                _heartsBackImg.sprite = _cooldownSprites[4];
+                _swordsBackImg.sprite = _cooldownSprites[4];
+            }
         }
 
         private void SetupStat(TMP_Text text, string value)
@@ -87,6 +131,11 @@ namespace _Scripts.Temp
             }
 
             createdSpeedObjectList.Clear();
+        }
+
+        private void OnDisable()
+        {
+            DeleteAllSpeedObject();
         }
     }
 }
