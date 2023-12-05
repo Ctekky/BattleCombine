@@ -161,7 +161,7 @@ RectTransform:
   m_GameObject: {fileID: 289196719806047893}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2458252375937116745}
@@ -170,7 +170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 74, y: -15}
+  m_AnchoredPosition: {x: 74, y: -24}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &736083268158211016
@@ -323,8 +323,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -295, y: -5.5}
-  m_SizeDelta: {x: 180, y: 225}
+  m_AnchoredPosition: {x: -295, y: -14}
+  m_SizeDelta: {x: 181, y: 255}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5761775876259838569
 CanvasRenderer:
@@ -406,7 +406,7 @@ RectTransform:
   m_GameObject: {fileID: 1235321009549229846}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4409113149619582682}
@@ -416,7 +416,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -82, y: -15.000001}
+  m_AnchoredPosition: {x: -82, y: -24}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1079731148815687044
@@ -1012,7 +1012,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 95.138504, y: 107.62351}
-  m_SizeDelta: {x: 345.4497, y: 230}
+  m_SizeDelta: {x: 351, y: 273}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8121814219527144669
 CanvasRenderer:
@@ -1934,7 +1934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4689578051282581652, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 383
+      value: 390
       objectReference: {fileID: 0}
     - target: {fileID: 4689578051282581652, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}
       propertyPath: m_SizeDelta.y
