@@ -1547,26 +1547,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563401088}
   m_CullTransparentMesh: 1
---- !u!114 &586558193 stripped
+--- !u!114 &588674783 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7959836533932848677, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1700409344171435173, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
   m_PrefabInstance: {fileID: 113680504}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &610336562 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2592239620813600767, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
-  m_PrefabInstance: {fileID: 113680504}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &619394800
@@ -1996,9 +1985,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9bd76b31418c024c94e0a42c1cc8544, type: 3}
---- !u!114 &962860984 stripped
+--- !u!114 &906598385 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5455769449798723456, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2330689912826154860, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
   m_PrefabInstance: {fileID: 113680504}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -2528,6 +2517,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2105806065}
     m_Modifications:
+    - target: {fileID: 3066044483865729, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 546497789429316259, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      propertyPath: m_Color.a
+      value: 0.92156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 546497789429316259, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2249192949186510100, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2611,6 +2612,10 @@ PrefabInstance:
     - target: {fileID: 4099382795836505412, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
       propertyPath: m_Name
       value: BoostPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4099382795836505412, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3754,7 +3759,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3272381435584416551, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3272381435584416551, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
       propertyPath: m_AnchorMin.x
@@ -3762,7 +3767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3272381435584416551, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3272381435584416551, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
       propertyPath: m_SizeDelta.x
@@ -3806,7 +3811,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3272381435584416551, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1805
+      value: 115
       objectReference: {fileID: 0}
     - target: {fileID: 3272381435584416551, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3903,6 +3908,17 @@ PrefabInstance:
       addedObject: {fileID: 80851411}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
+--- !u!114 &2025469135 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4299045580963068468, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
+  m_PrefabInstance: {fileID: 113680504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2050164791 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2749304438167675841, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
@@ -3950,7 +3966,7 @@ MonoBehaviour:
   _pauseButton: {fileID: 1070244895}
   _boostInBattleButton: {fileID: 330953243}
   _continueInBattleButton: {fileID: 1699690428}
-  _closeOptionsPanelButton: {fileID: 586558193}
+  _closeOptionsPanelButton: {fileID: 588674783}
   _closePausePanelButton: {fileID: 2050164791}
   _optionsInPauseButton: {fileID: 1097603050}
   _boostPanel: {fileID: 1435692908}
@@ -3967,8 +3983,8 @@ MonoBehaviour:
   _inBattleEnemyAttackText: {fileID: 722396198}
   _inBattlePlayerHealthText: {fileID: 1809397900}
   _inBattlePlayerAttackText: {fileID: 1059120776}
-  _sfxVolumeSlider: {fileID: 962860984}
-  _musicVolumeSlider: {fileID: 610336562}
+  _sfxVolumeSlider: {fileID: 2025469135}
+  _musicVolumeSlider: {fileID: 906598385}
   _playerExpSlider: {fileID: 1340131227}
   _boostToggles:
   - {fileID: 0}
