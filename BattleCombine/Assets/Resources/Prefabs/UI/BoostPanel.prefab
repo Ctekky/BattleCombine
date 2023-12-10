@@ -1568,6 +1568,7 @@ GameObject:
   - component: {fileID: 2956818860632452384}
   - component: {fileID: 3236544627875389974}
   - component: {fileID: 3066044483865729}
+  - component: {fileID: 3880508384573124640}
   m_Layer: 5
   m_Name: BoostBackground
   m_TagString: Untagged
@@ -1635,6 +1636,32 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3880508384573124640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3287505700525215636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a42ac5a1461514d9c4a8a694678017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 1, b: 1, a: 1}
+  _editorFlipMode: 0
+  _buildFlipMode: 0
+  _intensity: 0.116
+  _multiplier: 0.15
+  _onBeginBlur:
+    m_PersistentCalls:
+      m_Calls: []
+  _onEndBlur:
+    m_PersistentCalls:
+      m_Calls: []
+  _onBlurChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3581821961638163160
 GameObject:
   m_ObjectHideFlags: 0
