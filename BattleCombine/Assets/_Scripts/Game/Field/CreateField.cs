@@ -128,9 +128,12 @@ namespace BattleCombine.Gameplay
 
         private void SetupTileOnField()
         {
+            int i = 0;
             foreach (var tileInList in _tileList)
             {
                 tileInList.CheckTilesStateNearThisTile(tileInList);
+                tileInList.TileID = i;
+                i++;
             }
 
             _isTileFullSetup = true;

@@ -28,6 +28,7 @@ namespace BattleCombine.Gameplay
         [SerializeField] private bool startTile = false;
         [SerializeField] private TileState tileCurrentState;
         [SerializeField] private bool _cantUse = false;
+        [SerializeField] private int tileID;
         [SerializeField] private List<GameObject> tilesForChoosing = new List<GameObject>();
         [SerializeField] private List<GameObject> tilesNearThisTile = new List<GameObject>();
 
@@ -74,6 +75,12 @@ namespace BattleCombine.Gameplay
         {
             get => tileModifier;
             private set => tileModifier = value;
+        }
+
+        public int TileID
+        {
+            get => tileID;
+            set => tileID = value;
         }
 
         public TileStack GetTileStack => tileStack;
