@@ -13,7 +13,7 @@ namespace BattleCombine.Ai
 {
     public class AiHandler : MonoBehaviour
     {
-        public static Action ChangeEnemyStance;
+        public static event Action ChangeEnemyStance;
 
         public PathFinder GetPathFinder { get; private set; }
         public int GetMoodHealthPercent { get; private set; }
