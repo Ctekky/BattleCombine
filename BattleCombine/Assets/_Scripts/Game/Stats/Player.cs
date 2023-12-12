@@ -54,10 +54,10 @@ namespace BattleCombine.Gameplay
         {
             var gdBs = gameData.battleStatsData;
 
-            int i = 1;
+            int i = 0;
             if (playerName == "Player2")
             {
-                i = 0;
+                i = 1;
             }
             if (newGameBattle == true)
             {
@@ -79,10 +79,10 @@ namespace BattleCombine.Gameplay
         {
             var gdBs = gameData.battleStatsData;
 
-            int i = 1;
+            int i = 0;
             if (playerName == "Player2")
             {
-                i = 0;
+                i = 1;
             }
             gdBs[i].Name = playerName;
             gdBs[i].CurrentHealth = HealthValue;

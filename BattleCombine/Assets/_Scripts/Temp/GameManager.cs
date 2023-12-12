@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BattleCombine.Ai;
 using BattleCombine.Enums;
 using BattleCombine.ScriptableObjects;
 using BattleCombine.Services.InputService;
@@ -42,6 +43,7 @@ namespace BattleCombine.Gameplay
 
         [SerializeField] private ColorSettings tileColorSettings;
 
+        private PathCheck pathCheck = new PathCheck();
         private Step stepChecker;
         private SequenceMoves sequenceMoves;
         private bool isTypeStandart;
@@ -198,14 +200,9 @@ namespace BattleCombine.Gameplay
                 {
                     Debug.LogWarning("At the start of the turn there are no tiles to move, the field MUST be reloaded");
                 }
-                else if (gameField.GetComponent<TileStack>().NextMoveTiles.Count == 1)
-                {
-                    maxPossibleMove++;
-                    PathCheck();
-                }
                 else
                 {
-                    return;
+                    PathCheck(gameField.GetComponent<TileStack>().NextMoveTiles);
                 }
             }
         }
@@ -253,73 +250,31 @@ namespace BattleCombine.Gameplay
             nextTurnButton.IsTouchable = state;
         }
 
+
         #region Checking the possibility of movement
 
-        public List<GameObject> TilesCheck(GameObject tileForNextMove)
+        public void PathCheck(List<GameObject> listTilesGO)
         {
-            List<GameObject> listTileForMovement = new List<GameObject>();
-
-            List<GameObject> listNearTilesGameObject = tileForNextMove.GetComponent<Tile>().TilesNearThisTile;
-            if (maxPossibleMove > 0)
+            bool hasPath = false;
+            foreach (var tileGO in listTilesGO)
             {
-                listNearTilesGameObject.Remove(previousTile);
-            }
-
-            foreach (GameObject tileGameObject in listNearTilesGameObject)
-            {
-                if (tileGameObject.GetComponent<Tile>().GetTileState == TileState.EnabledState)
+                hasPath = pathCheck.FindPath(tileGO, _currentPlayer.moveSpeedValue);
+                if(hasPath == true)
                 {
-                    listTileForMovement.Add(tileGameObject);
+                    break;
                 }
             }
 
-            if (listTileForMovement.Count == 1)
+            if (hasPath == true)
             {
-                previousTile = currentTile;
-                currentTile = listTileForMovement[0];
-                maxPossibleMove++;
-                return null;
-            }
-            else if (listTileForMovement.Count > 1)
-            {
-                canMove = true;
-                maxPossibleMove++;
-                return listTileForMovement;
+                Debug.LogWarning("We have a way(s), let's go!");
             }
             else
             {
-                maxPossibleMove = 0;
-                return null;
+                Debug.LogWarning("We have no way, the field MUST be reloaded!");
             }
+
         }
-
-        public void PathCheck()
-        {
-            List<GameObject> countTile = null;
-            currentTile = gameField.GetComponent<TileStack>().NextMoveTiles[0];
-
-            for (int i = 0; i <= _currentPlayer.moveSpeedValue; i++)
-            {
-                if (canMove == true)
-                {
-                    Debug.LogWarning("At speed " + i.ToString() + " there are " + countTile.Count.ToString() +
-                                     " tiles available to choose from");
-                    canMove = false;
-                    break;
-                }
-
-                if (maxPossibleMove == 0)
-                {
-                    Debug.LogWarning("There are no tiles left for a move on step " + i.ToString() +
-                                     ", the field MUST be reloaded");
-                    break;
-                }
-
-                countTile = TilesCheck(currentTile);
-            }
-        }
-
         #endregion
-        
     }
 }
