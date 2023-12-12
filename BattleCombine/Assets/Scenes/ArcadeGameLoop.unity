@@ -620,7 +620,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3599559781538101009, guid: 395004208ae909d4494cd4271c7da268, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -552.00006
+      value: -641
       objectReference: {fileID: 0}
     - target: {fileID: 3599559781538101009, guid: 395004208ae909d4494cd4271c7da268, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -798,8 +798,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 327, y: 244.99994}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchoredPosition: {x: 395, y: 265}
+  m_SizeDelta: {x: 250, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &388951230
 GameObject:
@@ -1436,7 +1436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: sizeType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7231038543268852751, guid: 5c43d4a3f5ea42a4b95c251e215eb5df, type: 3}
       propertyPath: makeScale
@@ -3935,7 +3935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3272381435584416551, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 187
+      value: 207
       objectReference: {fileID: 0}
     - target: {fileID: 3272381435584416551, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
