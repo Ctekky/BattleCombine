@@ -1,4 +1,6 @@
+using _Scripts.Audio;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Scripts.UI
@@ -13,33 +15,37 @@ namespace _Scripts.UI
 
 		[Header("Buttons")]
 		[SerializeField] private Button _menuButton;
-		[SerializeField] private Button _ArcadeGameButton;
+		[SerializeField] private Button _arcadeGameButton;
 		[SerializeField] private Button _closeOptionsPanelButton;
 
+		[FormerlySerializedAs("_optionPanel")]
 		[Header("Game Panels")]
-		[SerializeField] private GameObject _optionPanel;
+		[SerializeField] private GameObject _settingsPanel;
+		[SerializeField] private SoundHelper _soundHelper;
 
-		private bool _isOptionsPanelActive = false;
+		private bool isOptionsPanelActive = false;
 
 		private void Awake()
 		{
 			_menuButton.onClick.AddListener(OnOptionsButtonClick);
-			_ArcadeGameButton.onClick.AddListener(OnArcadeButtonClick);
+			_arcadeGameButton.onClick.AddListener(OnArcadeButtonClick);
 			_closeOptionsPanelButton.onClick.AddListener(OnCloseButtonClick);
 		}
 
 		private void OnCloseButtonClick()
 		{
-			_isOptionsPanelActive = true;
+			isOptionsPanelActive = true;
 			
 			OnOptionsButtonClick();
 		}
 
 		private void OnOptionsButtonClick()
 		{
-			_isOptionsPanelActive = !_isOptionsPanelActive;
-			Debug.Log("Options Active = " + _isOptionsPanelActive);
-			_optionPanel.SetActive(_isOptionsPanelActive);
+			isOptionsPanelActive = !isOptionsPanelActive;
+			Debug.Log("Options Active = " + isOptionsPanelActive);
+			_settingsPanel.SetActive(isOptionsPanelActive);
+			
+			_soundHelper.PlayClickSound();
 		}
 		
 		private void OnArcadeButtonClick()
@@ -47,6 +53,5 @@ namespace _Scripts.UI
 			Debug.Log("Arcade button click!");
 			_curtain.MoveToAnotherScene(arcadeScene);
 		}
-
 	}
 }
