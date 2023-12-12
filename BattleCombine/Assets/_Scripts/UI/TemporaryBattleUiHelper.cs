@@ -1,4 +1,5 @@
 using System.Collections;
+using _Scripts.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,23 +20,20 @@ namespace _Scripts.UI
 		[SerializeField] private Button _pauseButton;
 		[SerializeField] private Button _boostInBattleButton;
 		[SerializeField] private Button _continueInBattleButton;
-		[SerializeField] private Button _closeOptionsPanelButton;
-		[SerializeField] private Button _closePausePanelButton;
-		[SerializeField] private Button _optionsInPauseButton;
 
 		[Header("Game Panels")]
 		[SerializeField] private GameObject _boostPanel;
-		[SerializeField] private GameObject _optionPanel;
-		[SerializeField] private GameObject _pausePanel;
+		[SerializeField] private PausePanel _pausePanel;
+		[SerializeField] private SettingsPanel _settingsPanel;
+		[SerializeField] private SoundHelper _soundHelper;
+		[SerializeField] private WalletPanel _wallet; //todo - add ScoreMechanics _wallet.AddScore(value)
 		[SerializeField] private GameObject _curtain;
-
+		
 		[Header("Hero Avatars")]
 		[SerializeField] private Image _playerInBattleAvatar;
 		[SerializeField] private Image _enemyInBattleAvatar;
 
 		[Header("Text panels")]
-		[SerializeField] private TMP_Text _scoreCountText;
-		[SerializeField] private TMP_Text _bestScoreCountText;
 		[SerializeField] private TMP_Text _roundCountText;
 		[SerializeField] private TMP_Text _playerLevelText;
 
@@ -46,15 +44,7 @@ namespace _Scripts.UI
 		[SerializeField] private TMP_Text _inBattlePlayerAttackText;
 		
 		[Header("Sliders")]
-		[SerializeField] private Slider _sfxVolumeSlider;
-		[SerializeField] private Slider _musicVolumeSlider;
 		[SerializeField] private Slider _playerExpSlider;
-
-		[Header("Boost Toggle")]
-		[SerializeField] private Toggle[] _boostToggles;
-		[Header("Toggle Sprites")]
-		[SerializeField] private Sprite _toggleOff;
-		[SerializeField] private Sprite _toggleOn;
 
 		private Coroutine _sceneLoad;
 
@@ -68,9 +58,10 @@ namespace _Scripts.UI
 			_pauseButton.onClick.AddListener(OnPauseButtonClick);
 			_boostInBattleButton.onClick.AddListener(OnBoostButtonClick);
 			_continueInBattleButton.onClick.AddListener(OnContinueClick);
-			_closeOptionsPanelButton.onClick.AddListener(OnCloseButtonClick);
-			_closePausePanelButton.onClick.AddListener(OnCloseButtonClick);
-			_optionsInPauseButton.onClick.AddListener(OnOptionsButtonInPauseClick);
+			_settingsPanel.GetSettingsCloseButton.onClick.AddListener(OnCloseButtonClick);
+			_pausePanel.GetCloseButton.onClick.AddListener(OnCloseButtonClick);
+			_pausePanel.GetMenuButton.onClick.AddListener(OnOptionsButtonInPauseClick);
+			_pausePanel.GetPauseContinueButton.onClick.AddListener(OnCloseButtonClick);
 		}
 
 		private void OnCloseButtonClick()
@@ -86,16 +77,17 @@ namespace _Scripts.UI
 
 		private void OnPauseButtonClick()
 		{
+			_soundHelper.PlayClickSound();
 			_isPausePanelActive = !_isPausePanelActive;
 			Debug.Log("Options Active = " + _isPausePanelActive);
-			_pausePanel.SetActive(_isPausePanelActive);
+			_pausePanel.gameObject.SetActive(_isPausePanelActive);
 		}
 
 		private void OnOptionsButtonClick()
 		{
 			_isOptionsPanelActive = !_isOptionsPanelActive;
 			Debug.Log("Options Active = " + _isOptionsPanelActive);
-			_optionPanel.SetActive(_isOptionsPanelActive);
+			_settingsPanel.gameObject.SetActive(_isOptionsPanelActive);
 		}
 
 		private void OnBoostButtonClick()
@@ -126,6 +118,7 @@ namespace _Scripts.UI
 
 		private void ClosePanel()
 		{
+			_soundHelper.PlayClickSound();
 			_isBoostPanelActive = !_isBoostPanelActive;
 			_boostPanel.SetActive(_isBoostPanelActive);
 		}
