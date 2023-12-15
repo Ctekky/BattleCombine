@@ -719,15 +719,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackText: {fileID: 7182271972405789140}
   healthText: {fileID: 1205639966790886380}
+  playerLevelText: {fileID: 0}
+  playerLevelSlider: {fileID: 0}
   shieldSprite: {fileID: 5411824502802154030}
   avatarGameObject: {fileID: 4779996241652399337}
   speedArea: {fileID: 2977854841085428956}
   speedPrefab: {fileID: 2188382078495627210, guid: d9bd76b31418c024c94e0a42c1cc8544, type: 3}
   createdSpeedObjectList: []
-  _heartImg: {fileID: 0}
-  _swordsImg: {fileID: 0}
-  _heartsBackImg: {fileID: 0}
-  _swordsBackImg: {fileID: 0}
+  _heartImg: {fileID: 6153143852977153947}
+  _swordsImg: {fileID: 875868642532871517}
+  _heartsBackImg: {fileID: 2189870637789612016}
+  _swordsBackImg: {fileID: 1133558712027308475}
   _cooldownSprites: []
   _healthCooldownObj: {fileID: 0}
   _attackCooldownObj: {fileID: 0}

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
-	public class TemporaryInitialUIHelper : MonoBehaviour
+	public class UIHelperInitialScene : MonoBehaviour
 	{
 		private const string initialScene = "Initial";
 		private const string arcadeScene = "EnemySelectionScene";
