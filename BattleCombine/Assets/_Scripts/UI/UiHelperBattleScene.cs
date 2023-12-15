@@ -28,23 +28,9 @@ namespace _Scripts.UI
 		[SerializeField] private SoundHelper _soundHelper;
 		[SerializeField] private WalletPanel _wallet; //todo - add ScoreMechanics _wallet.AddScore(value)
 		[SerializeField] private GameObject _curtain;
-		
-		[Header("Hero Avatars")]
-		[SerializeField] private Image _playerInBattleAvatar;
-		[SerializeField] private Image _enemyInBattleAvatar;
 
 		[Header("Text panels")]
 		[SerializeField] private TMP_Text _roundCountText;
-		[SerializeField] private TMP_Text _playerLevelText;
-
-		[Header("Stat Values (Battle)")]
-		[SerializeField] private TMP_Text _inBattleEnemyHealthText;
-		[SerializeField] private TMP_Text _inBattleEnemyAttackText;
-		[SerializeField] private TMP_Text _inBattlePlayerHealthText;
-		[SerializeField] private TMP_Text _inBattlePlayerAttackText;
-		
-		[Header("Sliders")]
-		[SerializeField] private Slider _playerExpSlider;
 
 		private Coroutine _sceneLoad;
 

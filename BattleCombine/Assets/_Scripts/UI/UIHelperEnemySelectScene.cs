@@ -32,18 +32,10 @@ namespace _Scripts.UI
 		[SerializeField] private SoundHelper _soundHelper;
 		[SerializeField] private WalletPanel _walletPanel;
 
-		[Header("Hero Avatars")]
-		[SerializeField] private Image _playerAvatar;
-		[SerializeField] private Image _enemyFirstAvatar;
-		[SerializeField] private Image _enemySecondAvatar;
-		[SerializeField] private Image _enemyThirdAvatar;
-		[SerializeField] private Image _playerAvatarMatchPanel;
-		[SerializeField] private Image _enemyChosenAvatar;
 		[Header("Texts values")]
 		[SerializeField] private TMP_Text _reRollPriceText;
 		[SerializeField] private TMP_Text _playerLevelArcadeText;
 		[SerializeField] private TMP_Text _playerLevelMatchPanelText;
-
 		[Header("Stat Values")]
 		[SerializeField] private TMP_Text _playerExpText;
 
@@ -64,6 +56,7 @@ namespace _Scripts.UI
 
 		[Header("XP Slider")]
 		[SerializeField] private Slider _playerExpSlider;
+
 
 		private Coroutine _sceneLoad;
 		private Curtain _curtain;
