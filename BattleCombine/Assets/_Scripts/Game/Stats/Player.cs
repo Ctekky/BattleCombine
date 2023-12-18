@@ -50,6 +50,13 @@ namespace BattleCombine.Gameplay
             playerUIScript.SetupSpeed(speed);
         }
 
+        public void SetDefaultStats(int attack, int health, int speed, bool shielded)
+        {
+            SetupDefaultStats(attack, health, speed, shielded);
+            UpdateStats();
+            playerUIScript.SetupSpeed(speed);
+        }
+
         public void LoadData(GameData gameData, bool newGameBattle, bool firstStart)
         {
             var gdBs = gameData.battleStatsData;
