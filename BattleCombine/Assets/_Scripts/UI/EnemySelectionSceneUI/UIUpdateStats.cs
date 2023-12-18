@@ -24,6 +24,8 @@ namespace BattleCombine.UI
 
         public void UpdateConfirmPanelEnemy(Player chosenEnemy)
         {
+            confirmPanelEnemy.SetDefaultStats(chosenEnemy.AttackValue, chosenEnemy.HealthValue, chosenEnemy.moveSpeedValue,
+                chosenEnemy.Shielded);
             confirmPanelEnemy.SetStats(chosenEnemy.AttackValue, chosenEnemy.HealthValue, chosenEnemy.moveSpeedValue,
                 chosenEnemy.Shielded);
             confirmPanelEnemy.SetupAvatar(chosenEnemy.GetAvatar());

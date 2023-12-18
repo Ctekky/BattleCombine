@@ -79,6 +79,14 @@ namespace BattleCombine.Gameplay
             stats.shielded = shielded;
             moveSpeedValue = speed;
         }
+        
+        public void SetupDefaultStats(int attack, int health, int speed, bool shielded)
+        {
+            stats.attackValueDefault = attack;
+            stats.healthValueDefault = health;
+            stats.shielded = shielded;
+            moveSpeedValue = speed;
+        }
 
         public void ChangeHealth(int addHealth)
         {
