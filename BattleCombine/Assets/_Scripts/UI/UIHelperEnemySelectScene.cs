@@ -1,4 +1,3 @@
-using _Scripts.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -36,6 +35,27 @@ namespace _Scripts.UI
 		[SerializeField] private TMP_Text _reRollPriceText;
 		[SerializeField] private TMP_Text _playerLevelArcadeText;
 		[SerializeField] private TMP_Text _playerLevelMatchPanelText;
+		[Header("Stat Values")]
+		[SerializeField] private TMP_Text _playerExpText;
+
+		[SerializeField] private TMP_Text _playerHealthText;
+		[SerializeField] private TMP_Text _playerAttackText;
+
+		[SerializeField] private TMP_Text _firstEnemyHealthText;
+		[SerializeField] private TMP_Text _firstEnemyAttackText;
+		[SerializeField] private TMP_Text _secondEnemyHealthText;
+		[SerializeField] private TMP_Text _secondEnemyAttackText;
+		[SerializeField] private TMP_Text _thirdEnemyHealthText;
+		[SerializeField] private TMP_Text _thirdEnemyAttackText;
+
+		[SerializeField] private TMP_Text _inMatchEnemyHealthText;
+		[SerializeField] private TMP_Text _inMatchEnemyAttackText;
+		[SerializeField] private TMP_Text _inMatchPlayerHealthText;
+		[SerializeField] private TMP_Text _inMatchPlayerAttackText;
+
+		[Header("XP Slider")]
+		[SerializeField] private Slider _playerExpSlider;
+
 
 		private Coroutine _sceneLoad;
 		private Curtain _curtain;
