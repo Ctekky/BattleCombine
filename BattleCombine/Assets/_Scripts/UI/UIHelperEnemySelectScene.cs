@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
-	public class UIHelperEnemySelectScene : MonoBehaviour
+	public class UIHelperEnemySelectScene : MonoBehaviour, IUIHelper
 	{
 		private const string initialScene = "Initial";
 		private const string arcadeScene = "EnemySelectionScene";
@@ -44,6 +44,7 @@ namespace _Scripts.UI
 		private bool _isOptionsPanelActive = false;
 		private bool _isPausePanelActive = false;
 		private bool _isBoostPanelActive = false;
+		
 
 		private void Awake()
 		{
@@ -62,6 +63,8 @@ namespace _Scripts.UI
 			_curtain = FindObjectOfType<Curtain>();
 		}
 
+		public WalletPanel GetWallet() => _walletPanel;
+		
 		private void OnCloseButtonClick()
 		{
 			_isMatchPanelActive = true;
