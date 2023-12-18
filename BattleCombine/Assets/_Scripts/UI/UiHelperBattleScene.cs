@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
-	public class UiHelperBattleScene : MonoBehaviour
+	public class UiHelperBattleScene : MonoBehaviour, IUIHelper
 	{
 		private const string initialScene = "Initial";
 		private const string arcadeScene = "EnemySelectionScene";
@@ -26,7 +26,7 @@ namespace _Scripts.UI
 		[SerializeField] private PausePanel _pausePanel;
 		[SerializeField] private SettingsPanel _settingsPanel;
 		[SerializeField] private SoundHelper _soundHelper;
-		[SerializeField] private WalletPanel _wallet; //todo - add ScoreMechanics _wallet.AddScore(value)
+		[SerializeField] private WalletPanel _walletPanel; //todo - add ScoreMechanics _wallet.AddScore(value)
 		[SerializeField] private GameObject _curtain;
 
 		[Header("Text panels")]
@@ -37,6 +37,7 @@ namespace _Scripts.UI
 		private bool _isBoostPanelActive = false;
 		private bool _isOptionsPanelActive = false;
 		private bool _isPausePanelActive = false;
+
 
 		private void Awake()
 		{
@@ -50,6 +51,8 @@ namespace _Scripts.UI
 			_pausePanel.GetPauseContinueButton.onClick.AddListener(OnCloseButtonClick);
 		}
 
+		public WalletPanel GetWallet() => _walletPanel;
+		
 		private void OnCloseButtonClick()
 		{
 			_isOptionsPanelActive = true;
