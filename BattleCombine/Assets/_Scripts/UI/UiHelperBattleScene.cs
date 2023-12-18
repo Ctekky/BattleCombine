@@ -28,6 +28,8 @@ namespace _Scripts.UI
 		[SerializeField] private SoundHelper _soundHelper;
 		[SerializeField] private WalletPanel _walletPanel; //todo - add ScoreMechanics _wallet.AddScore(value)
 		[SerializeField] private GameObject _curtain;
+		[SerializeField] private ResultPanel _winPanel;
+		[SerializeField] private ResultPanel _losePanel;
 
 		[Header("Text panels")]
 		[SerializeField] private TMP_Text _roundCountText;
@@ -52,7 +54,18 @@ namespace _Scripts.UI
 		}
 
 		public WalletPanel GetWallet() => _walletPanel;
-		
+
+		//todo - rework
+		public void ShowMatchResult(bool isWin, int score = 0, int bestScore = 0, int diamonds = 0, int coins = 0, int exp = 0, int attack = 0)
+		{
+			var resultPanel = isWin ? _winPanel : _losePanel;
+
+			resultPanel.SetScore(score, bestScore);
+			resultPanel.SetRewardText(coins, diamonds, exp, attack);
+			
+			resultPanel.gameObject.SetActive(true);
+		}
+
 		private void OnCloseButtonClick()
 		{
 			_isOptionsPanelActive = true;
