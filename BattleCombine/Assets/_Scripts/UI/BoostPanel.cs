@@ -6,13 +6,6 @@ namespace _Scripts.UI
 {
 	public class BoostPanel : MonoBehaviour
 	{
-		public string SetHealthText {get => _healthText.text; set => _healthText.text = value;}
-		public string SetHealthPlusText {get => _healthPlusText.text; set => _healthPlusText.text = value;}
-		public string SetAttackText {get => _attackText.text; set => _attackText.text = value;}
-		public string SetAttackPlusText {get => _attackPlusText.text; set => _attackPlusText.text = value;}
-		public string SetShieldText {get => _shieldText.text; set => _shieldText.text = value;}
-		public string SetSpeedText {get => _speedText.text; set => _speedText.text = value;}
-
 		[Header("Boost Cooldown")]
 		[SerializeField] private int _cooldown = 7;
 		
@@ -57,6 +50,13 @@ namespace _Scripts.UI
 		private Button _attackPlusButton;
 		private Button _shieldButton;
 		private Button _speedButton;
+		
+		public string SetHealthText {get => _healthText.text; set => _healthText.text = value;}
+		public string SetHealthPlusText {get => _healthPlusText.text; set => _healthPlusText.text = value;}
+		public string SetAttackText {get => _attackText.text; set => _attackText.text = value;}
+		public string SetAttackPlusText {get => _attackPlusText.text; set => _attackPlusText.text = value;}
+		public string SetShieldText {get => _shieldText.text; set => _shieldText.text = value;}
+		public string SetSpeedText {get => _speedText.text; set => _speedText.text = value;}
 
 		private void Start()
 		{

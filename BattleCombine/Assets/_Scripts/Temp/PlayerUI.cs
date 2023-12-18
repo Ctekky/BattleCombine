@@ -1,10 +1,7 @@
-using System;
 using System.Collections.Generic;
 using BattleCombine.UI;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Scripts.Temp
@@ -13,6 +10,8 @@ namespace _Scripts.Temp
     {
         [SerializeField] private TMP_Text attackText;
         [SerializeField] private TMP_Text healthText;
+        [SerializeField] private TMP_Text playerLevelText;
+        [SerializeField] private Slider playerLevelSlider;
         [SerializeField] private Image shieldSprite;
         [SerializeField] private GameObject avatarGameObject;
         [SerializeField] private GameObject speedArea;
@@ -23,7 +22,6 @@ namespace _Scripts.Temp
         [SerializeField] private Image _heartImg;
         [SerializeField] private Image _swordsImg;
         [SerializeField] private Image _heartsBackImg;
-        [FormerlySerializedAs("_swordsBAckImg")]
         [SerializeField] private Image _swordsBackImg;
         [SerializeField] private List<Sprite> _cooldownSprites;
         [SerializeField] private GameObject _healthCooldownObj;
@@ -42,6 +40,16 @@ namespace _Scripts.Temp
             ChangeImageInCooldown(6);
         }
 #endif
+
+        public void UpdateLevelSlider(float value)
+        {
+            playerLevelSlider.value = value;
+        }
+
+        public void UpdatePlayerLevel(int value)
+        {
+            playerLevelText.text = value.ToString();
+        }
         
         public void ChangeImageInCooldown(int value)
         {
