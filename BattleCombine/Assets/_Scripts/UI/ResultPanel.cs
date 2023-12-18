@@ -17,18 +17,18 @@ namespace _Scripts.UI
 		[SerializeField] private TMP_Text _score;
 		[SerializeField] private TMP_Text _bestScore;
 
-		public void SetRewardText(string coin, string diamond, string exp, string attack)
+		public void SetRewardText(int coin, int diamond, int exp, int attack)
 		{
-			_coin.text = coin;
-			_diamonds.text = diamond;
-			_exp.text = exp;
-			_attack.text = attack;
+			_coin.text = coin.ToString();
+			_diamonds.text = diamond.ToString();
+			_exp.text = exp.ToString();
+			_attack.text = attack.ToString();
 		}		
 		
-		public void SetScore(string score, string bestScore)
+		public void SetScore(int score, int bestScore)
 		{
-			_score.text = score;
-			_bestScore.text = bestScore;
+			_score.text = score.ToString();
+			_bestScore.text = bestScore.ToString();
 		}
 	}
 }
