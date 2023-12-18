@@ -1244,7 +1244,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 1
   far clip plane: 1000
   field of view: 60
   orthographic: 1
@@ -2883,3 +2883,4 @@ SceneRoots:
   - {fileID: 1914480173}
   - {fileID: 3320768780770175057}
   - {fileID: 1065884430273325576}
+  - {fileID: 2130699424}
