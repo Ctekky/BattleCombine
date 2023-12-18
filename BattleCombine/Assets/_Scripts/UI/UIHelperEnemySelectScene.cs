@@ -1,5 +1,3 @@
-using _Scripts.Audio;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -12,8 +10,6 @@ namespace _Scripts.UI
 		private const string initialScene = "Initial";
 		private const string arcadeScene = "EnemySelectionScene";
 		private const string battleScene = "ArcadeGameLoop";
-
-		public Action onBattleButtonClick;
 
 		[Header("Buttons")]
 		[SerializeField] private Button _menuButton;
@@ -109,7 +105,6 @@ namespace _Scripts.UI
 		{
 			Debug.Log("BattleButton Clicked!");
 			//todo - Scene switch to GameLoopScene
-			onBattleButtonClick?.Invoke();
 			_curtain.MoveToAnotherScene(battleScene);
 		}
 
