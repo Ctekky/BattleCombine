@@ -1,10 +1,12 @@
+using _Scripts.Audio;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
-	public class TemporaryEnemySelectUIHelper : MonoBehaviour
+	public class UIHelperEnemySelectScene : MonoBehaviour, IUIHelper
 	{
 		private const string initialScene = "Initial";
 		private const string arcadeScene = "EnemySelectionScene";
@@ -19,53 +21,21 @@ namespace _Scripts.UI
 		[SerializeField] private Button _reRollButton;
 		[SerializeField] private Button _boostButton;
 		[SerializeField] private Button _closeMatchPanelButton;
-		[SerializeField] private Button _closeOptionsPanelButton;
 		[SerializeField] private Button _startBattleButton;
 		[SerializeField] private Button _boostContinueButton;
 
+		[FormerlySerializedAs("_optionPanel")]
 		[Header("Game Panels")]
-		[SerializeField] private GameObject _optionPanel;
 		[SerializeField] private GameObject _boostPanel;
 		[SerializeField] private GameObject _matchPanel;
-		[SerializeField] private GameObject _walletPanel;
+		[SerializeField] private SettingsPanel _settingsPanel;
+		[SerializeField] private SoundHelper _soundHelper;
+		[SerializeField] private WalletPanel _walletPanel;
 
-		[Header("Hero Avatars")]
-		[SerializeField] private Image _playerAvatar;
-		[SerializeField] private Image _enemyFirstAvatar;
-		[SerializeField] private Image _enemySecondAvatar;
-		[SerializeField] private Image _enemyThirdAvatar;
-		[SerializeField] private Image _playerAvatarMatchPanel;
-		[SerializeField] private Image _enemyChosenAvatar;
-		[Header("Text panels")]
-		[SerializeField] private TMP_Text _coinCountText;
-		[SerializeField] private TMP_Text _diamondCountText;
+		[Header("Texts values")]
 		[SerializeField] private TMP_Text _reRollPriceText;
 		[SerializeField] private TMP_Text _playerLevelArcadeText;
 		[SerializeField] private TMP_Text _playerLevelMatchPanelText;
-		[SerializeField] private TMP_Text _scoreCountText;
-		[SerializeField] private TMP_Text _bestScoreCountText;
-		[Header("Stat Values")]
-		[SerializeField] private TMP_Text _playerExpText;
-
-		[SerializeField] private TMP_Text _playerHealthText;
-		[SerializeField] private TMP_Text _playerAttackText;
-
-		[SerializeField] private TMP_Text _firstEnemyHealthText;
-		[SerializeField] private TMP_Text _firstEnemyAttackText;
-		[SerializeField] private TMP_Text _secondEnemyHealthText;
-		[SerializeField] private TMP_Text _secondEnemyAttackText;
-		[SerializeField] private TMP_Text _thirdEnemyHealthText;
-		[SerializeField] private TMP_Text _thirdEnemyAttackText;
-
-		[SerializeField] private TMP_Text _inMatchEnemyHealthText;
-		[SerializeField] private TMP_Text _inMatchEnemyAttackText;
-		[SerializeField] private TMP_Text _inMatchPlayerHealthText;
-		[SerializeField] private TMP_Text _inMatchPlayerAttackText;
-
-		[Header("Sliders")]
-		[SerializeField] private Slider _sfxVolumeSlider;
-		[SerializeField] private Slider _musicVolumeSlider;
-		[SerializeField] private Slider _playerExpSlider;
 
 		private Coroutine _sceneLoad;
 		private Curtain _curtain;
@@ -74,6 +44,7 @@ namespace _Scripts.UI
 		private bool _isOptionsPanelActive = false;
 		private bool _isPausePanelActive = false;
 		private bool _isBoostPanelActive = false;
+		
 
 		private void Awake()
 		{
@@ -85,13 +56,15 @@ namespace _Scripts.UI
 			_reRollButton.onClick.AddListener(OnReRollButtonClick);
 			_boostButton.onClick.AddListener(OnBoostButtonClick);
 			_closeMatchPanelButton.onClick.AddListener(OnCloseButtonClick);
-			_closeOptionsPanelButton.onClick.AddListener(OnCloseButtonClick);
+			_settingsPanel.GetSettingsCloseButton.onClick.AddListener(OnCloseButtonClick);
 			_startBattleButton.onClick.AddListener(OnBattleButtonClick);
 			_boostContinueButton.onClick.AddListener(OnCloseButtonClick);
 
 			_curtain = FindObjectOfType<Curtain>();
 		}
 
+		public WalletPanel GetWallet() => _walletPanel;
+		
 		private void OnCloseButtonClick()
 		{
 			_isMatchPanelActive = true;
@@ -102,13 +75,15 @@ namespace _Scripts.UI
 			OnOptionsButtonClick();
 			OnNextButtonClick();
 			OnBoostButtonClick();
+			
+			_soundHelper.PlayClickSound();
 		}
 
 		private void OnOptionsButtonClick()
 		{
 			_isOptionsPanelActive = !_isOptionsPanelActive;
 			Debug.Log("Options Active = " + _isOptionsPanelActive);
-			_optionPanel.SetActive(_isOptionsPanelActive);
+			_settingsPanel.gameObject.SetActive(_isOptionsPanelActive);
 		}
 		
 		private void OnNextButtonClick()
