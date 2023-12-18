@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
-	public class UIHelperEnemySelectScene : MonoBehaviour, IUIHelper
+	public class UIHelperEnemySelectScene : MonoBehaviour
 	{
 		private const string initialScene = "Initial";
 		private const string arcadeScene = "EnemySelectionScene";
@@ -34,7 +34,8 @@ namespace _Scripts.UI
 		[SerializeField] private GameObject _matchPanel;
 		[SerializeField] private SettingsPanel _settingsPanel;
 		[SerializeField] private SoundHelper _soundHelper;
-		[SerializeField] private WalletPanel _walletPanel;
+		[FormerlySerializedAs("_walletPanel")]
+		[SerializeField] private UIWalletUpdate _uiWalletUpdate;
 
 		[Header("Texts values")]
 		[SerializeField] private TMP_Text _reRollPriceText;
@@ -88,8 +89,6 @@ namespace _Scripts.UI
 			_curtain = FindObjectOfType<Curtain>();
 		}
 
-		public WalletPanel GetWallet() => _walletPanel;
-		
 		private void OnCloseButtonClick()
 		{
 			_isMatchPanelActive = true;

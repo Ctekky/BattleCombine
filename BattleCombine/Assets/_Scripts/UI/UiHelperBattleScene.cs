@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
-	public class UiHelperBattleScene : MonoBehaviour, IUIHelper
+	public class UiHelperBattleScene : MonoBehaviour
 	{
 		private const string initialScene = "Initial";
 		private const string arcadeScene = "EnemySelectionScene";
@@ -26,7 +26,8 @@ namespace _Scripts.UI
 		[SerializeField] private PausePanel _pausePanel;
 		[SerializeField] private SettingsPanel _settingsPanel;
 		[SerializeField] private SoundHelper _soundHelper;
-		[SerializeField] private WalletPanel _walletPanel; //todo - add ScoreMechanics _wallet.AddScore(value)
+		[FormerlySerializedAs("_walletPanel")]
+		[SerializeField] private UIWalletUpdate _uiWalletUpdate; //todo - add ScoreMechanics _wallet.AddScore(value)
 		[SerializeField] private GameObject _curtain;
 		[SerializeField] private ResultPanel _winPanel;
 		[SerializeField] private ResultPanel _losePanel;
@@ -53,8 +54,6 @@ namespace _Scripts.UI
 			_pausePanel.GetPauseContinueButton.onClick.AddListener(OnCloseButtonClick);
 		}
 
-		public WalletPanel GetWallet() => _walletPanel;
-
 		//todo - rework
 		public void ShowMatchResult(bool isWin, int score = 0, int bestScore = 0, int diamonds = 0, int coins = 0, int exp = 0, int attack = 0)
 		{
@@ -64,6 +63,12 @@ namespace _Scripts.UI
 			resultPanel.SetRewardText(coins, diamonds, exp, attack);
 			
 			resultPanel.gameObject.SetActive(true);
+			WalletUpdate();
+		}
+
+		private void WalletUpdate()
+		{
+			_uiWalletUpdate.UpdateWallet();
 		}
 
 		private void OnCloseButtonClick()
