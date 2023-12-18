@@ -229,7 +229,7 @@ PrefabInstance:
     - target: {fileID: 2095428958665010184, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
       propertyPath: _sfxSource
       value: 
-      objectReference: {fileID: 519420035}
+      objectReference: {fileID: 0}
     - target: {fileID: 2157680945086992415, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
       propertyPath: m_Name
       value: SettingsPanel
@@ -1003,7 +1003,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e02392e03e55ed4bac523df0eaa2ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameService: {fileID: 968994365}
   inputService: {fileID: 1653408436}
   fieldSize: 3
   gameField: {fileID: 233264111}
@@ -1342,7 +1341,6 @@ GameObject:
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
-  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1499,52 +1497,6 @@ MonoBehaviour:
   ReferenceResolution: {x: 1080, y: 1920}
   Mode: 3
   MatchWidthOrHeight: 0.5
---- !u!1 &524229649
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 524229651}
-  - component: {fileID: 524229650}
-  m_Layer: 0
-  m_Name: ColorSettings
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &524229650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 524229649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b55870b94323041419e2286c63e008ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileColor: {r: 0.654902, g: 1, b: 0.30980393, a: 1}
-  borderColor: {r: 0.45882353, g: 0.88235295, b: 0.03529412, a: 1}
---- !u!4 &524229651
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 524229649}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.2789385, y: -3.7616458, z: 0.007369213}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &554730016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2255,17 +2207,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9bd76b31418c024c94e0a42c1cc8544, type: 3}
---- !u!114 &906598385 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2330689912826154860, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
-  m_PrefabInstance: {fileID: 113680504}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &968994364
 GameObject:
   m_ObjectHideFlags: 0
@@ -2297,7 +2238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arcadeCurrentScore: 0
   arcadeBestScore: 0
-  currentColorSettings: {fileID: 524229650}
+  currentColorSettings: {fileID: 0}
 --- !u!4 &968994366
 Transform:
   m_ObjectHideFlags: 0
@@ -3140,6 +3081,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
+--- !u!114 &1483202494 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8110981075178435286, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
+  m_PrefabInstance: {fileID: 1483202493}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31f0111c54b1fee4cafdceccf01314b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1496344753
 GameObject:
   m_ObjectHideFlags: 0
@@ -4195,6 +4147,7 @@ GameObject:
   - component: {fileID: 2105806063}
   - component: {fileID: 2105806062}
   - component: {fileID: 2105806061}
+  - component: {fileID: 2105806066}
   m_Layer: 5
   m_Name: BattleUi
   m_TagString: Untagged
@@ -4219,7 +4172,7 @@ MonoBehaviour:
   _boostInBattleButton: {fileID: 330953243}
   _continueInBattleButton: {fileID: 1699690428}
   _boostPanel: {fileID: 1435692908}
-  _pausePanel: {fileID: 876818933}
+  _pausePanel: {fileID: 1483202494}
   _settingsPanel: {fileID: 642956514}
   _soundHelper: {fileID: 642956513}
   _walletPanel: {fileID: 1369698872}
@@ -4323,6 +4276,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2105806066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105806060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49281c0b9f6919148b3d72778867ca0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScore: {fileID: 1215355340}
+  bestScore: {fileID: 1496344754}
 --- !u!1 &2111948036
 GameObject:
   m_ObjectHideFlags: 0
@@ -4528,7 +4495,6 @@ SceneRoots:
   - {fileID: 1653408435}
   - {fileID: 554730016}
   - {fileID: 388951231}
-  - {fileID: 524229651}
   - {fileID: 432524974}
   - {fileID: 1090815888}
   - {fileID: 1820607050}
