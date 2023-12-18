@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using BattleCombine.Ai;
-using BattleCombine.Data;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
 using BattleCombine.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace BattleCombine.Services
@@ -15,7 +15,8 @@ namespace BattleCombine.Services
     {
         #region Dependency
 
-        [Inject] private MainGameService _mainGameService;
+        //TODO: change gameService on INJECT obj
+        [SerializeField] private GameService _gameService;
         [SerializeField] private InputService.InputService inputService;
         //TODO: need inject UI to work with
 
@@ -95,22 +96,6 @@ namespace BattleCombine.Services
             _isTypeStandart = false;
             _isTypeStandart = _stepChecker is StandartTypeStep;
             _sequenceMoves = new SequenceMoves(player1.GetComponent<Player>(), player2.GetComponent<Player>());
-            SetupEnemyData(_mainGameService.EnemyAttack, _mainGameService.EnemyHealth, _mainGameService.EnemySpeed,
-                _mainGameService.EnemyShielded, _mainGameService.EnemyAvatarEnable,
-                _mainGameService.EnemyAvatarDisable);
-        }
-
-        private void SetupEnemyData(int attack, int health, int speed, bool shield, Sprite avatarEnable,
-            Sprite avatarDisable)
-        {
-            var enemy = player2.GetComponent<Player>();
-            var avatarStruct = new EnemyAvatarStruct
-            {
-                enableSprite = avatarEnable,
-                disableSprite = avatarDisable
-            };
-            enemy.SetStats(attack, health, speed, shield);
-            enemy.SetupAvatar(avatarStruct);
         }
 
         private void Start()
@@ -153,7 +138,7 @@ namespace BattleCombine.Services
             aiHandler.SetupAIHandler(this, inputService);
             fight.SetUpPlayers(player1.GetComponent<Player>(), player2.GetComponent<Player>());
             fieldScript.SetupArcadeGameService(this);
-            fieldScript.SetupField(false, fieldSize, _mainGameService.GetCurrentColorSettings());
+            fieldScript.SetupField(false, fieldSize, _gameService.GetCurrentColorSettings());
             currentPlayerName = player1.GetComponent<Player>()?.GetPlayerName;
             currentPlayer = player1.GetComponent<Player>();
             currentPlayer.UpdateStats();
@@ -193,7 +178,6 @@ namespace BattleCombine.Services
             else
             {
                 Debug.Log("Next battle");
-                ChangeCurrentScoreOnWin();
                 SceneManager.LoadScene("EnemySelectionScene");
             }
         }
@@ -250,6 +234,7 @@ namespace BattleCombine.Services
             }
 
             gameField.GetComponent<TileStack>().SpeedPlayer = currentPlayer.moveSpeedValue;
+            ;
             _stepChecker.GetVariables(currentStepInTurn, stepsInTurn);
             if (_stepChecker.MoveIsPassed() == false) return;
             Debug.Log("Round is over => Fight!!!");
@@ -268,7 +253,6 @@ namespace BattleCombine.Services
         }
 
         #region Checking the possibility of movement
-
         public void PathCheck(List<GameObject> listTilesGO)
         {
             bool hasPath = false;
@@ -289,22 +273,21 @@ namespace BattleCombine.Services
             {
                 Debug.LogWarning("We have no way, the field MUST be reloaded!");
             }
-        }
 
+        }
         #endregion
 
         #region EndBattle functions
 
         private void ChangeCurrentScoreOnWin()
         {
-            var currentScore = _mainGameService.ArcadeCurrentScore;
-            currentScore++;
-            if (currentScore > _mainGameService.ArcadeBestScore)
+            var currentScore = _gameService.ArcadeCurrentScore++;
+            if (currentScore > _gameService.ArcadeBestScore)
             {
-                _mainGameService.ArcadeBestScore = currentScore;
+                _gameService.ArcadeBestScore = currentScore;
             }
 
-            _mainGameService.ArcadeCurrentScore = currentScore;
+            _gameService.ArcadeCurrentScore = currentScore;
         }
 
         #endregion
