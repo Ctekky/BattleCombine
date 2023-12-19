@@ -2972,16 +2972,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1435692908 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4099382795836505412, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
-  m_PrefabInstance: {fileID: 1318042054}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1435692909 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2249192949186510100, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
   m_PrefabInstance: {fileID: 1318042054}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1435692910 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 337711277475889839, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+  m_PrefabInstance: {fileID: 1318042054}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad66e712434186041b602c7d33e33a7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1459877520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4285,11 +4291,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f4de55ed30c2b14eac14d9142364613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _optionsButton: {fileID: 2111948037}
+  _settingsButton: {fileID: 2111948037}
   _pauseButton: {fileID: 1070244895}
   _boostInBattleButton: {fileID: 330953243}
   _continueInBattleButton: {fileID: 1699690428}
-  _boostPanel: {fileID: 1435692908}
+  _boostPanel: {fileID: 1435692910}
   _pausePanel: {fileID: 1483202494}
   _settingsPanel: {fileID: 642956514}
   _soundHelper: {fileID: 642956513}
@@ -4421,7 +4427,7 @@ GameObject:
   - component: {fileID: 2111948038}
   - component: {fileID: 2111948037}
   m_Layer: 5
-  m_Name: MenuButton
+  m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -14,15 +14,14 @@ namespace _Scripts.UI
 		private const string arcadeScene = "EnemySelectionScene";
 		private const string gameLoopScene = "ArcadeGameLoop";
 
-		[FormerlySerializedAs("_menuButton")]
 		[Header("Buttons")]
-		[SerializeField] private Button _optionsButton;
+		[SerializeField] private Button _settingsButton;
 		[SerializeField] private Button _pauseButton;
 		[SerializeField] private Button _boostInBattleButton;
 		[SerializeField] private Button _continueInBattleButton;
 
 		[Header("Game Panels")]
-		[SerializeField] private GameObject _boostPanel;
+		[SerializeField] private BoostPanel _boostPanel;
 		[SerializeField] private PausePanel _pausePanel;
 		[SerializeField] private SettingsPanel _settingsPanel;
 		[SerializeField] private SoundHelper _soundHelper;
@@ -36,16 +35,11 @@ namespace _Scripts.UI
 
 		private Coroutine _sceneLoad;
 
-		private bool _isBoostPanelActive = false;
-		private bool _isOptionsPanelActive = false;
-		private bool _isPausePanelActive = false;
-
-
 		private void Awake()
 		{
-			_optionsButton.onClick.AddListener(OnOptionsButtonClick);
-			_pauseButton.onClick.AddListener(OnPauseButtonClick);
-			_boostInBattleButton.onClick.AddListener(OnBoostButtonClick);
+			_settingsButton.onClick.AddListener(()=> OnOptionsButtonClick(_settingsPanel.isActiveAndEnabled));
+			_pauseButton.onClick.AddListener(()=>OnPauseButtonClick(_pausePanel.isActiveAndEnabled));
+			_boostInBattleButton.onClick.AddListener((() => OnBoostButtonClick(_boostPanel.isActiveAndEnabled)));
 			_continueInBattleButton.onClick.AddListener(OnContinueClick);
 			_settingsPanel.GetSettingsCloseButton.onClick.AddListener(OnCloseButtonClick);
 			_pausePanel.GetCloseButton.onClick.AddListener(OnCloseButtonClick);
@@ -72,48 +66,38 @@ namespace _Scripts.UI
 
 		private void OnCloseButtonClick()
 		{
-			_isOptionsPanelActive = true;
-			_isPausePanelActive = true;
-			_isBoostPanelActive = true;
-
-			OnPauseButtonClick();
-			OnOptionsButtonClick();
-			ClosePanel();
-		}
-
-		private void OnPauseButtonClick()
-		{
 			_soundHelper.PlayClickSound();
-			_isPausePanelActive = !_isPausePanelActive;
-			Debug.Log("Options Active = " + _isPausePanelActive);
-			_pausePanel.gameObject.SetActive(_isPausePanelActive);
+			OnPauseButtonClick(true);
+			OnOptionsButtonClick(true);
+			OnBoostButtonClick(true);
 		}
 
-		private void OnOptionsButtonClick()
+		private void OnPauseButtonClick(bool active)
 		{
-			_isOptionsPanelActive = !_isOptionsPanelActive;
-			Debug.Log("Options Active = " + _isOptionsPanelActive);
-			_settingsPanel.gameObject.SetActive(_isOptionsPanelActive);
+			_pausePanel.gameObject.SetActive(!active);
 		}
 
-		private void OnBoostButtonClick()
+		private void OnOptionsButtonClick(bool active)
 		{
-			Debug.Log("BoostButton Clicked!");
-			ClosePanel();
+			_settingsPanel.gameObject.SetActive(!active);
+		}
+
+		private void OnBoostButtonClick(bool active)
+		{
+			_boostPanel.gameObject.SetActive(!active);
 		}
 
 		private void OnContinueClick()
 		{
 			//todo - no boost select effects
 			Debug.Log("ContinueButton Clicked!");
-			ClosePanel();
+			OnCloseButtonClick();
 		}
 
 		private void OnOptionsButtonInPauseClick()
 		{
-			Debug.Log("Move from Pause to Options");
-			OnPauseButtonClick();
-			OnOptionsButtonClick();
+			OnPauseButtonClick(_pausePanel.isActiveAndEnabled);
+			OnOptionsButtonClick(_settingsPanel.isActiveAndEnabled);
 		}
 
 		private void OnSceneExit()
@@ -121,14 +105,6 @@ namespace _Scripts.UI
 			//todo - add functional to switch scenes
 			_sceneLoad = StartCoroutine(OnSceneLoadRoutine(initialScene));
 		}
-
-		private void ClosePanel()
-		{
-			_soundHelper.PlayClickSound();
-			_isBoostPanelActive = !_isBoostPanelActive;
-			_boostPanel.SetActive(_isBoostPanelActive);
-		}
-
 
 		private IEnumerator OnSceneLoadRoutine(string sceneName)
 		{
@@ -153,6 +129,18 @@ namespace _Scripts.UI
 			StopCoroutine(_sceneLoad);
 			SceneManager.LoadScene(initialScene);
 			_curtain.gameObject.SetActive(false);
+		}
+		
+		private void OnDisable()
+		{
+			_settingsButton.onClick.RemoveListener(()=> OnOptionsButtonClick(_settingsPanel.isActiveAndEnabled));
+			_pauseButton.onClick.RemoveListener(()=>OnPauseButtonClick(_pausePanel.isActiveAndEnabled));
+			_boostInBattleButton.onClick.RemoveListener((() => OnBoostButtonClick(_boostPanel.isActiveAndEnabled)));
+			_continueInBattleButton.onClick.RemoveListener(OnContinueClick);
+			_settingsPanel.GetSettingsCloseButton.onClick.RemoveListener(OnCloseButtonClick);
+			_pausePanel.GetCloseButton.onClick.RemoveListener(OnCloseButtonClick);
+			_pausePanel.GetMenuButton.onClick.RemoveListener(OnOptionsButtonInPauseClick);
+			_pausePanel.GetPauseContinueButton.onClick.RemoveListener(OnCloseButtonClick);
 		}
 	}
 }
