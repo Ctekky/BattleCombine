@@ -11,7 +11,7 @@ namespace BattleCombine.Services
         [SerializeField] private ChooseEnemy choseEnemyScript;
         [SerializeField] private UIUpdateStats enemyUIUpdateStats;
         [SerializeField] private UIChosenEnemy enemyUIChosenScript;
-        [SerializeField] private UIHelperEnemySelectScene tempEnemySelection;
+        [SerializeField] private UiHelper tempEnemySelection;
         [SerializeField] private Player currentChosenEnemy;
         [SerializeField] private Player currentPlayer;
         [Inject] private MainGameService _mainGameService;
@@ -20,13 +20,13 @@ namespace BattleCombine.Services
         private void OnEnable()
         {
             enemyUIChosenScript.onEnemyClick += ChooseEnemy;
-            tempEnemySelection.onBattleButtonClick += BattleButtonClick;
+            tempEnemySelection.BattleButtonClickEvent += BattleButtonClickEvent;
         }
 
         private void OnDisable()
         {
             enemyUIChosenScript.onEnemyClick -= ChooseEnemy;
-            tempEnemySelection.onBattleButtonClick -= BattleButtonClick;
+            tempEnemySelection.BattleButtonClickEvent -= BattleButtonClickEvent;
         }
 
         private void Start()
@@ -44,7 +44,7 @@ namespace BattleCombine.Services
             enemyUIUpdateStats.UpdateConfirmPanelEnemy(player);
         }
 
-        private void BattleButtonClick()
+        private void BattleButtonClickEvent()
         {
             _mainGameService.SaveEnemy(currentChosenEnemy.AttackValue, currentChosenEnemy.HealthValue,
                 currentChosenEnemy.moveSpeedValue, currentChosenEnemy.Shielded,

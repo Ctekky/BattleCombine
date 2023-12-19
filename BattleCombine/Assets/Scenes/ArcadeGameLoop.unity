@@ -4291,19 +4291,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f4de55ed30c2b14eac14d9142364613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _nextButton: {fileID: 0}
   _settingsButton: {fileID: 2111948037}
   _pauseButton: {fileID: 1070244895}
-  _boostInBattleButton: {fileID: 330953243}
-  _continueInBattleButton: {fileID: 1699690428}
+  _boostButton: {fileID: 330953243}
+  _continueBoostButton: {fileID: 1699690428}
+  _firstEnemyButton: {fileID: 0}
+  _secondEnemyButton: {fileID: 0}
+  _thirdEnemyButton: {fileID: 0}
+  _reRollButton: {fileID: 0}
+  _closeMatchPanelButton: {fileID: 0}
+  _startBattleButton: {fileID: 0}
   _boostPanel: {fileID: 1435692910}
   _pausePanel: {fileID: 1483202494}
   _settingsPanel: {fileID: 642956514}
   _soundHelper: {fileID: 642956513}
   _uiWalletUpdate: {fileID: 1369698872}
-  _curtain: {fileID: 1751807278}
   _winPanel: {fileID: 327408444}
   _losePanel: {fileID: 402841116}
+  _matchPanel: {fileID: 0}
+  _curtain: {fileID: 1751807278}
   _roundCountText: {fileID: 1626647410}
+  _reRollPriceText: {fileID: 0}
+  _levelMatchPanelText: {fileID: 0}
 --- !u!114 &2105806062
 MonoBehaviour:
   m_ObjectHideFlags: 0

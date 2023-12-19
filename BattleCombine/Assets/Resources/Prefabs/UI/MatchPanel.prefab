@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 2826413803747450854}
   - component: {fileID: 8673926216802457783}
   - component: {fileID: 8981189896224925565}
+  - component: {fileID: 8950167152580485817}
   m_Layer: 5
   m_Name: MatchPanel
   m_TagString: Untagged
@@ -290,8 +291,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -960}
-  m_SizeDelta: {x: 1080, y: 1920}
+  m_AnchoredPosition: {x: 0, y: -956}
+  m_SizeDelta: {x: 1170, y: 2553}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8673926216802457783
 CanvasRenderer:
@@ -330,7 +331,19 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 4
+--- !u!114 &8950167152580485817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4165051540239023152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78f6926d3bc24ae40b6f62d946841884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4279952195198239133
 GameObject:
   m_ObjectHideFlags: 0
