@@ -470,6 +470,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Curtain
       objectReference: {fileID: 0}
+    - target: {fileID: 5790460832530979349, guid: 55bcd076f587ca241805ffb9ea3a069c, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5790460832530979349, guid: 55bcd076f587ca241805ffb9ea3a069c, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1170
+      objectReference: {fileID: 0}
+    - target: {fileID: 5790460832530979349, guid: 55bcd076f587ca241805ffb9ea3a069c, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 2553
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3820,6 +3832,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6408509383244270216, guid: 395004208ae909d4494cd4271c7da268, type: 3}
   m_PrefabInstance: {fileID: 229119109}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1751807278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6330388433113642145, guid: 55bcd076f587ca241805ffb9ea3a069c, type: 3}
+  m_PrefabInstance: {fileID: 216293257}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d440bbdf25d03c440ae4aef3dc53ffde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1805932184 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5627876116901472106, guid: 395004208ae909d4494cd4271c7da268, type: 3}
@@ -4271,7 +4294,7 @@ MonoBehaviour:
   _settingsPanel: {fileID: 642956514}
   _soundHelper: {fileID: 642956513}
   _uiWalletUpdate: {fileID: 1369698872}
-  _curtain: {fileID: 2133609750}
+  _curtain: {fileID: 1751807278}
   _winPanel: {fileID: 327408444}
   _losePanel: {fileID: 402841116}
   _roundCountText: {fileID: 1626647410}

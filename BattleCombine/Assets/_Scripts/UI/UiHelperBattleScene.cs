@@ -26,9 +26,8 @@ namespace _Scripts.UI
 		[SerializeField] private PausePanel _pausePanel;
 		[SerializeField] private SettingsPanel _settingsPanel;
 		[SerializeField] private SoundHelper _soundHelper;
-		[FormerlySerializedAs("_walletPanel")]
-		[SerializeField] private UIWalletUpdate _uiWalletUpdate; //todo - add ScoreMechanics _wallet.AddScore(value)
-		[SerializeField] private GameObject _curtain;
+		[SerializeField] private UIWalletUpdate _uiWalletUpdate;
+		[SerializeField] private Curtain _curtain;
 		[SerializeField] private ResultPanel _winPanel;
 		[SerializeField] private ResultPanel _losePanel;
 
@@ -134,8 +133,8 @@ namespace _Scripts.UI
 		private IEnumerator OnSceneLoadRoutine(string sceneName)
 		{
 			//извращение, как оно есть 2... :D
-			_curtain.SetActive(true);
-			var panel = _curtain.GetComponent<Image>();
+			_curtain.gameObject.SetActive(true);
+			var panel = _curtain.GetCurtainImage;
 			var changeRate = 0.01f;
 
 			panel.raycastTarget = true;
@@ -153,7 +152,7 @@ namespace _Scripts.UI
 
 			StopCoroutine(_sceneLoad);
 			SceneManager.LoadScene(initialScene);
-			_curtain.SetActive(false);
+			_curtain.gameObject.SetActive(false);
 		}
 	}
 }

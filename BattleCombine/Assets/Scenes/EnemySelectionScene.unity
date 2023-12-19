@@ -1065,10 +1065,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d17ade1d9a0cda4591815c5c625b49b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinCountText: {fileID: 512633107}
-  _diamondCountText: {fileID: 337428486}
-  _scoreCountText: {fileID: 762096467}
-  _bestScoreCountText: {fileID: 975980860}
+  _coinCount: {fileID: 0}
+  _diamondCount: {fileID: 0}
 --- !u!1 &344983589
 GameObject:
   m_ObjectHideFlags: 0
@@ -3803,7 +3801,7 @@ MonoBehaviour:
   _matchPanel: {fileID: 809139652}
   _settingsPanel: {fileID: 1880053754}
   _soundHelper: {fileID: 1880053753}
-  _walletPanel: {fileID: 340717006}
+  _uiWalletUpdate: {fileID: 340717006}
   _reRollPriceText: {fileID: 2109547}
   _playerLevelArcadeText: {fileID: 1328590426}
   _playerLevelMatchPanelText: {fileID: 272845688}

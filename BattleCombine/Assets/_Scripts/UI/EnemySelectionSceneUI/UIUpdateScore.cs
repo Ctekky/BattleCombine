@@ -18,5 +18,4 @@ namespace BattleCombine.UI
             bestScore.text = _mainGameService.ArcadeBestScore.ToString();
         }
     }
-    
 }

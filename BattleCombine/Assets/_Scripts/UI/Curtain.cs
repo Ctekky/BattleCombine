@@ -16,6 +16,8 @@ public class Curtain : MonoBehaviour
 	private Image _curtainImage;
 	private float _changeRate = 0.01f;
 
+	public Image GetCurtainImage => _curtainImage;
+
 	private void Awake()
 	{
 		_curtainImage = _curtainPanel.GetComponent<Image>();
