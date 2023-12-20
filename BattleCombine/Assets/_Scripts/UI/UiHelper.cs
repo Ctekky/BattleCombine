@@ -23,9 +23,6 @@ namespace _Scripts.UI
 		[SerializeField] private Button _continueBoostButton;
 		[Header("Buttons(OnlySelectEnemyScene")]
 		[SerializeField] private Button _nextButton;
-		[SerializeField] private Button _firstEnemyButton;
-		[SerializeField] private Button _secondEnemyButton;
-		[SerializeField] private Button _thirdEnemyButton;
 		[SerializeField] private Button _reRollButton;
 		[SerializeField] private Button _closeMatchPanelButton;
 		[SerializeField] private Button _startBattleButton;
@@ -53,7 +50,7 @@ namespace _Scripts.UI
 
 		private bool _isMatchPanelActive = false;
 
-		private void Awake()
+		private void OnEnable()
 		{
 			_currentScene = SceneManager.GetActiveScene();
 
@@ -76,9 +73,6 @@ namespace _Scripts.UI
 					_pausePanel.GetPauseContinueButton.onClick.AddListener(OnCloseButtonClick);
 					break;
 				case enemySelectScene:
-					_firstEnemyButton.onClick.AddListener(() => CheckToggleGroup(0));
-					_secondEnemyButton.onClick.AddListener(() => CheckToggleGroup(1));
-					_thirdEnemyButton.onClick.AddListener(() => CheckToggleGroup(2));
 					_nextButton.onClick.AddListener(() => OnNextButtonClick(_matchPanel.isActiveAndEnabled));
 					_reRollButton.onClick.AddListener(OnReRollButtonClick);
 					_closeMatchPanelButton.onClick.AddListener(OnCloseButtonClick);
@@ -148,12 +142,6 @@ namespace _Scripts.UI
 			OnOptionsButtonClick(_settingsPanel.isActiveAndEnabled);
 		}
 
-		private void OnSceneExit()
-		{
-			//todo - add functional to switch scenes
-			_sceneLoad = StartCoroutine(OnSceneLoadRoutine(initialScene));
-		}
-
 		private void OnNextButtonClick(bool active)
 		{
 			Debug.Log("Match panel Active = " + _isMatchPanelActive);
@@ -171,17 +159,18 @@ namespace _Scripts.UI
 			_curtain.MoveToAnotherScene(gameLoopScene);
 		}
 
-		private void CheckToggleGroup(int number)
+		private void OnSceneExit()
 		{
-			Debug.Log("Enemy " + number + " is Selected!");
+			//todo - add functional to switch scenes
+			_sceneLoad = StartCoroutine(OnSceneLoadRoutine(enemySelectScene));
 		}
 
 		private IEnumerator OnSceneLoadRoutine(string sceneName)
 		{
-			//извращение, как оно есть 2... :D
 			_curtain.gameObject.SetActive(true);
 			var panel = _curtain.GetCurtainImage;
 			var changeRate = 0.01f;
+			var waitTime = 0.005f;
 
 			panel.raycastTarget = true;
 
@@ -191,13 +180,13 @@ namespace _Scripts.UI
 				var newColor = panel.color;
 				newColor.a += changeRate;
 				panel.color = newColor;
-				yield return new WaitForEndOfFrame();
+				yield return new WaitForSeconds(waitTime);
 			}
 
 			panel.raycastTarget = false;
 
 			StopCoroutine(_sceneLoad);
-			SceneManager.LoadScene(initialScene);
+			SceneManager.LoadScene(sceneName);
 			_curtain.gameObject.SetActive(false);
 		}
 
@@ -217,9 +206,6 @@ namespace _Scripts.UI
 					_pausePanel.GetPauseContinueButton.onClick.RemoveListener(OnCloseButtonClick);
 					break;
 				case enemySelectScene:
-					_firstEnemyButton.onClick.RemoveListener(() => CheckToggleGroup(0));
-					_secondEnemyButton.onClick.RemoveListener(() => CheckToggleGroup(1));
-					_thirdEnemyButton.onClick.RemoveListener(() => CheckToggleGroup(2));
 					_nextButton.onClick.RemoveListener(() => OnNextButtonClick(_matchPanel.isActiveAndEnabled));
 					_reRollButton.onClick.RemoveListener(OnReRollButtonClick);
 					_closeMatchPanelButton.onClick.RemoveListener(OnCloseButtonClick);
