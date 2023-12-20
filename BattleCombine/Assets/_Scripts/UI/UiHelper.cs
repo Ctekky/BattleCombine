@@ -1,4 +1,3 @@
-using System.Collections;
 using System;
 using _Scripts.Audio;
 using TMPro;
@@ -15,6 +14,7 @@ namespace _Scripts.UI
 		private const string gameLoopScene = "ArcadeGameLoop";
 
 		public event Action BattleButtonClickEvent;
+		public event Action<string> BattleSceneExitEvent;
 
 		[Header("Buttons")]
 		[SerializeField] private Button _settingsButton;
@@ -52,8 +52,25 @@ namespace _Scripts.UI
 		private void OnEnable()
 		{
 			_currentScene = SceneManager.GetActiveScene();
+			BattleSceneExitEvent += OnSceneExit;
 
 			AddListeners();
+		}
+
+		public void ShowMatchResult(bool isWin, int score = 0, int bestScore = 0, int diamonds = 0, int coins = 0, int exp = 0, int attack = 0)
+		{
+			var resultPanel = isWin ? _winPanel : _losePanel;
+
+			resultPanel.SetScore(score, bestScore);
+			resultPanel.SetRewardText(coins, diamonds, exp, attack);
+
+			resultPanel.gameObject.SetActive(true);
+			WalletUpdate();
+		}
+
+		public void ExitBattleScene(string value = enemySelectScene)
+		{
+			BattleSceneExitEvent?.Invoke(value);
 		}
 
 		private void AddListeners()
@@ -80,23 +97,6 @@ namespace _Scripts.UI
 			}
 		}
 
-		//todo - rework
-		public void ShowMatchResult(bool isWin, int score = 0, int bestScore = 0, int diamonds = 0, int coins = 0, int exp = 0, int attack = 0)
-		{
-			var resultPanel = isWin ? _winPanel : _losePanel;
-
-			resultPanel.SetScore(score, bestScore);
-			resultPanel.SetRewardText(coins, diamonds, exp, attack);
-
-			resultPanel.gameObject.SetActive(true);
-			WalletUpdate();
-		}
-
-		private void WalletUpdate()
-		{
-			_uiWalletUpdate.UpdateWallet();
-		}
-
 		private void OnCloseButtonClick()
 		{
 			_soundHelper.PlayClickSound();
@@ -118,16 +118,6 @@ namespace _Scripts.UI
 				_pausePanel.gameObject.SetActive(!active);
 		}
 
-		private void OnOptionsButtonClick(bool active)
-		{
-			_settingsPanel.gameObject.SetActive(!active);
-		}
-
-		private void OnBoostButtonClick(bool active)
-		{
-			_boostPanel.gameObject.SetActive(!active);
-		}
-
 		private void OnContinueClick()
 		{
 			//todo - no boost select effects
@@ -135,17 +125,20 @@ namespace _Scripts.UI
 			OnCloseButtonClick();
 		}
 
+		private void OnBoostButtonClick(bool active) =>
+			_boostPanel.gameObject.SetActive(!active);
+
+		private void OnOptionsButtonClick(bool active) =>
+			_settingsPanel.gameObject.SetActive(!active);
+
 		private void OnOptionsButtonInPauseClick()
 		{
 			OnPauseButtonClick(_pausePanel.isActiveAndEnabled);
 			OnOptionsButtonClick(_settingsPanel.isActiveAndEnabled);
 		}
 
-		private void OnNextButtonClick(bool active)
-		{
-			Debug.Log("Match panel Active = " + _isMatchPanelActive);
+		private void OnNextButtonClick(bool active) =>
 			_matchPanel.gameObject.SetActive(!active);
-		}
 
 		private void OnReRollButtonClick()
 		{
@@ -158,10 +151,11 @@ namespace _Scripts.UI
 			_curtain.MoveToAnotherScene(gameLoopScene);
 		}
 
-		private void OnSceneExit()
-		{
-			_curtain.MoveToAnotherScene(enemySelectScene);
-		}
+		private void WalletUpdate() =>
+			_uiWalletUpdate.UpdateWallet();
+
+		private void OnSceneExit(string value) =>
+			_curtain.MoveToAnotherScene(value);
 
 		private void OnDisable()
 		{
@@ -186,5 +180,6 @@ namespace _Scripts.UI
 					break;
 			}
 		}
+
 	}
 }
