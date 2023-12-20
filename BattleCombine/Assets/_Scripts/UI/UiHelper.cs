@@ -45,7 +45,6 @@ namespace _Scripts.UI
 		[SerializeField] private TMP_Text _reRollPriceText;
 		[SerializeField] private TMP_Text _levelMatchPanelText;
 
-		private Coroutine _sceneLoad;
 		private Scene _currentScene;
 
 		private bool _isMatchPanelActive = false;
@@ -161,33 +160,7 @@ namespace _Scripts.UI
 
 		private void OnSceneExit()
 		{
-			//todo - add functional to switch scenes
-			_sceneLoad = StartCoroutine(OnSceneLoadRoutine(enemySelectScene));
-		}
-
-		private IEnumerator OnSceneLoadRoutine(string sceneName)
-		{
-			_curtain.gameObject.SetActive(true);
-			var panel = _curtain.GetCurtainImage;
-			var changeRate = 0.01f;
-			var waitTime = 0.005f;
-
-			panel.raycastTarget = true;
-
-			panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, 0);
-			while (panel.color.a < 1.0f)
-			{
-				var newColor = panel.color;
-				newColor.a += changeRate;
-				panel.color = newColor;
-				yield return new WaitForSeconds(waitTime);
-			}
-
-			panel.raycastTarget = false;
-
-			StopCoroutine(_sceneLoad);
-			SceneManager.LoadScene(sceneName);
-			_curtain.gameObject.SetActive(false);
+			_curtain.MoveToAnotherScene(enemySelectScene);
 		}
 
 		private void OnDisable()
