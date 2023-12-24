@@ -3,7 +3,6 @@ using _Scripts.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Scripts.UI
@@ -70,9 +69,9 @@ namespace _Scripts.UI
 			WalletUpdate();
 		}
 
-		public void ShowLevelUp(int attack = 0, int health = 0, int speed = 0)
+		public void ShowLevelUp(int level = 0, int attack = 0, int health = 0, int speed = 0)
 		{
-			_levelUpMenu.SetLevelUpText(attack, health, speed);
+			_levelUpMenu.SetLevelUpText(level, attack, health, speed);
 			
 			_levelUpMenu.gameObject.SetActive(true);
 		}
