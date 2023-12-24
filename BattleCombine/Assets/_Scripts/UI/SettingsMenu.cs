@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
-    public class SettingsPanel : MonoBehaviour
+    public class SettingsMenu : MonoBehaviour
     {
         [SerializeField] private Button _close;
         [SerializeField] private Button _connectFacebook;

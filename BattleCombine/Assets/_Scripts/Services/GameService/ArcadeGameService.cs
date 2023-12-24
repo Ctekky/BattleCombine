@@ -281,14 +281,7 @@ namespace BattleCombine.Services
                 }
             }
 
-            if (hasPath == true)
-            {
-                Debug.LogWarning("We have a way(s), let's go!");
-            }
-            else
-            {
-                Debug.LogWarning("We have no way, the field MUST be reloaded!");
-            }
+            Debug.LogWarning(hasPath ? "We have a way(s), let's go!" : "We have no way, the field MUST be reloaded!");
         }
 
         #endregion

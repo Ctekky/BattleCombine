@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
-	public class PausePanel : MonoBehaviour
+	public class PauseMenu : MonoBehaviour
 	{
 		[SerializeField] private Button _menuButton;
 		[SerializeField] private Button _closeButton;
