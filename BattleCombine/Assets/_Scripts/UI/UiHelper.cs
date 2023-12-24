@@ -3,6 +3,7 @@ using _Scripts.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Scripts.UI
@@ -28,13 +29,14 @@ namespace _Scripts.UI
 		[SerializeField] private Button _startBattleButton;
 
 		[Header("Game Panels")]
-		[SerializeField] private BoostPanel _boostPanel;
-		[SerializeField] private PausePanel _pausePanel;
-		[SerializeField] private SettingsPanel _settingsPanel;
+		[SerializeField] private BoostMenu _boostMenu;
+		[SerializeField] private PauseMenu _pauseMenu;
+		[SerializeField] private SettingsMenu _settingsMenu;
 		[SerializeField] private SoundHelper _soundHelper;
 		[SerializeField] private UIWalletUpdate _uiWalletUpdate;
-		[SerializeField] private ResultPanel _winPanel;
-		[SerializeField] private ResultPanel _losePanel;
+		[SerializeField] private Result _win;
+		[SerializeField] private Result _lose;
+		[SerializeField] private LevelUpMenu _levelUpMenu;
 		[SerializeField] private MatchPanel _matchPanel;
 		[SerializeField] private Curtain _curtain;
 
@@ -59,13 +61,20 @@ namespace _Scripts.UI
 
 		public void ShowMatchResult(bool isWin, int score = 0, int bestScore = 0, int diamonds = 0, int coins = 0, int exp = 0, int attack = 0)
 		{
-			var resultPanel = isWin ? _winPanel : _losePanel;
+			var result = isWin ? _win : _lose;
 
-			resultPanel.SetScore(score, bestScore);
-			resultPanel.SetRewardText(coins, diamonds, exp, attack);
+			result.SetScore(score, bestScore);
+			result.SetRewardText(coins, diamonds, exp, attack);
 
-			resultPanel.gameObject.SetActive(true);
+			result.gameObject.SetActive(true);
 			WalletUpdate();
+		}
+
+		public void ShowLevelUp(int attack = 0, int health = 0, int speed = 0)
+		{
+			_levelUpMenu.SetLevelUpText(attack, health, speed);
+			
+			_levelUpMenu.gameObject.SetActive(true);
 		}
 
 		public void ExitBattleScene(string value = enemySelectScene)
@@ -75,18 +84,18 @@ namespace _Scripts.UI
 
 		private void AddListeners()
 		{
-			_settingsButton.onClick.AddListener(() => OnOptionsButtonClick(_settingsPanel.isActiveAndEnabled));
-			_boostButton.onClick.AddListener((() => OnBoostButtonClick(_boostPanel.isActiveAndEnabled)));
+			_settingsButton.onClick.AddListener(() => OnOptionsButtonClick(_settingsMenu.isActiveAndEnabled));
+			_boostButton.onClick.AddListener((() => OnBoostButtonClick(_boostMenu.isActiveAndEnabled)));
 			_continueBoostButton.onClick.AddListener(OnContinueClick);
-			_settingsPanel.GetSettingsCloseButton.onClick.AddListener(OnCloseButtonClick);
+			_settingsMenu.GetSettingsCloseButton.onClick.AddListener(OnCloseButtonClick);
 
 			switch (_currentScene.name)
 			{
 				case gameLoopScene:
-					_pauseButton.onClick.AddListener(() => OnPauseButtonClick(_pausePanel.isActiveAndEnabled));
-					_pausePanel.GetCloseButton.onClick.AddListener(OnCloseButtonClick);
-					_pausePanel.GetMenuButton.onClick.AddListener(OnOptionsButtonInPauseClick);
-					_pausePanel.GetPauseContinueButton.onClick.AddListener(OnCloseButtonClick);
+					_pauseButton.onClick.AddListener(() => OnPauseButtonClick(_pauseMenu.isActiveAndEnabled));
+					_pauseMenu.GetCloseButton.onClick.AddListener(OnCloseButtonClick);
+					_pauseMenu.GetMenuButton.onClick.AddListener(OnOptionsButtonInPauseClick);
+					_pauseMenu.GetPauseContinueButton.onClick.AddListener(OnCloseButtonClick);
 					break;
 				case enemySelectScene:
 					_nextButton.onClick.AddListener(() => OnNextButtonClick(_matchPanel.isActiveAndEnabled));
@@ -115,7 +124,7 @@ namespace _Scripts.UI
 		private void OnPauseButtonClick(bool active)
 		{
 			if(_currentScene.name == gameLoopScene)
-				_pausePanel.gameObject.SetActive(!active);
+				_pauseMenu.gameObject.SetActive(!active);
 		}
 
 		private void OnContinueClick()
@@ -126,15 +135,15 @@ namespace _Scripts.UI
 		}
 
 		private void OnBoostButtonClick(bool active) =>
-			_boostPanel.gameObject.SetActive(!active);
+			_boostMenu.gameObject.SetActive(!active);
 
 		private void OnOptionsButtonClick(bool active) =>
-			_settingsPanel.gameObject.SetActive(!active);
+			_settingsMenu.gameObject.SetActive(!active);
 
 		private void OnOptionsButtonInPauseClick()
 		{
-			OnPauseButtonClick(_pausePanel.isActiveAndEnabled);
-			OnOptionsButtonClick(_settingsPanel.isActiveAndEnabled);
+			OnPauseButtonClick(_pauseMenu.isActiveAndEnabled);
+			OnOptionsButtonClick(_settingsMenu.isActiveAndEnabled);
 		}
 
 		private void OnNextButtonClick(bool active) =>
@@ -159,18 +168,18 @@ namespace _Scripts.UI
 
 		private void OnDisable()
 		{
-			_settingsButton.onClick.RemoveListener(() => OnOptionsButtonClick(_settingsPanel.isActiveAndEnabled));
-			_boostButton.onClick.RemoveListener((() => OnBoostButtonClick(_boostPanel.isActiveAndEnabled)));
+			_settingsButton.onClick.RemoveListener(() => OnOptionsButtonClick(_settingsMenu.isActiveAndEnabled));
+			_boostButton.onClick.RemoveListener((() => OnBoostButtonClick(_boostMenu.isActiveAndEnabled)));
 			_continueBoostButton.onClick.RemoveListener(OnContinueClick);
-			_settingsPanel.GetSettingsCloseButton.onClick.AddListener(OnCloseButtonClick);
+			_settingsMenu.GetSettingsCloseButton.onClick.RemoveListener(OnCloseButtonClick);
 
 			switch (_currentScene.name)
 			{
 				case gameLoopScene:
-					_pauseButton.onClick.RemoveListener(() => OnPauseButtonClick(_pausePanel.isActiveAndEnabled));
-					_pausePanel.GetCloseButton.onClick.RemoveListener(OnCloseButtonClick);
-					_pausePanel.GetMenuButton.onClick.RemoveListener(OnOptionsButtonInPauseClick);
-					_pausePanel.GetPauseContinueButton.onClick.RemoveListener(OnCloseButtonClick);
+					_pauseButton.onClick.RemoveListener(() => OnPauseButtonClick(_pauseMenu.isActiveAndEnabled));
+					_pauseMenu.GetCloseButton.onClick.RemoveListener(OnCloseButtonClick);
+					_pauseMenu.GetMenuButton.onClick.RemoveListener(OnOptionsButtonInPauseClick);
+					_pauseMenu.GetPauseContinueButton.onClick.RemoveListener(OnCloseButtonClick);
 					break;
 				case enemySelectScene:
 					_nextButton.onClick.RemoveListener(() => OnNextButtonClick(_matchPanel.isActiveAndEnabled));

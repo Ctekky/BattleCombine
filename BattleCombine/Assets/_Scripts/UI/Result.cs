@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Scripts.UI
 {
-	public class ResultPanel : MonoBehaviour
+	public class Result : MonoBehaviour
 	{
 		[SerializeField] private TMP_Text _playerLevel;
 	

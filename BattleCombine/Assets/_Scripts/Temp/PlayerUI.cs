@@ -32,15 +32,6 @@ namespace _Scripts.Temp
         private bool _isShielded;
         private bool _isPlayerBoostCooldownOn;
 
-#if UNITY_EDITOR
-        //todo - timers and cooldowns
-        [ContextMenu("TESTCooldown")]
-        public void TestCooldown()
-        {
-            ChangeImageInCooldown(6);
-        }
-#endif
-
         public void UpdateLevelSlider(float value)
         {
             playerLevelSlider.value = value;
@@ -126,7 +117,7 @@ namespace _Scripts.Temp
         public void SetupSpeed(int speed)
         {
             DeleteAllSpeedObject();
-            for (int i = 0; i < speed; i++)
+            for (var i = 0; i < speed; i++)
             {
                 var speedObject = Instantiate(speedPrefab, speedArea.transform);
                 createdSpeedObjectList.Add(speedObject);

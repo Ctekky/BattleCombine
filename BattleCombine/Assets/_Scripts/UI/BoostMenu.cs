@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
-	public class BoostPanel : MonoBehaviour
+	public class BoostMenu : MonoBehaviour
 	{
 		[Header("Boost Cooldown")]
 		[SerializeField] private int _cooldown = 7;
