@@ -48,21 +48,21 @@ namespace BattleCombine.Data
                     //ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     //Formatting = Formatting.None
                 };
+                var mSavedGameFileContent = JsonConvert.SerializeObject(gameDataNew, settings);
+                using FileStream streamFile = new FileStream(fullPath, FileMode.Create, FileAccess.Write);
+                using StreamWriter sr = new StreamWriter(streamFile);
+                sr.Write(mSavedGameFileContent);
+                sr.Flush();
+                sr.Close();
+                streamFile.Close();
                 */
                 
-                //var mSavedGameFileContent = bf.Serialize(gameDataNew);
-                    //JsonConvert.SerializeObject(gameDataNew, settings);
-
-                //File.WriteAllText(fullPath, JsonConvert.SerializeObject(gameDataNew, settings));
-                
                 using FileStream streamFile = new FileStream(fullPath, FileMode.Create, FileAccess.Write);
-                //using StreamWriter sr = new StreamWriter(streamFile);
                 BinaryFormatter bf = new BinaryFormatter();
                 bf.Serialize(streamFile, gameDataNew);
-                //sr.Write(mSavedGameFileContent);
                 streamFile.Flush();
-                //sr.Close(); 
                 streamFile.Close();
+                
             }
             catch (Exception e)
             {
@@ -80,14 +80,13 @@ namespace BattleCombine.Data
             }
             try
             {
-                using FileStream fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
-                BinaryFormatter bf = new BinaryFormatter();
-                gd = (GameData)bf.Deserialize(fileStream);
-                //using StreamReader sr = new StreamReader(fileStream);
-                //var mSavedGameFileContent = sr.ReadToEnd();
-                //sr.Close();
-                fileStream.Close();
                 /*
+                using FileStream fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+                using StreamReader sr = new StreamReader(fileStream);
+                var mSavedGameFileContent = sr.ReadToEnd();
+                sr.Close();
+                fileStream.Close();
+                
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.All,
@@ -96,6 +95,12 @@ namespace BattleCombine.Data
 
                 gd = JsonConvert.DeserializeObject<GameData>(mSavedGameFileContent, settings);
                 */
+                
+                using FileStream fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+                BinaryFormatter bf = new BinaryFormatter();
+                gd = (GameData)bf.Deserialize(fileStream);
+                fileStream.Close();
+                
                 
             }
             catch (Exception e)
