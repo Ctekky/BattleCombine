@@ -2,19 +2,22 @@ using System;
 using BattleCombine.Enums;
 using System.Collections.Generic;
 using System.Linq;
+using BattleCombine.Data;
+using BattleCombine.Interfaces;
 using BattleCombine.Services;
 using UnityEngine;
 
 namespace BattleCombine.Gameplay
 {
-    public class TileStack : MonoBehaviour
+    public class TileStack : MonoBehaviour, ISaveLoad
     {
         [SerializeField] private int speedPlayer;
         [SerializeField] private IDPlayer player;
-        [SerializeField] ArcadeGameService _arcadeGameService;
+        [SerializeField] private ArcadeGameService arcadeGameService;
         [SerializeField] private List<GameObject> nextMoveTiles;
         [SerializeField] private List<GameObject> tilesForNextMovePlayer1;
         [SerializeField] private List<GameObject> tilesForNextMovePlayer2;
+        [SerializeField] private CreateField field;
 
         [SerializeField] private List<GameObject> tileListPlayer1;
         [SerializeField] private List<GameObject> tileListPlayer2;
@@ -29,7 +32,7 @@ namespace BattleCombine.Gameplay
 
         public List<GameObject> GetTilesForNextMovePlayer1 => tilesForNextMovePlayer1;
         public List<GameObject> GetTilesForNextMovePlayer2 => tilesForNextMovePlayer2;
-        public ArcadeGameService GetArcadeGameService => _arcadeGameService;
+        public ArcadeGameService GetArcadeGameService => arcadeGameService;
 
         public Action<Tile> onTileChoose;
 
@@ -55,9 +58,9 @@ namespace BattleCombine.Gameplay
             return startingPlayerTiles.Contains(tile);
         }
 
-        public void SetupArcadeGameService(ArcadeGameService arcadeGameService)
+        public void SetupArcadeGameService(ArcadeGameService aGS)
         {
-            _arcadeGameService = arcadeGameService;
+            this.arcadeGameService = aGS;
         }
 
         public void ChangeStartingTileState(Tile currentTile, bool status)
@@ -239,6 +242,65 @@ namespace BattleCombine.Gameplay
             foreach (var tile in tileList.Select(tileGameObject => tileGameObject.GetComponent<Tile>()))
             {
                 tile.SetAlignTileToPlayer2(flag: true);
+            }
+        }
+
+        public void LoadData(GameData gameData, bool newGameBattle, bool firstStart)
+        {
+            nextMoveTiles.Clear();
+            tilesForNextMovePlayer1.Clear();
+            tilesForNextMovePlayer2.Clear();
+            startingPlayerTiles.Clear();
+            foreach (var tile in field.GetTileList)
+            {
+                var tileScript = tile.GetComponent<Tile>();
+                foreach (var tileID in gameData.NextMoveTileID.Where(tileID => tileID == tileScript.TileID))
+                {
+                    NextMoveTiles.Add(tile.gameObject);
+                }
+
+                foreach (var tileID in gameData.TileForNextMovePlayer1ID.Where(tileID => tileScript.TileID == tileID))
+                {
+                    tilesForNextMovePlayer1.Add(tile.gameObject);
+                }
+
+                foreach (var tileID in gameData.TileForNextMovePlayer2ID.Where(tileID => tileScript.TileID == tileID))
+                {
+                    tilesForNextMovePlayer2.Add(tile.gameObject);
+                }
+                foreach (var tileID in gameData.StartTile.Where(tileID => tileScript.TileID == tileID))
+                {
+                    startingPlayerTiles.Add(tile);
+                }
+                
+            }
+            
+        }
+
+        public void SaveData(ref GameData gameData, bool newGameBattle, bool firstStart)
+        {
+            gameData.NextMoveTileID.Clear();
+            gameData.TileForNextMovePlayer1ID.Clear();
+            gameData.TileForNextMovePlayer2ID.Clear();
+            gameData.StartTile.Clear();
+            foreach (var tileScript in nextMoveTiles.Select(tile => tile.GetComponent<Tile>()))
+            {
+                gameData.NextMoveTileID.Add(tileScript.TileID);
+            }
+
+            foreach (var tileScript in tilesForNextMovePlayer1.Select(tile => tile.GetComponent<Tile>()))
+            {
+                gameData.TileForNextMovePlayer1ID.Add(tileScript.TileID);
+            }
+
+            foreach (var tileScript in tilesForNextMovePlayer2.Select(tile => tile.GetComponent<Tile>()))
+            {
+                gameData.TileForNextMovePlayer2ID.Add(tileScript.TileID);
+            }
+
+            foreach (var tileScript in startingPlayerTiles.Select(tile => tile.GetComponent<Tile>()))
+            {
+                gameData.StartTile.Add(tileScript.TileID);
             }
         }
     }

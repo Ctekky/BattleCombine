@@ -1,6 +1,8 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace _Scripts.UI
 {
@@ -21,6 +23,8 @@ namespace _Scripts.UI
 		private LevelUpColorChanger attackColorChanger;
 		private LevelUpColorChanger healthColorChanger;
 		private LevelUpColorChanger speedColorChanger;
+
+		public Action<int> onStatChange;
 
 		private void Awake()
 		{
@@ -53,18 +57,21 @@ namespace _Scripts.UI
 					healthColorChanger.DisableState();
 					speedColorChanger.DisableState();
 					//onStatClick?.Invoke(_attackButton);
+					onStatChange?.Invoke(1);
 					break;
 				case 1:
 					attackColorChanger.DisableState();
 					healthColorChanger.EnableState();
 					speedColorChanger.DisableState();
 					//onStatClick?.Invoke(_healthButton);
+					onStatChange?.Invoke(2);
 					break;
 				case 2:
 					attackColorChanger.DisableState();
 					healthColorChanger.DisableState();
 					speedColorChanger.EnableState();
 					//onStatClick?.Invoke(_speedButton);
+					onStatChange?.Invoke(3);
 					break;
 			}
 		}

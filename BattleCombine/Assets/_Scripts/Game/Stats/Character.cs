@@ -79,6 +79,20 @@ namespace BattleCombine.Gameplay
             stats.shielded = shielded;
             moveSpeedValue = speed;
         }
+
+        public void SetupFullStats(BattleStatsData bsd)
+        {
+            stats.attackValue = bsd.CurrentDamage;
+            stats.attackValueDefault = bsd.DamageDefault;
+            stats.attackValueModifier = bsd.DamageModifier;
+            stats.healthValue = bsd.CurrentHealth;
+            stats.healthValueDefault = bsd.HealthDefault;
+            stats.healthValueModifier = bsd.HealthModifier;
+            stats.moveSpeedValueDefault = bsd.SpeedDefault;
+            stats.moveSpeedValueModifier = bsd.SpeedModifier;
+            moveSpeedValue = bsd.CurrentSpeed;
+            Shielded = bsd.Shield;
+        }
         
         public void SetupDefaultStats(int attack, int health, int speed, bool shielded)
         {

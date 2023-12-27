@@ -20,8 +20,8 @@ namespace BattleCombine.Gameplay
             StateName = TileState.AvailableForSelectionState;
             _tile.SetCurrentState(StateName);
             
-            Debug.Log(_tile.GetTileStack.ToString());
-            Debug.Log(_tile.GetTileStack.IDPlayer.ToString());
+            //Debug.Log(_tile.GetTileStack.ToString());
+            //Debug.Log(_tile.GetTileStack.IDPlayer.ToString());
             switch (_tile.GetTileStack.IDPlayer)
             {
                 case IDPlayer.Player1:

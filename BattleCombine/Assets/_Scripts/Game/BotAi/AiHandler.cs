@@ -86,8 +86,9 @@ namespace BattleCombine.Ai
             }
         }
 
-        private void GiveAiTurn()
+        private void GiveAiTurn(bool isPaused)
         {
+            if(isPaused) return;
             _isAiTurn = !_isAiTurn;
 
             if (HealthToChangeStance() && !_isStanceChanged)
@@ -214,7 +215,7 @@ namespace BattleCombine.Ai
         private void OnDisable()
         {
             ChangeEnemyStance -= ChangeAiStance;
-            GameManager.OnPlayerChange -= GiveAiTurn;
+            _gameManager.onPlayerChange -= GiveAiTurn;
             StopAllCoroutines();
         }
 

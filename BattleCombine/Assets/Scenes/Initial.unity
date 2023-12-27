@@ -2179,10 +2179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d17ade1d9a0cda4591815c5c625b49b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinCountText: {fileID: 1687617764}
-  _diamondCountText: {fileID: 1138179638}
-  _scoreCountText: {fileID: 0}
-  _bestScoreCountText: {fileID: 0}
+  _coinCount: {fileID: 1687617764}
+  _diamondCount: {fileID: 1138179638}
 --- !u!1 &2130699422
 GameObject:
   m_ObjectHideFlags: 0
@@ -2193,6 +2191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2130699424}
   - component: {fileID: 2130699423}
+  - component: {fileID: 2130699425}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -2213,7 +2212,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 2130699425}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -2246,6 +2246,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2130699425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130699422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba7172e340e5be4db605a150bca0047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialServicePrefab: {fileID: 3489075458439663399, guid: 0442827a7e48c934ab37127fadc38ad1, type: 3}
 --- !u!1001 &1065884430273325576
 PrefabInstance:
   m_ObjectHideFlags: 0

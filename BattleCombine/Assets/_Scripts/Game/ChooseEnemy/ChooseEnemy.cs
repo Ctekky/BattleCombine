@@ -1,10 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Data;
 using BattleCombine.ScriptableObjects;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 public class ChooseEnemy : MonoBehaviour
@@ -14,7 +13,8 @@ public class ChooseEnemy : MonoBehaviour
     [SerializeField] private List<EnemyAvatarStruct> chosenAvatarList;
     [SerializeField] private SOEnemyStatsTable enemyStatsTable;
     [SerializeField] private SOStatsModifierTable statModifierTable;
-    [SerializeField] private SOEnemyAvatarTable enemyAvatarTable;
+    //[SerializeField] private SOEnemyAvatarTable enemyAvatarTable;
+    [Inject] private ResourceService _resourceService;
     [SerializeField] private int enemyCountToChoose;
     [SerializeField] private int currentScore;
 
@@ -90,7 +90,7 @@ public class ChooseEnemy : MonoBehaviour
     public List<EnemyAvatarStruct> GetFinalAvatars()
     {
         chosenAvatarList = new List<EnemyAvatarStruct>();
-        GetSomeAvatars(enemyAvatarTable.avatarList, enemyCountToChoose);
+        GetSomeAvatars(_resourceService.GetAvatarDB.avatarList, enemyCountToChoose);
         return chosenAvatarList;
     }
 

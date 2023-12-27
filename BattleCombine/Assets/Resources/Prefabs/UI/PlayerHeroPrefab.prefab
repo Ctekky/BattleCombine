@@ -764,7 +764,7 @@ MonoBehaviour:
     shielded: 0
   moveSpeedValue: 0
   playerUIScript: {fileID: 8770927838747403095}
-  playerName: Player1
+  playerName: Player
 --- !u!1 &2566341055362854540
 GameObject:
   m_ObjectHideFlags: 0

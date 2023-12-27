@@ -24,11 +24,21 @@ namespace BattleCombine.UI
 
         public void UpdateConfirmPanelEnemy(Player chosenEnemy)
         {
-            confirmPanelEnemy.SetDefaultStats(chosenEnemy.AttackValue, chosenEnemy.HealthValue, chosenEnemy.moveSpeedValue,
+            confirmPanelEnemy.SetDefaultStats(chosenEnemy.AttackValue, chosenEnemy.HealthValue,
+                chosenEnemy.moveSpeedValue,
                 chosenEnemy.Shielded);
             confirmPanelEnemy.SetStats(chosenEnemy.AttackValue, chosenEnemy.HealthValue, chosenEnemy.moveSpeedValue,
                 chosenEnemy.Shielded);
-            confirmPanelEnemy.SetupAvatar(chosenEnemy.GetAvatar());
+            confirmPanelEnemy.SetupAvatar(chosenEnemy.GetAvatar(), chosenEnemy.AvatarID);
+        }
+
+        public void UpdateConfirmPanelPlayer(Player ourPlayer)
+        {
+            confirmPanelPlayer.SetDefaultStats(ourPlayer.AttackValue, ourPlayer.HealthValue, ourPlayer.moveSpeedValue,
+                ourPlayer.Shielded);
+            confirmPanelPlayer.SetDefaultStats(ourPlayer.AttackValue, ourPlayer.HealthValue, ourPlayer.moveSpeedValue,
+                ourPlayer.Shielded);
+            confirmPanelPlayer.SetupAvatar(ourPlayer.GetAvatar(), ourPlayer.AvatarID);
         }
 
         private void UpdateEnemyStats(EnemyStatsStruct enemyStatsStruct, Player enemyObject)
@@ -44,9 +54,9 @@ namespace BattleCombine.UI
 
         public void UpdateEnemiesAvatars(List<EnemyAvatarStruct> enemyAvatarList)
         {
-            firstEnemy.SetupAvatar(enemyAvatarList[0]);
-            secondEnemy.SetupAvatar(enemyAvatarList[1]);
-            thirdEnemy.SetupAvatar(enemyAvatarList[2]);
+            firstEnemy.SetupAvatar(enemyAvatarList[0], enemyAvatarList[0].ID);
+            secondEnemy.SetupAvatar(enemyAvatarList[1], enemyAvatarList[1].ID);
+            thirdEnemy.SetupAvatar(enemyAvatarList[2], enemyAvatarList[2].ID);
         }
     }
 }
