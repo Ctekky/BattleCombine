@@ -1052,11 +1052,11 @@ MonoBehaviour:
   currentTurn: 0
   stepsInTurn: 0
   arcadeUIHelper: {fileID: 2105806061}
-  expToLevel: 1
+  expToLevel: 5
   attackByLevel: 1
   healthByLevel: 5
   speedByLevel: 1
-  whenUpSpeed: 1
+  whenUpSpeed: 30
 --- !u!114 &388951238
 MonoBehaviour:
   m_ObjectHideFlags: 0

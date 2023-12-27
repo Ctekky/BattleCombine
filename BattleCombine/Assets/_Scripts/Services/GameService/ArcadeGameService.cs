@@ -129,7 +129,7 @@ namespace BattleCombine.Services
                     _playerAccount.HealthStatUp(healthByLevel);
                     break;
                 case 3:
-                    _playerAccount.SpeedStatUp(_mainGameService.ArcadePlayerLevel % whenUpSpeed == 0
+                    _playerAccount.SpeedStatUp(_mainGameService.ArcadeCurrentScore % whenUpSpeed == 0
                         ? 0
                         : speedByLevel);
                     break;
@@ -241,7 +241,7 @@ namespace BattleCombine.Services
                 {
                     _mainGameService.ArcadePlayerLevel++;
                     arcadeUIHelper.ShowLevelUp(_mainGameService.ArcadePlayerLevel, attackByLevel, healthByLevel,
-                        _mainGameService.ArcadePlayerLevel % whenUpSpeed == 0 ? 0 : speedByLevel);
+                        _mainGameService.ArcadeCurrentScore % whenUpSpeed == 0 ? 0 : speedByLevel);
                 }
 
                 arcadeUIHelper.ShowMatchResult(true, _mainGameService.ArcadeCurrentScore,
