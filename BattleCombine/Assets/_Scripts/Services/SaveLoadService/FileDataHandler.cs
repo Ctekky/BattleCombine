@@ -1,7 +1,6 @@
 using System;
 using System.IO;
-using UnityEngine;
-using Newtonsoft.Json;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BattleCombine.Data
 {
@@ -11,7 +10,7 @@ namespace BattleCombine.Data
         private string _dataFileName = "";
         private bool _encryptData = false;
         private string _codeWord = "kachachar";
-
+        
         public FileDataHandler(string dataDirPath, string dataFileName, bool encryptData)
         {
             _dataDirPath = dataDirPath;
@@ -37,7 +36,13 @@ namespace BattleCombine.Data
 
         public void Save(GameData gameDataNew)
         {
+            Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
+            BinaryFormatter bf = new BinaryFormatter();
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
+            FileStream fs = new FileStream(fullPath, FileMode.Create);
+            bf.Serialize(fs, gameDataNew);
+            fs.Close();
+            /*
             try
             {
                 JsonSerializerSettings settings = new JsonSerializerSettings
@@ -53,17 +58,26 @@ namespace BattleCombine.Data
             {
                 Debug.Log($"Error on trying to save data to file {fullPath} \n {e}");
             }
+            */
         }
 
         public GameData Load()
         {
+            Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
-            GameData loadData = null;
-            if (!File.Exists(fullPath))
+            GameData gd = null;
+            if (File.Exists(fullPath))
             {
-                Debug.Log($"There is no save file {fullPath}");
-                return null;
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream fs = new FileStream(fullPath, FileMode.Open);
+                
+                GameData gameData = bf.Deserialize(fs) as GameData;
+                fs.Close();
+                return gameData;
             }
+
+            return gd;
+            /*
             try
             {
                 JsonSerializerSettings settings = new JsonSerializerSettings
@@ -78,7 +92,7 @@ namespace BattleCombine.Data
             {
                 Debug.Log($"Error on trying to load data from file {fullPath} \n {e}");
             }
-            return loadData;
+            */
         }
         
     }

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Data;
-using BattleCombine.Gameplay;
 using BattleCombine.Interfaces;
 using UnityEngine;
 using Zenject;
@@ -29,10 +28,16 @@ namespace BattleCombine.Services
             get => newGameBattle;
             set => newGameBattle = value;
         }
+        
+        void Awake()
+        {
+            // Forces a different code path in the BinaryFormatter that doesn't rely on run-time code generation (which would break on iOS).
+            Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
+        }
 
         public void Initialization()
         {
-            _fileName = "data.txt";
+            _fileName = "nesave.dat";
             encryptData = false;
             _dataHandler = new FileDataHandler(Application.persistentDataPath, _fileName, encryptData);
             _saveInterfacesInScripts = FindAllSaveAndLoadInterfaces();
@@ -81,6 +86,7 @@ namespace BattleCombine.Services
             _playerAccount.CreatePlayerAccount(playerInfo.PlayerID, playerInfo.PlayerName, playerInfo.Exp,
                 playerInfo.Gold, playerInfo.Diamond, playerInfo.CurrentScore, playerInfo.MaxScore,
                 playerInfo.PlayerAvatarID, playerBattleStateData);
+            _dataHandler.Save(_gameData);
         }
 
         public bool CheckForSavedData()
@@ -126,15 +132,6 @@ namespace BattleCombine.Services
 
         private List<ISaveLoad> FindAllSaveAndLoadInterfaces() //TODO
         {
-            /*
-            
-            var saveInterfacesInScripts = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>();
-            //var saveBattleStats = FindObjectsOfType<Character>().OfType<ISaveLoad>();
-            //
-            saveInterfacesInScripts.AddRange(saveBattleStats);
-            saveInterfacesInScripts.AddRange(saveOthers);
-            return new List<ISaveLoad>(saveInterfacesInScripts);
-            */
             var saveInterfacesInScripts = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>();
             return new List<ISaveLoad>(saveInterfacesInScripts);
         }
