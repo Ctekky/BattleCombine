@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Newtonsoft.Json;
+using UnityEngine;
 
 namespace BattleCombine.Data
 {
@@ -36,63 +38,72 @@ namespace BattleCombine.Data
 
         public void Save(GameData gameDataNew)
         {
-            Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
-            BinaryFormatter bf = new BinaryFormatter();
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
-            FileStream fs = new FileStream(fullPath, FileMode.Create);
-            bf.Serialize(fs, gameDataNew);
-            fs.Close();
-            /*
             try
             {
+                /*
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.All,
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    Formatting = Formatting.None
+                    //ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    //Formatting = Formatting.None
                 };
+                */
+                
+                //var mSavedGameFileContent = bf.Serialize(gameDataNew);
+                    //JsonConvert.SerializeObject(gameDataNew, settings);
 
-                File.WriteAllText(fullPath, JsonConvert.SerializeObject(gameDataNew, settings));
+                //File.WriteAllText(fullPath, JsonConvert.SerializeObject(gameDataNew, settings));
+                
+                using FileStream streamFile = new FileStream(fullPath, FileMode.Create, FileAccess.Write);
+                //using StreamWriter sr = new StreamWriter(streamFile);
+                BinaryFormatter bf = new BinaryFormatter();
+                bf.Serialize(streamFile, gameDataNew);
+                //sr.Write(mSavedGameFileContent);
+                streamFile.Flush();
+                //sr.Close(); 
+                streamFile.Close();
             }
             catch (Exception e)
             {
                 Debug.Log($"Error on trying to save data to file {fullPath} \n {e}");
             }
-            */
         }
 
         public GameData Load()
         {
-            Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
             GameData gd = null;
-            if (File.Exists(fullPath))
+            if (!File.Exists(fullPath))
             {
-                BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = new FileStream(fullPath, FileMode.Open);
-                
-                GameData gameData = bf.Deserialize(fs) as GameData;
-                fs.Close();
-                return gameData;
+                return gd;
             }
-
-            return gd;
-            /*
             try
             {
+                using FileStream fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+                BinaryFormatter bf = new BinaryFormatter();
+                gd = (GameData)bf.Deserialize(fileStream);
+                //using StreamReader sr = new StreamReader(fileStream);
+                //var mSavedGameFileContent = sr.ReadToEnd();
+                //sr.Close();
+                fileStream.Close();
+                /*
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.All,
-                    ObjectCreationHandling = ObjectCreationHandling.Replace
+                    //ObjectCreationHandling = ObjectCreationHandling.Replace
                 };
 
-                loadData = JsonConvert.DeserializeObject<GameData>(File.ReadAllText(fullPath), settings);
+                gd = JsonConvert.DeserializeObject<GameData>(mSavedGameFileContent, settings);
+                */
+                
             }
             catch (Exception e)
             {
                 Debug.Log($"Error on trying to load data from file {fullPath} \n {e}");
             }
-            */
+
+            return gd;
         }
         
     }

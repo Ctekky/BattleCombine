@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleCombine.Enums;
 
 namespace BattleCombine.Data
 {
+    [Serializable]
     public class GameData
     {
         public PlayerAccountData PlayerAccountData = new PlayerAccountData();
