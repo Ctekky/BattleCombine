@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3838139759549436945
 Transform:
   m_ObjectHideFlags: 0
@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3abf14f07efca3b42b52472871265b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourceServicePrefab: {fileID: 6313588329213795291, guid: 11f8320f59768d64fb16cd0282a79783, type: 3}
   playerAccountPrefab: {fileID: 8127547089818125066, guid: b0c0df689693e4847bfaf6a6d40c4ea0, type: 3}
   saveManagerPrefab: {fileID: 111876604988128674, guid: bb73ffb66acc8754a93a4c0b9d0e202d, type: 3}
   gameServicePrefab: {fileID: 1054097128707585351, guid: f013b9b16a1638a4a9f0cdf8a4b00c1f, type: 3}

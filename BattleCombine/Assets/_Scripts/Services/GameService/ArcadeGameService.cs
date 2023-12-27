@@ -1,21 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using _Scripts.UI;
 using BattleCombine.Ai;
 using BattleCombine.Data;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
+using BattleCombine.Interfaces;
 using BattleCombine.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace BattleCombine.Services
 {
-    public class ArcadeGameService : MonoBehaviour
+    public class ArcadeGameService : MonoBehaviour, ISaveLoad
     {
         #region Dependency
 
         [Inject] private MainGameService _mainGameService;
+        [Inject] private SaveManager _saveManager;
+        [Inject] private PlayerAccount _playerAccount;
         [SerializeField] private InputService.InputService inputService;
         //TODO: need inject UI to work with
 
@@ -42,7 +46,7 @@ namespace BattleCombine.Services
         #region Bot
 
         //добавил, чтоб ловить боту момент смены хода
-        public Action onPlayerChange;
+        public Action<bool> onPlayerChange;
         [SerializeField] private AiHandler aiHandler;
 
         #endregion
@@ -65,6 +69,12 @@ namespace BattleCombine.Services
         [SerializeField] private int currentStepInTurn;
         [SerializeField] private int currentTurn;
         [SerializeField] private int stepsInTurn;
+        [SerializeField] private UiHelper arcadeUIHelper;
+        [SerializeField] private int expToLevel;
+        [SerializeField] private int attackByLevel;
+        [SerializeField] private int healthByLevel;
+        [SerializeField] private int speedByLevel;
+        [SerializeField] private int whenUpSpeed;
 
         private PathCheck pathCheck = new PathCheck();
         private bool _isTypeStandart;
@@ -84,33 +94,61 @@ namespace BattleCombine.Services
         private void OnDisable()
         {
             inputService.onFingerUp -= InputFingerUp;
+            arcadeUIHelper.onStatChange -= StatChange;
+            arcadeUIHelper.onLoseClick -= LoseBattle;
+            arcadeUIHelper.onWinClick -= WinBattle;
+        }
+
+        private void WinBattle()
+        {
+            arcadeUIHelper.ExitBattleScene();
+        }
+
+        private void LoseBattle()
+        {
+            _mainGameService.ArcadeCurrentScore = 0;
+            _playerAccount.ZeroModifierOnLose();
+            arcadeUIHelper.ExitBattleScene();
+        }
+
+        private void OnEnable()
+        {
+            arcadeUIHelper.onStatChange += StatChange;
+            arcadeUIHelper.onLoseClick += LoseBattle;
+            arcadeUIHelper.onWinClick += WinBattle;
+        }
+
+        private void StatChange(int key)
+        {
+            switch (key)
+            {
+                case 1:
+                    _playerAccount.AttackStatUp(attackByLevel);
+                    break;
+                case 2:
+                    _playerAccount.HealthStatUp(healthByLevel);
+                    break;
+                case 3:
+                    _playerAccount.SpeedStatUp(_mainGameService.ArcadePlayerLevel % whenUpSpeed == 0
+                        ? 0
+                        : speedByLevel);
+                    break;
+            }
         }
 
         #endregion
 
-
         private void Awake()
+        {
+            InitializeBattlefield();
+        }
+
+        private void InitializeBattlefield()
         {
             _stepChecker = GetComponent<Step>();
             _isTypeStandart = false;
             _isTypeStandart = _stepChecker is StandartTypeStep;
             _sequenceMoves = new SequenceMoves(player1.GetComponent<Player>(), player2.GetComponent<Player>());
-            SetupEnemyData(_mainGameService.EnemyAttack, _mainGameService.EnemyHealth, _mainGameService.EnemySpeed,
-                _mainGameService.EnemyShielded, _mainGameService.EnemyAvatarEnable,
-                _mainGameService.EnemyAvatarDisable);
-        }
-
-        private void SetupEnemyData(int attack, int health, int speed, bool shield, Sprite avatarEnable,
-            Sprite avatarDisable)
-        {
-            var enemy = player2.GetComponent<Player>();
-            var avatarStruct = new EnemyAvatarStruct
-            {
-                enableSprite = avatarEnable,
-                disableSprite = avatarDisable
-            };
-            enemy.SetStats(attack, health, speed, shield);
-            enemy.SetupAvatar(avatarStruct);
         }
 
         private void Start()
@@ -165,6 +203,8 @@ namespace BattleCombine.Services
             currentTurn = 1;
             currentStepInTurn = 1;
             tileStackScript.SpeedPlayer = currentPlayer.moveSpeedValue;
+            if (_saveManager.CheckForSavedData() && _mainGameService.IsBattleActive) _saveManager.LoadGame();
+            _mainGameService.ChangeActiveBattle(true);
         }
 
         private void InputFingerUp()
@@ -181,20 +221,33 @@ namespace BattleCombine.Services
         {
             var fieldScript = gameField.GetComponent<CreateField>();
             fieldScript.RefreshField();
+            _saveManager.SaveGame();
+            onPlayerChange?.Invoke(false);
         }
 
         private void GameOver(Player player)
         {
             if (player.GetPlayerName == player1.GetComponent<Player>().GetPlayerName)
             {
-                Debug.Log("Game over");
-                SceneManager.LoadScene("Initial");
+                //TODO - rewards
+                arcadeUIHelper.ShowMatchResult(false, _mainGameService.ArcadeCurrentScore,
+                    _mainGameService.ArcadeBestScore, 0, 0, 0, 0);
+                onPlayerChange?.Invoke(true);
             }
             else
             {
-                Debug.Log("Next battle");
                 ChangeCurrentScoreOnWin();
-                SceneManager.LoadScene("EnemySelectionScene");
+                if (_mainGameService.ArcadeCurrentScore % expToLevel == 0)
+                {
+                    _mainGameService.ArcadePlayerLevel++;
+                    arcadeUIHelper.ShowLevelUp(_mainGameService.ArcadePlayerLevel, attackByLevel, healthByLevel,
+                        _mainGameService.ArcadePlayerLevel % whenUpSpeed == 0 ? 0 : speedByLevel);
+                }
+
+                arcadeUIHelper.ShowMatchResult(true, _mainGameService.ArcadeCurrentScore,
+                    _mainGameService.ArcadeBestScore, 0, 0, 0, 0);
+                onPlayerChange?.Invoke(true);
+                //SceneManager.LoadScene("EnemySelectionScene");
             }
         }
 
@@ -264,7 +317,6 @@ namespace BattleCombine.Services
 
             _sequenceMoves.Next();
             //Kirill Add for AI
-            onPlayerChange?.Invoke();
         }
 
         #region Checking the possibility of movement
@@ -301,5 +353,46 @@ namespace BattleCombine.Services
         }
 
         #endregion
+
+        public void LoadData(GameData gameData, bool newGameBattle, bool firstStart)
+        {
+            currentStepInTurn = gameData.CurrentStep;
+        }
+
+        private void SaveBattleStatDataUpdate(GameData gameData, BattleStatsData enemyBSD)
+        {
+            foreach (var bsd in gameData.BattleStatsData.Where(bsd => bsd.Name == "Enemy"))
+            {
+                bsd.Shield = enemyBSD.Shield;
+                bsd.CurrentDamage = enemyBSD.CurrentDamage;
+                bsd.CurrentHealth = enemyBSD.CurrentHealth;
+                bsd.CurrentSpeed = enemyBSD.CurrentSpeed;
+            }
+        }
+
+        public void SaveData(ref GameData gameData, bool newGameBattle, bool firstStart)
+        {
+            var enemy = player2.GetComponent<Player>();
+            var flag = false;
+            var enemyBSD = new BattleStatsData
+            {
+                CurrentDamage = enemy.AttackValue,
+                CurrentHealth = enemy.HealthValue,
+                CurrentSpeed = enemy.moveSpeedValue,
+                Shield = enemy.Shielded
+            };
+            foreach (var bsd in gameData.BattleStatsData.Where(bsd => bsd.Name == "Enemy"))
+            {
+                flag = true;
+            }
+
+            if (flag) SaveBattleStatDataUpdate(gameData, enemyBSD);
+            else
+            {
+                gameData.BattleStatsData.Add(enemyBSD);
+            }
+
+            gameData.CurrentStep = currentStepInTurn;
+        }
     }
 }

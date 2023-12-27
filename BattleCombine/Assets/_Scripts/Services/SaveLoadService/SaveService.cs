@@ -1,12 +1,12 @@
+using System;
 using System.Collections.Generic;
-//using System.Diagnostics;
 using System.Linq;
 using BattleCombine.Data;
 using BattleCombine.Gameplay;
 using BattleCombine.Interfaces;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Video;
+using Zenject;
+
 
 namespace BattleCombine.Services
 {
@@ -20,31 +20,67 @@ namespace BattleCombine.Services
         private FileDataHandler _dataHandler;
         private string _fileName;
         private List<ISaveLoad> _saveInterfacesInScripts;
+
+        [Inject] private PlayerAccount _playerAccount;
         
 
-        public bool NewGameBattle { get => newGameBattle; set => newGameBattle = value; }
+        public bool NewGameBattle
+        {
+            get => newGameBattle;
+            set => newGameBattle = value;
+        }
 
-        private void Awake()
+        public void Initialization()
         {
             _fileName = "data.txt";
             encryptData = false;
-        }
-
-        private void Start()
-        {
             _dataHandler = new FileDataHandler(Application.persistentDataPath, _fileName, encryptData);
             _saveInterfacesInScripts = FindAllSaveAndLoadInterfaces();
-            LoadGame();
         }
-
+        
         public void AddScriptToList(ISaveLoad script)
         {
             _saveInterfacesInScripts.Add(script);
         }
 
-        private void NewGame()
+        public void NewGame()
         {
-            _gameData = new GameData();
+            _gameData = new GameData
+            {
+                PlayerAccountData =
+                {
+                    //TODO - need to connect with all player base and generate correct unique player ID
+                    PlayerID = "playerID",
+                    //TODO - create new player name nick generation
+                    PlayerName = "Noname new player",
+                    CurrentScore = 0,
+                    Exp = 0,
+                    MaxScore = 0,
+                    Gold = 0,
+                    Diamond = 0,
+                    PlayerAvatarID = 1
+                },
+                ArcadePlayerLevel = 1
+            };
+            var playerBattleStateData = new BattleStatsData
+            {
+                Name = "Player",
+                Shield = false,
+                DamageDefault = 3,
+                DamageModifier = 0,
+                CurrentDamage = 3,
+                SpeedDefault = 3,
+                SpeedModifier = 0,
+                CurrentSpeed = 3,
+                CurrentHealth = 25,
+                HealthDefault = 25,
+                HealthModifier = 0
+            };
+            _gameData.BattleStatsData.Add(playerBattleStateData);
+            var playerInfo = _gameData.PlayerAccountData;
+            _playerAccount.CreatePlayerAccount(playerInfo.PlayerID, playerInfo.PlayerName, playerInfo.Exp,
+                playerInfo.Gold, playerInfo.Diamond, playerInfo.CurrentScore, playerInfo.MaxScore,
+                playerInfo.PlayerAvatarID, playerBattleStateData);
         }
 
         public bool CheckForSavedData()
@@ -64,21 +100,20 @@ namespace BattleCombine.Services
                 return;
             }
 
+            _saveInterfacesInScripts = FindAllSaveAndLoadInterfaces();
             foreach (var loadScript in _saveInterfacesInScripts)
             {
                 loadScript.LoadData(_gameData, NewGameBattle, firstStart);
                 firstStart = false;
             }
         }
+
         public void SaveGame()
         {
+            _saveInterfacesInScripts = FindAllSaveAndLoadInterfaces();
+            _gameData.BattleStatsData.Clear();
             foreach (var saveScript in _saveInterfacesInScripts)
             {
-                if (firstStart == true & saveScript is Player)
-                {
-                    _gameData.battleStatsData.Add(new BattleStatsData());
-                }
-                
                 saveScript.SaveData(ref _gameData, NewGameBattle, firstStart);
             }
             _dataHandler.Save(_gameData);
@@ -91,12 +126,16 @@ namespace BattleCombine.Services
 
         private List<ISaveLoad> FindAllSaveAndLoadInterfaces() //TODO
         {
-            List<ISaveLoad> saveInterfacesInScripts = new List<ISaveLoad>();
-
-            var saveBattleStats = FindObjectsOfType<Character>().OfType<ISaveLoad>();
-            var saveOthers = FindObjectsOfType<PlayerAccount>().OfType<ISaveLoad>();
+            /*
+            
+            var saveInterfacesInScripts = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>();
+            //var saveBattleStats = FindObjectsOfType<Character>().OfType<ISaveLoad>();
+            //
             saveInterfacesInScripts.AddRange(saveBattleStats);
             saveInterfacesInScripts.AddRange(saveOthers);
+            return new List<ISaveLoad>(saveInterfacesInScripts);
+            */
+            var saveInterfacesInScripts = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>();
             return new List<ISaveLoad>(saveInterfacesInScripts);
         }
 

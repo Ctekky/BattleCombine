@@ -15,9 +15,13 @@ MonoBehaviour:
   avatarList:
   - enableSprite: {fileID: 21300000, guid: ecb362b07f607e04a801f8612e2f8a70, type: 3}
     disableSprite: {fileID: 21300000, guid: ace198dc4a3240644a04a6f8ec0a738c, type: 3}
+    ID: 1
   - enableSprite: {fileID: 21300000, guid: 0c16ad3f15be50842afd27b666f9b7bd, type: 3}
     disableSprite: {fileID: 21300000, guid: 8969aa8d186f571469970f7e1afeeef1, type: 3}
+    ID: 2
   - enableSprite: {fileID: 21300000, guid: 99d89c801eff0d644a76e14b24acad14, type: 3}
     disableSprite: {fileID: 21300000, guid: 26c9e070bb1921d40ac0802a13d22b2b, type: 3}
+    ID: 3
   - enableSprite: {fileID: 21300000, guid: 3c9083763f797374fb572124fa9dc4f6, type: 3}
     disableSprite: {fileID: 21300000, guid: a4eda67863c13b442bf3e61dc4142e08, type: 3}
+    ID: 4

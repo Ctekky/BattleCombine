@@ -770,7 +770,8 @@ PrefabInstance:
       value: EnemyHeroPrefab (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 667464159713596929, guid: 395004208ae909d4494cd4271c7da268, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 395004208ae909d4494cd4271c7da268, type: 3}
@@ -1043,8 +1044,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d17ade1d9a0cda4591815c5c625b49b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinCount: {fileID: 0}
-  _diamondCount: {fileID: 0}
+  _coinCount: {fileID: 512633107}
+  _diamondCount: {fileID: 337428486}
 --- !u!1 &344983589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1930,7 +1931,8 @@ PrefabInstance:
       value: EnemyHeroPrefab (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 667464159713596929, guid: 395004208ae909d4494cd4271c7da268, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 395004208ae909d4494cd4271c7da268, type: 3}
@@ -2341,7 +2343,8 @@ PrefabInstance:
       value: AttackText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2957736786845239061, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
@@ -3233,7 +3236,8 @@ PrefabInstance:
       value: EnemyHeroPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 667464159713596929, guid: 395004208ae909d4494cd4271c7da268, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 395004208ae909d4494cd4271c7da268, type: 3}
@@ -3853,24 +3857,25 @@ MonoBehaviour:
   _boostButton: {fileID: 1012731185}
   _continueBoostButton: {fileID: 471424524}
   _nextButton: {fileID: 62764299}
-  _firstEnemyButton: {fileID: 1667451402}
-  _secondEnemyButton: {fileID: 213606653}
-  _thirdEnemyButton: {fileID: 1111862865}
   _reRollButton: {fileID: 1832797195}
   _closeMatchPanelButton: {fileID: 1695235674}
   _startBattleButton: {fileID: 589242352}
-  _boostPanel: {fileID: 471424525}
-  _pausePanel: {fileID: 0}
-  _settingsPanel: {fileID: 1880053754}
+  _boostMenu: {fileID: 471424525}
+  _pauseMenu: {fileID: 0}
+  _settingsMenu: {fileID: 1880053754}
   _soundHelper: {fileID: 1616429037}
   _uiWalletUpdate: {fileID: 340717006}
-  _winPanel: {fileID: 0}
-  _losePanel: {fileID: 0}
+  _win: {fileID: 0}
+  _lose: {fileID: 0}
+  _levelUpMenu: {fileID: 0}
   _matchPanel: {fileID: 809139656}
   _curtain: {fileID: 2111216558}
   _roundCountText: {fileID: 0}
   _reRollPriceText: {fileID: 2109547}
   _levelMatchPanelText: {fileID: 272845688}
+  enableSprite: {fileID: 21300000, guid: ff99001a15e16b042a9f032405be0af6, type: 3}
+  disableSprite: {fileID: 21300000, guid: 2e095f055ae43744a8435b622382ea26, type: 3}
+  isNextButtonEnable: 0
 --- !u!224 &1667451401 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3599559781538101009, guid: 395004208ae909d4494cd4271c7da268, type: 3}
@@ -4898,7 +4903,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4338865808104745035, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 116.5
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 4338865808104745035, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4946,7 +4951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7056237286326705358, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 266.5
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 7056237286326705358, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4962,7 +4967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7100348961348098152, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 216.5
+      value: 220
       objectReference: {fileID: 0}
     - target: {fileID: 7100348961348098152, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4986,14 +4991,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7443657654393937921, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 166.5
+      value: 170
       objectReference: {fileID: 0}
     - target: {fileID: 7443657654393937921, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6143813861498909592, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
+    - {fileID: 6109465048875685539, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
+    - {fileID: 1242599953687701350, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
+    - {fileID: 4610954506634394357, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
+    - {fileID: 7243748585895015103, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
+    - {fileID: 7008260751344372438, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
+    - {fileID: 7072643362034585200, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}

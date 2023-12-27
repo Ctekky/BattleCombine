@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Data;
 using BattleCombine.Enums;
+using BattleCombine.Interfaces;
+using BattleCombine.ScriptableObjects;
 using BattleCombine.Services;
 using BattleCombine.Services.Other;
 using UnityEngine;
@@ -10,8 +12,10 @@ using Random = System.Random;
 
 namespace BattleCombine.Gameplay
 {
-    public class CreateField : MonoBehaviour
+    public class CreateField : MonoBehaviour, ISaveLoad
     {
+        [SerializeField] private SOTileTypeTable tileTypeTable;
+
         [Header("Scale or not on start")] [SerializeField]
         private bool makeScale;
 
@@ -58,10 +62,10 @@ namespace BattleCombine.Gameplay
         private int tileRefreshChance;
 
         private ColorSettings _currentTileColorSettings;
-        
+
         private ArcadeGameService _arcadeGameService;
         private GameManager _gameManager;
-        private List<Tile> _tileList;
+        [SerializeField] private List<Tile> _tileList;
         private Transform _fieldParent;
         private GameObject _mainField;
         private Random _rand;
@@ -95,7 +99,7 @@ namespace BattleCombine.Gameplay
             if (changeFieldSize) sizeType = fieldSize;
             ChangeFieldSize();
         }
-        
+
 
         private void Update()
         {
@@ -119,7 +123,9 @@ namespace BattleCombine.Gameplay
             };
 
             AddTileToField();
+
             ModifyTitleSize();
+            SetupTileOnField();
 
             if (!makeScale) return;
             var scaler = new FieldScaler();
@@ -156,11 +162,11 @@ namespace BattleCombine.Gameplay
 
                     currentTile.transform.Rotate(90, 180, 0);
                     var tileComponent = currentTile.GetComponent<Tile>();
-                    
+
                     ChangeTileType(tileComponent);
                     tileComponent.SetupTile(tileStack, _currentTileColorSettings);
                     _tileList.Add(tileComponent);
-                    
+
                     tileComponent.onTileTouched += touchedTile => onTileTouched?.Invoke(touchedTile);
                     tileComponent.onSpeedEnded += isSpeedEnded => onSpeedEnded?.Invoke(isSpeedEnded);
 
@@ -169,7 +175,7 @@ namespace BattleCombine.Gameplay
                     //ApplyStartTileStatus(tileComponent);
                     GetAiStartTile = tileComponent;
                     FindStartTileIndex(tileComponent);
-                    
+
                     tileComponent.SetAlignTileToPlayer2(true);
                 }
             }
@@ -252,7 +258,7 @@ namespace BattleCombine.Gameplay
         {
             _arcadeGameService = arcadeGameService;
         }
-        
+
         public void SetupGameManager(GameManager gameManager)
         {
             _gameManager = gameManager;
@@ -356,6 +362,64 @@ namespace BattleCombine.Gameplay
             }).value;
 
             currentTile.ChangeTileModifier(selectedModifier);
+        }
+
+        public void LoadData(GameData gameData, bool newGameBattle, bool firstStart)
+        {
+            sizeType = gameData.FieldSize;
+            if (_tileList.Count != gameData.FieldData.Count)
+            {
+                Debug.Log("Field size in save not equal field size in game");
+                return;
+            }
+
+            foreach (var td in gameData.FieldData)
+            {
+                _tileList[td.position].ChangeTileType(GetTileTypeFromTable(td.tileTypeID));
+                _tileList[td.position].ChangeTileModifier(td.tileModifier);
+                _tileList[td.position].ChangeStateMachine(td.tileCurrentState);
+                _tileList[td.position].ChangeStartFlag(td.isStartTile);
+            }
+        }
+
+        public void SaveData(ref GameData gameData, bool newGameBattle, bool firstStart)
+        {
+            gameData.FieldSize = sizeType;
+            gameData.FieldData.Clear();
+            for (var i = 0; i < _tileList.Count; i++)
+            {
+                var tileData = new TileData()
+                {
+                    position = i,
+                    tileModifier = _tileList[i].TileModifier,
+                    tileTypeID = GetTileTypeID(_tileList[i]),
+                    tileCurrentState = _tileList[i].GetTileState,
+                    isStartTile = _tileList[i].GetTileState == TileState.AvailableForSelectionState
+                };
+                gameData.FieldData.Add(tileData);
+            }
+        }
+
+        private TileType GetTileTypeFromTable(int id)
+        {
+            var result = ScriptableObject.CreateInstance<TileType>();
+            foreach (var tileType in tileTypeTable.tileTypeDB.Where(tileType => tileType.ID == id))
+            {
+                result = tileType.TileType;
+            }
+
+            return result;
+        }
+
+        private int GetTileTypeID(Tile tile)
+        {
+            var result = 0;
+            foreach (var line in tileTypeTable.tileTypeDB.Where(line => line.TileType.cellType == tile.GetTileType))
+            {
+                result = line.ID;
+            }
+
+            return result;
         }
     }
 }

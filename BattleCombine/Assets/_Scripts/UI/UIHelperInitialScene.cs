@@ -2,6 +2,7 @@ using _Scripts.Audio;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Zenject;
 
 namespace _Scripts.UI
 {
@@ -24,6 +25,8 @@ namespace _Scripts.UI
 		[SerializeField] private SoundHelper _soundHelper;
 
 		private bool isOptionsPanelActive = false;
+
+		[Inject] private PlayerAccount _playerAccount;
 
 		private void Awake()
 		{

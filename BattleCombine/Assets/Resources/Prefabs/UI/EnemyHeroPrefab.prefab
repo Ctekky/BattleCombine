@@ -759,7 +759,7 @@ MonoBehaviour:
     shielded: 0
   moveSpeedValue: 0
   playerUIScript: {fileID: 5838217023709320270}
-  playerName: Player2
+  playerName: Enemy
 --- !u!114 &-3352779556028992961
 MonoBehaviour:
   m_ObjectHideFlags: 0

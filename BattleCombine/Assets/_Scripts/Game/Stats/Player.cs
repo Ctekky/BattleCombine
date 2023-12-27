@@ -1,8 +1,10 @@
+using System.Linq;
 using BattleCombine.Data;
 using BattleCombine.Interfaces;
 using _Scripts.Temp;
+using BattleCombine.Services;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
+using Zenject;
 
 namespace BattleCombine.Gameplay
 {
@@ -10,7 +12,10 @@ namespace BattleCombine.Gameplay
     {
         [SerializeField] private PlayerUI playerUIScript;
         [SerializeField] private string playerName;
+        [SerializeField] private int avatarID;
+        [Inject] private MainGameService _mainGameService;
         public string GetPlayerName => playerName;
+        public int AvatarID => avatarID;
 
         protected override void Start()
         {
@@ -23,9 +28,10 @@ namespace BattleCombine.Gameplay
             playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString(), Shielded);
         }
         
-        public void SetupAvatar(EnemyAvatarStruct avatarStruct)
+        public void SetupAvatar(EnemyAvatarStruct avatarStruct, int id)
         {
             playerUIScript.SetupAvatar(avatarStruct.enableSprite, avatarStruct.disableSprite);
+            avatarID = id;
         }
 
         public EnemyAvatarStruct GetAvatar()
@@ -33,7 +39,9 @@ namespace BattleCombine.Gameplay
             var avatarStruct = new EnemyAvatarStruct
             {
                 enableSprite = playerUIScript.GetSprite(true),
-                disableSprite = playerUIScript.GetSprite(false)
+                disableSprite = playerUIScript.GetSprite(false),
+                ID = avatarID
+                
             };
             return avatarStruct;
         }
@@ -59,48 +67,49 @@ namespace BattleCombine.Gameplay
 
         public void LoadData(GameData gameData, bool newGameBattle, bool firstStart)
         {
-            var gdBs = gameData.battleStatsData;
-
-            int i = 0;
-            if (playerName == "Player2")
+            /*
+            var gdBs = gameData.BattleStatsData;
+            foreach (var bsd in gdBs.Where(bsd => bsd.Name == playerName))
             {
-                i = 1;
+                if (gameData.IsBattleActive)
+                {
+                    HealthValue = bsd.CurrentHealth;
+                    AttackValue = bsd.CurrentDamage;
+                    moveSpeedValue = bsd.CurrentSpeed;
+                    Shielded = bsd.Shield;
+                    playerName = bsd.Name;
+                }
+                else
+                {
+                    HealthValue = bsd.HealthDefault + bsd.HealthModifier;
+                    AttackValue = bsd.DamageDefault + bsd.DamageModifier;
+                    moveSpeedValue = bsd.SpeedDefault + bsd.SpeedModifier;
+                    Shielded = bsd.Shield;
+                    playerName = bsd.Name;
+                }
             }
-            if (newGameBattle == true)
-            {
-                HealthValue = HealthValueDefault + gdBs[i].HealthModifier;
-                AttackValue = DamageValueDefault + gdBs[i].DamageModifier;
-                moveSpeedValue = SpeedValueDefault + gdBs[i].SpeedModifier;
-            }
-            else
-            {
-                HealthValue = gdBs[i].CurrentHealth;
-                AttackValue = gdBs[i].CurrentDamage;
-                moveSpeedValue = gdBs[i].CurrentSpeed;
-            }
-            playerName = gdBs[i].Name;
-            Shielded = gdBs[i].Shield;
+            */
         }
 
         public void SaveData(ref GameData gameData, bool newGameBattle, bool firstStart)
         {
-            var gdBs = gameData.battleStatsData;
-
-            int i = 0;
-            if (playerName == "Player2")
+            if(_mainGameService.IsEnemySelectionScene) return;
+            var gdBs = gameData.BattleStatsData;
+            var bsd = new BattleStatsData()
             {
-                i = 1;
-            }
-            gdBs[i].Name = playerName;
-            gdBs[i].CurrentHealth = HealthValue;
-            gdBs[i].HealthModifier = HealthValueModifier;
-            gdBs[i].HealthDefault = HealthValueDefault;
-            gdBs[i].CurrentDamage = AttackValue;
-            gdBs[i].DamageModifier = DamageValueModifier;
-            gdBs[i].DamageDefault = DamageValueDefault;
-            gdBs[i].CurrentSpeed = moveSpeedValue;
-            gdBs[i].SpeedModifier = SpeedValueModifier;
-            gdBs[i].Shield = Shielded;
+                Name = playerName,
+                CurrentHealth = HealthValue,
+                HealthModifier = HealthValueModifier,
+                HealthDefault = HealthValueDefault,
+                CurrentDamage = AttackValue,
+                DamageModifier = DamageValueModifier,
+                DamageDefault = DamageValueDefault,
+                CurrentSpeed = moveSpeedValue,
+                SpeedModifier = SpeedValueModifier,
+                SpeedDefault = SpeedValueDefault,
+                Shield = Shielded
+            };
+            gdBs.Add(bsd);
         }
     }
 }

@@ -9,8 +9,6 @@ using UnityEngine;
 using System.Linq;
 using BattleCombine.Services.Other;
 using UnityEngine.EventSystems;
-using UnityEngine.Rendering.Universal;
-using Unity.VisualScripting;
 
 namespace BattleCombine.Gameplay
 {
@@ -74,7 +72,7 @@ namespace BattleCombine.Gameplay
         public int TileModifier
         {
             get => tileModifier;
-            private set => tileModifier = value;
+            set => tileModifier = value;
         }
 
         public int TileID
@@ -86,6 +84,8 @@ namespace BattleCombine.Gameplay
         public TileStack GetTileStack => tileStack;
 
         public CellType GetTileType => tileType.cellType;
+
+        public TileType GetFullTileType => tileType;
 
         //set tile mask
         [SerializeField] private LayerMask tileLayerMask;
@@ -179,7 +179,6 @@ namespace BattleCombine.Gameplay
             tileChosenBorder = tileColorSettings.borderColor;
             tileSprite.color = tileNormalColor;
             borderSprite.color = tileNormalBorder;
-            //ÑhangeTileModifier(tileModifier);
             if (startTile)
             {
                 StateMachine.Initialize(AvailableForSelectionState);
@@ -193,6 +192,31 @@ namespace BattleCombine.Gameplay
         public void SetCurrentState(TileState currentState)
         {
             tileCurrentState = currentState;
+        }
+
+        public void ChangeStateMachine(TileState currentState)
+        {
+            switch (currentState)
+            {
+                case TileState.AvailableForSelectionState:
+                    StateMachine.ChangeState(AvailableForSelectionState);
+                    break;
+                case TileState.ChosenState:
+                    StateMachine.ChangeState(ChosenState);
+                    break;
+                case TileState.DisabledState:
+                    StateMachine.ChangeState(DisabledState);
+                    break;
+                case TileState.EnabledState:
+                    StateMachine.ChangeState(EnabledState);
+                    break;
+                case TileState.FinalChoiceState:
+                    StateMachine.ChangeState(FinalChoiceState);
+                    break;
+                default:
+                    Debug.Log("No state");
+                    break;
+            }
         }
 
         public TileState GetTileState
