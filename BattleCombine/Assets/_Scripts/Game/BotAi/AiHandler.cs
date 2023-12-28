@@ -18,6 +18,7 @@ namespace BattleCombine.Ai
         public PathFinder GetPathFinder { get; private set; }
         public int GetMoodHealthPercent { get; private set; }
         public int AiSpeed { get; private set; }
+        private bool _isPaused;
         public AiArchetypes GetCurrentArchetype => currentArchetype;
 
         //todo - if HP == X, then change stance;
@@ -60,6 +61,12 @@ namespace BattleCombine.Ai
             _inputService = inputService;
             ChangeEnemyStance += ChangeAiStance;
             _gameManager.onPlayerChange += GiveAiTurn;
+            _gameManager.onBattleEnd += PauseAi;
+        }
+
+        private void PauseAi()
+        {
+            _isPaused = true;
         }
 
         private void Awake()
@@ -67,6 +74,7 @@ namespace BattleCombine.Ai
             AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
             _nextTurnButton = FindObjectOfType<NextTurnButton>();
             _field = FindObjectOfType<CreateField>();
+            _isPaused = false;
         }
 
         private void Start()
@@ -86,9 +94,9 @@ namespace BattleCombine.Ai
             }
         }
 
-        private void GiveAiTurn(bool isPaused)
+        private void GiveAiTurn()
         {
-            if(isPaused) return;
+            if (_isPaused) return;
             _isAiTurn = !_isAiTurn;
 
             if (HealthToChangeStance() && !_isStanceChanged)

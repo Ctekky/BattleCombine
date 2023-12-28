@@ -46,7 +46,8 @@ namespace BattleCombine.Services
         #region Bot
 
         //добавил, чтоб ловить боту момент смены хода
-        public Action<bool> onPlayerChange;
+        public Action onPlayerChange;
+        public Action onBattleEnd;
         [SerializeField] private AiHandler aiHandler;
 
         #endregion
@@ -222,17 +223,16 @@ namespace BattleCombine.Services
             var fieldScript = gameField.GetComponent<CreateField>();
             fieldScript.RefreshField();
             _saveManager.SaveGame();
-            onPlayerChange?.Invoke(false);
         }
 
         private void GameOver(Player player)
         {
+            onBattleEnd?.Invoke();
             if (player.GetPlayerName == player1.GetComponent<Player>().GetPlayerName)
             {
                 //TODO - rewards
                 arcadeUIHelper.ShowMatchResult(false, _mainGameService.ArcadeCurrentScore,
                     _mainGameService.ArcadeBestScore, 0, 0, 0, 0);
-                onPlayerChange?.Invoke(true);
             }
             else
             {
@@ -246,7 +246,6 @@ namespace BattleCombine.Services
 
                 arcadeUIHelper.ShowMatchResult(true, _mainGameService.ArcadeCurrentScore,
                     _mainGameService.ArcadeBestScore, 0, 0, 0, 0);
-                onPlayerChange?.Invoke(true);
                 //SceneManager.LoadScene("EnemySelectionScene");
             }
         }
@@ -317,6 +316,7 @@ namespace BattleCombine.Services
 
             _sequenceMoves.Next();
             //Kirill Add for AI
+            onPlayerChange?.Invoke();
         }
 
         #region Checking the possibility of movement

@@ -1,7 +1,8 @@
 using System;
 using System.IO;
-using UnityEngine;
+using System.Runtime.Serialization.Formatters.Binary;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace BattleCombine.Data
 {
@@ -11,7 +12,7 @@ namespace BattleCombine.Data
         private string _dataFileName = "";
         private bool _encryptData = false;
         private string _codeWord = "kachachar";
-
+        
         public FileDataHandler(string dataDirPath, string dataFileName, bool encryptData)
         {
             _dataDirPath = dataDirPath;
@@ -40,14 +41,28 @@ namespace BattleCombine.Data
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
             try
             {
+                /*
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.All,
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    Formatting = Formatting.None
+                    //ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    //Formatting = Formatting.None
                 };
-
-                File.WriteAllText(fullPath, JsonConvert.SerializeObject(gameDataNew, settings));
+                var mSavedGameFileContent = JsonConvert.SerializeObject(gameDataNew, settings);
+                using FileStream streamFile = new FileStream(fullPath, FileMode.Create, FileAccess.Write);
+                using StreamWriter sr = new StreamWriter(streamFile);
+                sr.Write(mSavedGameFileContent);
+                sr.Flush();
+                sr.Close();
+                streamFile.Close();
+                */
+                
+                using FileStream streamFile = new FileStream(fullPath, FileMode.Create, FileAccess.Write);
+                BinaryFormatter bf = new BinaryFormatter();
+                bf.Serialize(streamFile, gameDataNew);
+                streamFile.Flush();
+                streamFile.Close();
+                
             }
             catch (Exception e)
             {
@@ -58,27 +73,42 @@ namespace BattleCombine.Data
         public GameData Load()
         {
             var fullPath = Path.Combine(_dataDirPath, _dataFileName);
-            GameData loadData = null;
+            GameData gd = null;
             if (!File.Exists(fullPath))
             {
-                Debug.Log($"There is no save file {fullPath}");
-                return null;
+                return gd;
             }
             try
             {
+                /*
+                using FileStream fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+                using StreamReader sr = new StreamReader(fileStream);
+                var mSavedGameFileContent = sr.ReadToEnd();
+                sr.Close();
+                fileStream.Close();
+                
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.All,
-                    ObjectCreationHandling = ObjectCreationHandling.Replace
+                    //ObjectCreationHandling = ObjectCreationHandling.Replace
                 };
 
-                loadData = JsonConvert.DeserializeObject<GameData>(File.ReadAllText(fullPath), settings);
+                gd = JsonConvert.DeserializeObject<GameData>(mSavedGameFileContent, settings);
+                */
+                
+                using FileStream fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+                BinaryFormatter bf = new BinaryFormatter();
+                gd = (GameData)bf.Deserialize(fileStream);
+                fileStream.Close();
+                
+                
             }
             catch (Exception e)
             {
                 Debug.Log($"Error on trying to load data from file {fullPath} \n {e}");
             }
-            return loadData;
+
+            return gd;
         }
         
     }
