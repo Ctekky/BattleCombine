@@ -84,6 +84,8 @@ namespace BattleCombine.Services
         private GameObject _currentTile;
         private bool _canMove = false;
         private bool _isFirstRun = true;
+        [SerializeField] private bool isOnWinScreen;
+        [SerializeField] private string loserName;
 
         //todo - (temp) Kirill Add to control ai hp status (to change state)
         public int GetPlayerAiHealth => player2.GetComponent<Player>().HealthValue;
@@ -98,6 +100,8 @@ namespace BattleCombine.Services
             arcadeUIHelper.onStatChange -= StatChange;
             arcadeUIHelper.onLoseClick -= LoseBattle;
             arcadeUIHelper.onWinClick -= WinBattle;
+            //TODO add properly lose screen
+            arcadeUIHelper.OnEndBattle -= LoseBattle;
         }
 
         private void WinBattle()
@@ -117,6 +121,7 @@ namespace BattleCombine.Services
             arcadeUIHelper.onStatChange += StatChange;
             arcadeUIHelper.onLoseClick += LoseBattle;
             arcadeUIHelper.onWinClick += WinBattle;
+            arcadeUIHelper.OnEndBattle += LoseBattle;
         }
 
         private void StatChange(int key)
@@ -154,6 +159,8 @@ namespace BattleCombine.Services
 
         private void Start()
         {
+            isOnWinScreen = false;
+            loserName = "";
             if (gameField == null)
             {
                 Debug.Log("No game field object");
@@ -206,6 +213,10 @@ namespace BattleCombine.Services
             tileStackScript.SpeedPlayer = currentPlayer.moveSpeedValue;
             if (_saveManager.CheckForSavedData() && _mainGameService.IsBattleActive) _saveManager.LoadGame();
             _mainGameService.ChangeActiveBattle(true);
+            if (isOnWinScreen)
+                GameOver(player1.GetComponent<Player>().GetPlayerName == loserName
+                    ? player1.GetComponent<Player>()
+                    : player2.GetComponent<Player>());
         }
 
         private void InputFingerUp()
@@ -228,6 +239,9 @@ namespace BattleCombine.Services
         private void GameOver(Player player)
         {
             onBattleEnd?.Invoke();
+            isOnWinScreen = true;
+            loserName = player.GetPlayerName;
+            _saveManager.SaveGame();
             if (player.GetPlayerName == player1.GetComponent<Player>().GetPlayerName)
             {
                 //TODO - rewards
@@ -357,6 +371,8 @@ namespace BattleCombine.Services
         public void LoadData(GameData gameData, bool newGameBattle, bool firstStart)
         {
             currentStepInTurn = gameData.CurrentStep;
+            loserName = gameData.LoserName;
+            isOnWinScreen = gameData.IsEndScreen;
         }
 
         private void SaveBattleStatDataUpdate(GameData gameData, BattleStatsData enemyBSD)
@@ -393,6 +409,8 @@ namespace BattleCombine.Services
             }
 
             gameData.CurrentStep = currentStepInTurn;
+            gameData.LoserName = loserName;
+            gameData.IsEndScreen = isOnWinScreen;
         }
     }
 }

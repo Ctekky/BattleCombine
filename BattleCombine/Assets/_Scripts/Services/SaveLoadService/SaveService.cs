@@ -128,7 +128,7 @@ namespace BattleCombine.Services
 
         private void OnApplicationQuit()
         {
-            SaveGame();
+            //SaveGame();
         }
 
         private List<ISaveLoad> FindAllSaveAndLoadInterfaces() //TODO

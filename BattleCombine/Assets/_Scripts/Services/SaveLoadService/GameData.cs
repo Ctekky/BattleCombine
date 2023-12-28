@@ -20,5 +20,7 @@ namespace BattleCombine.Data
         public bool IsEnemySelectionScene;
         public int EnemyAvatarID;
         public int ArcadePlayerLevel;
+        public bool IsEndScreen;
+        public string LoserName;
     }
 }

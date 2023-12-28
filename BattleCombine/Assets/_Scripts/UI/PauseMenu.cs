@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,8 @@ namespace _Scripts.UI
 
 		public Button GetPauseContinueButton => _continueButton;
 
+		public Action OnLeaveGameButtonPress;
+
 		private void Start()
 		{
 			_leaveGameButton.onClick.AddListener(LeaveGame);
@@ -23,11 +26,7 @@ namespace _Scripts.UI
 
 		private void LeaveGame()
 		{
-			Debug.Log("Game Exit");
-			Application.Quit();
-#if UNITY_EDITOR
-			EditorApplication.isPlaying = false;
-#endif
+			OnLeaveGameButtonPress?.Invoke();
 		}
 	}
 }

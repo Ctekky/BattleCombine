@@ -16,6 +16,7 @@ namespace BattleCombine.Services
         [SerializeField] private Player currentPlayer;
         [Inject] private MainGameService _mainGameService;
         [Inject] private PlayerAccount _playerAccount;
+        [Inject] private SaveManager _saveManager;
         [SerializeField] private int currentScore; //came from GameService
 
         private void OnEnable()
@@ -43,6 +44,7 @@ namespace BattleCombine.Services
             enemyUIUpdateStats.UpdateEnemiesAvatars(choseEnemyScript.GetFinalAvatars());
             enemyUIUpdateStats.UpdateConfirmPanelPlayer(currentPlayer);
             _mainGameService.ChangeActiveBattle(false);
+            _saveManager.SaveGame();
         }
 
         private void ChooseEnemy(Player player)
