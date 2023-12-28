@@ -2725,6 +2725,10 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6289495516299128136, guid: 55bcd076f587ca241805ffb9ea3a069c, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330388433113642145, guid: 55bcd076f587ca241805ffb9ea3a069c, type: 3}
       propertyPath: _curtain
       value: 

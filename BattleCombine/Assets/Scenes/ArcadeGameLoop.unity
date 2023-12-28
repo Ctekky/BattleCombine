@@ -472,6 +472,10 @@ PrefabInstance:
       propertyPath: m_ReferenceResolution.y
       value: 2553
       objectReference: {fileID: 0}
+    - target: {fileID: 6289495516299128136, guid: 55bcd076f587ca241805ffb9ea3a069c, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

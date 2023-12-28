@@ -39,7 +39,7 @@ namespace _Scripts.UI
 		{
 			_curtainPanel.SetActive(true);
 			_curtainImage.color = new Color(_curtainImage.color.r, _curtainImage.color.g, _curtainImage.color.b, 1);
-		
+			
 			while (_curtainImage.color.a > 0f)
 			{
 				var newColor = _curtainImage.color;
@@ -49,7 +49,7 @@ namespace _Scripts.UI
 			}
 
 			_curtainImage.raycastTarget = false;
-
+			
 			_curtainPanel.SetActive(false);
 			StopCoroutine(_curtainRoutine);
 		}
@@ -67,8 +67,13 @@ namespace _Scripts.UI
 				_curtainImage.color = newColor;
 				yield return new WaitForSecondsRealtime(_waitTime);
 			}
-
+			
 			SceneManager.LoadScene(sceneName);
+			StopCoroutine(_curtainRoutine);
+		}
+		
+		private void OnDisable()
+		{
 			StopCoroutine(_curtainRoutine);
 		}
 	}
