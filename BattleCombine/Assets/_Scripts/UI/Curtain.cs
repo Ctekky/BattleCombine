@@ -15,7 +15,7 @@ namespace _Scripts.UI
 
 		private Coroutine _curtainRoutine;
 		private Image _curtainImage;
-		private float _changeRate = 0.01f;
+		private float _changeRate = 2.5f;
 		private float _waitTime = 0.005f;
 
 		public Image GetCurtainImage => _curtainImage;
@@ -43,9 +43,9 @@ namespace _Scripts.UI
 			while (_curtainImage.color.a > 0f)
 			{
 				var newColor = _curtainImage.color;
-				newColor.a -= _changeRate;
+				newColor.a -= _changeRate * Time.deltaTime;;
 				_curtainImage.color = newColor;
-				yield return new WaitForSeconds(_waitTime);
+				yield return new WaitForSecondsRealtime(_waitTime);
 			}
 
 			_curtainImage.raycastTarget = false;
@@ -63,9 +63,9 @@ namespace _Scripts.UI
 			while (_curtainImage.color.a < 1.0f)
 			{
 				var newColor = _curtainImage.color;
-				newColor.a += _changeRate;
+				newColor.a += _changeRate * Time.deltaTime;
 				_curtainImage.color = newColor;
-				yield return new WaitForSeconds(_waitTime);
+				yield return new WaitForSecondsRealtime(_waitTime);
 			}
 
 			SceneManager.LoadScene(sceneName);
