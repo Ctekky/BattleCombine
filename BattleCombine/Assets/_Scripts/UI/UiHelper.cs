@@ -64,6 +64,7 @@ namespace _Scripts.UI
         public Action<int> onStatChange;
         public Action onLoseClick;
         public Action onWinClick;
+        public Action OnEndBattle;
 
         private void OnEnable()
         {
@@ -71,8 +72,14 @@ namespace _Scripts.UI
             BattleSceneExitEvent += OnSceneExit;
             if (_levelUpMenu != null) _levelUpMenu.onStatChange += LevelUpStat;
             if (_nextButton != null) _nextButton.image.sprite = disableSprite;
+            if (_pauseMenu != null) _pauseMenu.OnLeaveGameButtonPress += EndBattle;
             isNextButtonEnable = false;
             AddListeners();
+        }
+
+        private void EndBattle()
+        {
+            OnEndBattle?.Invoke();
         }
 
         private void LevelUpStat(int key)
@@ -218,6 +225,7 @@ namespace _Scripts.UI
             _settingsMenu.GetSettingsCloseButton.onClick.RemoveListener(OnCloseButtonClick);
             if (_leaveLoseButton != null) _leaveLoseButton.onClick.RemoveListener(OnLoseLeaveButtonClick);
             if (_continueWinButton != null) _continueWinButton.onClick.RemoveListener(OnWinContinueClick);
+            if (_pauseMenu != null) _pauseMenu.OnLeaveGameButtonPress -= EndBattle;
             if (_levelUpMenu != null) _levelUpMenu.onStatChange -= LevelUpStat;
             switch (_currentScene.name)
             {
