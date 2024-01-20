@@ -112,6 +112,11 @@ namespace BattleCombine.Gameplay
             stats.attackValue = AddValue(stats.attackValue, addAttack);
         }
 
+        public void AddShield()
+        {
+            stats.shielded = true;
+        }
+
         public void SetAttackDefault()
         {
             stats.attackValue = stats.attackValueDefault;
@@ -121,11 +126,6 @@ namespace BattleCombine.Gameplay
         {
             return stat + value;
             //return tmp <= 0 ? 0 : tmp;
-        }
-
-        public void AddShield()
-        {
-            stats.shielded = true;
         }
 
         public void RemoveShield()

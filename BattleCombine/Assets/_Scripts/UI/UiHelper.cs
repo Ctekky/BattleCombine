@@ -32,7 +32,7 @@ namespace _Scripts.UI
         [SerializeField] private Button _startBattleButton;
 
         [Header("Game Panels")] [SerializeField]
-        private BoostMenu _boostMenu;
+        private BoostPanel _boostMenu;
 
         [SerializeField] private PauseMenu _pauseMenu;
         [SerializeField] private SettingsMenu _settingsMenu;

@@ -626,6 +626,7 @@ GameObject:
   - component: {fileID: 5925054688115890540}
   - component: {fileID: 244501099206090064}
   - component: {fileID: 7981478422780213901}
+  - component: {fileID: 5501381517460297163}
   m_Layer: 5
   m_Name: AttackPlusImage
   m_TagString: Untagged
@@ -735,6 +736,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5501381517460297163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555097600971028691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 8665125634878893377}
+  _cooldownText: {fileID: 2231656744092447714}
+  _image: {fileID: 244501099206090064}
 --- !u!1 &1645147684952751403
 GameObject:
   m_ObjectHideFlags: 0
@@ -2170,13 +2186,14 @@ GameObject:
   - component: {fileID: 2891370981553695307}
   - component: {fileID: 546497789429316259}
   - component: {fileID: 337711277475889839}
+  - component: {fileID: -8403818877169524134}
   m_Layer: 5
   m_Name: BoostPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2249192949186510100
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2247,13 +2264,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad66e712434186041b602c7d33e33a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown: 7
-  _health: {fileID: 8255038577175364987}
-  _healthPlus: {fileID: 6953634271836475318}
-  _attack: {fileID: 1847372598720702159}
-  _attackPlus: {fileID: 244501099206090064}
-  _shield: {fileID: 3610510181769988272}
-  _speed: {fileID: 6400667033091808455}
+  _healthButton: {fileID: 8993121351507005626}
+  _healthPlusButton: {fileID: 5290234046649427103}
+  _attackButton: {fileID: 4217746109512805846}
+  _attackPlusButton: {fileID: 7981478422780213901}
+  _shieldButton: {fileID: 414024546538389789}
+  _speedButton: {fileID: 6468942599544619682}
   _boostSprites:
   - {fileID: 21300000, guid: 4da8e6aee4c75b941bb520167c37da21, type: 3}
   - {fileID: 21300000, guid: 3056f119fa33a7241865d18e7661f971, type: 3}
@@ -2268,18 +2284,28 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2a1309cfa776c7340bec1098ba713942, type: 3}
   - {fileID: 21300000, guid: 387188d2b2ac2a443a66841cd61dccfc, type: 3}
   - {fileID: 21300000, guid: 31765c778cbbea0459063a2ac0be3576, type: 3}
-  _healthText: {fileID: 2818599363263426566}
-  _healthPlusText: {fileID: 3726135766755806453}
-  _attackText: {fileID: 736999967062806459}
-  _attackPlusText: {fileID: 8665125634878893377}
-  _shieldText: {fileID: 1869206901388657089}
-  _speedText: {fileID: 8084436282794730248}
-  _healthCooldownText: {fileID: 5603664295889076960}
-  _healthPlusCooldownText: {fileID: 1251442253909957505}
-  _attackCooldownText: {fileID: 1777349439481766821}
-  _attackPlusCooldownText: {fileID: 2231656744092447714}
-  _shieldCooldownText: {fileID: 6624279937348155273}
-  _speedCooldownText: {fileID: 3898285279208698038}
+--- !u!114 &-8403818877169524134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4099382795836505412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e1261f775cbbcf4a8638bc4767662b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 0}
+  _attackBoostValue: 3
+  _healthBoostValue: 5
+  _attackLongBoostValue: 10
+  _healthLongBoostValue: 15
+  _speedBoostValue: 0
+  _attackMaxDuration: 1
+  _healthMaxDuration: 1
+  _shieldMaxDuration: 4
+  _speedMaxDuration: 0
 --- !u!1 &4290399230095215476
 GameObject:
   m_ObjectHideFlags: 0
@@ -2636,6 +2662,7 @@ GameObject:
   - component: {fileID: 7474318154900209313}
   - component: {fileID: 6400667033091808455}
   - component: {fileID: 6468942599544619682}
+  - component: {fileID: 6566530023262122528}
   m_Layer: 5
   m_Name: speedImage
   m_TagString: Untagged
@@ -2745,6 +2772,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6566530023262122528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4815131561812477506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 8084436282794730248}
+  _cooldownText: {fileID: 3898285279208698038}
+  _image: {fileID: 6400667033091808455}
 --- !u!1 &4874402783525032818
 GameObject:
   m_ObjectHideFlags: 0
@@ -3312,6 +3354,7 @@ GameObject:
   - component: {fileID: 1032068829809886051}
   - component: {fileID: 3610510181769988272}
   - component: {fileID: 414024546538389789}
+  - component: {fileID: 8180713101255625060}
   m_Layer: 5
   m_Name: ShieldImage
   m_TagString: Untagged
@@ -3421,6 +3464,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8180713101255625060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5809188030991585617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 1869206901388657089}
+  _cooldownText: {fileID: 6624279937348155273}
+  _image: {fileID: 3610510181769988272}
 --- !u!1 &6218241838994523095
 GameObject:
   m_ObjectHideFlags: 0
@@ -3644,6 +3702,7 @@ GameObject:
   - component: {fileID: 8429250290935113197}
   - component: {fileID: 8255038577175364987}
   - component: {fileID: 8993121351507005626}
+  - component: {fileID: 4829242803447095037}
   m_Layer: 5
   m_Name: HeartImage
   m_TagString: Untagged
@@ -3753,6 +3812,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4829242803447095037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6778560115417144002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 2818599363263426566}
+  _cooldownText: {fileID: 5603664295889076960}
+  _image: {fileID: 8255038577175364987}
 --- !u!1 &7580021826480102723
 GameObject:
   m_ObjectHideFlags: 0
@@ -3765,6 +3839,7 @@ GameObject:
   - component: {fileID: 8083628045348568163}
   - component: {fileID: 1847372598720702159}
   - component: {fileID: 4217746109512805846}
+  - component: {fileID: 8050824023039900886}
   m_Layer: 5
   m_Name: AttackImage
   m_TagString: Untagged
@@ -3874,6 +3949,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8050824023039900886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7580021826480102723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 736999967062806459}
+  _cooldownText: {fileID: 1777349439481766821}
+  _image: {fileID: 1847372598720702159}
 --- !u!1 &7982387978561177450
 GameObject:
   m_ObjectHideFlags: 0
@@ -4038,6 +4128,7 @@ GameObject:
   - component: {fileID: 8775206107654699765}
   - component: {fileID: 6953634271836475318}
   - component: {fileID: 5290234046649427103}
+  - component: {fileID: 1101491285815884609}
   m_Layer: 5
   m_Name: HeartPlusImage
   m_TagString: Untagged
@@ -4147,3 +4238,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1101491285815884609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8732920808876643806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 3726135766755806453}
+  _cooldownText: {fileID: 1251442253909957505}
+  _image: {fileID: 6953634271836475318}

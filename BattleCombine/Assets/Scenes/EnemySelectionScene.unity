@@ -1482,6 +1482,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1616429033}
     m_Modifications:
+    - target: {fileID: -8403818877169524134, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 337711277475889839, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2249192949186510100, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1573,7 +1581,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4099382795836505412, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1851257100}
   m_SourcePrefab: {fileID: 100100000, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
 --- !u!224 &471424523 stripped
 RectTransform:
@@ -1589,17 +1600,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &471424525 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 337711277475889839, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
-  m_PrefabInstance: {fileID: 471424521}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad66e712434186041b602c7d33e33a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &512633104
@@ -3905,7 +3905,7 @@ MonoBehaviour:
   _reRollButton: {fileID: 1832797195}
   _closeMatchPanelButton: {fileID: 1695235674}
   _startBattleButton: {fileID: 589242352}
-  _boostMenu: {fileID: 471424525}
+  _boostMenu: {fileID: 1851257100}
   _pauseMenu: {fileID: 0}
   _settingsMenu: {fileID: 1880053754}
   _soundHelper: {fileID: 1616429037}
@@ -4373,6 +4373,23 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1851257096 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4099382795836505412, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+  m_PrefabInstance: {fileID: 471424521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1851257100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851257096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c234137d47e779c49868de0ec60e4930, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1851310438
 GameObject:
   m_ObjectHideFlags: 0

@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c9accb2d991ca404ab0dc407a2fd4d85, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c9accb2d991ca404ab0dc407a2fd4d85, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 5734423980067358474}
   - component: {fileID: 5673388899553812938}
   - component: {fileID: 5138612900698687234}
+  - component: {fileID: 126556859772058220}
   m_Layer: 5
   m_Name: ShieldImage
   m_TagString: Untagged
@@ -351,6 +352,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &126556859772058220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879956385440337893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 3816639043265404323}
+  _cooldownText: {fileID: 995865251560595378}
+  _image: {fileID: 5673388899553812938}
 --- !u!1 &1130528662871955781
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +379,7 @@ GameObject:
   - component: {fileID: 68051049716289083}
   - component: {fileID: 8003476551596298032}
   - component: {fileID: 8417031093719440091}
+  - component: {fileID: 8386826487721763877}
   m_Layer: 5
   m_Name: HeartPlusImage
   m_TagString: Untagged
@@ -472,6 +489,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8386826487721763877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130528662871955781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 2127622449722388333}
+  _cooldownText: {fileID: 444895951993783744}
+  _image: {fileID: 8003476551596298032}
 --- !u!1 &1388029786928406083
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,7 +571,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c9accb2d991ca404ab0dc407a2fd4d85, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -681,6 +713,7 @@ GameObject:
   - component: {fileID: 9063122568959848670}
   - component: {fileID: 4024428669596145279}
   - component: {fileID: 3732558209533221069}
+  - component: {fileID: 2949844842758184909}
   m_Layer: 5
   m_Name: AttackImage
   m_TagString: Untagged
@@ -790,6 +823,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2949844842758184909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583224475245851241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 5283325761029518366}
+  _cooldownText: {fileID: 6941583525388386645}
+  _image: {fileID: 4024428669596145279}
 --- !u!1 &1814539221859463998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1476,6 +1524,7 @@ GameObject:
   - component: {fileID: 4391444902095303156}
   - component: {fileID: 2576892595776985803}
   - component: {fileID: 216401566868031761}
+  - component: {fileID: 4619802185470783459}
   m_Layer: 5
   m_Name: speedImage
   m_TagString: Untagged
@@ -1585,6 +1634,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4619802185470783459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4064013966211401570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 4090639550999406869}
+  _cooldownText: {fileID: 4626119345476776676}
+  _image: {fileID: 2576892595776985803}
 --- !u!1 &4152765182766539233
 GameObject:
   m_ObjectHideFlags: 0
@@ -2134,7 +2198,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c9accb2d991ca404ab0dc407a2fd4d85, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2345,7 +2409,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c9accb2d991ca404ab0dc407a2fd4d85, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2366,7 +2430,6 @@ GameObject:
   - component: {fileID: 7988617402094372971}
   - component: {fileID: 459342538230462731}
   - component: {fileID: 5873760765806269824}
-  - component: {fileID: 2800688159430825660}
   - component: {fileID: 8110981075178435286}
   m_Layer: 5
   m_Name: PausePanel
@@ -2434,51 +2497,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2800688159430825660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4660240605484566453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad66e712434186041b602c7d33e33a7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cooldown: 7
-  _health: {fileID: 6622874924400916509}
-  _healthPlus: {fileID: 8003476551596298032}
-  _attack: {fileID: 4024428669596145279}
-  _attackPlus: {fileID: 1692490441722698354}
-  _shield: {fileID: 5673388899553812938}
-  _speed: {fileID: 2576892595776985803}
-  _boostSprites:
-  - {fileID: 21300000, guid: 4da8e6aee4c75b941bb520167c37da21, type: 3}
-  - {fileID: 21300000, guid: 3056f119fa33a7241865d18e7661f971, type: 3}
-  - {fileID: 21300000, guid: eb887ed9dfff59340b34c311bdf36285, type: 3}
-  - {fileID: 21300000, guid: 980f47d5208bdf14fbf0f2d2bfbaf813, type: 3}
-  - {fileID: 21300000, guid: 43dd061f5a2234040a400f5989a611d3, type: 3}
-  - {fileID: 21300000, guid: 27f3163c59b222549ad7a4d7c751724d, type: 3}
-  _boostCooldownSprites:
-  - {fileID: 21300000, guid: 658c332e9db057c4c9d3789a6aef17bc, type: 3}
-  - {fileID: 21300000, guid: 4f0e59ecf0af7b740ae580f83de7ce62, type: 3}
-  - {fileID: 21300000, guid: 696696460d6153143ae537b97caee0f0, type: 3}
-  - {fileID: 21300000, guid: 2a1309cfa776c7340bec1098ba713942, type: 3}
-  - {fileID: 21300000, guid: 387188d2b2ac2a443a66841cd61dccfc, type: 3}
-  - {fileID: 21300000, guid: 31765c778cbbea0459063a2ac0be3576, type: 3}
-  _healthText: {fileID: 75664948674708772}
-  _healthPlusText: {fileID: 2127622449722388333}
-  _attackText: {fileID: 5283325761029518366}
-  _attackPlusText: {fileID: 6514647878690114853}
-  _shieldText: {fileID: 3816639043265404323}
-  _speedText: {fileID: 4090639550999406869}
-  _healthCooldownText: {fileID: 649310979293640608}
-  _healthPlusCooldownText: {fileID: 444895951993783744}
-  _attackCooldownText: {fileID: 6941583525388386645}
-  _attackPlusCooldownText: {fileID: 4490368656106785131}
-  _shieldCooldownText: {fileID: 995865251560595378}
-  _speedCooldownText: {fileID: 4626119345476776676}
 --- !u!114 &8110981075178435286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2495,6 +2513,12 @@ MonoBehaviour:
   _closeButton: {fileID: 2749304438167675841}
   _continueButton: {fileID: 7681789258473083907}
   _leaveGameButton: {fileID: 5143309610583575532}
+  _healthPauseButton: {fileID: 8991792516724747863}
+  _healthPausePlusButton: {fileID: 8417031093719440091}
+  _attackPauseButton: {fileID: 3732558209533221069}
+  _attackPausePlusButton: {fileID: 5946030709259942219}
+  _shieldPauseButton: {fileID: 5138612900698687234}
+  _speedPauseButton: {fileID: 216401566868031761}
 --- !u!1 &4786841881556025462
 GameObject:
   m_ObjectHideFlags: 0
@@ -3483,6 +3507,7 @@ GameObject:
   - component: {fileID: 914678625287458399}
   - component: {fileID: 6622874924400916509}
   - component: {fileID: 8991792516724747863}
+  - component: {fileID: 6996926783920185686}
   m_Layer: 5
   m_Name: HeartImage
   m_TagString: Untagged
@@ -3592,6 +3617,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6996926783920185686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7189907491876297736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 75664948674708772}
+  _cooldownText: {fileID: 649310979293640608}
+  _image: {fileID: 6622874924400916509}
 --- !u!1 &7425665044869228320
 GameObject:
   m_ObjectHideFlags: 0
@@ -3659,7 +3699,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c9accb2d991ca404ab0dc407a2fd4d85, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3833,6 +3873,7 @@ GameObject:
   - component: {fileID: 7920281559265365809}
   - component: {fileID: 1692490441722698354}
   - component: {fileID: 5946030709259942219}
+  - component: {fileID: 1376504002940103470}
   m_Layer: 5
   m_Name: AttackPlusImage
   m_TagString: Untagged
@@ -3942,6 +3983,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1376504002940103470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573618024436693217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda4c2c08714af3438f4f2b9db53ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 6514647878690114853}
+  _cooldownText: {fileID: 4490368656106785131}
+  _image: {fileID: 1692490441722698354}
 --- !u!1 &7724804161625609050
 GameObject:
   m_ObjectHideFlags: 0
