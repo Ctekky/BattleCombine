@@ -52,9 +52,8 @@ namespace _Scripts.Game.Stats
 			UpdateStats += _player.UpdateStats;
 		}
 
-		private void Start()
+		public void BoostUpdate()
 		{
-			//todo - round change
 			ActiveBoosterCheck();
 		}
 
@@ -130,51 +129,52 @@ namespace _Scripts.Game.Stats
 
 		private void ActiveBoosterCheck()
 		{
+		
 			if(longDurationAttackBoostActive)
 			{
+				attackDuration--;
 				if(attackDuration <= 0)
 				{
 					longDurationAttackBoostActive = false;
 					return;
 				}
 
-				attackDuration--;
 				BoostAttack(true);
 			}
 
 			if(longDurationHealthBoostActive)
 			{
+				healthDuration--;
 				if(healthDuration <= 0)
 				{
 					longDurationHealthBoostActive = false;
 					return;
 				}
 
-				healthDuration--;
 				BoostHealth(true);
 			}
 
 			if(longDurationShieldBoostActive)
 			{
+				shieldDuration--;
 				if(shieldDuration <= 0)
 				{
 					longDurationShieldBoostActive = false;
 					return;
 				}
 
-				shieldDuration--;
 				BoostShield();
 			}
 
 			if(longDurationSpeedBoostActive)
 			{
+				speedDuration--;
 				if(speedDuration <= 0)
 				{
 					longDurationSpeedBoostActive = false;
 					return;
 				}
 
-				speedDuration--;
 				BoostSpeed();
 			}
 			

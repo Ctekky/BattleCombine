@@ -1063,6 +1063,7 @@ MonoBehaviour:
   statsCollector: {fileID: 388951233}
   increaseStats: {fileID: 388951234}
   fight: {fileID: 388951232}
+  _boostHandler: {fileID: 2105806067}
   currentStepInTurn: 0
   currentTurn: 0
   stepsInTurn: 0
@@ -4365,10 +4366,10 @@ MonoBehaviour:
   _attackLongBoostValue: 10
   _healthLongBoostValue: 15
   _speedBoostValue: 0
-  _attackMaxDuration: 1
-  _healthMaxDuration: 1
-  _shieldMaxDuration: 4
-  _speedMaxDuration: 0
+  _attackMaxDuration: 2
+  _healthMaxDuration: 2
+  _shieldMaxDuration: 5
+  _speedMaxDuration: 5
 --- !u!114 &2105806068
 MonoBehaviour:
   m_ObjectHideFlags: 0
