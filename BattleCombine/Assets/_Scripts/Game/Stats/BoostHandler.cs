@@ -25,6 +25,7 @@ namespace _Scripts.Game.Stats
 		private BoostMenu _boostMenu;
 
 		//todo - active boost database?
+		//todo - data of booster capacity
 		private bool longDurationAttackBoostActive;
 		private bool longDurationHealthBoostActive;
 		private bool longDurationShieldBoostActive;
@@ -69,11 +70,13 @@ namespace _Scripts.Game.Stats
 
 				Debug.Log("longDuration attack Boost attack" + _attackLongBoostValue);
 				_player.AddAttack(_attackLongBoostValue);
+				//boostCount--
 			}
 			else
 			{
 				Debug.Log(_attackBoostValue +" attack Boost");
 				_player.AddAttack(_attackBoostValue);
+				//boostCount--
 			}
 			
 			UpdateStats?.Invoke();
@@ -91,11 +94,13 @@ namespace _Scripts.Game.Stats
 				
 				Debug.Log("longDuration health Boost hp" + _healthLongBoostValue);
 				_player.ChangeHealth(_healthLongBoostValue);
+				//boostCount--
 			}
 			else
 			{
 				Debug.Log("health Boost hp" + _healthBoostValue);
 				_player.ChangeHealth(_healthBoostValue);
+				//boostCount--
 			}
 			
 			UpdateStats?.Invoke();
@@ -111,6 +116,7 @@ namespace _Scripts.Game.Stats
 			}
 
 			_player.AddShield();
+			//boostCount--
 			UpdateStats?.Invoke();
 		}
 
@@ -124,6 +130,7 @@ namespace _Scripts.Game.Stats
 			}
 
 			//todo - speed add
+			//boostCount--
 			UpdateStats?.Invoke();
 		}
 
