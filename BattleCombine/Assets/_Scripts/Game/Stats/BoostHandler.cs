@@ -39,6 +39,8 @@ namespace _Scripts.Game.Stats
 		private int healthDuration;
 		private int shieldDuration;
 		private int speedDuration;
+
+		private int defaultSpeed = 0;
 		//todo --------------------------------------
 
 		public bool IsAttackLongBoostActive => longDurationAttackBoostActive;
@@ -129,12 +131,14 @@ namespace _Scripts.Game.Stats
 			if(longDurationSpeedBoostActive) return;
 			if(speedDuration <= 0)
 			{
-				Debug.Log("longDuration speed Boost");
+				Debug.Log("Speed Boost+");
 				longDurationSpeedBoostActive = true;
 				speedDuration = _speedMaxDuration;
 			}
 
-			//todo - speed add
+			if(defaultSpeed == 0)
+				defaultSpeed = _player.moveSpeedValue;
+			
 			_player.moveSpeedValue += _speedBoostValue;
 			_arcadeGameService.UpdateCurrentPlayerSpeed();
 			//boostCount--
@@ -186,12 +190,15 @@ namespace _Scripts.Game.Stats
 				if(speedDuration <= 0)
 				{
 					longDurationSpeedBoostActive = false;
-					_player.moveSpeedValue -= _speedBoostValue;
-					_arcadeGameService.UpdateCurrentPlayerSpeed();
 					return;
 				}
 
-				BoostSpeed();
+				if(defaultSpeed != _player.moveSpeedValue)
+				{
+					_player.moveSpeedValue = defaultSpeed;
+					_arcadeGameService.UpdateCurrentPlayerSpeed();
+				}
+				//BoostSpeed();
 			}
 			
 			_boostMenu.ExitCooldown();
