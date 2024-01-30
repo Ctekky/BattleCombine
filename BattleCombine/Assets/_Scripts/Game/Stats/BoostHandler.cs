@@ -186,6 +186,8 @@ namespace _Scripts.Game.Stats
 				if(speedDuration <= 0)
 				{
 					longDurationSpeedBoostActive = false;
+					_player.moveSpeedValue -= _speedBoostValue;
+					_arcadeGameService.UpdateCurrentPlayerSpeed();
 					return;
 				}
 
