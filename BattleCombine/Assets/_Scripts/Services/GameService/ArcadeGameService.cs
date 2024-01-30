@@ -226,6 +226,12 @@ namespace BattleCombine.Services
                     : player2.GetComponent<Player>());
         }
 
+        public void UpdateCurrentPlayerSpeed()
+        {
+            gameField.GetComponent<TileStack>().SpeedPlayer = currentPlayer.moveSpeedValue;
+            Debug.Log("УстановкаТекСкорости" + currentPlayer.moveSpeedValue + " " + gameField.GetComponent<TileStack>().SpeedPlayer);
+        }
+
         private void InputFingerUp()
         {
             var tileStack = gameField.GetComponent<TileStack>();

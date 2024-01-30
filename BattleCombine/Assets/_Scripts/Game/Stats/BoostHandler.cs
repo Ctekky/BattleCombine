@@ -1,7 +1,9 @@
 using System;
 using _Scripts.UI;
 using BattleCombine.Gameplay;
+using BattleCombine.Services;
 using UnityEngine;
+using Zenject;
 
 namespace _Scripts.Game.Stats
 {
@@ -10,6 +12,8 @@ namespace _Scripts.Game.Stats
 		private event Action UpdateStats;
 		
 		[SerializeField] private Player _player;
+		//todo - [Inject] 
+		[SerializeField] private ArcadeGameService _arcadeGameService;
 		
 		//todo - boost values database?
 		[SerializeField] private int _attackBoostValue;
@@ -122,6 +126,7 @@ namespace _Scripts.Game.Stats
 
 		public void BoostSpeed()
 		{
+			if(longDurationSpeedBoostActive) return;
 			if(speedDuration <= 0)
 			{
 				Debug.Log("longDuration speed Boost");
@@ -130,6 +135,8 @@ namespace _Scripts.Game.Stats
 			}
 
 			//todo - speed add
+			_player.moveSpeedValue += _speedBoostValue;
+			_arcadeGameService.UpdateCurrentPlayerSpeed();
 			//boostCount--
 			UpdateStats?.Invoke();
 		}

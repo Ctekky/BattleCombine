@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using BattleCombine.Data;
 using BattleCombine.Interfaces;
-using BattleCombine.Services;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -20,6 +19,7 @@ namespace _Scripts.UI
         private List<GameObject> _barImages;
 
         private float loadProgress = 0;
+        public Coroutine StartRoutine {get; private set;}
 
         [Inject] private InitialSceneService _initialSceneService;
 
@@ -49,7 +49,7 @@ namespace _Scripts.UI
                 item.SetActive(false);
             }
             _initialSceneService.Initialize();
-            StartCoroutine(CountRoutine());
+            StartRoutine = StartCoroutine(CountRoutine());
         }
 
         private void ChangeProgressText()

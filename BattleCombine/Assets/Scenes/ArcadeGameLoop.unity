@@ -1230,6 +1230,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 830942565227971313, guid: 384daa484734655429e4c406ff17f057, type: 3}
+      propertyPath: _aiPlayer
+      value: 
+      objectReference: {fileID: 229119110}
     - target: {fileID: 2588469170476912505, guid: 384daa484734655429e4c406ff17f057, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.5059686
@@ -4361,11 +4365,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1990527827}
+  _arcadeGameService: {fileID: 388951237}
   _attackBoostValue: 3
   _healthBoostValue: 5
   _attackLongBoostValue: 10
   _healthLongBoostValue: 15
-  _speedBoostValue: 0
+  _speedBoostValue: 1
   _attackMaxDuration: 2
   _healthMaxDuration: 2
   _shieldMaxDuration: 5

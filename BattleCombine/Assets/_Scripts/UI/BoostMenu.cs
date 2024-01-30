@@ -111,7 +111,6 @@ namespace _Scripts.UI
 			EnterCooldownView(_speedButton.GetComponent<BoostButton>().GetImage, _speedButton.GetComponent<BoostButton>().GetCooldownText, 5,
 				boostHandler.GetSpeedBoostCurrentDuration);
 
-			boostHandler.BoostSpeed();
 			EnterCooldownView(_speedPauseMenuButton.GetComponent<BoostButton>().GetImage, _speedPauseMenuButton.GetComponent<BoostButton>().GetCooldownText, 5,
 				boostHandler.GetSpeedBoostCurrentDuration);
 		}
