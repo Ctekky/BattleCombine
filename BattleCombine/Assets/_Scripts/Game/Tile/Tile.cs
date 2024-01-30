@@ -7,6 +7,7 @@ using BattleCombine.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using BattleCombine.Animations;
 using BattleCombine.Services.Other;
 using UnityEngine.EventSystems;
 
@@ -29,6 +30,9 @@ namespace BattleCombine.Gameplay
         [SerializeField] private int tileID;
         [SerializeField] private List<GameObject> tilesForChoosing = new List<GameObject>();
         [SerializeField] private List<GameObject> tilesNearThisTile = new List<GameObject>();
+
+        //Animation part
+        [SerializeField] private TileTextAnimationHelper tileTextAnimationHelper;
 
         //TODO: set type and modifier to tile
         [SerializeField] private TileType tileType;
@@ -106,6 +110,33 @@ namespace BattleCombine.Gameplay
             DisabledState = new DisabledState(this, StateMachine);
             EnabledState = new EnabledState(this, StateMachine);
             FinalChoiceState = new FinalChoiceState(this, StateMachine);
+            tileTextAnimationHelper.onAnimationTrigger += OnAnimationTileTextUpTrigger;
+        }
+
+        private void OnDisable()
+        {
+            tileTextAnimationHelper.onAnimationTrigger -= OnAnimationTileTextUpTrigger;
+        }
+
+        private void OnAnimationTileTextUpTrigger()
+        {
+            //test this parameter (mb not here)
+            SetAnimationTextBool(false);
+            switch (tileModifier)
+            {
+                case > 0:
+                    text.text = "+" + tileModifier.ToString(CultureInfo.CurrentCulture);
+                    ChangeTileSprite(tileType.spriteUp);
+                    break;
+                case 0:
+                    text.text = "";
+                    ChangeTileSprite(tileType.spriteUp);
+                    break;
+                case < 0:
+                    text.text = tileModifier.ToString(CultureInfo.CurrentCulture);
+                    ChangeTileSprite(tileType.spriteDown);
+                    break;
+            }
         }
 
         private void Start()
@@ -121,6 +152,11 @@ namespace BattleCombine.Gameplay
             isAlignPlayer1 = flag;
         }
 
+        private void SetAnimationTextBool(bool flag)
+        {
+            tileTextAnimationHelper.SetAnimationBool(flag);
+        }
+
         public void SetAlignTileToPlayer2(bool flag)
         {
             isAlignPlayer2 = flag;
@@ -132,31 +168,38 @@ namespace BattleCombine.Gameplay
             switch (type.cellType)
             {
                 case CellType.Empty:
-                    ChangeTileModifier(0);
+                    ChangeTileModifier(0, false);
                     break;
                 case CellType.Shield:
-                    ChangeTileModifier(0);
+                    ChangeTileModifier(0, false);
                     break;
             }
         }
 
-        public void ChangeTileModifier(int modifier)
+        public void ChangeTileModifier(int modifier, bool animationFlag)
         {
             tileModifier = modifier;
-            switch (tileModifier)
+            if (animationFlag)
             {
-                case > 0:
-                    text.text = "+" + tileModifier.ToString(CultureInfo.CurrentCulture);
-                    ChangeTileSprite(tileType.spriteUp);
-                    break;
-                case 0:
-                    text.text = "";
-                    ChangeTileSprite(tileType.spriteUp);
-                    break;
-                case < 0:
-                    text.text = tileModifier.ToString(CultureInfo.CurrentCulture);
-                    ChangeTileSprite(tileType.spriteDown);
-                    break;
+                SetAnimationTextBool(true);
+            }
+            else
+            {
+                switch (tileModifier)
+                {
+                    case > 0:
+                        text.text = "+" + tileModifier.ToString(CultureInfo.CurrentCulture);
+                        ChangeTileSprite(tileType.spriteUp);
+                        break;
+                    case 0:
+                        text.text = "";
+                        ChangeTileSprite(tileType.spriteUp);
+                        break;
+                    case < 0:
+                        text.text = tileModifier.ToString(CultureInfo.CurrentCulture);
+                        ChangeTileSprite(tileType.spriteDown);
+                        break;
+                }
             }
         }
 
