@@ -229,7 +229,8 @@ namespace BattleCombine.Services
         public void UpdateCurrentPlayerSpeed()
         {
             gameField.GetComponent<TileStack>().SpeedPlayer = currentPlayer.moveSpeedValue;
-            Debug.Log("УстановкаТекСкорости" + currentPlayer.moveSpeedValue + " " + gameField.GetComponent<TileStack>().SpeedPlayer);
+            Debug.Log("SetSpeedBooster| current player speed = " + currentPlayer.moveSpeedValue + 
+                      "| current tileStuckSpeed = " + gameField.GetComponent<TileStack>().SpeedPlayer);
         }
 
         private void InputFingerUp()
