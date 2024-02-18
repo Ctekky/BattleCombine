@@ -412,7 +412,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 858689e35d5f1614eb45187e379db8ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f8f6c1c73e5c584e8622e29fa23a4b8, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -719,15 +719,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackText: {fileID: 7182271972405789140}
   healthText: {fileID: 1205639966790886380}
+  playerLevelText: {fileID: 0}
+  playerLevelSlider: {fileID: 0}
   shieldSprite: {fileID: 5411824502802154030}
   avatarGameObject: {fileID: 4779996241652399337}
   speedArea: {fileID: 2977854841085428956}
   speedPrefab: {fileID: 2188382078495627210, guid: d9bd76b31418c024c94e0a42c1cc8544, type: 3}
   createdSpeedObjectList: []
-  _heartImg: {fileID: 0}
-  _swordsImg: {fileID: 0}
-  _heartsBackImg: {fileID: 0}
-  _swordsBackImg: {fileID: 0}
+  _heartImg: {fileID: 6153143852977153947}
+  _swordsImg: {fileID: 875868642532871517}
+  _heartsBackImg: {fileID: 2189870637789612016}
+  _swordsBackImg: {fileID: 1133558712027308475}
   _cooldownSprites: []
   _healthCooldownObj: {fileID: 0}
   _attackCooldownObj: {fileID: 0}
@@ -757,7 +759,7 @@ MonoBehaviour:
     shielded: 0
   moveSpeedValue: 0
   playerUIScript: {fileID: 5838217023709320270}
-  playerName: Player2
+  playerName: Enemy
 --- !u!114 &-3352779556028992961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1151,8 +1153,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5950759901659374660, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5950759901659374660, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3677f400e4f34af4a9090e8188673e6b, type: 3}
+    - target: {fileID: 5950759901659374660, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}
       propertyPath: m_Color.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5950759901659374660, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6158216739221355498, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}
       propertyPath: m_AnchorMax.y

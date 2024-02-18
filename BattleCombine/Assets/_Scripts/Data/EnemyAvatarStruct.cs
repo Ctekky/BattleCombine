@@ -8,6 +8,7 @@ namespace BattleCombine.Data
     {
         public Sprite enableSprite;
         public Sprite disableSprite;
+        public int ID;
     }
     
 }

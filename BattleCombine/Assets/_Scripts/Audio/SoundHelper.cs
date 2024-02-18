@@ -3,88 +3,85 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-namespace Scripts
+namespace _Scripts.Audio
 {
     public class SoundHelper : MonoBehaviour
     {
-        public Action<AudioClip> PlaySoundEvent; //todo - move to events holder
+        private const string MusicMixer = "MusicVolume";
+        private const string SfxMixer = "SfxVolume";
+        private const float SoundOnValue = 1;
+        private const float SoundOffValue = 0.0001f;
         
-        [Header("VolumeSwitchers")] //todo - rewrite (Trial billet)
-        [SerializeField] private Button sfxOn;
-        [SerializeField] private Button sfxOff;
-        [SerializeField] private Button musicOn;
-        [SerializeField] private Button musicOff;
+        //[Header("VolumeSwitchers")] //todo - rewrite (Trial billet)
+        //[SerializeField] private Button sfxOn;
+        //[SerializeField] private Button sfxOff;
+        //[SerializeField] private Button musicOn;
+        //[SerializeField] private Button musicOff;
+        
         [Header("VolumeSliders")] 
-        [SerializeField] private Slider musicSlider;
-        [SerializeField] private Slider sfxSlider;
+        [SerializeField] private Slider _musicSlider;
+        [SerializeField] private Slider _sfxSlider;
         [Header("AudioSources")] 
-        [SerializeField] private AudioSource musicSource;
-        [SerializeField] private AudioSource sfxSource;
+        [SerializeField] private AudioSource _musicSource;
+        [SerializeField] private AudioSource _sfxSource;
         [Header("MasterMixer")] 
-        [SerializeField] private AudioMixer mixer;
+        [SerializeField] private AudioMixer _mixer;
+
+        [SerializeField] private AudioClip _clickSound;
         
-        private readonly string _musicMixer = "MusicVolume";
-        private readonly string _sfxMixer = "SfxVolume";
-        private readonly float _soundOn = 1;
-        private readonly float _soundOff = 0.0001f;
         
-        private bool _isSfxOn;
-        private bool _isMusicOn;
-        private bool _isVibrationOn;
+        private bool isSfxOn;
+        private bool isMusicOn;
+        private bool isVibrationOn;
 
         private void Start()
         {
-            PlaySoundEvent += PlaySound;
-            sfxOn.onClick.AddListener(SwitchSfxButton);
-            sfxOff.onClick.AddListener(SwitchSfxButton);
-            musicOn.onClick.AddListener(SwitchMusicButton);
-            musicOff.onClick.AddListener(SwitchMusicButton);
-            musicSlider.onValueChanged.AddListener(ChangeMusicVolume);
-            sfxSlider.onValueChanged.AddListener(ChangeSfxVolume);
+            //sfxOn.onClick.AddListener(SwitchSfxButton);
+            //sfxOff.onClick.AddListener(SwitchSfxButton);
+            //musicOn.onClick.AddListener(SwitchMusicButton);
+            //musicOff.onClick.AddListener(SwitchMusicButton);
+            _musicSlider.onValueChanged.AddListener(ChangeMusicVolume);
+            _sfxSlider.onValueChanged.AddListener(ChangeSfxVolume);
         }
 
-        private void SwitchSfxButton()
+        public void PlayClickSound()
         {
-            _isSfxOn = !_isSfxOn;
-            sfxOn.gameObject.SetActive(!_isSfxOn);
-            sfxOff.gameObject.SetActive(_isSfxOn);
-            ChangeSfxVolume(_isSfxOn ? _soundOff : _soundOn);
+            PlaySound(_clickSound);
+        }
+        
+        //play sound
+        private void PlaySound(AudioClip clip)
+        {
+            _sfxSource.PlayOneShot(clip);
         }
 
-        private void SwitchMusicButton()
-        {
-            _isMusicOn = !_isMusicOn;
-            musicOn.gameObject.SetActive(!_isMusicOn);
-            musicOff.gameObject.SetActive(_isMusicOn);
-            ChangeMusicVolume(_isMusicOn ? _soundOff : _soundOn);
-        }
+        //private void SwitchSfxButton()
+        //{
+        //    _isSfxOn = !_isSfxOn;
+        //    sfxOn.gameObject.SetActive(!_isSfxOn);
+        //    sfxOff.gameObject.SetActive(_isSfxOn);
+        //    ChangeSfxVolume(_isSfxOn ? _soundOff : _soundOn);
+        //}
+
+        //private void SwitchMusicButton()
+        //{
+        //    _isMusicOn = !_isMusicOn;
+        //    musicOn.gameObject.SetActive(!_isMusicOn);
+        //    musicOff.gameObject.SetActive(_isMusicOn);
+        //    ChangeMusicVolume(_isMusicOn ? _soundOff : _soundOn);
+        //}
 
         private void ChangeMusicVolume(float value)
         {
             var dbValue = Mathf.Log10(value) * 20;
-            mixer.SetFloat(_musicMixer, dbValue);
+            _mixer.SetFloat(MusicMixer, dbValue);
         }
 
         private void ChangeSfxVolume(float value)
         {
             var dbValue = Mathf.Log10(value) * 20;
-            mixer.SetFloat(_sfxMixer, dbValue);
+            _mixer.SetFloat(SfxMixer, dbValue);
         }
 
-        //play sound from everywhere
-        private void PlaySound(AudioClip clip)
-        {
-            sfxSource.PlayOneShot(clip);
-        }
-
-        private void OnDisable()
-        {
-            PlaySoundEvent -= PlaySound;
-        }
-
-        private void OnDestroy()
-        {
-            PlaySoundEvent -= PlaySound;
-        }
     }
 }

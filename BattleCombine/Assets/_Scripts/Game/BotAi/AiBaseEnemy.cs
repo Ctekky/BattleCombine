@@ -9,7 +9,7 @@ namespace BattleCombine.Ai
     public abstract class AiBaseEnemy
     {
         //Event to link sound *poon'k* to selection
-        public static Action OnTileSelectPlaySfx;
+        public static event Action OnTileSelectPlaySfx;
 
         public AiHandler AiHandler;
         public List<Tile> CurrentWay { get; set; } = new ();

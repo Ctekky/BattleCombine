@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404c71d07359dd6499f912153f4845b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileTypeTable: {fileID: 11400000, guid: b46792b71670cd84dab322c54d9fb673, type: 2}
   makeScale: 0
   isAiRandomStart: 1
   defaultAiStartTilePos: 2
@@ -138,7 +139,7 @@ MonoBehaviour:
   - Key: {fileID: 11400000, guid: 2f75529d751daf74e969c5d2e461e21d, type: 2}
     Value: 35
   tileRefreshChance: 70
-  gameManager: {fileID: 0}
+  _tileList: []
 --- !u!114 &3865557558910741595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,12 +152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddd86cd3d9e98f44b1a368d9168cd1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
   speedPlayer: 3
   player: 0
+  arcadeGameService: {fileID: 0}
   nextMoveTiles: []
   tilesForNextMovePlayer1: []
   tilesForNextMovePlayer2: []
+  field: {fileID: 7231038543268852751}
   tileListPlayer1: []
   tileListPlayer2: []
   startingPlayerTiles: []

@@ -1,22 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using _Scripts.UI;
 using BattleCombine.Ai;
+using BattleCombine.Data;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
+using BattleCombine.Interfaces;
 using BattleCombine.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace BattleCombine.Services
 {
-    public class ArcadeGameService : MonoBehaviour
+    public class ArcadeGameService : MonoBehaviour, ISaveLoad
     {
         #region Dependency
 
-        //TODO: change gameService on INJECT obj
-        [SerializeField] private GameService _gameService;
+        [Inject] private MainGameService _mainGameService;
+        [Inject] private SaveManager _saveManager;
+        [Inject] private PlayerAccount _playerAccount;
         [SerializeField] private InputService.InputService inputService;
         //TODO: need inject UI to work with
 
@@ -44,6 +47,7 @@ namespace BattleCombine.Services
 
         //добавил, чтоб ловить боту момент смены хода
         public Action onPlayerChange;
+        public Action onBattleEnd;
         [SerializeField] private AiHandler aiHandler;
 
         #endregion
@@ -66,6 +70,12 @@ namespace BattleCombine.Services
         [SerializeField] private int currentStepInTurn;
         [SerializeField] private int currentTurn;
         [SerializeField] private int stepsInTurn;
+        [SerializeField] private UiHelper arcadeUIHelper;
+        [SerializeField] private int expToLevel;
+        [SerializeField] private int attackByLevel;
+        [SerializeField] private int healthByLevel;
+        [SerializeField] private int speedByLevel;
+        [SerializeField] private int whenUpSpeed;
 
         private PathCheck pathCheck = new PathCheck();
         private bool _isTypeStandart;
@@ -74,6 +84,8 @@ namespace BattleCombine.Services
         private GameObject _currentTile;
         private bool _canMove = false;
         private bool _isFirstRun = true;
+        [SerializeField] private bool isOnWinScreen;
+        [SerializeField] private string loserName;
 
         //todo - (temp) Kirill Add to control ai hp status (to change state)
         public int GetPlayerAiHealth => player2.GetComponent<Player>().HealthValue;
@@ -85,12 +97,59 @@ namespace BattleCombine.Services
         private void OnDisable()
         {
             inputService.onFingerUp -= InputFingerUp;
+            arcadeUIHelper.onStatChange -= StatChange;
+            arcadeUIHelper.onLoseClick -= LoseBattle;
+            arcadeUIHelper.onWinClick -= WinBattle;
+            //TODO add properly lose screen
+            arcadeUIHelper.OnEndBattle -= LoseBattle;
+        }
+
+        private void WinBattle()
+        {
+            arcadeUIHelper.ExitBattleScene();
+        }
+
+        private void LoseBattle()
+        {
+            _mainGameService.ArcadeCurrentScore = 0;
+            _playerAccount.ZeroModifierOnLose();
+            arcadeUIHelper.ExitBattleScene();
+        }
+
+        private void OnEnable()
+        {
+            arcadeUIHelper.onStatChange += StatChange;
+            arcadeUIHelper.onLoseClick += LoseBattle;
+            arcadeUIHelper.onWinClick += WinBattle;
+            arcadeUIHelper.OnEndBattle += LoseBattle;
+        }
+
+        private void StatChange(int key)
+        {
+            switch (key)
+            {
+                case 1:
+                    _playerAccount.AttackStatUp(attackByLevel);
+                    break;
+                case 2:
+                    _playerAccount.HealthStatUp(healthByLevel);
+                    break;
+                case 3:
+                    _playerAccount.SpeedStatUp(_mainGameService.ArcadeCurrentScore % whenUpSpeed == 0
+                        ? 0
+                        : speedByLevel);
+                    break;
+            }
         }
 
         #endregion
 
-
         private void Awake()
+        {
+            InitializeBattlefield();
+        }
+
+        private void InitializeBattlefield()
         {
             _stepChecker = GetComponent<Step>();
             _isTypeStandart = false;
@@ -100,6 +159,8 @@ namespace BattleCombine.Services
 
         private void Start()
         {
+            isOnWinScreen = false;
+            loserName = "";
             if (gameField == null)
             {
                 Debug.Log("No game field object");
@@ -138,7 +199,7 @@ namespace BattleCombine.Services
             aiHandler.SetupAIHandler(this, inputService);
             fight.SetUpPlayers(player1.GetComponent<Player>(), player2.GetComponent<Player>());
             fieldScript.SetupArcadeGameService(this);
-            fieldScript.SetupField(false, fieldSize, _gameService.GetCurrentColorSettings());
+            fieldScript.SetupField(false, fieldSize, _mainGameService.GetCurrentColorSettings());
             currentPlayerName = player1.GetComponent<Player>()?.GetPlayerName;
             currentPlayer = player1.GetComponent<Player>();
             currentPlayer.UpdateStats();
@@ -150,6 +211,12 @@ namespace BattleCombine.Services
             currentTurn = 1;
             currentStepInTurn = 1;
             tileStackScript.SpeedPlayer = currentPlayer.moveSpeedValue;
+            if (_saveManager.CheckForSavedData() && _mainGameService.IsBattleActive) _saveManager.LoadGame();
+            _mainGameService.ChangeActiveBattle(true);
+            if (isOnWinScreen)
+                GameOver(player1.GetComponent<Player>().GetPlayerName == loserName
+                    ? player1.GetComponent<Player>()
+                    : player2.GetComponent<Player>());
         }
 
         private void InputFingerUp()
@@ -166,19 +233,34 @@ namespace BattleCombine.Services
         {
             var fieldScript = gameField.GetComponent<CreateField>();
             fieldScript.RefreshField();
+            _saveManager.SaveGame();
         }
 
         private void GameOver(Player player)
         {
+            onBattleEnd?.Invoke();
+            isOnWinScreen = true;
+            loserName = player.GetPlayerName;
+            _saveManager.SaveGame();
             if (player.GetPlayerName == player1.GetComponent<Player>().GetPlayerName)
             {
-                Debug.Log("Game over");
-                SceneManager.LoadScene("Initial");
+                //TODO - rewards
+                arcadeUIHelper.ShowMatchResult(false, _mainGameService.ArcadeCurrentScore,
+                    _mainGameService.ArcadeBestScore, 0, 0, 0, 0);
             }
             else
             {
-                Debug.Log("Next battle");
-                SceneManager.LoadScene("EnemySelectionScene");
+                ChangeCurrentScoreOnWin();
+                if (_mainGameService.ArcadeCurrentScore % expToLevel == 0)
+                {
+                    _mainGameService.ArcadePlayerLevel++;
+                    arcadeUIHelper.ShowLevelUp(_mainGameService.ArcadePlayerLevel, attackByLevel, healthByLevel,
+                        _mainGameService.ArcadeCurrentScore % whenUpSpeed == 0 ? 0 : speedByLevel);
+                }
+
+                arcadeUIHelper.ShowMatchResult(true, _mainGameService.ArcadeCurrentScore,
+                    _mainGameService.ArcadeBestScore, 0, 0, 0, 0);
+                //SceneManager.LoadScene("EnemySelectionScene");
             }
         }
 
@@ -234,7 +316,6 @@ namespace BattleCombine.Services
             }
 
             gameField.GetComponent<TileStack>().SpeedPlayer = currentPlayer.moveSpeedValue;
-            ;
             _stepChecker.GetVariables(currentStepInTurn, stepsInTurn);
             if (_stepChecker.MoveIsPassed() == false) return;
             Debug.Log("Round is over => Fight!!!");
@@ -253,6 +334,7 @@ namespace BattleCombine.Services
         }
 
         #region Checking the possibility of movement
+
         public void PathCheck(List<GameObject> listTilesGO)
         {
             bool hasPath = false;
@@ -265,31 +347,70 @@ namespace BattleCombine.Services
                 }
             }
 
-            if (hasPath == true)
-            {
-                Debug.LogWarning("We have a way(s), let's go!");
-            }
-            else
-            {
-                Debug.LogWarning("We have no way, the field MUST be reloaded!");
-            }
-
+            Debug.LogWarning(hasPath ? "We have a way(s), let's go!" : "We have no way, the field MUST be reloaded!");
         }
+
         #endregion
 
         #region EndBattle functions
 
         private void ChangeCurrentScoreOnWin()
         {
-            var currentScore = _gameService.ArcadeCurrentScore++;
-            if (currentScore > _gameService.ArcadeBestScore)
+            var currentScore = _mainGameService.ArcadeCurrentScore;
+            currentScore++;
+            if (currentScore > _mainGameService.ArcadeBestScore)
             {
-                _gameService.ArcadeBestScore = currentScore;
+                _mainGameService.ArcadeBestScore = currentScore;
             }
 
-            _gameService.ArcadeCurrentScore = currentScore;
+            _mainGameService.ArcadeCurrentScore = currentScore;
         }
 
         #endregion
+
+        public void LoadData(GameData gameData, bool newGameBattle, bool firstStart)
+        {
+            currentStepInTurn = gameData.CurrentStep;
+            loserName = gameData.LoserName;
+            isOnWinScreen = gameData.IsEndScreen;
+        }
+
+        private void SaveBattleStatDataUpdate(GameData gameData, BattleStatsData enemyBSD)
+        {
+            foreach (var bsd in gameData.BattleStatsData.Where(bsd => bsd.Name == "Enemy"))
+            {
+                bsd.Shield = enemyBSD.Shield;
+                bsd.CurrentDamage = enemyBSD.CurrentDamage;
+                bsd.CurrentHealth = enemyBSD.CurrentHealth;
+                bsd.CurrentSpeed = enemyBSD.CurrentSpeed;
+            }
+        }
+
+        public void SaveData(ref GameData gameData, bool newGameBattle, bool firstStart)
+        {
+            var enemy = player2.GetComponent<Player>();
+            var flag = false;
+            var enemyBSD = new BattleStatsData
+            {
+                CurrentDamage = enemy.AttackValue,
+                CurrentHealth = enemy.HealthValue,
+                CurrentSpeed = enemy.moveSpeedValue,
+                Shield = enemy.Shielded
+            };
+            foreach (var bsd in gameData.BattleStatsData.Where(bsd => bsd.Name == "Enemy"))
+            {
+                flag = true;
+            }
+
+            if (flag) SaveBattleStatDataUpdate(gameData, enemyBSD);
+            else
+            {
+                gameData.BattleStatsData.Add(enemyBSD);
+            }
+
+            gameData.CurrentStep = currentStepInTurn;
+            gameData.LoserName = loserName;
+            gameData.IsEndScreen = isOnWinScreen;
+        }
     }
 }

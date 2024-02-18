@@ -1,30 +1,17 @@
 using BattleCombine.ScriptableObjects;
 using UnityEngine;
 
-public class ResourceService
+public class ResourceService : MonoBehaviour
 {
-    private AssetsData data;
-    public Sprite IconSword => data.iconSword;
-    public Sprite IconHeart => data.iconHeart;
-    public Sprite IconShild => data.iconShild;
-    public Sprite IconSpeed => data.iconSpeed;
+    [SerializeField] private SOEnemyAvatarTable avatarDB;
 
-    public TileType SwordTile => data.swordTile;
-    public TileType HeartTile => data.heartTile;
-    public TileType ShieldTile => data.shieldTile;
+    public SOEnemyAvatarTable GetAvatarDB => avatarDB;
 
-    public GettingAsset<Sprite> Icons => data.icons;
-    public GettingAsset<Sprite> Portraits => data.portraits;
-    public GettingAsset<Sprite> BG => data.bg;
-
-    public GettingAsset<AudioClip> Music => data.music;
-    public GettingAsset<AudioClip> SFX => data.sfx;
-
-
-    public ResourceService(AssetsData data)
+    public int GetAvatarID()
     {
-        this.data = data;
-    }
+        var result = 1;
+        
 
-    
+        return result;
+    }
 }

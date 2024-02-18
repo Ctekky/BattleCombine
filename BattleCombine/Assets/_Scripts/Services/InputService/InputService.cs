@@ -104,6 +104,9 @@ namespace BattleCombine.Services.InputService
 
         private void DetectTouchOnObject(EnhancedTouch.Finger finger)
         {
+            var mousePos = finger.screenPosition;
+            if(mousePos.x < 0 || mousePos.x >= Screen.width || mousePos.y < 0 || mousePos.y >= Screen.height)
+                return;
             var raycast = Camera.main.ScreenPointToRay(finger.screenPosition);
             var hit = Physics2D.Raycast(raycast.origin, raycast.direction);
             if (hit.collider == null) return;
@@ -115,6 +118,9 @@ namespace BattleCombine.Services.InputService
 
         private void DetectMoveOnObject(EnhancedTouch.Finger finger)
         {
+            var mousePos = finger.screenPosition;
+            if(mousePos.x < 0 || mousePos.x >= Screen.width || mousePos.y < 0 || mousePos.y >= Screen.height)
+                return;
             var raycast = Camera.main.ScreenPointToRay(finger.screenPosition);
             var hit = Physics2D.Raycast(raycast.origin, raycast.direction);
             if (hit.collider == null) return;

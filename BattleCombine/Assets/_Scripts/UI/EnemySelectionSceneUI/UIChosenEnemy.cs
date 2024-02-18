@@ -13,7 +13,7 @@ public class UIChosenEnemy : MonoBehaviour
     [SerializeField] private Player secondEnemy;
     [SerializeField] private Player thirdEnemy;
 
-    public Action<Player> onEnemyClick;
+    public event Action<Player> onEnemyClick;
 
     private void Awake()
     {
