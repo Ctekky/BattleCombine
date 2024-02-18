@@ -226,10 +226,10 @@ namespace BattleCombine.Gameplay
                 else if ((currentTile.GetTileType != CellType.Shield && currentTile.TileModifier < 9))
                 {
                     if (currentTile.TileModifier == -1)
-                        currentTile.ChangeTileModifier(currentTile.TileModifier + 2);
+                        currentTile.ChangeTileModifier(currentTile.TileModifier + 2, true);
 
                     else
-                        currentTile.ChangeTileModifier(currentTile.TileModifier + 1);
+                        currentTile.ChangeTileModifier(currentTile.TileModifier + 1, true);
                 }
             }
         }
@@ -361,7 +361,7 @@ namespace BattleCombine.Gameplay
                 return roll < 0;
             }).value;
 
-            currentTile.ChangeTileModifier(selectedModifier);
+            currentTile.ChangeTileModifier(selectedModifier, false);
         }
 
         public void LoadData(GameData gameData, bool newGameBattle, bool firstStart)
@@ -376,7 +376,7 @@ namespace BattleCombine.Gameplay
             foreach (var td in gameData.FieldData)
             {
                 _tileList[td.position].ChangeTileType(GetTileTypeFromTable(td.tileTypeID));
-                _tileList[td.position].ChangeTileModifier(td.tileModifier);
+                _tileList[td.position].ChangeTileModifier(td.tileModifier, false);
                 _tileList[td.position].ChangeStateMachine(td.tileCurrentState);
                 _tileList[td.position].ChangeStartFlag(td.isStartTile);
             }
