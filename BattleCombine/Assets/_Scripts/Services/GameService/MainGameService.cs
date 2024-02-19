@@ -1,7 +1,6 @@
 using System.Linq;
 using BattleCombine.Data;
 using BattleCombine.Interfaces;
-using BattleCombine.ScriptableObjects;
 using BattleCombine.Services.Other;
 using UnityEngine;
 using Zenject;

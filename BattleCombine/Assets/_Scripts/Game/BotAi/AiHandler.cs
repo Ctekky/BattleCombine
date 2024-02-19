@@ -14,6 +14,7 @@ namespace BattleCombine.Ai
     public class AiHandler : MonoBehaviour
     {
         public static event Action ChangeEnemyStance;
+        public Action<int> onEnemyEndTurn;
 
         public PathFinder GetPathFinder { get; private set; }
         public int GetMoodHealthPercent { get; private set; }
@@ -194,6 +195,7 @@ namespace BattleCombine.Ai
 
         private IEnumerator MovePathRoutine()
         {
+            if(_lastStepIndex != -1) _field.ChangeTileForEnemy(_lastStepIndex, false);
             var currentStep = 0;
 
             while (currentStep < _pathFinder.CurrentWay.Count)
@@ -205,7 +207,8 @@ namespace BattleCombine.Ai
             }
 
             _lastStepIndex = _pathFinder.CurrentWay.Last();
-
+            _field.ChangeTileForEnemy(_lastStepIndex, true);
+            
             _currentAiBaseEnemy.EndAiTurn();
             _inputService.onFingerUp?.Invoke();
 
