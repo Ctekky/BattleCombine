@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Scripts.Game.Stats;
 using _Scripts.UI;
 using BattleCombine.Ai;
 using BattleCombine.Data;
@@ -67,6 +68,12 @@ namespace BattleCombine.Services
 
         #endregion
 
+        #region Boosters
+        [Header("BoosterHandler")]
+        [SerializeField] private BoostHandler _boostHandler;
+        #endregion
+
+        [Header("Other")]
         [SerializeField] private int currentStepInTurn;
         [SerializeField] private int currentTurn;
         [SerializeField] private int stepsInTurn;
@@ -219,6 +226,13 @@ namespace BattleCombine.Services
                     : player2.GetComponent<Player>());
         }
 
+        public void UpdateCurrentPlayerSpeed()
+        {
+            gameField.GetComponent<TileStack>().SpeedPlayer = currentPlayer.moveSpeedValue;
+            Debug.Log("SetSpeedBooster| current player speed = " + currentPlayer.moveSpeedValue + 
+                      "| current tileStuckSpeed = " + gameField.GetComponent<TileStack>().SpeedPlayer);
+        }
+
         private void InputFingerUp()
         {
             var tileStack = gameField.GetComponent<TileStack>();
@@ -234,6 +248,7 @@ namespace BattleCombine.Services
             var fieldScript = gameField.GetComponent<CreateField>();
             fieldScript.RefreshField();
             _saveManager.SaveGame();
+            _boostHandler.BoostUpdate();
         }
 
         private void GameOver(Player player)

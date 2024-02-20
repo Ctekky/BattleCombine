@@ -22,6 +22,8 @@ namespace BattleCombine.Ai
         private bool _isPaused;
         public AiArchetypes GetCurrentArchetype => currentArchetype;
 
+        [SerializeField] private Player _aiPlayer;
+
         //todo - if HP == X, then change stance;
         [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
 
@@ -60,6 +62,7 @@ namespace BattleCombine.Ai
         {
             _gameManager = arcadeGameService;
             _inputService = inputService;
+            AiSpeed = _aiPlayer.moveSpeedValue;
             ChangeEnemyStance += ChangeAiStance;
             _gameManager.onPlayerChange += GiveAiTurn;
             _gameManager.onBattleEnd += PauseAi;
@@ -72,7 +75,6 @@ namespace BattleCombine.Ai
 
         private void Awake()
         {
-            AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
             _nextTurnButton = FindObjectOfType<NextTurnButton>();
             _field = FindObjectOfType<CreateField>();
             _isPaused = false;
