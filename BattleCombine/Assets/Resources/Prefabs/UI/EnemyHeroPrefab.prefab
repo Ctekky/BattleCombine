@@ -526,7 +526,7 @@ RectTransform:
   m_GameObject: {fileID: 4779996241652399337}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4297148856145249043}
@@ -760,6 +760,7 @@ MonoBehaviour:
   moveSpeedValue: 0
   playerUIScript: {fileID: 5838217023709320270}
   playerName: Enemy
+  avatarID: 0
 --- !u!114 &-3352779556028992961
 MonoBehaviour:
   m_ObjectHideFlags: 0
