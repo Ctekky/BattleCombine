@@ -8,6 +8,7 @@ using BattleCombine.ScriptableObjects;
 using BattleCombine.Services;
 using BattleCombine.Services.Other;
 using UnityEngine;
+using Zenject;
 using Random = System.Random;
 
 namespace BattleCombine.Gameplay
@@ -71,6 +72,8 @@ namespace BattleCombine.Gameplay
         private Random _rand;
         private int _fieldSize;
         private bool _isTileFullSetup;
+
+        [Inject] private GlobalEventService _globalEventService;
 
         public Tile GetAiStartTile { get; private set; }
         public int GetAiStartTileIndex { get; private set; }
@@ -162,7 +165,7 @@ namespace BattleCombine.Gameplay
 
                     currentTile.transform.Rotate(90, 180, 0);
                     var tileComponent = currentTile.GetComponent<Tile>();
-
+                    tileComponent.SetUpGlobalEventService(_globalEventService);
                     ChangeTileType(tileComponent);
                     tileComponent.SetupTile(tileStack, _currentTileColorSettings);
                     _tileList.Add(tileComponent);
@@ -211,18 +214,28 @@ namespace BattleCombine.Gameplay
             _rand = new Random();
             var roll = _rand.Next(0, 100);
             if (roll >= tileRefreshChance) return;
+            currentTile.onTileRefreshAnimationTriggered += TileRefreshAnimationTrigger;
+            currentTile.OnTileRefreshEvent();
+            // TileRefreshAnimationTrigger(currentTile);
+        }
+
+        private void TileRefreshAnimationTrigger(Tile currentTile)
+        {
             ChangeTileType(currentTile);
             currentTile.StateMachine.ChangeState(currentTile.EnabledState);
+            currentTile.onTileRefreshAnimationTriggered -= TileRefreshAnimationTrigger;
         }
 
         public void RefreshField()
         {
+            _globalEventService.OnFieldRefreshInvoke();
             foreach (var currentTile in _tileList)
             {
                 if (currentTile.GetTileState == TileState.DisabledState)
                 {
                     RefreshEmptyTile(currentTile);
                 }
+                /*
                 else if ((currentTile.GetTileType != CellType.Shield && currentTile.TileModifier < 9))
                 {
                     if (currentTile.TileModifier == -1)
@@ -231,6 +244,8 @@ namespace BattleCombine.Gameplay
                     else
                         currentTile.ChangeTileModifier(currentTile.TileModifier + 1, true);
                 }
+                */
+                
             }
         }
 
@@ -272,6 +287,11 @@ namespace BattleCombine.Gameplay
                 defaultAiStartTilePos = _fieldSize - 1;
 
             return isAiRandomStart ? _rand.Next(0, _fieldSize) : defaultAiStartTilePos;
+        }
+
+        public void ChangeTileForEnemy(int index, bool flag)
+        {
+            _tileList[index].TileEnemyEndTurn(flag);
         }
 
         private void FindStartTileIndex(Tile startTile)
@@ -325,7 +345,6 @@ namespace BattleCombine.Gameplay
                 roll -= dictionary.Value;
                 return roll < 0;
             }).Key;
-
             currentTile.ChangeTileType(selectedType);
             ChangeTileModifier(currentTile, selectedType.modifierChances);
         }
