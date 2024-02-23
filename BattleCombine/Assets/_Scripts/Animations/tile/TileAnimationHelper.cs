@@ -3,15 +3,16 @@ using UnityEngine;
 
 namespace BattleCombine.Animations
 {
-    public class TileTextAnimationHelper : MonoBehaviour
+    public class TileAnimationHelper : MonoBehaviour
     {
         [SerializeField] private Animator animator;
         [SerializeField] private string animationName;
         
-        public Action onTileTextAnimationTrigger;
-        public void TileTextAnimationTriggerEvent()
+        public Action onTileAnimationTrigger;
+        
+        public void TileAnimationTriggerEvent()
         {
-            onTileTextAnimationTrigger?.Invoke();
+            onTileAnimationTrigger?.Invoke();
         }
 
         public void SetAnimationBool(bool flag)
@@ -19,5 +20,4 @@ namespace BattleCombine.Animations
             animator.SetBool(animationName, flag);
         }
     }
-    
 }

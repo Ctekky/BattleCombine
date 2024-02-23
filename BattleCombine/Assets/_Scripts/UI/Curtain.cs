@@ -15,7 +15,7 @@ namespace _Scripts.UI
 
 		private Coroutine _curtainRoutine;
 		private Image _curtainImage;
-		private float _changeRate = 2.5f;
+		private float _changeRate = 3f;
 		private float _waitTime = 0.005f;
 
 		public Image GetCurtainImage => _curtainImage;

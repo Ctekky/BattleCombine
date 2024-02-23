@@ -8,8 +8,11 @@ using TMPro;
 using UnityEngine;
 using System.Linq;
 using BattleCombine.Animations;
+using BattleCombine.Services;
 using BattleCombine.Services.Other;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
+using Zenject;
 
 namespace BattleCombine.Gameplay
 {
@@ -31,8 +34,14 @@ namespace BattleCombine.Gameplay
         [SerializeField] private List<GameObject> tilesForChoosing = new List<GameObject>();
         [SerializeField] private List<GameObject> tilesNearThisTile = new List<GameObject>();
 
+        [SerializeField] private Color tileEnemyColor;
+
+        [FormerlySerializedAs("currentNormalTile")] [SerializeField]
+        private Color currentNormalColor;
+
         //Animation part
         [SerializeField] private TileTextAnimationHelper tileTextAnimationHelper;
+        [SerializeField] private TileAnimationHelper tileAnimationHelper;
 
         //TODO: set type and modifier to tile
         [SerializeField] private TileType tileType;
@@ -40,6 +49,9 @@ namespace BattleCombine.Gameplay
         [SerializeField] private TextMeshPro text;
         [SerializeField] private bool isAlignPlayer1 = false;
         [SerializeField] private bool isAlignPlayer2 = false;
+
+
+        [Inject] private GlobalEventService _globalEventService;
 
         public bool IsAlignPlayer1 => isAlignPlayer1;
         public bool IsAlignPlayer2 => isAlignPlayer2;
@@ -98,6 +110,7 @@ namespace BattleCombine.Gameplay
 
         public Action<Tile> onTileTouched;
         public Action<bool> onSpeedEnded;
+        public Action<Tile> onTileRefreshAnimationTriggered;
 
         #endregion
 
@@ -110,12 +123,32 @@ namespace BattleCombine.Gameplay
             DisabledState = new DisabledState(this, StateMachine);
             EnabledState = new EnabledState(this, StateMachine);
             FinalChoiceState = new FinalChoiceState(this, StateMachine);
-            tileTextAnimationHelper.onAnimationTrigger += OnAnimationTileTextUpTrigger;
+            tileTextAnimationHelper.onTileTextAnimationTrigger += OnAnimationTileTextUpTrigger;
+            tileAnimationHelper.onTileAnimationTrigger += OnAnimationTileTrigger;
+        }
+
+        public void SetUpGlobalEventService(GlobalEventService ges)
+        {
+            _globalEventService = ges;
+            _globalEventService.onFieldRefresh += OnFieldRefreshEvent;
         }
 
         private void OnDisable()
         {
-            tileTextAnimationHelper.onAnimationTrigger -= OnAnimationTileTextUpTrigger;
+            tileTextAnimationHelper.onTileTextAnimationTrigger -= OnAnimationTileTextUpTrigger;
+            _globalEventService.onFieldRefresh -= OnFieldRefreshEvent;
+            tileAnimationHelper.onTileAnimationTrigger -= OnAnimationTileTrigger;
+        }
+
+        public void OnTileRefreshEvent()
+        {
+            tileAnimationHelper.SetAnimationBool(true);
+        }
+
+        private void OnAnimationTileTrigger()
+        {
+            onTileRefreshAnimationTriggered?.Invoke(this);
+            tileAnimationHelper.SetAnimationBool(false);
         }
 
         private void OnAnimationTileTextUpTrigger()
@@ -135,6 +168,23 @@ namespace BattleCombine.Gameplay
                 case < 0:
                     text.text = tileModifier.ToString(CultureInfo.CurrentCulture);
                     ChangeTileSprite(tileType.spriteDown);
+                    break;
+            }
+        }
+
+        private void OnFieldRefreshEvent()
+        {
+            if (GetTileState == TileState.DisabledState) return;
+            if (GetTileType == CellType.Shield) return;
+            switch (TileModifier)
+            {
+                case >= 9:
+                    return;
+                case -1:
+                    ChangeTileModifier(TileModifier + 2, true);
+                    break;
+                default:
+                    ChangeTileModifier(TileModifier + 1, true);
                     break;
             }
         }
@@ -389,6 +439,13 @@ namespace BattleCombine.Gameplay
             }
 
             return listAfterSort;
+        }
+
+        public void TileEnemyEndTurn(bool flag)
+        {
+            if (flag) currentNormalColor = tileNormalColor;
+            tileNormalColor = flag ? tileEnemyColor : currentNormalColor;
+            typeSprite.color = flag ? tileEnemyColor : currentNormalColor;
         }
 
         private void ActionForTileTouch(List<GameObject> list)

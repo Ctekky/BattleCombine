@@ -14,12 +14,15 @@ namespace BattleCombine.Ai
     public class AiHandler : MonoBehaviour
     {
         public static event Action ChangeEnemyStance;
+        public Action<int> onEnemyEndTurn;
 
         public PathFinder GetPathFinder { get; private set; }
         public int GetMoodHealthPercent { get; private set; }
         public int AiSpeed { get; private set; }
         private bool _isPaused;
         public AiArchetypes GetCurrentArchetype => currentArchetype;
+
+        [SerializeField] private Player _aiPlayer;
 
         //todo - if HP == X, then change stance;
         [field: SerializeField] private AiArchetypes currentArchetype { get; set; }
@@ -59,6 +62,7 @@ namespace BattleCombine.Ai
         {
             _gameManager = arcadeGameService;
             _inputService = inputService;
+            AiSpeed = _aiPlayer.moveSpeedValue;
             ChangeEnemyStance += ChangeAiStance;
             _gameManager.onPlayerChange += GiveAiTurn;
             _gameManager.onBattleEnd += PauseAi;
@@ -71,7 +75,6 @@ namespace BattleCombine.Ai
 
         private void Awake()
         {
-            AiSpeed = FindObjectOfType<TileStack>().SpeedPlayer;
             _nextTurnButton = FindObjectOfType<NextTurnButton>();
             _field = FindObjectOfType<CreateField>();
             _isPaused = false;
@@ -194,6 +197,7 @@ namespace BattleCombine.Ai
 
         private IEnumerator MovePathRoutine()
         {
+            if(_lastStepIndex != -1) _field.ChangeTileForEnemy(_lastStepIndex, false);
             var currentStep = 0;
 
             while (currentStep < _pathFinder.CurrentWay.Count)
@@ -205,7 +209,8 @@ namespace BattleCombine.Ai
             }
 
             _lastStepIndex = _pathFinder.CurrentWay.Last();
-
+            _field.ChangeTileForEnemy(_lastStepIndex, true);
+            
             _currentAiBaseEnemy.EndAiTurn();
             _inputService.onFingerUp?.Invoke();
 

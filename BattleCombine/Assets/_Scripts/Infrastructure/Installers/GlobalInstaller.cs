@@ -8,12 +8,15 @@ public class GlobalInstaller : MonoInstaller
     [SerializeField] private PlayerAccount playerAccountPrefab;
     [SerializeField] private SaveManager saveManagerPrefab;
     [SerializeField] private MainGameService gameServicePrefab;
+    [SerializeField] private GlobalEventService globalEventServicePrefab;
 
     public override void InstallBindings()
     {
         var resourceService = 
             Container.InstantiatePrefabForComponent<ResourceService>(resourceServicePrefab);
         Container.Bind<ResourceService>().FromInstance(resourceService).AsSingle();
+        var eventService = Container.InstantiatePrefabForComponent<GlobalEventService>(globalEventServicePrefab);
+        Container.Bind<GlobalEventService>().FromInstance(eventService).AsSingle();
         var playerAccount =
             Container.InstantiatePrefabForComponent<PlayerAccount>(playerAccountPrefab);
         Container.Bind<PlayerAccount>().FromInstance(playerAccount).AsSingle();
@@ -21,5 +24,6 @@ public class GlobalInstaller : MonoInstaller
         Container.Bind<MainGameService>().FromInstance(gameService).AsSingle();
         var saveManager = Container.InstantiatePrefabForComponent<SaveManager>(saveManagerPrefab);
         Container.Bind<SaveManager>().FromInstance(saveManager).AsSingle();
+        
     }
 }

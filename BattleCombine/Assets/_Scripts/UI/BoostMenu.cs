@@ -1,3 +1,4 @@
+using _Scripts.Game.Stats;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,121 +7,174 @@ namespace _Scripts.UI
 {
 	public class BoostMenu : MonoBehaviour
 	{
-		[Header("Boost Cooldown")]
-		[SerializeField] private int _cooldown = 7;
-		
-		[Header("BoostImg")]
-		[SerializeField] private Image _health;
-		[SerializeField] private Image _healthPlus;
-		[SerializeField] private Image _attack;
-		[SerializeField] private Image _attackPlus;
-		[SerializeField] private Image _shield;
-		[SerializeField] private Image _speed;
+		[Header("BoostButtons")]
+		[SerializeField] private Button _healthButton;
+		[SerializeField] private Button _healthPlusButton;
+		[SerializeField] private Button _attackButton;
+		[SerializeField] private Button _attackPlusButton;
+		[SerializeField] private Button _shieldButton;
+		[SerializeField] private Button _speedButton;
+
+		[Header("BoostPauseMenuButtons")]
+		[SerializeField] private Button _healthPauseMenuButton;
+		[SerializeField] private Button _healthPauseMenuPlusButton;
+		[SerializeField] private Button _attackPauseMenuButton;
+		[SerializeField] private Button _attackPauseMenuPlusButton;
+		[SerializeField] private Button _shieldPauseMenuButton;
+		[SerializeField] private Button _speedPauseMenuButton;
 
 		[Header("Sprites")]
 		[SerializeField] private Sprite[] _boostSprites;
 		[SerializeField] private Sprite[] _boostCooldownSprites;
 
-		[Header("Values")]
-		[SerializeField] private TMP_Text _healthText;
-		[SerializeField] private TMP_Text _healthPlusText;
-		[SerializeField] private TMP_Text _attackText;
-		[SerializeField] private TMP_Text _attackPlusText;
-		[SerializeField] private TMP_Text _shieldText;
-		[SerializeField] private TMP_Text _speedText;
+		private BoostHandler boostHandler;
+		private PauseMenu pauseMenu;
 
-		[Header("CooldownTextValues")]
-		[SerializeField] private TMP_Text _healthCooldownText;
-		[SerializeField] private TMP_Text _healthPlusCooldownText;
-		[SerializeField] private TMP_Text _attackCooldownText;
-		[SerializeField] private TMP_Text _attackPlusCooldownText;
-		[SerializeField] private TMP_Text _shieldCooldownText;
-		[SerializeField] private TMP_Text _speedCooldownText;
+		//todo - count value of boosters;
 
-		private bool isHealthCooldown;
-		private bool isHealthPlusCooldown;
-		private bool isAttackCooldown;
-		private bool isAttackPlusCooldown;
-		private bool isShieldCooldown;
-		private bool isSpeedCooldown;
-
-		private Button _healthButton;
-		private Button _healthPlusButton;
-		private Button _attackButton;
-		private Button _attackPlusButton;
-		private Button _shieldButton;
-		private Button _speedButton;
-		
-		public string SetHealthText {get => _healthText.text; set => _healthText.text = value;}
-		public string SetHealthPlusText {get => _healthPlusText.text; set => _healthPlusText.text = value;}
-		public string SetAttackText {get => _attackText.text; set => _attackText.text = value;}
-		public string SetAttackPlusText {get => _attackPlusText.text; set => _attackPlusText.text = value;}
-		public string SetShieldText {get => _shieldText.text; set => _shieldText.text = value;}
-		public string SetSpeedText {get => _speedText.text; set => _speedText.text = value;}
+		private void OnEnable()
+		{
+			boostHandler = GetComponent<BoostHandler>();
+		}
 
 		private void Start()
 		{
-			_healthButton = _health.GetComponent<Button>();
-			_healthButton.onClick.AddListener(() => HealthCooldown(_cooldown));
-			_healthPlusButton = _healthPlus.GetComponent<Button>();
-			_healthPlusButton.onClick.AddListener(() => HealthPlusCooldown(_cooldown));
-			_attackButton = _attack.GetComponent<Button>();
-			_attackButton.onClick.AddListener(() => AttackCooldown(_cooldown));
-			_attackPlusButton = _attackPlus.GetComponent<Button>();
-			_attackPlusButton.onClick.AddListener(() => AttackPlusCooldown(_cooldown));
-			_shieldButton = _shield.GetComponent<Button>();
-			_shieldButton.onClick.AddListener(() => ShieldCooldown(_cooldown));
-			_speedButton = _speed.GetComponent<Button>();
-			_speedButton.onClick.AddListener(() => SpeedCooldown(_cooldown));
+			_healthButton.onClick.AddListener(OnHealthBoostClick);
+			_attackButton.onClick.AddListener(AttackCooldown);
+
+			_healthPlusButton.onClick.AddListener(() => HealthPlusCooldown(boostHandler.IsHealthLongBoostActive));
+			_attackPlusButton.onClick.AddListener(() => AttackPlusCooldown(boostHandler.IsAttackLongBoostActive));
+			_shieldButton.onClick.AddListener(() => ShieldCooldown(boostHandler.IsShieldLongBoostActive));
+			_speedButton.onClick.AddListener(() => SpeedCooldown(boostHandler.IsSpeedLongBoostActive));
+
+			_healthPauseMenuButton.onClick.AddListener(OnHealthBoostClick);
+			_attackPauseMenuButton.onClick.AddListener(AttackCooldown);
+
+			_healthPauseMenuPlusButton.onClick.AddListener(() => HealthPlusCooldown(boostHandler.IsHealthLongBoostActive));
+			_attackPauseMenuPlusButton.onClick.AddListener(() => AttackPlusCooldown(boostHandler.IsAttackLongBoostActive));
+			_shieldPauseMenuButton.onClick.AddListener(() => ShieldCooldown(boostHandler.IsShieldLongBoostActive));
+			_speedPauseMenuButton.onClick.AddListener(() => SpeedCooldown(boostHandler.IsSpeedLongBoostActive));
 		}
 
-		public void HealthCooldown(int cooldownValue)
+		private void OnHealthBoostClick()
 		{
-			SwitchCooldown(ref isHealthCooldown, _health, _healthCooldownText, 0, cooldownValue);
-		}		
-		
-		public void HealthPlusCooldown(int cooldownValue)
-		{
-			SwitchCooldown(ref isHealthPlusCooldown, _healthPlus, _healthPlusCooldownText, 1, cooldownValue);
-		}		
-		
-		public void AttackCooldown(int cooldownValue)
-		{
-			SwitchCooldown(ref isAttackCooldown, _attack, _attackCooldownText, 2, cooldownValue);
-		}		
-		
-		public void AttackPlusCooldown(int cooldownValue)
-		{
-			SwitchCooldown(ref isAttackPlusCooldown, _attackPlus, _attackPlusCooldownText, 3, cooldownValue);
-		}		
-		
-		public void ShieldCooldown(int cooldownValue)
-		{
-			SwitchCooldown(ref isShieldCooldown, _shield, _shieldCooldownText, 4, cooldownValue);
-		}		
-		
-		public void SpeedCooldown(int cooldownValue)
-		{
-			SwitchCooldown(ref isSpeedCooldown, _speed, _speedCooldownText, 5, cooldownValue);
-		}		
-		
+			Debug.Log("пуф");
+			boostHandler.BoostAttack(false);
+		}
 
-		private void SwitchCooldown(ref bool currentBool, Image currentImage, TMP_Text currentText, int spriteIndex, int cooldownValue)
+		private void AttackCooldown()
 		{
-			currentBool = !currentBool;
+			boostHandler.BoostHealth(false);
+		}
 
-			switch (currentBool)
+		private void HealthPlusCooldown(bool isHealthPlusCooldown)
+		{
+			if(isHealthPlusCooldown) return;
+
+			boostHandler.BoostHealth(true);
+			EnterCooldownView(_healthPlusButton.GetComponent<BoostButton>().GetImage, _healthPlusButton.GetComponent<BoostButton>().GetCooldownText, 1,
+				boostHandler.GetHealthBoostCurrentDuration);
+
+			EnterCooldownView(_healthPauseMenuPlusButton.GetComponent<BoostButton>().GetImage, _healthPauseMenuPlusButton.GetComponent<BoostButton>().GetCooldownText, 1,
+				boostHandler.GetHealthBoostCurrentDuration);
+		}
+
+		private void AttackPlusCooldown(bool isAttackPlusCooldown)
+		{
+			if(isAttackPlusCooldown) return;
+
+			boostHandler.BoostAttack(true);
+			EnterCooldownView(_attackPlusButton.GetComponent<BoostButton>().GetImage, _attackPlusButton.GetComponent<BoostButton>().GetCooldownText, 3,
+				boostHandler.GetAttackBoostCurrentDuration);
+
+			EnterCooldownView(_attackPauseMenuPlusButton.GetComponent<BoostButton>().GetImage, _attackPauseMenuPlusButton.GetComponent<BoostButton>().GetCooldownText, 3,
+				boostHandler.GetAttackBoostCurrentDuration);
+		}
+
+		private void ShieldCooldown(bool isShieldCooldown)
+		{
+			if(isShieldCooldown) return;
+
+			boostHandler.BoostShield();
+			EnterCooldownView(_shieldButton.GetComponent<BoostButton>().GetImage, _shieldButton.GetComponent<BoostButton>().GetCooldownText, 4,
+				boostHandler.GetShieldBoostCurrentDuration);
+
+			EnterCooldownView(_shieldPauseMenuButton.GetComponent<BoostButton>().GetImage, _shieldPauseMenuButton.GetComponent<BoostButton>().GetCooldownText, 4,
+				boostHandler.GetShieldBoostCurrentDuration);
+		}
+
+		private void SpeedCooldown(bool isSpeedCooldown)
+		{
+			if(isSpeedCooldown) return;
+
+			boostHandler.BoostSpeed();
+			EnterCooldownView(_speedButton.GetComponent<BoostButton>().GetImage, _speedButton.GetComponent<BoostButton>().GetCooldownText, 5,
+				boostHandler.GetSpeedBoostCurrentDuration);
+
+			EnterCooldownView(_speedPauseMenuButton.GetComponent<BoostButton>().GetImage, _speedPauseMenuButton.GetComponent<BoostButton>().GetCooldownText, 5,
+				boostHandler.GetSpeedBoostCurrentDuration);
+		}
+
+
+		private void EnterCooldownView(Image currentImage, TMP_Text currentText, int spriteIndex, int cooldownValue = 0)
+		{
+			currentImage.sprite = _boostCooldownSprites[spriteIndex];
+			currentText.gameObject.SetActive(true);
+			currentText.text = cooldownValue.ToString();
+		}
+
+		private void ExitCooldownView(Image currentImage, TMP_Text currentText, int spriteIndex)
+		{
+			currentImage.sprite = _boostSprites[spriteIndex];
+			currentText.gameObject.SetActive(false);
+		}
+
+		public void ExitCooldown()
+		{
+			if(!boostHandler.IsAttackLongBoostActive)
 			{
-				case true:
-					currentImage.sprite = _boostCooldownSprites[spriteIndex];
-					currentText.gameObject.SetActive(true);
-					currentText.text = cooldownValue.ToString();
-					break;
-				default:
-					currentImage.sprite = _boostSprites[spriteIndex];
-					currentText.gameObject.SetActive(false);
-					break;
+				ExitCooldownView(_attackPlusButton.GetComponent<BoostButton>().GetImage, _attackPlusButton.GetComponent<BoostButton>().GetCooldownText, 3);
+				ExitCooldownView(_attackPauseMenuPlusButton.GetComponent<BoostButton>().GetImage,
+					_attackPauseMenuPlusButton.GetComponent<BoostButton>().GetCooldownText, 3);
 			}
+
+			if(!boostHandler.IsHealthLongBoostActive)
+			{
+				ExitCooldownView(_healthPlusButton.GetComponent<BoostButton>().GetImage, _healthPlusButton.GetComponent<BoostButton>().GetCooldownText, 1);
+				ExitCooldownView(_healthPauseMenuPlusButton.GetComponent<BoostButton>().GetImage,
+					_healthPauseMenuPlusButton.GetComponent<BoostButton>().GetCooldownText, 1);
+			}
+
+			if(!boostHandler.IsShieldLongBoostActive)
+			{
+				ExitCooldownView(_shieldButton.GetComponent<BoostButton>().GetImage, _shieldButton.GetComponent<BoostButton>().GetCooldownText, 4);
+				ExitCooldownView(_shieldPauseMenuButton.GetComponent<BoostButton>().GetImage,
+					_shieldPauseMenuButton.GetComponent<BoostButton>().GetCooldownText, 4);
+			}
+
+			if(!boostHandler.IsSpeedLongBoostActive)
+			{
+				ExitCooldownView(_speedButton.GetComponent<BoostButton>().GetImage, _speedButton.GetComponent<BoostButton>().GetCooldownText, 5);
+				ExitCooldownView(_speedPauseMenuButton.GetComponent<BoostButton>().GetImage, _speedPauseMenuButton.GetComponent<BoostButton>().GetCooldownText,
+					5);
+			}
+		}
+
+		private void OnDisable()
+		{
+			_healthButton.onClick.RemoveListener(OnHealthBoostClick);
+			_attackButton.onClick.RemoveListener(AttackCooldown);
+			_healthPlusButton.onClick.RemoveListener(() => HealthPlusCooldown(boostHandler.IsHealthLongBoostActive));
+			_attackPlusButton.onClick.RemoveListener(() => AttackPlusCooldown(boostHandler.IsAttackLongBoostActive));
+			_shieldButton.onClick.RemoveListener(() => ShieldCooldown(boostHandler.IsShieldLongBoostActive));
+			_speedButton.onClick.RemoveListener(() => SpeedCooldown(boostHandler.IsSpeedLongBoostActive));
+
+			_healthPauseMenuButton.onClick.RemoveListener(OnHealthBoostClick);
+			_healthPauseMenuPlusButton.onClick.RemoveListener(AttackCooldown);
+			_attackPauseMenuButton.onClick.RemoveListener(() => HealthPlusCooldown(boostHandler.IsHealthLongBoostActive));
+			_attackPauseMenuPlusButton.onClick.RemoveListener(() => AttackPlusCooldown(boostHandler.IsAttackLongBoostActive));
+			_shieldPauseMenuButton.onClick.RemoveListener(() => ShieldCooldown(boostHandler.IsShieldLongBoostActive));
+			_speedPauseMenuButton.onClick.RemoveListener(() => SpeedCooldown(boostHandler.IsSpeedLongBoostActive));
 		}
 	}
 }

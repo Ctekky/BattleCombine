@@ -193,7 +193,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278209792
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -465,7 +465,10 @@ MonoBehaviour:
   tileID: 0
   tilesForChoosing: []
   tilesNearThisTile: []
+  tileEnemyColor: {r: 1, g: 0, b: 0, a: 1}
+  currentNormalColor: {r: 0, g: 0, b: 0, a: 0}
   tileTextAnimationHelper: {fileID: 4925942363016054613}
+  tileAnimationHelper: {fileID: 30120979702810260}
   tileType: {fileID: 11400000, guid: 0cbfd373c49892844a1b42ffb77a1168, type: 2}
   tileModifier: 5
   text: {fileID: 2226465790456060401}
@@ -529,6 +532,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8754641353907052396}
   - component: {fileID: 6805105043564170373}
+  - component: {fileID: 30120979702810260}
   m_Layer: 6
   m_Name: Achor
   m_TagString: Untagged
@@ -576,6 +580,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &30120979702810260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2894030692692851580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d3320080da7ac4db88a2cddef44556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 6805105043564170373}
+  animationName: stretch
 --- !u!1 &6215361947914798964
 GameObject:
   m_ObjectHideFlags: 0

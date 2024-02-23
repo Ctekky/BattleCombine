@@ -32,7 +32,7 @@ namespace _Scripts.UI
         [SerializeField] private Button _startBattleButton;
 
         [Header("Game Panels")] [SerializeField]
-        private BoostMenu _boostMenu;
+        private BoostPanel _boostMenu;
 
         [SerializeField] private PauseMenu _pauseMenu;
         [SerializeField] private SettingsMenu _settingsMenu;
@@ -70,7 +70,7 @@ namespace _Scripts.UI
         {
             _currentScene = SceneManager.GetActiveScene();
             BattleSceneExitEvent += OnSceneExit;
-            if (_levelUpMenu != null) _levelUpMenu.onStatChange += LevelUpStat;
+            if (_levelUpMenu != null) _levelUpMenu.StatChangeEvent += LevelUpStat;
             if (_nextButton != null) _nextButton.image.sprite = disableSprite;
             if (_pauseMenu != null) _pauseMenu.OnLeaveGameButtonPress += EndBattle;
             isNextButtonEnable = false;
@@ -226,7 +226,7 @@ namespace _Scripts.UI
             if (_leaveLoseButton != null) _leaveLoseButton.onClick.RemoveListener(OnLoseLeaveButtonClick);
             if (_continueWinButton != null) _continueWinButton.onClick.RemoveListener(OnWinContinueClick);
             if (_pauseMenu != null) _pauseMenu.OnLeaveGameButtonPress -= EndBattle;
-            if (_levelUpMenu != null) _levelUpMenu.onStatChange -= LevelUpStat;
+            if (_levelUpMenu != null) _levelUpMenu.StatChangeEvent -= LevelUpStat;
             switch (_currentScene.name)
             {
                 case gameLoopScene:

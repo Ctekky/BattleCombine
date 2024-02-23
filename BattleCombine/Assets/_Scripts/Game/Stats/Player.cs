@@ -16,11 +16,13 @@ namespace BattleCombine.Gameplay
         [Inject] private MainGameService _mainGameService;
         public string GetPlayerName => playerName;
         public int AvatarID => avatarID;
+        public PlayerUI GetUi {get; private set;}
 
         protected override void Start()
         {
             base.Start();
             playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString(), Shielded);
+            GetUi = GetComponent<PlayerUI>();
         }
 
         public void UpdateStats()
