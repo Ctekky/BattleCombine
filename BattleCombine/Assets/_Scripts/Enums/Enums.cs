@@ -8,7 +8,10 @@ namespace BattleCombine.Enums
         Empty,
     }
     public enum FieldSize : byte
-    {
+    {  
+        XTwoTiles,
+        XThreeTiles,
+        XFourTiles,
         UltraSmall,
         Small,
         Medium,

@@ -45,16 +45,8 @@ namespace BattleCombine.Gameplay
         private float tileOffset = 1.1f;
 
         [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
-        private float tutorFieldScale = 1.8f;
-
-        [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
-        private float smallFieldScale = 1.45f;
-
-        [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
-        private float mediumFieldScale = 1.2f;
-
-        [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
-        private float largeFieldScale = 1.04f;
+        private List<float> fieldScales = new List<float>() {5f, 4f, 2.7f, 2.15f, 1.61f,1.29f,1.076f, 0.925f,
+        };
 
         [Header("TileTypes & Chances - %")] [SerializeField]
         private List<TileTypeDictionary> tileTypeChances;
@@ -113,6 +105,9 @@ namespace BattleCombine.Gameplay
         {
             _fieldSize = sizeType switch
             {
+                FieldSize.XTwoTiles => 2,
+                FieldSize.XThreeTiles => 3,
+                FieldSize.XFourTiles => 4,
                 FieldSize.UltraSmall => 5,
                 FieldSize.Small => 6,
                 FieldSize.Medium => 7,
@@ -199,13 +194,13 @@ namespace BattleCombine.Gameplay
 
         private void ModifyTitleSize()
         {
-            tileParent.transform.localScale = _fieldSize switch
-            {
-                5 => new Vector3(tutorFieldScale, 0, tutorFieldScale),
-                6 => new Vector3(smallFieldScale, 0, smallFieldScale),
-                7 => new Vector3(mediumFieldScale, 0, mediumFieldScale),
-                8 => new Vector3(largeFieldScale, 0, largeFieldScale),
-                _ => tileParent.transform.localScale
+            tileParent.transform.localScale = new Vector3(fieldScales[_fieldSize - 1], 0, fieldScales[_fieldSize - 1]);
+
+            tileParent.transform.localPosition = _fieldSize switch {
+                //todo del magic num
+                3 => new Vector3(3, 0, 3),
+                2 => new Vector3(2.25f, 0, 3),
+                _ => tileParent.transform.localPosition,
             };
         }
 
@@ -308,33 +303,6 @@ namespace BattleCombine.Gameplay
             }
         }
 
-        //todo - delete old func and comments!
-        //Хотел порефакторить метод, чтобы избавиться от повторящихся значений в довольно страшненьком классе...
-        //Чисто ради эексперимента попробовал использовать Linq, который я почти не знаю!
-        //First - возвращает первое значение, которое соответствует требованиям -
-        //В данном случае, это "значение - меньше чем Рол". т.е. именно тот вес, который требуется...
-        //Как уже объяснял ранее, событие соответствует требованиям по шансу выпадения в % записанных в инспекторе.
-        //в итоге сэкономил меньше строчек, чем потратил на этот коммент :D Зато выглядит симпатичнее, да...
-
-        #region OldChangeTileType
-
-        //private void ChangeTileType(Tile currentTile)
-        //{
-        //	_rand = new Random();
-        //	var totalWeight = tileTypeChances.Sum(dictionary => dictionary.Value);
-        //	var roll = _rand.Next(0, totalWeight);
-        //	var cumulativeWeight = 0;
-        //	foreach (var dictionary in tileTypeChances)
-        //	{
-        //		cumulativeWeight += dictionary.Value;
-        //		if(roll >= cumulativeWeight) continue;
-        //		currentTile.ChangeTileType(dictionary.Key);
-        //		ChangeTileModifier(currentTile, dictionary.Key.modifierChances);
-        //		return;
-        //	}
-        //}
-
-        #endregion
 
         private void ChangeTileType(Tile currentTile)
         {
@@ -348,27 +316,6 @@ namespace BattleCombine.Gameplay
             currentTile.ChangeTileType(selectedType);
             ChangeTileModifier(currentTile, selectedType.modifierChances);
         }
-
-        #region OldChangeTileModificator
-
-        //private void ChangeTileModifier(Tile currentTile, List<TileModifierDictionary> table)
-        //{
-        //	_rand = new Random();
-        //	var totalWeight = table.Sum(dictionary => dictionary.chance);
-        //
-        //	var roll = _rand.Next(0, totalWeight);
-        //	var cumulativeWeight = 0;
-        //
-        //	foreach (var dictionary in table)
-        //	{
-        //		cumulativeWeight += dictionary.chance;
-        //		if(roll >= cumulativeWeight) continue;
-        //		currentTile.ChangeTileModifier(dictionary.value);
-        //		return;
-        //	}
-        //}
-
-        #endregion
 
         private void ChangeTileModifier(Tile currentTile, IReadOnlyCollection<TileModifierDictionary> table)
         {
