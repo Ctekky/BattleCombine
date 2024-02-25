@@ -13,8 +13,8 @@ namespace BattleCombine.Gameplay
 
         public override void Enter()
         {
-            _tile.SetTileColor(true);
-            _tile.SetBorderColor(false);
+            _tile.SetTileColor(true, _tile.GetTileStack.IDPlayer);
+            _tile.SetBorderColor(false, _tile.GetTileStack.IDPlayer);
             StateName = TileState.FinalChoiceState;
             _tile.SetCurrentState(StateName);
 

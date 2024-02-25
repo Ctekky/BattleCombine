@@ -46,3 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileColor: {r: 0.654902, g: 1, b: 0.30980393, a: 1}
   borderColor: {r: 0.45882353, g: 0.88235295, b: 0.03529412, a: 1}
+  tileEnemyColor: {r: 0.936, g: 0.100429155, b: 0.100429155, a: 1}
+  borderEnemyColor: {r: 0.6509434, g: 0.0521983, b: 0.0521983, a: 1}
