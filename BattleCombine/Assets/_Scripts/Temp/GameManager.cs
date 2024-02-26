@@ -171,7 +171,7 @@ namespace BattleCombine.Gameplay
                 return;
             //чисто для проверки добавлял булку
             isFirstRun = false;
-            gameField.GetComponent<CreateField>().SetupField(false, FieldSize.Large, tileColorSettings);
+            gameField.GetComponent<CreateField>().SetupField(false, FieldSize.XSevenTiles, tileColorSettings);
             //TODO: change AI Type behavior
             //TODO: calculate stats and get next AI type
         }

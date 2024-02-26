@@ -50,6 +50,10 @@ namespace BattleCombine.Gameplay
         [SerializeField] private bool isAlignPlayer1 = false;
         [SerializeField] private bool isAlignPlayer2 = false;
 
+        
+        //TODO get separate scriptable object for this
+        [SerializeField] private Sprite tileNormalImage;
+        [SerializeField] private Sprite tileEnemyEndImage;
 
         [Inject] private GlobalEventService _globalEventService;
 
@@ -215,12 +219,25 @@ namespace BattleCombine.Gameplay
         public void ChangeTileType(TileType type)
         {
             tileType = type;
+            if (type.cellType == CellType.Void)
+            {
+                tileSprite.sprite = tileType.spriteUp;
+                gameObject.layer = 2;
+            }
+            else
+            {
+                tileSprite.sprite = tileNormalImage;
+                gameObject.layer = 6;
+            }
             switch (type.cellType)
             {
                 case CellType.Empty:
                     ChangeTileModifier(0, false);
                     break;
                 case CellType.Shield:
+                    ChangeTileModifier(0, false);
+                    break;
+                case CellType.Void:
                     ChangeTileModifier(0, false);
                     break;
             }
@@ -263,7 +280,13 @@ namespace BattleCombine.Gameplay
             startTile = isStartTile;
         }
 
-        public void SetupTile(TileStack mainTileStack, ColorSettings tileColorSettings)
+        public void UpdateTileInInspector()
+        {
+            ChangeTileType(tileType);
+            ChangeTileModifier(tileModifier, false);
+        }
+
+        public void SetupTile(TileStack mainTileStack, ColorSettings tileColorSettings, bool isLevelDesign)
         {
             tileStack = mainTileStack;
             tileNormalColor = Color.white;
@@ -272,6 +295,7 @@ namespace BattleCombine.Gameplay
             tileChosenBorder = tileColorSettings.borderColor;
             tileSprite.color = tileNormalColor;
             borderSprite.color = tileNormalBorder;
+            if(isLevelDesign) return;
             if (startTile)
             {
                 StateMachine.Initialize(AvailableForSelectionState);
