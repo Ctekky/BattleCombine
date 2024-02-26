@@ -122,15 +122,20 @@ MonoBehaviour:
   defaultAiStartTilePos: 2
   isPlayerRandomStart: 1
   tileStack: {fileID: 3865557558910741595}
-  sizeType: 2
+  sizeType: 5
   tileParent: {fileID: 5861258062984849538}
   tile: {fileID: 105925409287168891, guid: b5cffa0cdebd1814b8fa0e06cd2967e8, type: 3}
   edgeOffset: 0.5
   tileOffset: 1.1
-  tutorFieldScale: 1.8
-  smallFieldScale: 1.45
-  mediumFieldScale: 1.2
-  largeFieldScale: 1.04
+  fieldScales:
+  - 5
+  - 4
+  - 2.7
+  - 2.15
+  - 1.61
+  - 1.29
+  - 1.076
+  - 0.925
   tileTypeChances:
   - Key: {fileID: 11400000, guid: 530c4220e922b5641b0bf732d90064de, type: 2}
     Value: 60

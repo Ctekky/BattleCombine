@@ -6,16 +6,17 @@ namespace BattleCombine.Enums
         Health,
         Shield,
         Empty,
+        Void
     }
     public enum FieldSize : byte
     {  
         XTwoTiles,
         XThreeTiles,
         XFourTiles,
-        UltraSmall,
-        Small,
-        Medium,
-        Large,
+        XFiveTiles,
+        XSixTiles,
+        XSevenTiles,
+        XEightTiles,
     }
     public enum StatsEnum : byte
     {

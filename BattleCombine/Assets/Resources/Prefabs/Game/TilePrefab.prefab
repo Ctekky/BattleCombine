@@ -474,6 +474,8 @@ MonoBehaviour:
   text: {fileID: 2226465790456060401}
   isAlignPlayer1: 0
   isAlignPlayer2: 0
+  tileNormalImage: {fileID: 21300000, guid: 61728d2d3825a524aa50faf7eacfbcd7, type: 3}
+  tileEnemyEndImage: {fileID: 21300000, guid: 61728d2d3825a524aa50faf7eacfbcd7, type: 3}
   tileLayerMask:
     serializedVersion: 2
     m_Bits: 64
