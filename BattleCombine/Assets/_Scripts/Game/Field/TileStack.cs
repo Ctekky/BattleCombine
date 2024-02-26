@@ -175,6 +175,14 @@ namespace BattleCombine.Gameplay
                 else
                 {
                     tile.StateMachine.ChangeState(tile.AvailableForSelectionState);
+                    if (IDPlayer == IDPlayer.Player1)
+                    {
+                        tile.BorderSpriteTile.color = tile.GetChosenEnemyBorder;
+                    }
+                    else if (IDPlayer == IDPlayer.Player2)
+                    {
+                        tile.BorderSpriteTile.color = tile.GetChosenBorder;
+                    }
                 }
             }
         }

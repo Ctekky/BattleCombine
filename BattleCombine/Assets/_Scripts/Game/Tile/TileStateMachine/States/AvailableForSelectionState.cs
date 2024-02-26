@@ -15,8 +15,8 @@ namespace BattleCombine.Gameplay
         public override void Enter()
         {
             TileStatusHelp = true;
-            _tile.SetTileColor(false);
-            _tile.SetBorderColor(true);
+            _tile.SetTileColor(false, _tile.GetTileStack.IDPlayer);
+            _tile.SetBorderColor(true, _tile.GetTileStack.IDPlayer);
             StateName = TileState.AvailableForSelectionState;
             _tile.SetCurrentState(StateName);
             
@@ -31,7 +31,6 @@ namespace BattleCombine.Gameplay
                     _tile.SetAlignTileToPlayer2(true);
                     break;
             }
-            //}
         }
 
         public override void Input()

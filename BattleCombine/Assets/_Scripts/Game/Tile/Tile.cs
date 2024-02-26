@@ -13,6 +13,7 @@ using BattleCombine.Services.Other;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using Zenject;
+using _Scripts.Temp;
 
 namespace BattleCombine.Gameplay
 {
@@ -24,8 +25,10 @@ namespace BattleCombine.Gameplay
         [SerializeField] private SpriteRenderer typeSprite;
         [SerializeField] private Color tileNormalColor;
         [SerializeField] private Color tileChosenColor;
+        [SerializeField] private Color tileChosenEnemyColor;
         [SerializeField] private Color tileNormalBorder;
         [SerializeField] private Color tileChosenBorder;
+        [SerializeField] private Color tileChosenEnemyBorder;
         [SerializeField] private TileStack tileStack;
         [SerializeField] private bool startTile = false;
         [SerializeField] private TileState tileCurrentState;
@@ -95,6 +98,19 @@ namespace BattleCombine.Gameplay
         {
             get => tileID;
             set => tileID = value;
+        }
+        public SpriteRenderer BorderSpriteTile
+        {
+            get => borderSprite;
+            set => borderSprite = value;
+        }
+        public Color GetChosenBorder
+        {
+            get => tileChosenBorder;
+        }
+        public Color GetChosenEnemyBorder
+        {
+            get => tileChosenEnemyBorder;
         }
 
         public TileStack GetTileStack => tileStack;
@@ -270,6 +286,8 @@ namespace BattleCombine.Gameplay
             tileNormalBorder = new Color(255, 255, 255, 0);
             tileChosenColor = tileColorSettings.tileColor;
             tileChosenBorder = tileColorSettings.borderColor;
+            tileChosenEnemyColor = tileColorSettings.tileEnemyColor;
+            tileChosenEnemyBorder = tileColorSettings.borderEnemyColor;
             tileSprite.color = tileNormalColor;
             borderSprite.color = tileNormalBorder;
             if (startTile)
@@ -317,14 +335,42 @@ namespace BattleCombine.Gameplay
             get => tileCurrentState;
         }
 
-        public void SetBorderColor(bool state)
+        public void SetBorderColor(bool state, IDPlayer playerID)
         {
-            borderSprite.color = state ? tileChosenBorder : tileNormalBorder;
+            if (state)
+            {
+                if (playerID == IDPlayer.Player1)
+                {
+                    borderSprite.color = tileChosenBorder;
+                }
+                else if (playerID == IDPlayer.Player2)
+                {
+                    borderSprite.color = tileChosenEnemyBorder;
+                }
+            }
+            else
+            {
+                borderSprite.color = tileNormalBorder;
+            }
         }
 
-        public void SetTileColor(bool state)
+        public void SetTileColor(bool state, IDPlayer playerID)
         {
-            tileSprite.color = state ? tileChosenBorder : tileNormalColor;
+            if (state)
+            {
+                if (playerID == IDPlayer.Player1)
+                {
+                    tileSprite.color = tileChosenColor;
+                }
+                else if (playerID == IDPlayer.Player2)
+                {
+                    tileSprite.color = tileChosenEnemyColor;
+                }
+            }
+            else
+            {
+                tileSprite.color = tileNormalColor;
+            }
         }
 
         public void Touch()
