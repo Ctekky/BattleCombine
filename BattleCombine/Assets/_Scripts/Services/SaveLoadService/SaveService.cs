@@ -38,7 +38,7 @@ namespace BattleCombine.Services
         public void Initialization()
         {
             Debug.Log(Application.persistentDataPath);
-            _fileName = "nesave.dat";
+            _fileName = "newsave.dat";
             encryptData = false;
             _dataHandler = new FileDataHandler(Application.persistentDataPath, _fileName, encryptData);
             _saveInterfacesInScripts = FindAllSaveAndLoadInterfaces();
