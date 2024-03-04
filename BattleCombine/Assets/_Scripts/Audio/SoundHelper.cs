@@ -22,11 +22,13 @@ namespace _Scripts.Audio
         [SerializeField] private AudioMixer _mixer;
 
         [SerializeField] private AudioClip _clickSound;
-        
-        
+
         private bool isSfxOn;
         private bool isMusicOn;
         private bool isVibrationOn;
+
+        public AudioSource GetSfxSource => _sfxSource;
+        public AudioSource GetMusicSource => _musicSource;
 
         private void Start()
         {

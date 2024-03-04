@@ -7,23 +7,33 @@ namespace _Scripts.Audio
 	{
 		[Header("Папка со звуками")]
 		[SerializeField] private string _soundPath = "SFX";
+		[Header("Папка с Музыкой")]
+		[SerializeField] private string _musicPath = "Music";
 
 		private readonly Dictionary<string, AudioClip> sounds = new Dictionary<string, AudioClip>();
+		private readonly Dictionary<string, AudioClip> musicThemes = new Dictionary<string, AudioClip>();
+
+		private AudioSource sfxSource;
+		private AudioSource musicSource;
+
+		private void OnEnable()
+		{
+			//todo - подвязаться к глобальному ивенту смены сцены
+			//ивент += LoadAudioSources();
+		}
 
 		private void Awake()
-			=> LoadSounds();
-
-		public void PlaySound(string key, AudioSource source)
 		{
-			if(source == null)
-			{
-				Debug.LogWarning("AudioSource not found!");
-				return;
-			}
+			UpdateAudioSources();
+			LoadSounds();
+			LoadMusic();
+		}
 
+		public void PlaySound(string key)
+		{
 			if(sounds.TryGetValue(key, out var sound))
 			{
-				source.PlayOneShot(sound);
+				sfxSource.PlayOneShot(sound);
 			}
 			else
 			{
@@ -31,9 +41,28 @@ namespace _Scripts.Audio
 			}
 		}
 
+		public void PlayMusic(string key)
+		{
+			if(musicThemes.TryGetValue(key, out var music))
+			{
+				musicSource.PlayOneShot(music);
+			}
+			else
+			{
+				Debug.LogWarning("Music with key " + key + " not found!");
+			}
+		}
+
+		private void UpdateAudioSources()
+		{
+			var soundHelper = FindObjectOfType<SoundHelper>();
+			
+			sfxSource = soundHelper.GetSfxSource;
+			musicSource = soundHelper.GetMusicSource;
+		}
+
 		private void LoadSounds()
 		{
-			//source - Resources/Sounds
 			var clips = Resources.LoadAll<AudioClip>(_soundPath);
 
 			foreach (var clip in clips)
@@ -42,13 +71,34 @@ namespace _Scripts.Audio
 			}
 		}
 
-		public void StopSound(AudioSource source)
-			=> source.Stop();
+		private void LoadMusic()
+		{
+			var clips = Resources.LoadAll<AudioClip>(_soundPath);
 
-		public void PauseSound(AudioSource source)
-			=> source.Pause();
+			foreach (var clip in clips)
+			{
+				musicThemes.Add(clip.name, clip);
+			}
+		}
 
-		public void UnpauseSound(AudioSource source)
-			=> source.Play();
+		public void StopSound()
+			=> sfxSource.Stop();
+		public void PauseSound()
+			=> sfxSource.Pause();
+		public void UnpauseSound()
+			=> sfxSource.Play();		
+		
+		public void StopMusic()
+			=> musicSource.Stop();
+		public void PauseMusic()
+			=> musicSource.Pause();
+		public void UnpauseMusic()
+			=> musicSource.Play();
+
+		private void OnDisable()
+		{
+			//todo - отвязаться
+			//ивент -= LoadAudioSources();
+		}
 	}
 }
