@@ -3301,6 +3301,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyHeroPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 6333075410500782126, guid: 395004208ae909d4494cd4271c7da268, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 667464159713596929, guid: 395004208ae909d4494cd4271c7da268, type: 3}

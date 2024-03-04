@@ -11,13 +11,7 @@ namespace _Scripts.Audio
         private const string SfxMixer = "SfxVolume";
         private const float SoundOnValue = 1;
         private const float SoundOffValue = 0.0001f;
-        
-        //[Header("VolumeSwitchers")] //todo - rewrite (Trial billet)
-        //[SerializeField] private Button sfxOn;
-        //[SerializeField] private Button sfxOff;
-        //[SerializeField] private Button musicOn;
-        //[SerializeField] private Button musicOff;
-        
+
         [Header("VolumeSliders")] 
         [SerializeField] private Slider _musicSlider;
         [SerializeField] private Slider _sfxSlider;
@@ -36,14 +30,12 @@ namespace _Scripts.Audio
 
         private void Start()
         {
-            //sfxOn.onClick.AddListener(SwitchSfxButton);
-            //sfxOff.onClick.AddListener(SwitchSfxButton);
-            //musicOn.onClick.AddListener(SwitchMusicButton);
-            //musicOff.onClick.AddListener(SwitchMusicButton);
             _musicSlider.onValueChanged.AddListener(ChangeMusicVolume);
             _sfxSlider.onValueChanged.AddListener(ChangeSfxVolume);
         }
 
+        //todo - скрипт можно оставить, т.к. он, по сути, просто регулирует звук.
+        //Но плейСаунды выпилить, т.к. они тут уже будут не нужны в будущем ибо проигрываться будет через сервис.
         public void PlayClickSound()
         {
             PlaySound(_clickSound);
@@ -54,22 +46,6 @@ namespace _Scripts.Audio
         {
             _sfxSource.PlayOneShot(clip);
         }
-
-        //private void SwitchSfxButton()
-        //{
-        //    _isSfxOn = !_isSfxOn;
-        //    sfxOn.gameObject.SetActive(!_isSfxOn);
-        //    sfxOff.gameObject.SetActive(_isSfxOn);
-        //    ChangeSfxVolume(_isSfxOn ? _soundOff : _soundOn);
-        //}
-
-        //private void SwitchMusicButton()
-        //{
-        //    _isMusicOn = !_isMusicOn;
-        //    musicOn.gameObject.SetActive(!_isMusicOn);
-        //    musicOff.gameObject.SetActive(_isMusicOn);
-        //    ChangeMusicVolume(_isMusicOn ? _soundOff : _soundOn);
-        //}
 
         private void ChangeMusicVolume(float value)
         {
@@ -82,6 +58,5 @@ namespace _Scripts.Audio
             var dbValue = Mathf.Log10(value) * 20;
             _mixer.SetFloat(SfxMixer, dbValue);
         }
-
     }
 }
