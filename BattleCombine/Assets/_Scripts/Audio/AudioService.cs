@@ -6,9 +6,9 @@ namespace _Scripts.Audio
 	public class AudioService : MonoBehaviour
 	{
 		[Header("Папка со звуками")]
-		[SerializeField] private string _soundPath = "SFX";
+		[SerializeField] private string _soundPath = "Audio/Effects";
 		[Header("Папка с Музыкой")]
-		[SerializeField] private string _musicPath = "Music";
+		[SerializeField] private string _musicPath = "Audio/Music";
 
 		private readonly Dictionary<string, AudioClip> sounds = new Dictionary<string, AudioClip>();
 		private readonly Dictionary<string, AudioClip> musicThemes = new Dictionary<string, AudioClip>();
@@ -73,7 +73,7 @@ namespace _Scripts.Audio
 
 		private void LoadMusic()
 		{
-			var clips = Resources.LoadAll<AudioClip>(_soundPath);
+			var clips = Resources.LoadAll<AudioClip>(_musicPath);
 
 			foreach (var clip in clips)
 			{
