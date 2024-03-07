@@ -21,6 +21,7 @@ namespace _Scripts.Audio
 		[Header("MasterMixer")]
 		[SerializeField] private AudioMixer _mixer;
 
+		//todo - delete
 		[SerializeField] private AudioClip _clickSound;
 
 		private bool isSfxOn;
@@ -46,7 +47,7 @@ namespace _Scripts.Audio
 			PlaySound(_clickSound);
 		}
 
-		//play sound
+		//todo - del this play sound
 		private void PlaySound(AudioClip clip)
 		{
 			_sfxSource.PlayOneShot(clip);

@@ -18,8 +18,8 @@ namespace _Scripts.Audio
 
 		private void OnEnable()
 		{
-			//todo - подвязаться к глобальному ивенту смены сцены
-			//ивент += LoadAudioSources();
+			//todo - link to global scene changeEvent
+			//event += LoadAudioSources();
 		}
 
 		private void Awake()
@@ -83,6 +83,8 @@ namespace _Scripts.Audio
 
 		public void StopSound()
 			=> sfxSource.Stop();
+		
+		//todo - useful or not?
 		public void PauseSound()
 			=> sfxSource.Pause();
 		public void UnpauseSound()
@@ -97,8 +99,8 @@ namespace _Scripts.Audio
 
 		private void OnDisable()
 		{
-			//todo - отвязаться
-			//ивент -= LoadAudioSources();
+			//todo - unlink
+			//event -= LoadAudioSources();
 		}
 	}
 }
