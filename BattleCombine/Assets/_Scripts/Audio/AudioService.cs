@@ -27,6 +27,8 @@ namespace _Scripts.Audio
 			UpdateAudioSources();
 			LoadSounds();
 			LoadMusic();
+			
+			DontDestroyOnLoad(this);
 		}
 
 		public void PlaySound(string key)
