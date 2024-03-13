@@ -79,3 +79,4 @@ MonoBehaviour:
   saveManagerPrefab: {fileID: 111876604988128674, guid: bb73ffb66acc8754a93a4c0b9d0e202d, type: 3}
   gameServicePrefab: {fileID: 1054097128707585351, guid: f013b9b16a1638a4a9f0cdf8a4b00c1f, type: 3}
   globalEventServicePrefab: {fileID: 2084372437751992779, guid: 31c2ec94eec539143b19d8e0cfd38440, type: 3}
+  audioServicePrefab: {fileID: 7719414613635072853, guid: 222b180a394106d438037c712a324897, type: 3}

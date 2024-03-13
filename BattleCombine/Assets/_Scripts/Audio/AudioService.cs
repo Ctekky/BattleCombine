@@ -9,12 +9,14 @@ namespace _Scripts.Audio
 		[SerializeField] private string _soundPath = "Audio/Effects";
 		[Header("Папка с Музыкой")]
 		[SerializeField] private string _musicPath = "Audio/Music";
+		
+		[Header("Источники Звука")]
+		[SerializeField] private AudioSource sfxSource;
+		[SerializeField] private AudioSource musicSource;
 
 		private readonly Dictionary<string, AudioClip> sounds = new Dictionary<string, AudioClip>();
 		private readonly Dictionary<string, AudioClip> musicThemes = new Dictionary<string, AudioClip>();
 
-		private AudioSource sfxSource;
-		private AudioSource musicSource;
 
 		private void OnEnable()
 		{
@@ -24,11 +26,8 @@ namespace _Scripts.Audio
 
 		private void Awake()
 		{
-			UpdateAudioSources();
 			LoadSounds();
 			LoadMusic();
-			
-			DontDestroyOnLoad(this);
 		}
 
 		public void PlaySound(string key)
@@ -36,6 +35,7 @@ namespace _Scripts.Audio
 			if(sounds.TryGetValue(key, out var sound))
 			{
 				sfxSource.PlayOneShot(sound);
+				Debug.Log(sound + "played");
 			}
 			else
 			{
@@ -55,13 +55,26 @@ namespace _Scripts.Audio
 			}
 		}
 
-		private void UpdateAudioSources()
+		public void UpdateAudioSources(AudioSource sfxSrc, AudioSource musicSrc)
 		{
-			var soundHelper = FindObjectOfType<SoundHelper>();
-			
-			sfxSource = soundHelper.GetSfxSource;
-			musicSource = soundHelper.GetMusicSource;
+			sfxSource = sfxSrc;
+			musicSource = musicSrc;
 		}
+
+		public void StopSound()
+			=> sfxSource.Stop();
+		//todo - useful or not?
+		public void PauseSound()
+			=> sfxSource.Pause();
+		public void UnpauseSound()
+			=> sfxSource.Play();
+		
+		public void StopMusic()
+			=> musicSource.Stop();
+		public void PauseMusic()
+			=> musicSource.Pause();
+		public void UnpauseMusic()
+			=> musicSource.Play();
 
 		private void LoadSounds()
 		{
@@ -70,6 +83,7 @@ namespace _Scripts.Audio
 			foreach (var clip in clips)
 			{
 				sounds.Add(clip.name, clip);
+				Debug.Log(clip + " / " + clip.name );
 			}
 		}
 
@@ -82,22 +96,6 @@ namespace _Scripts.Audio
 				musicThemes.Add(clip.name, clip);
 			}
 		}
-
-		public void StopSound()
-			=> sfxSource.Stop();
-		
-		//todo - useful or not?
-		public void PauseSound()
-			=> sfxSource.Pause();
-		public void UnpauseSound()
-			=> sfxSource.Play();		
-		
-		public void StopMusic()
-			=> musicSource.Stop();
-		public void PauseMusic()
-			=> musicSource.Pause();
-		public void UnpauseMusic()
-			=> musicSource.Play();
 
 		private void OnDisable()
 		{

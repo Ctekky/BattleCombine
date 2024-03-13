@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 namespace _Scripts.UI
 {
@@ -58,6 +59,9 @@ namespace _Scripts.UI
         [SerializeField] private Sprite disableSprite;
         [SerializeField] private bool isNextButtonEnable;
 
+        [Inject]
+        private AudioService audioService;
+        
         private Scene _currentScene;
 
         private bool _isMatchPanelActive = false;
@@ -156,7 +160,7 @@ namespace _Scripts.UI
 
         private void OnCloseButtonClick()
         {
-            _soundHelper.PlayClickSound();
+            audioService.PlaySound("button_click");
             OnPauseButtonClick(true);
             OnOptionsButtonClick(true);
             OnBoostButtonClick(true);
