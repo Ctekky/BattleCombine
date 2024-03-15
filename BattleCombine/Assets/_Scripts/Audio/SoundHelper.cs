@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using Zenject;
 
 namespace _Scripts.Audio
 {
@@ -21,12 +22,12 @@ namespace _Scripts.Audio
 		[Header("MasterMixer")]
 		[SerializeField] private AudioMixer _mixer;
 
-		//todo - delete
-		[SerializeField] private AudioClip _clickSound;
-
 		private bool isSfxOn;
 		private bool isMusicOn;
 		private bool isVibrationOn;
+
+		[Inject]
+		private AudioService audioSource;
 
 		public AudioSource GetSfxSource => _sfxSource;
 		public AudioSource GetMusicSource => _musicSource;
@@ -38,19 +39,8 @@ namespace _Scripts.Audio
 
 			if(_sfxSlider != null)
 				_sfxSlider.onValueChanged.AddListener(ChangeSfxVolume);
-		}
 
-		//todo - скрипт можно оставить, т.к. он, по сути, просто регулирует звук.
-		//Но плейСаунды выпилить, т.к. они тут уже будут не нужны в будущем ибо проигрываться будет через сервис.
-		public void PlayClickSound()
-		{
-			PlaySound(_clickSound);
-		}
-
-		//todo - del this play sound
-		private void PlaySound(AudioClip clip)
-		{
-			_sfxSource.PlayOneShot(clip);
+			audioSource.UpdateAudioSources(_sfxSource, _musicSource);
 		}
 
 		private void ChangeMusicVolume(float value)

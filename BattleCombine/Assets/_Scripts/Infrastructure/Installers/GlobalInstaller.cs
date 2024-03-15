@@ -1,3 +1,4 @@
+using _Scripts.Audio;
 using Zenject;
 using BattleCombine.Services;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class GlobalInstaller : MonoInstaller
     [SerializeField] private SaveManager saveManagerPrefab;
     [SerializeField] private MainGameService gameServicePrefab;
     [SerializeField] private GlobalEventService globalEventServicePrefab;
+    [SerializeField] private AudioService audioServicePrefab;
     [SerializeField] private AnimationService animationServicePrefab;
 
     public override void InstallBindings()
@@ -29,5 +31,7 @@ public class GlobalInstaller : MonoInstaller
         Container.Bind<SaveManager>().FromInstance(saveManager).AsSingle();
 
         
+        var audioService = Container.InstantiatePrefabForComponent<AudioService>(audioServicePrefab);
+        Container.Bind<AudioService>().FromInstance(audioService).AsSingle();
     }
 }
