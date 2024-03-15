@@ -39,6 +39,7 @@ namespace BattleCombine.Services
         [SerializeField] private bool isBattleActive;
         [SerializeField] private bool isEnemySelectionScene;
         [Inject] private ResourceService _resourceService;
+        [Inject] private AnimationService _animationService;
 
         #region MyRegion EnemyData
 
@@ -69,6 +70,11 @@ namespace BattleCombine.Services
         public ColorSettings GetCurrentColorSettings()
         {
             return currentColorSettings;
+        }
+
+        public AnimationService GetAnimationService()
+        {
+            return _animationService;
         }
 
         public bool IsBattleActive => isBattleActive;

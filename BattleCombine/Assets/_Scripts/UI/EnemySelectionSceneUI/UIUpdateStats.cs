@@ -1,8 +1,11 @@
+
+using System;
 using System.Collections.Generic;
 using BattleCombine.Data;
 using BattleCombine.Gameplay;
+using BattleCombine.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace BattleCombine.UI
 {
@@ -14,7 +17,24 @@ namespace BattleCombine.UI
         [SerializeField] private Player confirmPanelEnemy;
         [SerializeField] private Player player;
         [SerializeField] private Player confirmPanelPlayer;
+        [SerializeField] private SOEnemyRerollAnimationTable enemyRerollAnimationTable;
 
+        public event Action onEndRerollTrigger; 
+
+        private void OnEnable()
+        {
+            firstEnemy.GetUi().onEndRerollTrigger += EndReroll;
+        }
+
+        private void OnDisable()
+        {
+            firstEnemy.GetUi().onEndRerollTrigger -= EndReroll;
+        }
+
+        private void EndReroll()
+        {
+            onEndRerollTrigger?.Invoke();
+        }
         public void UpdateEnemiesStats(List<EnemyStatsStruct> enemyStatsList)
         {
             UpdateEnemyStats(enemyStatsList[0], firstEnemy);
@@ -57,6 +77,16 @@ namespace BattleCombine.UI
             firstEnemy.SetupAvatar(enemyAvatarList[0], enemyAvatarList[0].ID);
             secondEnemy.SetupAvatar(enemyAvatarList[1], enemyAvatarList[1].ID);
             thirdEnemy.SetupAvatar(enemyAvatarList[2], enemyAvatarList[2].ID);
+        }
+
+        public void RerollEnemies()
+        {
+            var animationNameIndex = Random.Range(0, enemyRerollAnimationTable.rerollAnimationName.Count);
+            firstEnemy.PlayRerollAnimation(enemyRerollAnimationTable.rerollAnimationName[animationNameIndex]);
+            animationNameIndex = Random.Range(0, enemyRerollAnimationTable.rerollAnimationName.Count);
+            secondEnemy.PlayRerollAnimation(enemyRerollAnimationTable.rerollAnimationName[animationNameIndex]);
+            animationNameIndex = Random.Range(0, enemyRerollAnimationTable.rerollAnimationName.Count);
+            thirdEnemy.PlayRerollAnimation(enemyRerollAnimationTable.rerollAnimationName[animationNameIndex]);
         }
     }
 }
