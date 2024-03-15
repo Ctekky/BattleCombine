@@ -15,6 +15,7 @@ namespace _Scripts.UI
         private const string gameLoopScene = "ArcadeGameLoop";
 
         public event Action BattleButtonClickEvent;
+        public event Action RerollButtonClickEvent; 
         public event Action<string> BattleSceneExitEvent;
 
         [Header("Buttons")] [SerializeField] private Button _settingsButton;
@@ -92,6 +93,12 @@ namespace _Scripts.UI
         {
             isNextButtonEnable = true;
             _nextButton.image.sprite = enableSprite;
+        }
+
+        public void NextButtonDeactivate()
+        {
+            isNextButtonEnable = false;
+            _nextButton.image.sprite = disableSprite;
         }
 
         public void ShowMatchResult(bool isWin, int score = 0, int bestScore = 0, int diamonds = 0, int coins = 0,
@@ -202,7 +209,7 @@ namespace _Scripts.UI
 
         private void OnReRollButtonClick()
         {
-            Debug.Log("ReRollButton Clicked!");
+            RerollButtonClickEvent?.Invoke();
         }
 
         private void OnBattleButtonClick()

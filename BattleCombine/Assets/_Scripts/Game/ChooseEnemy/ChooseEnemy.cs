@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Data;
@@ -24,18 +25,27 @@ public class ChooseEnemy : MonoBehaviour
         set => currentScore = value;
     }
 
+    private void Start()
+    {
+        finalEnemyStatsList = new List<EnemyStatsStruct>();
+        chosenAvatarList = new List<EnemyAvatarStruct>();
+        chosenList = new List<EnemyStatsStruct>();
+    }
+
     private void GetSomeEnemies(List<EnemyStatsStruct> baseTable, int count)
     {
         var usedIndex = new List<int>();
         for (var i = 0; i < count; i++)
         {
+            /*
             var index = 0;
             do
             {
                 index = Random.Range(0, baseTable.Count);
             } while (usedIndex.Contains(index));
 
-            usedIndex.Add(index);
+            usedIndex.Add(index);*/
+            var index = Random.Range(0, baseTable.Count);
             chosenList.Add(baseTable[index]);
         }
     }
@@ -77,10 +87,11 @@ public class ChooseEnemy : MonoBehaviour
 
     public void CalculateEnemies(int score)
     {
-        finalEnemyStatsList = new List<EnemyStatsStruct>();
+        finalEnemyStatsList.Clear();
+        chosenList.Clear();
         GetSomeEnemies(enemyStatsTable.enemyStatsStruct, enemyCountToChoose);
         var weakEnemyScore = score - 1;
-        if (weakEnemyScore <= 0) weakEnemyScore = 1;
+        if (weakEnemyScore <= 0) weakEnemyScore = 0;
         var strongEnemyScore = score + 1;
         ApplyStatModifiers(0, weakEnemyScore);
         ApplyStatModifiers(1, score);
@@ -89,7 +100,7 @@ public class ChooseEnemy : MonoBehaviour
 
     public List<EnemyAvatarStruct> GetFinalAvatars()
     {
-        chosenAvatarList = new List<EnemyAvatarStruct>();
+        chosenAvatarList.Clear();
         GetSomeAvatars(_resourceService.GetAvatarDB.avatarList, enemyCountToChoose);
         return chosenAvatarList;
     }
