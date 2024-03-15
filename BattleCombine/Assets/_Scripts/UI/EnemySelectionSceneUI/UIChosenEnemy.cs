@@ -14,6 +14,7 @@ public class UIChosenEnemy : MonoBehaviour
     [SerializeField] private Player thirdEnemy;
 
     public event Action<Player> onEnemyClick;
+    public event Action onDeselectAll;
 
     private void Awake()
     {
@@ -45,5 +46,13 @@ public class UIChosenEnemy : MonoBehaviour
                 onEnemyClick?.Invoke(thirdEnemy);
                 break;
         }
+    }
+
+    public void DeselectAllEnemies()
+    {
+        firstEnemy.ChangeAvatarState(false);
+        secondEnemy.ChangeAvatarState(false);
+        thirdEnemy.ChangeAvatarState(false);
+        onDeselectAll?.Invoke();
     }
 }

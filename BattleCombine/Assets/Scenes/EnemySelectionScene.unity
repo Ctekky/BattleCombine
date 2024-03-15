@@ -761,6 +761,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3686515433645248266, guid: 395004208ae909d4494cd4271c7da268, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4200953333958026823, guid: 395004208ae909d4494cd4271c7da268, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2047,6 +2051,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3599559781538101009, guid: 395004208ae909d4494cd4271c7da268, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3686515433645248266, guid: 395004208ae909d4494cd4271c7da268, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4200953333958026823, guid: 395004208ae909d4494cd4271c7da268, type: 3}
@@ -3553,6 +3561,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3686515433645248266, guid: 395004208ae909d4494cd4271c7da268, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627876116901472106, guid: 395004208ae909d4494cd4271c7da268, type: 3}
       propertyPath: m_Name
       value: EnemyHeroPrefab
@@ -3964,7 +3976,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1170, y: 2532}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -4040,6 +4052,7 @@ MonoBehaviour:
   confirmPanelEnemy: {fileID: 2146440681147237775}
   player: {fileID: 112048388}
   confirmPanelPlayer: {fileID: 2146440681147237774}
+  enemyRerollAnimationTable: {fileID: 11400000, guid: 6595249c5f43f364cac205fa148b29dc, type: 2}
 --- !u!114 &1616429035
 MonoBehaviour:
   m_ObjectHideFlags: 0
