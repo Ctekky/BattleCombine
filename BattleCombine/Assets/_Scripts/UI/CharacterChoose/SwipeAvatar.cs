@@ -79,23 +79,23 @@ namespace _Scripts.UI.CharacterChoose
 				swipeLeft = !(transform.localPosition.x > initialPosition.x);
 				avatars[2].localPosition = initialPositionNext;
 				avatars[0].localPosition = initialPositionPrev;
-				StartCoroutine(MovedCard());
+				StartCoroutine(MovedCard(true));
 			}
 		}
 
 		public void SwipeLeftButtonClick()
 		{
 			swipeLeft = true;
-			StartCoroutine(MovedCard());
+			StartCoroutine(MovedCard(false));
 		}	
 		
 		public void SwipeRightButtonClick()
 		{
 			swipeLeft = false;
-			StartCoroutine(MovedCard());
+			StartCoroutine(MovedCard(false));
 		}
 
-		private IEnumerator MovedCard()
+		private IEnumerator MovedCard(bool swipe)
 		{
 			float time = 0;
 			var colorFadeDuration = 0.2f; 
@@ -105,23 +105,26 @@ namespace _Scripts.UI.CharacterChoose
 			    _provider.AvatarMoveLeft();
 			else
 			    _provider.AvatarMoveRight();
-			
-			while (time < colorFadeDuration)
+
+			if(!swipe)
 			{
-				time += Time.deltaTime;
-				var position = currentAvatar.localPosition;
-
-				var newPositionX = Mathf.SmoothStep(position.x, position.x + (swipeLeft ? -1 : 1) * Screen.width,
-					moveSpeed * Time.deltaTime);
-
-				currentAvatar.localPosition = new Vector3(newPositionX, position.y, position.z);
-
-				if(currentAvatar.TryGetComponent<Image>(out var image))
+				while (time < colorFadeDuration)
 				{
-					image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(1, 0, time / colorFadeDuration));
+					time += Time.deltaTime;
+					var position = currentAvatar.localPosition;
+
+					var newPositionX = Mathf.SmoothStep(position.x, position.x + (swipeLeft ? -1 : 1) * Screen.width,
+						moveSpeed * Time.deltaTime);
+
+					currentAvatar.localPosition = new Vector3(newPositionX, position.y, position.z);
+
+					if(currentAvatar.TryGetComponent<Image>(out var image))
+					{
+						image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(1, 0, time / colorFadeDuration));
+					}
+
+					yield return null;
 				}
-				
-				yield return null;
 			}
 
 
