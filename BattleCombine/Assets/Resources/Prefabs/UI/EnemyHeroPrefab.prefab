@@ -724,7 +724,8 @@ MonoBehaviour:
   shieldSprite: {fileID: 5411824502802154030}
   avatarGameObject: {fileID: 4779996241652399337}
   speedArea: {fileID: 2977854841085428956}
-  speedPrefab: {fileID: 2188382078495627210, guid: d9bd76b31418c024c94e0a42c1cc8544, type: 3}
+  speedPrefab: {fileID: 2188382078495627210, guid: 19ac780cf62aabd4d9f75a8322c3cc35, type: 3}
+  speedPrefabBonus: {fileID: 2188382078495627210, guid: 0fedaea31783bb84a9c01d099daa9ad5, type: 3}
   createdSpeedObjectList: []
   _heartImg: {fileID: 6153143852977153947}
   _swordsImg: {fileID: 875868642532871517}

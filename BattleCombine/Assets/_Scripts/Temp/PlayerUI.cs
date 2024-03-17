@@ -1,7 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
+using BattleCombine.Gameplay;
 using BattleCombine.UI;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace _Scripts.Temp
@@ -16,6 +20,7 @@ namespace _Scripts.Temp
         [SerializeField] private GameObject avatarGameObject;
         [SerializeField] private GameObject speedArea;
         [SerializeField] private GameObject speedPrefab;
+        [SerializeField] private GameObject speedPrefabBonus;
         [SerializeField] private List<GameObject> createdSpeedObjectList;
 
         [Header("BoostTimer")]
@@ -29,8 +34,17 @@ namespace _Scripts.Temp
         [SerializeField] private TMP_Text _healthTimerText;
         [SerializeField] private TMP_Text _attackTimerText;
 
+
         private bool _isShielded;
         private bool _isPlayerBoostCooldownOn;
+        private void OnDisable()
+        {
+            DeleteAllSpeedObject();
+        }
+        public List<GameObject> GetCreatedSpeedObjectList
+        {
+            get => createdSpeedObjectList;
+        }
 
         public void UpdateLevelSlider(float value)
         {
@@ -122,6 +136,14 @@ namespace _Scripts.Temp
                 var speedObject = Instantiate(speedPrefab, speedArea.transform);
                 createdSpeedObjectList.Add(speedObject);
             }
+            var speedObjectBonus = Instantiate(speedPrefabBonus, speedArea.transform);
+            createdSpeedObjectList.Add(speedObjectBonus);
+            speedObjectBonus.SetActive(false);
+
+            if (SceneManager.GetActiveScene().name == "ArcadeGameLoop")
+            {
+                speedArea.GetComponent<SpeedPanelAnimationHelper>().FindSpeedBallAnimationHelper();
+            }
         }
 
         private void DeleteAllSpeedObject()
@@ -133,10 +155,10 @@ namespace _Scripts.Temp
 
             createdSpeedObjectList.Clear();
         }
-
-        private void OnDisable()
+        public void EnabledBonusSpeedSrite()
         {
-            DeleteAllSpeedObject();
+            createdSpeedObjectList.Last().SetActive(true);
         }
+
     }
 }

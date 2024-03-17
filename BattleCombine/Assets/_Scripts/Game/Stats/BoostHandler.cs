@@ -1,4 +1,5 @@
 using System;
+using _Scripts.Temp;
 using _Scripts.UI;
 using BattleCombine.Gameplay;
 using BattleCombine.Services;
@@ -134,6 +135,7 @@ namespace _Scripts.Game.Stats
 				Debug.Log("Speed Boost+");
 				longDurationSpeedBoostActive = true;
 				speedDuration = _speedMaxDuration;
+				_player.GetComponent<PlayerUI>().EnabledBonusSpeedSrite();
 			}
 
 			if(defaultSpeed == 0)
