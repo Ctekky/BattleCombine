@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,25 +12,25 @@ namespace _Scripts.UI.CharacterChoose
 
         private const string AvatarsPath = "Images/UI/Portraits/NewChars";
         
-        private List<Transform> avatarTransform = new List<Transform>();
-
         private void Awake()
         {
             LoadAvatars();
-            GetTransforms();
         }
+
+        //todo - Continue button link
+        public Sprite GetChosenAvatar() =>
+            _avatars.First();
 
         public void AvatarMoveLeft()
         {
             _avatarCards[1].sprite = _avatars.First();
-            Debug.Log("ВЛЕВА");
             
             AvatarListUpdate(true);
         }
         public void AvatarMoveRight()
         {
             _avatarCards[1].sprite = _avatars.Last();
-            Debug.Log("ВПРАВА");
+            
             AvatarListUpdate(false);
         }
 
@@ -72,14 +71,6 @@ namespace _Scripts.UI.CharacterChoose
             _avatarCards[0].sprite = _avatars.Last();
             _avatarCards[1].sprite = _avatars.First();
             _avatarCards[2].sprite = _avatars[1];
-        }
-
-        private void GetTransforms()
-        {
-            foreach (var card in _avatarCards)
-            {
-                avatarTransform.Add(card.gameObject.transform);
-            }
         }
     }
 }
