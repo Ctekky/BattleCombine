@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,7 @@ namespace _Scripts.UI.CharacterChoose
     {
         [SerializeField] private List<Sprite> _avatars;
         [SerializeField] private List<Image> _avatarCards;
+        [SerializeField] private TMP_Text _playerName;
 
         private const string AvatarsPath = "Images/UI/Portraits/NewChars";
         
@@ -17,9 +20,12 @@ namespace _Scripts.UI.CharacterChoose
             LoadAvatars();
         }
 
-        //todo - Continue button link
+        //todo - Continue button link needed
+        //or Player Account Set Avatar
         public Sprite GetChosenAvatar() =>
             _avatars.First();
+        public string GetPlayerName() =>
+            _playerName.text;
 
         public void AvatarMoveLeft()
         {
