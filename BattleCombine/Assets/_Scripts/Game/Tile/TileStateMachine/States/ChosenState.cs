@@ -69,6 +69,8 @@ namespace BattleCombine.Gameplay
             }
 
             listGameObjectTile.RemoveAt(listGameObjectTile.Count - 1);
+            _tile.GetTileStack.OnReduceTileInStackTrigger();
+
             if (_tile.GetTileStack.CheckForStartingTile(_tile))
                 _tile.GetTileStack.ChangeStartingTileState(_tile, false);
             _stateMachine.ChangeState(_tile.AvailableForSelectionState);
@@ -146,6 +148,8 @@ namespace BattleCombine.Gameplay
             }
 
             listCurrentPlayer.Remove(lastTileGameObjectInList);
+            _tile.GetTileStack.OnReduceTileInStackTrigger();
+
             tileListNextMove.Clear();
 
             #endregion

@@ -6,6 +6,7 @@ using BattleCombine.Data;
 using BattleCombine.Interfaces;
 using BattleCombine.Services;
 using UnityEngine;
+using Unity.VisualScripting;
 
 namespace BattleCombine.Gameplay
 {
@@ -14,6 +15,7 @@ namespace BattleCombine.Gameplay
         [SerializeField] private int speedPlayer;
         [SerializeField] private IDPlayer player;
         [SerializeField] private ArcadeGameService arcadeGameService;
+        //[SerializeField] private SpeedBallAnimationHelper speedBallAnimationHelper;
         [SerializeField] private List<GameObject> nextMoveTiles;
         [SerializeField] private List<GameObject> tilesForNextMovePlayer1;
         [SerializeField] private List<GameObject> tilesForNextMovePlayer2;
@@ -35,6 +37,9 @@ namespace BattleCombine.Gameplay
         public ArcadeGameService GetArcadeGameService => arcadeGameService;
 
         public Action<Tile> onTileChoose;
+        public Action addTileInStack;
+        public Action reduceTileInStack;
+        public Action refreshCountTileAndSpeed;
 
         public List<GameObject> TilesListPlayer1
         {
@@ -147,8 +152,9 @@ namespace BattleCombine.Gameplay
                     NextMoveTiles.AddRange(tilesForNextMovePlayer1);
                     break;
             }
-
+            
             PassingTheTurnToTheNextPlayer();
+
         }
 
         private void ConfirmSelectedTiles(List<GameObject> listChosenTile, List<GameObject> list,
@@ -198,6 +204,7 @@ namespace BattleCombine.Gameplay
 
         private void PassingTheTurnToTheNextPlayer()
         {
+            OnRefreshTilesStackAndSpeedTrigger();
             switch (IDPlayer)
             {
                 case IDPlayer.Player1:
@@ -310,6 +317,19 @@ namespace BattleCombine.Gameplay
             {
                 gameData.StartTile.Add(tileScript.TileID);
             }
+        }
+        public void OnAddTileInStackTrigger()
+        {
+            addTileInStack?.Invoke();
+        }
+
+        public void OnReduceTileInStackTrigger()
+        {
+            reduceTileInStack?.Invoke();
+        }
+        public void OnRefreshTilesStackAndSpeedTrigger()
+        {
+            refreshCountTileAndSpeed?.Invoke();
         }
     }
 }

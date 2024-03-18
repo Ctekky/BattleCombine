@@ -1,4 +1,5 @@
 using BattleCombine.Enums;
+using System;
 using UnityEngine;
 
 namespace BattleCombine.Gameplay
@@ -19,6 +20,7 @@ namespace BattleCombine.Gameplay
             _tile.SetBorderColor(true, _tile.GetTileStack.IDPlayer);
             StateName = TileState.AvailableForSelectionState;
             _tile.SetCurrentState(StateName);
+            
             
             //Debug.Log(_tile.GetTileStack.ToString());
             //Debug.Log(_tile.GetTileStack.IDPlayer.ToString());
@@ -68,6 +70,7 @@ namespace BattleCombine.Gameplay
                     }
 
                     _tile.GetTileStack.TilesListPlayer1.Add(_tile.gameObject);
+
                     break;
                 case IDPlayer.Player2: //TODO
                     if (_tile.GetTileStack.TilesListPlayer2.Count > 0 ||
@@ -112,6 +115,8 @@ namespace BattleCombine.Gameplay
                     }
 
                     _tile.GetTileStack.TilesListPlayer1.Add(_tile.gameObject);
+                    _tile.GetTileStack.OnAddTileInStackTrigger();
+
                     break;
                 case IDPlayer.Player2: //TODO
                     if (_tile.GetTileStack.TilesListPlayer2.Count > 0 ||
@@ -121,6 +126,8 @@ namespace BattleCombine.Gameplay
                     }
 
                     _tile.GetTileStack.TilesListPlayer2.Add(_tile.gameObject);
+                    _tile.GetTileStack.OnAddTileInStackTrigger();
+
                     break;
             }
 

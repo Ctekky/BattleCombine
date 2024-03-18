@@ -161,6 +161,7 @@ MonoBehaviour:
   speedPlayer: 3
   player: 0
   arcadeGameService: {fileID: 0}
+  speedBallAnimationHelper: {fileID: 0}
   nextMoveTiles: []
   tilesForNextMovePlayer1: []
   tilesForNextMovePlayer2: []

@@ -723,7 +723,8 @@ MonoBehaviour:
   shieldSprite: {fileID: 1340349462757451475}
   avatarGameObject: {fileID: 940831715400170277}
   speedArea: {fileID: 656335605052970440}
-  speedPrefab: {fileID: 2188382078495627210, guid: d9bd76b31418c024c94e0a42c1cc8544, type: 3}
+  speedPrefab: {fileID: 2188382078495627210, guid: 19ac780cf62aabd4d9f75a8322c3cc35, type: 3}
+  speedPrefabBonus: {fileID: 2188382078495627210, guid: 0fedaea31783bb84a9c01d099daa9ad5, type: 3}
   createdSpeedObjectList: []
   enemyRerollAnimator: {fileID: 0}
   animToTrigger: {fileID: 0}

@@ -20,7 +20,7 @@ namespace BattleCombine.UI
 
         private void Start()
         {
-            image.sprite = spriteStateTrue;
+            image.sprite = spriteStateFalse;
         }
 
         public void EnableState()
