@@ -49,9 +49,11 @@ namespace _Scripts.Temp
         {
             DeleteAllSpeedObject();
         }
+
         public List<GameObject> GetCreatedSpeedObjectList
         {
             get => createdSpeedObjectList;
+        }
 
         private AnimationService _animationService;
 
