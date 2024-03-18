@@ -17,7 +17,6 @@ namespace _Scripts.Audio
 		private readonly Dictionary<string, AudioClip> sounds = new Dictionary<string, AudioClip>();
 		private readonly Dictionary<string, AudioClip> musicThemes = new Dictionary<string, AudioClip>();
 
-
 		private void OnEnable()
 		{
 			//todo - link to global scene changeEvent
@@ -29,6 +28,8 @@ namespace _Scripts.Audio
 			LoadSounds();
 			LoadMusic();
 		}
+
+		public string GetCurrentMusicThemeName {get; private set;}
 
 		public void PlaySound(string key)
 		{
@@ -45,9 +46,12 @@ namespace _Scripts.Audio
 
 		public void PlayMusic(string key)
 		{
+			StopMusic();
+			
 			if(musicThemes.TryGetValue(key, out var music))
 			{
 				musicSource.PlayOneShot(music);
+				GetCurrentMusicThemeName = key;
 			}
 			else
 			{
@@ -55,11 +59,8 @@ namespace _Scripts.Audio
 			}
 		}
 
-		public void UpdateAudioSources(AudioSource sfxSrc, AudioSource musicSrc)
-		{
-			sfxSource = sfxSrc;
-			musicSource = musicSrc;
-		}
+		public (AudioSource, AudioSource) UpdateAudioSources()=>
+			(sfxSource, musicSource);
 
 		public void StopSound()
 			=> sfxSource.Stop();

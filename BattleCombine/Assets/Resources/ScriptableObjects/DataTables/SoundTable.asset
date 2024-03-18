@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b207d49c722e04c46a6a1a16d865067c, type: 3}
+  m_Name: SoundTable
+  m_EditorClassIdentifier: 
+  soundEffectsName:
+  - s_ui_button_click
+  - s_ui_arcade_enemy_select
+  - s_ui_arcade_enemy_reroll
+  - s_gold_spend
+  - s_battle_victory
+  - s_battle_defeat
+  - s_battle_field_spawn
+  - s_battle_tile_upgrade
+  - s_ui_battle_tile_select
+  - s_battle_tile_dissapear
+  - s_battle_stat_upgrade
+  - s_battle_stat_shield_on
+  - s_battle_stat_shield_destroy
+  - s_battle_stat_deathstrike
+  - s_battle_stat_strike
+  - s_battle_start
+  - s_ui_battle_booster_use
+  - s_battle_move_transition
+  - s_battle_rewards
+  musicThemeName:
+  - m_menu
+  - m_battle
