@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -13,6 +12,8 @@ namespace _Scripts.Audio
 		private const float SoundOnValue = 1;
 		private const float SoundOffValue = 0.0001f;
 
+		[SerializeField] private bool _startNewBackgroundMusic = false;
+		[SerializeField] private string _musicName = "m_menu";
 		[Header("VolumeSliders")]
 		[SerializeField] private Slider _musicSlider;
 		[SerializeField] private Slider _sfxSlider;
@@ -34,15 +35,31 @@ namespace _Scripts.Audio
 
 		private void Start()
 		{
+			VolumeSliderSubscribe();
+
+			(_sfxSource, _musicSource) = audioSource.UpdateAudioSources();
+
+			if(_startNewBackgroundMusic && CheckSceneAndMusic()==false)
+				StartBGM();
+		}
+
+		private void VolumeSliderSubscribe()
+		{
 			if(_musicSlider != null)
 				_musicSlider.onValueChanged.AddListener(ChangeMusicVolume);
 
 			if(_sfxSlider != null)
 				_sfxSlider.onValueChanged.AddListener(ChangeSfxVolume);
-
-			audioSource.UpdateAudioSources(_sfxSource, _musicSource);
 		}
 
+		private void StartBGM()
+		{
+			audioSource.PlayMusic(_musicName);
+		}
+
+		private bool CheckSceneAndMusic() 
+			=> audioSource.GetCurrentMusicThemeName == _musicName;
+	
 		private void ChangeMusicVolume(float value)
 		{
 			var dbValue = Mathf.Log10(value) * 20;

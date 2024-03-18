@@ -833,7 +833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9433962, g: 0.9433962, b: 0.9433962, a: 0.3882353}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1217,6 +1217,8 @@ MonoBehaviour:
   speedArea: {fileID: 8076035875293736876}
   speedPrefab: {fileID: 2188382078495627210, guid: d9bd76b31418c024c94e0a42c1cc8544, type: 3}
   createdSpeedObjectList: []
+  enemyRerollAnimator: {fileID: 0}
+  animToTrigger: {fileID: 0}
   _heartImg: {fileID: 531817157983097019}
   _swordsImg: {fileID: 566051854078590826}
   _heartsBackImg: {fileID: 3195322121280717548}
