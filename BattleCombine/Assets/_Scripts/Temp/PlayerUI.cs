@@ -1,12 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Gameplay;
+using BattleCombine.Animations;
+using BattleCombine.Services;
 using BattleCombine.UI;
 using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 
 namespace _Scripts.Temp
 {
@@ -22,9 +26,12 @@ namespace _Scripts.Temp
         [SerializeField] private GameObject speedPrefab;
         [SerializeField] private GameObject speedPrefabBonus;
         [SerializeField] private List<GameObject> createdSpeedObjectList;
+        [SerializeField] private Animator enemyRerollAnimator;
+        [SerializeField] private AnimationTriggerToEventRelay animToTrigger;
 
-        [Header("BoostTimer")]
-        [SerializeField] private Image _heartImg;
+        [Header("BoostTimer")] [SerializeField]
+        private Image _heartImg;
+
         [SerializeField] private Image _swordsImg;
         [SerializeField] private Image _heartsBackImg;
         [SerializeField] private Image _swordsBackImg;
@@ -37,6 +44,7 @@ namespace _Scripts.Temp
 
         private bool _isShielded;
         private bool _isPlayerBoostCooldownOn;
+
         private void OnDisable()
         {
             DeleteAllSpeedObject();
@@ -44,6 +52,15 @@ namespace _Scripts.Temp
         public List<GameObject> GetCreatedSpeedObjectList
         {
             get => createdSpeedObjectList;
+
+        private AnimationService _animationService;
+
+        public event Action onEndRerollTrigger; 
+
+        private void OnEnable()
+        {
+            if (animToTrigger != null) animToTrigger.onRerollTrigger += EndRerollAnimation;
+
         }
 
         public void UpdateLevelSlider(float value)
@@ -55,15 +72,31 @@ namespace _Scripts.Temp
         {
             playerLevelText.text = value.ToString();
         }
-        
+
+        public void SetupAnimationService(AnimationService animationService)
+        {
+            _animationService = animationService;
+        }
+
+        public void PlayRerollAnimation(string animName)
+        {
+            _animationService.PlayAnim(animName, enemyRerollAnimator);
+        }
+
+        private void EndRerollAnimation(string animName)
+        {
+            _animationService.StopAnim(animName, enemyRerollAnimator);
+            onEndRerollTrigger?.Invoke();
+        }
+
         public void ChangeImageInCooldown(int value)
         {
             _isPlayerBoostCooldownOn = !_isPlayerBoostCooldownOn;
-            
+
             _healthCooldownObj.SetActive(_isPlayerBoostCooldownOn);
             _attackCooldownObj.SetActive(_isPlayerBoostCooldownOn);
-            
-            if(_isPlayerBoostCooldownOn)
+
+            if (_isPlayerBoostCooldownOn)
             {
                 _heartImg.sprite = _cooldownSprites[1];
                 _heartsBackImg.sprite = _cooldownSprites[5];
@@ -158,6 +191,8 @@ namespace _Scripts.Temp
         public void EnabledBonusSpeedSrite()
         {
             createdSpeedObjectList.Last().SetActive(true);
+            if (animToTrigger != null) animToTrigger.onRerollTrigger -= EndRerollAnimation;
+            DeleteAllSpeedObject();
         }
 
     }

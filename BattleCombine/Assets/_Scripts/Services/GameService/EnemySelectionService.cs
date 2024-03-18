@@ -22,16 +22,29 @@ namespace BattleCombine.Services
         private void OnEnable()
         {
             enemyUIChosenScript.onEnemyClick += ChooseEnemy;
+            enemyUIChosenScript.onDeselectAll += DeselectAllEnemies;
             tempEnemySelection.BattleButtonClickEvent += BattleButtonClickEvent;
+            tempEnemySelection.RerollButtonClickEvent += RerollButtonClickEvent;
+            enemyUIUpdateStats.onEndRerollTrigger += EndReroll;
+
         }
 
         private void OnDisable()
         {
             enemyUIChosenScript.onEnemyClick -= ChooseEnemy;
+            enemyUIChosenScript.onDeselectAll -= DeselectAllEnemies;
             tempEnemySelection.BattleButtonClickEvent -= BattleButtonClickEvent;
+            tempEnemySelection.RerollButtonClickEvent -= RerollButtonClickEvent;
+            enemyUIUpdateStats.onEndRerollTrigger -= EndReroll;
         }
 
         private void Start()
+        {
+            GenerateEnemies();
+            _saveManager.SaveGame();
+        }
+
+        private void GenerateEnemies()
         {
             _mainGameService.IsEnemySelectionScene = true;
             currentScore = _mainGameService.ArcadeCurrentScore;
@@ -44,7 +57,6 @@ namespace BattleCombine.Services
             enemyUIUpdateStats.UpdateEnemiesAvatars(choseEnemyScript.GetFinalAvatars());
             enemyUIUpdateStats.UpdateConfirmPanelPlayer(currentPlayer);
             _mainGameService.ChangeActiveBattle(false);
-            _saveManager.SaveGame();
         }
 
         private void ChooseEnemy(Player player)
@@ -54,11 +66,27 @@ namespace BattleCombine.Services
             tempEnemySelection.NextButtonActivate();
         }
 
+        private void DeselectAllEnemies()
+        {
+            tempEnemySelection.NextButtonDeactivate();
+        }
+
         private void BattleButtonClickEvent()
         {
             _mainGameService.SaveEnemy(currentChosenEnemy.AttackValue, currentChosenEnemy.HealthValue,
                 currentChosenEnemy.moveSpeedValue, currentChosenEnemy.Shielded,
                 currentChosenEnemy.GetAvatar().enableSprite, currentChosenEnemy.GetAvatar().disableSprite, currentChosenEnemy.GetAvatar().ID);
+        }
+
+        private void RerollButtonClickEvent()
+        {
+            enemyUIUpdateStats.RerollEnemies();
+        }
+
+        private void EndReroll()
+        {
+            GenerateEnemies();
+            DeselectAllEnemies();
         }
         
     }

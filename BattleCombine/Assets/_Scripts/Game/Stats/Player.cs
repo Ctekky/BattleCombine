@@ -1,4 +1,3 @@
-using System.Linq;
 using BattleCombine.Data;
 using BattleCombine.Interfaces;
 using _Scripts.Temp;
@@ -16,13 +15,17 @@ namespace BattleCombine.Gameplay
         [Inject] private MainGameService _mainGameService;
         public string GetPlayerName => playerName;
         public int AvatarID => avatarID;
-        public PlayerUI GetUi {get; private set;}
+
+        public PlayerUI GetUi()
+        {
+            return playerUIScript;
+        }
 
         protected override void Start()
         {
             base.Start();
             playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString(), Shielded);
-            GetUi = GetComponent<PlayerUI>();
+            playerUIScript.SetupAnimationService(_mainGameService.GetAnimationService());
         }
 
         public void UpdateStats()
@@ -34,6 +37,11 @@ namespace BattleCombine.Gameplay
         {
             playerUIScript.SetupAvatar(avatarStruct.enableSprite, avatarStruct.disableSprite);
             avatarID = id;
+        }
+
+        public void PlayRerollAnimation(string animName)
+        {
+            playerUIScript.PlayRerollAnimation(animName);
         }
 
         public EnemyAvatarStruct GetAvatar()

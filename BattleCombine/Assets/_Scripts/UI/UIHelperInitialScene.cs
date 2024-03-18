@@ -27,6 +27,7 @@ namespace _Scripts.UI
 		private bool isOptionsPanelActive = false;
 
 		[Inject] private PlayerAccount _playerAccount;
+		[Inject] private AudioService audioService;
 
 		private void Awake()
 		{
@@ -38,7 +39,7 @@ namespace _Scripts.UI
 		private void OnCloseButtonClick()
 		{
 			isOptionsPanelActive = true;
-			
+
 			OnOptionsButtonClick();
 		}
 
@@ -47,10 +48,10 @@ namespace _Scripts.UI
 			isOptionsPanelActive = !isOptionsPanelActive;
 			Debug.Log("Options Active = " + isOptionsPanelActive);
 			_settingsPanel.SetActive(isOptionsPanelActive);
-			
-			_soundHelper.PlayClickSound();
+
+			audioService.PlaySound("button_click");
 		}
-		
+
 		private void OnArcadeButtonClick()
 		{
 			Debug.Log("Arcade button click!");

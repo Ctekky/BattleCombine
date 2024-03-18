@@ -118,10 +118,9 @@ namespace BattleCombine.Gameplay
         }
 
         public TileStack GetTileStack => tileStack;
-
         public CellType GetTileType => tileType.cellType;
-
         public TileType GetFullTileType => tileType;
+        public SpriteRenderer GetSprite => tileSprite;
 
         //set tile mask
         [SerializeField] private LayerMask tileLayerMask;
