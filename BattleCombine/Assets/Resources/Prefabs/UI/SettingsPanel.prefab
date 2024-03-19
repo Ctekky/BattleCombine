@@ -477,7 +477,6 @@ GameObject:
   - component: {fileID: 5589078442247491198}
   - component: {fileID: 2214206336947216868}
   - component: {fileID: 6664147201227361105}
-  - component: {fileID: 2095428958665010184}
   m_Layer: 5
   m_Name: SettingsPanel
   m_TagString: Untagged
@@ -555,28 +554,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57087ad72b093f74a8fd54b3f6e164c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _close: {fileID: 0}
+  _close: {fileID: 345481272952706649}
   _connectFacebook: {fileID: 1873462583996720965}
   _connectGoogle: {fileID: 9150552206409997890}
---- !u!114 &2095428958665010184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2157680945086992415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b156000ca9b9eb4b9ef5f4869c56608, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startNewBackgroundMusic: 0
-  _musicName: m_menu
-  _musicSlider: {fileID: 2330689912826154860}
-  _sfxSlider: {fileID: 4299045580963068468}
-  _musicSource: {fileID: 0}
-  _sfxSource: {fileID: 0}
-  _mixer: {fileID: 24100000, guid: 47926a14ec1b2604d8bf4d48c9c5ec98, type: 2}
 --- !u!1 &2436453174979483621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2180,17 +2160,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 818837912fec58d4db4587f9c9298044, type: 3}
---- !u!114 &2330689912826154860 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1458219887264896788, guid: 818837912fec58d4db4587f9c9298044, type: 3}
-  m_PrefabInstance: {fileID: 3775394598847993976}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &8445368888521170194 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4708266158983464298, guid: 818837912fec58d4db4587f9c9298044, type: 3}
