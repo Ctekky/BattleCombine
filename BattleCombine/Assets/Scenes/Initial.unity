@@ -1034,17 +1034,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978494568}
   m_CullTransparentMesh: 1
---- !u!114 &994418223 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1700409344171435173, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
-  m_PrefabInstance: {fileID: 7043747032158662152}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1022929288 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2157680945086992415, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
@@ -2083,9 +2072,20 @@ MonoBehaviour:
   _curtain: {fileID: 2085620918}
   _menuButton: {fileID: 710592046}
   _arcadeGameButton: {fileID: 1868032814}
-  _closeOptionsPanelButton: {fileID: 994418223}
+  _closeOptionsPanelButton: {fileID: 2005664082}
   _settingsPanel: {fileID: 1022929288}
   _soundHelper: {fileID: 1454331639}
+--- !u!114 &2005664082 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 345481272952706649, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
+  m_PrefabInstance: {fileID: 7043747032158662152}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2085620918 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6330388433113642145, guid: 55bcd076f587ca241805ffb9ea3a069c, type: 3}
@@ -3288,6 +3288,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6664147201227361105, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
+      propertyPath: _close
+      value: 
+      objectReference: {fileID: 2005664082}
     - target: {fileID: 6664256418361369422, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

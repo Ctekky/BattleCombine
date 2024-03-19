@@ -304,5 +304,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soundPath: Audio/Effects
   _musicPath: Audio/Music
-  sfxSource: {fileID: 8704651093699925548}
-  musicSource: {fileID: 5074753403382036389}
+  _sfxSource: {fileID: 8704651093699925548}
+  _musicSource: {fileID: 5074753403382036389}
+  _audioData: {fileID: 11400000, guid: 4f02f34b7248bba4c87e18c873677435, type: 2}

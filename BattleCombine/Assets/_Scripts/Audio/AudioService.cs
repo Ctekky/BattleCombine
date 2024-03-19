@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using BattleCombine.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Scripts.Audio
 {
@@ -10,18 +12,17 @@ namespace _Scripts.Audio
 		[Header("Папка с Музыкой")]
 		[SerializeField] private string _musicPath = "Audio/Music";
 		
+		[FormerlySerializedAs("sfxSource")]
 		[Header("Источники Звука")]
-		[SerializeField] private AudioSource sfxSource;
-		[SerializeField] private AudioSource musicSource;
+		[SerializeField] private AudioSource _sfxSource;
+		[FormerlySerializedAs("musicSource")]
+		[SerializeField] private AudioSource _musicSource;
+
+		[Header("База Звуков")]
+		[SerializeField] private SOSoundTable _audioData;
 
 		private readonly Dictionary<string, AudioClip> sounds = new Dictionary<string, AudioClip>();
 		private readonly Dictionary<string, AudioClip> musicThemes = new Dictionary<string, AudioClip>();
-
-		private void OnEnable()
-		{
-			//todo - link to global scene changeEvent
-			//event += LoadAudioSources();
-		}
 
 		private void Awake()
 		{
@@ -35,7 +36,7 @@ namespace _Scripts.Audio
 		{
 			if(sounds.TryGetValue(key, out var sound))
 			{
-				sfxSource.PlayOneShot(sound);
+				_sfxSource.PlayOneShot(sound);
 				Debug.Log(sound + "played");
 			}
 			else
@@ -50,7 +51,7 @@ namespace _Scripts.Audio
 			
 			if(musicThemes.TryGetValue(key, out var music))
 			{
-				musicSource.PlayOneShot(music);
+				_musicSource.PlayOneShot(music);
 				GetCurrentMusicThemeName = key;
 			}
 			else
@@ -60,48 +61,50 @@ namespace _Scripts.Audio
 		}
 
 		public (AudioSource, AudioSource) UpdateAudioSources()=>
-			(sfxSource, musicSource);
+			(_sfxSource, _musicSource);
 
 		public void StopSound()
-			=> sfxSource.Stop();
+			=> _sfxSource.Stop();
 		//todo - useful or not?
 		public void PauseSound()
-			=> sfxSource.Pause();
+			=> _sfxSource.Pause();
 		public void UnpauseSound()
-			=> sfxSource.Play();
+			=> _sfxSource.Play();
 		
 		public void StopMusic()
-			=> musicSource.Stop();
+			=> _musicSource.Stop();
 		public void PauseMusic()
-			=> musicSource.Pause();
+			=> _musicSource.Pause();
 		public void UnpauseMusic()
-			=> musicSource.Play();
+			=> _musicSource.Play();
 
 		private void LoadSounds()
 		{
-			var clips = Resources.LoadAll<AudioClip>(_soundPath);
-
-			foreach (var clip in clips)
+			//var clips = Resources.LoadAll<AudioClip>(_soundPath);
+			//foreach (var clip in clips)
+			//{
+			//	sounds.Add(clip.name, clip);
+			//	Debug.Log(clip + " / " + clip.name );
+			//}
+			
+			foreach (var clip in _audioData.soundEffects)
 			{
-				sounds.Add(clip.name, clip);
-				Debug.Log(clip + " / " + clip.name );
+				sounds.Add(clip.Key, clip.Clip);
 			}
 		}
 
 		private void LoadMusic()
 		{
-			var clips = Resources.LoadAll<AudioClip>(_musicPath);
-
-			foreach (var clip in clips)
+			//var clips = Resources.LoadAll<AudioClip>(_musicPath);
+			//foreach (var clip in clips)
+			//{
+			//	musicThemes.Add(clip.name, clip);
+			//}
+			
+			foreach (var clip in _audioData.musicThemes)
 			{
-				musicThemes.Add(clip.name, clip);
+				musicThemes.Add(clip.Key, clip.Clip);
 			}
-		}
-
-		private void OnDisable()
-		{
-			//todo - unlink
-			//event -= LoadAudioSources();
 		}
 	}
 }
