@@ -58,13 +58,12 @@ namespace _Scripts.UI
 
 		private void OnHealthBoostClick()
 		{
-			Debug.Log("пуф");
-			boostHandler.BoostAttack(false);
+			boostHandler.BoostHealth(false);
 		}
 
 		private void AttackCooldown()
 		{
-			boostHandler.BoostHealth(false);
+			boostHandler.BoostAttack(false);
 		}
 
 		private void HealthPlusCooldown(bool isHealthPlusCooldown)
