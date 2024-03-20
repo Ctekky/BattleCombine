@@ -17,7 +17,6 @@ namespace BattleCombine.Gameplay
             _tile.SetBorderColor(false, _tile.GetTileStack.IDPlayer);
             StateName = TileState.FinalChoiceState;
             _tile.SetCurrentState(StateName);
-
             _stateMachine.ChangeState(_tile.DisabledState);
         }
 

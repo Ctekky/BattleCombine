@@ -18,11 +18,9 @@ namespace BattleCombine.Gameplay
             TileStatusHelp = true;
             _tile.SetTileColor(false, _tile.GetTileStack.IDPlayer);
             _tile.SetBorderColor(true, _tile.GetTileStack.IDPlayer);
-            _tile.PlayFMODSound(TileSound.Enable);
             StateName = TileState.AvailableForSelectionState;
             _tile.SetCurrentState(StateName);
-            
-            
+            _tile.PlayFMODSound(TileSound.Enable);
             //Debug.Log(_tile.GetTileStack.ToString());
             //Debug.Log(_tile.GetTileStack.IDPlayer.ToString());
             switch (_tile.GetTileStack.IDPlayer)
