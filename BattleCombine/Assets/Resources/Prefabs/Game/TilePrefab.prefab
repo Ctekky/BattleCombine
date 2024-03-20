@@ -472,7 +472,7 @@ MonoBehaviour:
   currentNormalColor: {r: 0, g: 0, b: 0, a: 0}
   tileTextAnimationHelper: {fileID: 4925942363016054613}
   tileAnimationHelper: {fileID: 30120979702810260}
-  tileType: {fileID: 11400000, guid: 0cbfd373c49892844a1b42ffb77a1168, type: 2}
+  tileType: {fileID: 11400000, guid: 530c4220e922b5641b0bf732d90064de, type: 2}
   tileModifier: 5
   text: {fileID: 2226465790456060401}
   isAlignPlayer1: 0
