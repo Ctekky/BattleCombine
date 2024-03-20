@@ -1,8 +1,6 @@
 using BattleCombine.Enums;
-using ModestTree;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
 
 namespace BattleCombine.Gameplay
@@ -20,7 +18,7 @@ namespace BattleCombine.Gameplay
             //_tile.CantUse = true;
             _tile.SetTileColor(true, _tile.GetTileStack.IDPlayer);
             _tile.SetBorderColor(false, _tile.GetTileStack.IDPlayer);
-            _tile.PlayTileFMODSound();
+            _tile.PlayFMODSound(TileSound.Chosen);
             StateName = TileState.ChosenState;
             _tile.SetCurrentState(StateName);
         }

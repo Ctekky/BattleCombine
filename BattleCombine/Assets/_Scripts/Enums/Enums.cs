@@ -74,4 +74,11 @@ namespace BattleCombine.Enums
         PvPMod
 
     }
+
+    public enum TileSound : byte
+    {
+        Chosen,
+        Enable,
+        Fixed
+    }
 }
