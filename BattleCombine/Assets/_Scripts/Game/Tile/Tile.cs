@@ -54,7 +54,7 @@ namespace BattleCombine.Gameplay
         [SerializeField] private bool isAlignPlayer1 = false;
         [SerializeField] private bool isAlignPlayer2 = false;
 
-        
+
         //TODO get separate scriptable object for this
         [SerializeField] private Sprite tileNormalImage;
         [SerializeField] private Sprite tileEnemyEndImage;
@@ -74,7 +74,7 @@ namespace BattleCombine.Gameplay
         public DisabledState DisabledState;
         public EnabledState EnabledState;
         public FinalChoiceState FinalChoiceState;
-        [SerializeField] private StudioEventEmitter FMODEventEmitter;
+        [SerializeField] private SOTileSoundFMODLib TileSoundLib;
 
         public List<GameObject> TilesForChoosing
         {
@@ -88,9 +88,12 @@ namespace BattleCombine.Gameplay
             private set => tilesNearThisTile = value;
         }
 
-        public void PlayTileFMODSound()
+        public void PlayFMODSound(TileSound tileSound)
         {
-            RuntimeManager.PlayOneShot(FMODEventEmitter.EventReference);
+            foreach (var soundEvent in TileSoundLib.TileSoundDict.Where(soundEvent => soundEvent.ID == tileSound))
+            {
+                RuntimeManager.PlayOneShot(soundEvent.soundEventPath);
+            }
         }
 
         public bool CantUse
@@ -110,15 +113,18 @@ namespace BattleCombine.Gameplay
             get => tileID;
             set => tileID = value;
         }
+
         public SpriteRenderer BorderSpriteTile
         {
             get => borderSprite;
             set => borderSprite = value;
         }
+
         public Color GetChosenBorder
         {
             get => tileChosenBorder;
         }
+
         public Color GetChosenEnemyBorder
         {
             get => tileChosenEnemyBorder;
@@ -251,6 +257,7 @@ namespace BattleCombine.Gameplay
                 tileSprite.sprite = tileNormalImage;
                 gameObject.layer = 6;
             }
+
             switch (type.cellType)
             {
                 case CellType.Empty:
@@ -319,7 +326,7 @@ namespace BattleCombine.Gameplay
             tileChosenEnemyBorder = tileColorSettings.borderEnemyColor;
             tileSprite.color = tileNormalColor;
             borderSprite.color = tileNormalBorder;
-            if(isLevelDesign) return;
+            if (isLevelDesign) return;
             if (startTile)
             {
                 StateMachine.Initialize(AvailableForSelectionState);
