@@ -165,9 +165,8 @@ namespace _Scripts.UI
             onWinClick?.Invoke();
         }
 
-        private void OnCloseButtonClick()
+        public void OnCloseButtonClick()
         {
-            audioService.PlaySound("button_click");
             OnPauseButtonClick(true);
             OnOptionsButtonClick(true);
             OnBoostButtonClick(true);
