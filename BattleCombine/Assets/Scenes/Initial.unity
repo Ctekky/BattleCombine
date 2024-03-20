@@ -1427,7 +1427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b156000ca9b9eb4b9ef5f4869c56608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startNewBackgroundMusic: 1
+  _startNewBackgroundMusic: 0
   _musicName: 
   _musicSlider: {fileID: 1273415682}
   _sfxSlider: {fileID: 1342583942}

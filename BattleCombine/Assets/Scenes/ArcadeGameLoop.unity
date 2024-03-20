@@ -1499,8 +1499,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b156000ca9b9eb4b9ef5f4869c56608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startNewBackgroundMusic: 1
-  _musicName: m_battle
+  _startNewBackgroundMusic: 0
+  _musicName: 
   _musicSlider: {fileID: 1274688384}
   _sfxSlider: {fileID: 1905331529}
   _musicSource: {fileID: 0}
@@ -2552,7 +2552,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 694ce52c86c52f546ad416fe12834b55, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.05882353}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3975,6 +3975,7 @@ MonoBehaviour:
   enableSprite: {fileID: 21300000, guid: ff99001a15e16b042a9f032405be0af6, type: 3}
   disableSprite: {fileID: 21300000, guid: 2e095f055ae43744a8435b622382ea26, type: 3}
   isNextButtonEnable: 0
+  isRerollButtonEnable: 0
 --- !u!114 &2105806062
 MonoBehaviour:
   m_ObjectHideFlags: 0
