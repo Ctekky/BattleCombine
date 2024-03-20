@@ -14,6 +14,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using Zenject;
 using _Scripts.Temp;
+using FMODUnity;
 
 namespace BattleCombine.Gameplay
 {
@@ -73,6 +74,7 @@ namespace BattleCombine.Gameplay
         public DisabledState DisabledState;
         public EnabledState EnabledState;
         public FinalChoiceState FinalChoiceState;
+        [SerializeField] private StudioEventEmitter FMODEventEmitter;
 
         public List<GameObject> TilesForChoosing
         {
@@ -84,6 +86,11 @@ namespace BattleCombine.Gameplay
         {
             get => tilesNearThisTile;
             private set => tilesNearThisTile = value;
+        }
+
+        public void PlayTileFMODSound()
+        {
+            RuntimeManager.PlayOneShot(FMODEventEmitter.EventReference);
         }
 
         public bool CantUse
