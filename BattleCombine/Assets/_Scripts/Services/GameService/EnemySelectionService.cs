@@ -1,3 +1,4 @@
+using System;
 using _Scripts.UI;
 using BattleCombine.Gameplay;
 using BattleCombine.UI;
@@ -87,6 +88,7 @@ namespace BattleCombine.Services
         {
             GenerateEnemies();
             DeselectAllEnemies();
+            tempEnemySelection.ChangeRerollButtonState(true);
         }
         
     }

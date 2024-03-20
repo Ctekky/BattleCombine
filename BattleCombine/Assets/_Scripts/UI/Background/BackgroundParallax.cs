@@ -6,7 +6,7 @@ namespace _Scripts.UI.Background
 	public class BackgroundParallax : MonoBehaviour
 	{
 		[Header("Image")]
-		[SerializeField] private Image _background;
+		[SerializeField] private GameObject _background;
 		
 		[SerializeField] private float _parallaxEffectMultiplier = 0.5f;
 		[SerializeField] private float _smoothRate = 0.5f;

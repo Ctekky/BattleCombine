@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Sword
   cellType: 0
   spriteUp: {fileID: 21300000, guid: 0d141e5e9938c144e83acd1197599262, type: 3}
-  spriteDown: {fileID: 21300000, guid: 83d77ce7737247a4a9acf4510d33bd3f, type: 3}
+  spriteDown: {fileID: 21300000, guid: b340774d84e179f4ebc48e732e7fc61b, type: 3}
   modifierChances:
   - key: 0
     value: -9
