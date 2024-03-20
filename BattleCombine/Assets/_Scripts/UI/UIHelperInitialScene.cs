@@ -46,10 +46,8 @@ namespace _Scripts.UI
 		private void OnOptionsButtonClick()
 		{
 			isOptionsPanelActive = !isOptionsPanelActive;
-			Debug.Log("Options Active = " + isOptionsPanelActive);
-			_settingsPanel.SetActive(isOptionsPanelActive);
 
-			audioService.PlaySound("button_click");
+			_settingsPanel.SetActive(isOptionsPanelActive);
 		}
 
 		private void OnArcadeButtonClick()
