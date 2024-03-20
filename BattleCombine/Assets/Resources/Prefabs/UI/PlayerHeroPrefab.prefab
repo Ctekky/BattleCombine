@@ -379,6 +379,9 @@ MonoBehaviour:
   spriteStateTrue: {fileID: 21300000, guid: 3c9083763f797374fb572124fa9dc4f6, type: 3}
   spriteStateFalse: {fileID: 21300000, guid: a4eda67863c13b442bf3e61dc4142e08, type: 3}
   image: {fileID: 690414835090078614}
+  avatarBackgroud: {fileID: 0}
+  avatarBorder: {fileID: 0}
+  statBorder: {fileID: 0}
 --- !u!1 &1235321009549229846
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,7 +724,6 @@ MonoBehaviour:
   playerLevelText: {fileID: 1307607795919925513}
   playerLevelSlider: {fileID: 7692687408130675854}
   shieldSprite: {fileID: 1340349462757451475}
-  avatarGameObject: {fileID: 940831715400170277}
   speedArea: {fileID: 656335605052970440}
   speedPrefab: {fileID: 2188382078495627210, guid: 19ac780cf62aabd4d9f75a8322c3cc35, type: 3}
   speedPrefabBonus: {fileID: 2188382078495627210, guid: 0fedaea31783bb84a9c01d099daa9ad5, type: 3}
@@ -743,6 +745,7 @@ MonoBehaviour:
   _attackCooldownObj: {fileID: 2727544250570916983}
   _healthTimerText: {fileID: 551232562139566927}
   _attackTimerText: {fileID: 5114042959313911622}
+  avatarGameObject: {fileID: 940831715400170277}
 --- !u!114 &4627782776612342393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1976,7 +1979,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4689578051282581652, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0011806
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4689578051282581652, guid: 12ab9c2a6ab3e5044b6f9058b61cb8e9, type: 3}
       propertyPath: m_AnchoredPosition.y
