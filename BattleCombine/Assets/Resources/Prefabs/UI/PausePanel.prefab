@@ -1194,6 +1194,7 @@ GameObject:
   - component: {fileID: 4230717944228192499}
   - component: {fileID: 3360053657230237491}
   - component: {fileID: 3995173788110953281}
+  - component: {fileID: 8087616425113758764}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -1302,6 +1303,37 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8087616425113758764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2678723592153282818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 377779227
+      Data2: 1137601678
+      Data3: -1312724051
+      Data4: -1589876667
+    Path: event:/Sounds/ButtonClick
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &3096450151787955903
 GameObject:
   m_ObjectHideFlags: 0
@@ -4305,14 +4337,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2295665993127491651, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1895485201104436798}
   m_SourcePrefab: {fileID: 100100000, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+--- !u!1 &1052776307063362382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2295665993127491651, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+  m_PrefabInstance: {fileID: 1245226021041171213}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1895485201104436798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052776307063362382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 452703839
+      Data2: 1187569032
+      Data3: 786182077
+      Data4: 453498860
+    Path: event:/Sounds/ButtonSurrender
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!114 &5143309610583575532 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6208030258312290529, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
   m_PrefabInstance: {fileID: 1245226021041171213}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1052776307063362382}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -4422,8 +4493,47 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2295665993127491651, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8287034931984992850}
   m_SourcePrefab: {fileID: 100100000, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+--- !u!1 &2551201294017186977 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2295665993127491651, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+  m_PrefabInstance: {fileID: 4376487294273041634}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8287034931984992850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2551201294017186977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -686275368
+      Data2: 1202653605
+      Data3: -1384288865
+      Data4: -1951555157
+    Path: event:/Sounds/ButtonClickClose
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!224 &5157909849466716929 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8874619796983150563, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
@@ -4434,7 +4544,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6208030258312290529, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
   m_PrefabInstance: {fileID: 4376487294273041634}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2551201294017186977}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
