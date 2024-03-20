@@ -161,7 +161,7 @@ namespace _Scripts.Temp
 			createdSpeedObjectList.Clear();
 		}
 
-		public void EnabledBonusSpeedSrite()
+		public void EnabledBonusSpeedSprite()
 		{
 			createdSpeedObjectList.Last().SetActive(true);
 			if(animToTrigger != null) animToTrigger.onRerollTrigger -= EndRerollAnimation;

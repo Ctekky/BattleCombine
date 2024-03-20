@@ -2346,6 +2346,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 577505253}
     m_Modifications:
+    - target: {fileID: 690414835090078614, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 72b686aa1b2bb454a8b1f53c89f74117, type: 3}
     - target: {fileID: 1770342667573768655, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
       propertyPath: m_Name
       value: PlayerHeroPrefab
@@ -2466,6 +2470,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.15
       objectReference: {fileID: 0}
+    - target: {fileID: 7274690653936066884, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
+      propertyPath: spriteStateTrue
+      value: 
+      objectReference: {fileID: 21300000, guid: 15de9b17a1156b54e98d867be020e77a, type: 3}
+    - target: {fileID: 7274690653936066884, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
+      propertyPath: spriteStateFalse
+      value: 
+      objectReference: {fileID: 21300000, guid: 15de9b17a1156b54e98d867be020e77a, type: 3}
     - target: {fileID: 8476694389319867576, guid: 06f0c7906008f73429c66bba6636c2fc, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
