@@ -453,6 +453,7 @@ GameObject:
   - component: {fileID: 7936558985841498729}
   - component: {fileID: 6811113850108999549}
   - component: {fileID: 8396764356643166042}
+  - component: {fileID: 7635121348867742983}
   m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
@@ -517,6 +518,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7635121348867742983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3034522516840527173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 377779227
+      Data2: 1137601678
+      Data3: -1312724051
+      Data4: -1589876667
+    Path: event:/Sounds/ButtonClick
+  Event: 
+  PlayEvent: 11
+  StopEvent: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &3152245769236054158
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,8 +874,19 @@ MonoBehaviour:
   spriteStateFalse: {fileID: 0}
   image: {fileID: 4200953333958026823}
   avatarBackgroud: {fileID: 6333075410500782126}
+  HeartImage: {fileID: 6153143852977153947}
+  attackImage: {fileID: 875868642532871517}
+  speedArea: {fileID: 2977854841085428956}
   avatarBorder: {fileID: 3356331786524776187}
   statBorder: {fileID: 3034522516840527173}
+  _avatarBackgroudSprite: {fileID: 21300000, guid: 3a3ab20d64f06e74cb8bad821bbfcc58, type: 3}
+  _avatarBackgroudSpriteNega: {fileID: 21300000, guid: a9d31ce305c281b4c915bb50b6888311, type: 3}
+  _attack: {fileID: 21300000, guid: c5619064b4955b541b0403d553ac40fe, type: 3}
+  _attackNega: {fileID: 21300000, guid: a33aac291e5f903418d08ff4309eeefb, type: 3}
+  _heart: {fileID: 21300000, guid: b0d175dc290853c4aa619da220d83652, type: 3}
+  _heartNega: {fileID: 21300000, guid: 538e5bb5b9e47284eabfb46f8033209e, type: 3}
+  _speed: {fileID: 21300000, guid: 76be4dc4957f5a246893197613e78a5a, type: 3}
+  _speedNega: {fileID: 21300000, guid: f3aa840272b600546965f5644fae199a, type: 3}
 --- !u!95 &3686515433645248266
 Animator:
   serializedVersion: 5

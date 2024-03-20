@@ -600,6 +600,7 @@ GameObject:
   - component: {fileID: 710592048}
   - component: {fileID: 710592047}
   - component: {fileID: 710592046}
+  - component: {fileID: 710592049}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -720,6 +721,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 710592044}
   m_CullTransparentMesh: 1
+--- !u!114 &710592049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710592044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 377779227
+      Data2: 1137601678
+      Data3: -1312724051
+      Data4: -1589876667
+    Path: event:/Sounds/ButtonClick
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &740136026
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,6 +861,7 @@ GameObject:
   - component: {fileID: 922004896}
   - component: {fileID: 922004895}
   - component: {fileID: 922004894}
+  - component: {fileID: 922004897}
   m_Layer: 0
   m_Name: StoryModeButton
   m_TagString: Untagged
@@ -939,6 +972,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922004892}
   m_CullTransparentMesh: 1
+--- !u!114 &922004897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922004892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1201047702
+      Data2: 1103017304
+      Data3: 1758028672
+      Data4: -895862199
+    Path: event:/Sounds/ButtonClickError
+  Event: 
+  PlayEvent: 19
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &978494568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1427,7 +1491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b156000ca9b9eb4b9ef5f4869c56608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startNewBackgroundMusic: 1
+  _startNewBackgroundMusic: 0
   _musicName: 
   _musicSlider: {fileID: 1273415682}
   _sfxSlider: {fileID: 1342583942}
@@ -1892,6 +1956,7 @@ GameObject:
   - component: {fileID: 1868032816}
   - component: {fileID: 1868032815}
   - component: {fileID: 1868032814}
+  - component: {fileID: 1868032817}
   m_Layer: 0
   m_Name: ArcadeModeButton
   m_TagString: Untagged
@@ -2001,6 +2066,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868032812}
   m_CullTransparentMesh: 1
+--- !u!114 &1868032817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868032812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 868098640
+      Data2: 1263772609
+      Data3: -239358535
+      Data4: -25992983
+    Path: event:/Sounds/ButtonModeSelect
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1914480169
 GameObject:
   m_ObjectHideFlags: 0

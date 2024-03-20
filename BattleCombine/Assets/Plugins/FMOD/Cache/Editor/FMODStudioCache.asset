@@ -22,6 +22,60 @@ MonoBehaviour:
   - Name: Mobile
     Value: 11055840
   Exists: 1
+--- !u!114 &-8048925367424775877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/ButtonEnemySelect
+  m_EditorClassIdentifier: 
+  Path: event:/Sounds/ButtonEnemySelect
+  Guid:
+    Data1: 1328147824
+    Data2: 1306182547
+    Data3: -1219110497
+    Data4: -1144196810
+  Banks:
+  - {fileID: -6034453891238088988}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-7563567150642365741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/ButtonSurrender
+  m_EditorClassIdentifier: 
+  Path: event:/Sounds/ButtonSurrender
+  Guid:
+    Data1: 452703839
+    Data2: 1187569032
+    Data3: 786182077
+    Data4: 453498860
+  Banks:
+  - {fileID: -6034453891238088988}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-6747821693767495337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +116,7 @@ MonoBehaviour:
   lastModified: 638465588134609694
   FileSizes:
   - Name: Desktop
-    Value: 11584
+    Value: 112192
   Exists: 1
 --- !u!114 &-5767688126379338383
 MonoBehaviour:
@@ -91,6 +145,60 @@ MonoBehaviour:
   - After battle
   - Off
   Exists: 1
+--- !u!114 &-2029625785877609246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/ButtonStartBattle
+  m_EditorClassIdentifier: 
+  Path: event:/Sounds/ButtonStartBattle
+  Guid:
+    Data1: -595287273
+    Data2: 1289098633
+    Data3: 144285846
+    Data4: -1898354603
+  Banks:
+  - {fileID: -6034453891238088988}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-304685352900737901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/ButtonClick
+  m_EditorClassIdentifier: 
+  Path: event:/Sounds/ButtonClick
+  Guid:
+    Data1: 377779227
+    Data2: 1137601678
+    Data3: -1312724051
+    Data4: -1589876667
+  Banks:
+  - {fileID: -6034453891238088988}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-74625735468342901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,9 +217,9 @@ MonoBehaviour:
   lastModified: 638465588134073247
   FileSizes:
   - Name: Desktop
-    Value: 1152
+    Value: 1514
   - Name: Mobile
-    Value: 1152
+    Value: 1514
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -134,6 +242,14 @@ MonoBehaviour:
   - {fileID: 2396378996774621269}
   - {fileID: 7663950869675400813}
   - {fileID: 8923698003626685078}
+  - {fileID: -2029625785877609246}
+  - {fileID: -304685352900737901}
+  - {fileID: 7063697512124102306}
+  - {fileID: -8048925367424775877}
+  - {fileID: 1937336097178152124}
+  - {fileID: 4985643784393590906}
+  - {fileID: 8456098373273074883}
+  - {fileID: -7563567150642365741}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6747821693767495337}
@@ -165,6 +281,33 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &1937336097178152124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/ButtonClickError
+  m_EditorClassIdentifier: 
+  Path: event:/Sounds/ButtonClickError
+  Guid:
+    Data1: 1201047702
+    Data2: 1103017304
+    Data3: 1758028672
+    Data4: -895862199
+  Banks:
+  - {fileID: -6034453891238088988}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &2396378996774621269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +336,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 82771
+--- !u!114 &4985643784393590906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/ButtonReroll
+  m_EditorClassIdentifier: 
+  Path: event:/Sounds/ButtonReroll
+  Guid:
+    Data1: -1350203206
+    Data2: 1298582926
+    Data3: 1763781286
+    Data4: -1507292240
+  Banks:
+  - {fileID: -6034453891238088988}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &7063697512124102306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/ButtonModeSelect
+  m_EditorClassIdentifier: 
+  Path: event:/Sounds/ButtonModeSelect
+  Guid:
+    Data1: 868098640
+    Data2: 1263772609
+    Data3: -239358535
+    Data4: -25992983
+  Banks:
+  - {fileID: -6034453891238088988}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &7663950869675400813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +418,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 85112
+--- !u!114 &8456098373273074883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/ButtonClickClose
+  m_EditorClassIdentifier: 
+  Path: event:/Sounds/ButtonClickClose
+  Guid:
+    Data1: -686275368
+    Data2: 1202653605
+    Data3: -1384288865
+    Data4: -1951555157
+  Banks:
+  - {fileID: -6034453891238088988}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &8923698003626685078
 MonoBehaviour:
   m_ObjectHideFlags: 0

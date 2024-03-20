@@ -39,7 +39,7 @@ namespace _Scripts.Audio
 
 			(_sfxSource, _musicSource) = audioSource.UpdateAudioSources();
 
-			if(_startNewBackgroundMusic && CheckSceneAndMusic()==false)
+			if(_startNewBackgroundMusic && CheckSceneAndMusic() == false)
 				StartBGM();
 		}
 
