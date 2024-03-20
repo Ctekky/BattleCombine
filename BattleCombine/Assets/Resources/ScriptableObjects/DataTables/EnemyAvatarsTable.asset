@@ -14,14 +14,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avatarList:
   - enableSprite: {fileID: 21300000, guid: ecb362b07f607e04a801f8612e2f8a70, type: 3}
-    disableSprite: {fileID: 21300000, guid: ace198dc4a3240644a04a6f8ec0a738c, type: 3}
+    disableSprite: {fileID: 21300000, guid: ca786ac842de7504e8b23169fcdc9451, type: 3}
     ID: 1
   - enableSprite: {fileID: 21300000, guid: 0c16ad3f15be50842afd27b666f9b7bd, type: 3}
-    disableSprite: {fileID: 21300000, guid: 8969aa8d186f571469970f7e1afeeef1, type: 3}
+    disableSprite: {fileID: 21300000, guid: 9283897f1df0db9459d087c9bd8424ba, type: 3}
     ID: 2
   - enableSprite: {fileID: 21300000, guid: 99d89c801eff0d644a76e14b24acad14, type: 3}
-    disableSprite: {fileID: 21300000, guid: 26c9e070bb1921d40ac0802a13d22b2b, type: 3}
+    disableSprite: {fileID: 21300000, guid: f66c882bc3c59de48acf7117b7962ae1, type: 3}
     ID: 3
   - enableSprite: {fileID: 21300000, guid: 3c9083763f797374fb572124fa9dc4f6, type: 3}
-    disableSprite: {fileID: 21300000, guid: a4eda67863c13b442bf3e61dc4142e08, type: 3}
+    disableSprite: {fileID: 21300000, guid: 0f115b74be17b4f468d7e1bd9ef6820f, type: 3}
     ID: 4
+  - enableSprite: {fileID: 21300000, guid: 66bc9ae11459224419c132a65a580459, type: 3}
+    disableSprite: {fileID: 21300000, guid: 26d8fedc9b7f62c4ba70ed6b5e507261, type: 3}
+    ID: 5
+  - enableSprite: {fileID: 21300000, guid: c01d567d92f279e4a94143cf7eaa96c2, type: 3}
+    disableSprite: {fileID: 21300000, guid: 2f3532b1d841e0048b47667a87c4acbf, type: 3}
+    ID: 6
+  - enableSprite: {fileID: 21300000, guid: a78f99ee4b07cbb4ea01a518bdd82300, type: 3}
+    disableSprite: {fileID: 21300000, guid: 8267bd891150a33449f4a592dd83c5f6, type: 3}
+    ID: 7
+  - enableSprite: {fileID: 21300000, guid: 82437d1bde368264c964ca6831f9f7f5, type: 3}
+    disableSprite: {fileID: 21300000, guid: 628986c9eba95d641b6bea0c938bfa86, type: 3}
+    ID: 8
+  - enableSprite: {fileID: 21300000, guid: f8716940708e7014fa34c4a9242b473d, type: 3}
+    disableSprite: {fileID: 21300000, guid: 8e8fb5d0f38db1c409f5734c40eb34fd, type: 3}
+    ID: 9
+  - enableSprite: {fileID: 21300000, guid: 214d878b2a620424e90a4ad47dd306ac, type: 3}
+    disableSprite: {fileID: 21300000, guid: e3dfc7c1bf0d6404fa44c4d6e494627f, type: 3}
+    ID: 10
+  - enableSprite: {fileID: 21300000, guid: 6d4552831cc226e439854fe08be5e719, type: 3}
+    disableSprite: {fileID: 21300000, guid: b4c2f97b340c4354bb025bc9f6c931a4, type: 3}
+    ID: 11
+  - enableSprite: {fileID: 21300000, guid: ff8b7d190a20dfe40898cc7a6a0b9945, type: 3}
+    disableSprite: {fileID: 21300000, guid: e456d18fd2f4021489e0ea310c58ed86, type: 3}
+    ID: 12

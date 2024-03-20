@@ -4678,6 +4678,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2105806065}
     m_Modifications:
+    - target: {fileID: 2160873007522290464, guid: 89e52283e92528d4aaf5a5168792acc8, type: 3}
+      propertyPath: spriteStateTrue
+      value: 
+      objectReference: {fileID: 21300000, guid: 15de9b17a1156b54e98d867be020e77a, type: 3}
+    - target: {fileID: 2160873007522290464, guid: 89e52283e92528d4aaf5a5168792acc8, type: 3}
+      propertyPath: spriteStateFalse
+      value: 
+      objectReference: {fileID: 21300000, guid: 15de9b17a1156b54e98d867be020e77a, type: 3}
     - target: {fileID: 6080360348273717571, guid: 89e52283e92528d4aaf5a5168792acc8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4762,6 +4770,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8114583503420129778, guid: 89e52283e92528d4aaf5a5168792acc8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 72b686aa1b2bb454a8b1f53c89f74117, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

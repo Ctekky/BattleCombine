@@ -135,7 +135,7 @@ namespace _Scripts.Game.Stats
 				Debug.Log("Speed Boost+");
 				longDurationSpeedBoostActive = true;
 				speedDuration = _speedMaxDuration;
-				_player.GetComponent<PlayerUI>().EnabledBonusSpeedSrite();
+				_player.GetComponent<PlayerUI>().EnabledBonusSpeedSprite();
 			}
 
 			if(defaultSpeed == 0)
