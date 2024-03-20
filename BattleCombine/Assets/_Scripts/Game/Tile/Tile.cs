@@ -74,12 +74,19 @@ namespace BattleCombine.Gameplay
         public DisabledState DisabledState;
         public EnabledState EnabledState;
         public FinalChoiceState FinalChoiceState;
+        private bool _isCanPlaySound;
         [SerializeField] private SOTileSoundFMODLib TileSoundLib;
 
         public List<GameObject> TilesForChoosing
         {
             get => tilesForChoosing;
             set => tilesForChoosing = value;
+        }
+
+        public bool CanPlaySound
+        {
+            get => _isCanPlaySound;
+            set => _isCanPlaySound = value;
         }
 
         public List<GameObject> TilesNearThisTile
@@ -90,12 +97,13 @@ namespace BattleCombine.Gameplay
 
         public void PlayFMODSound(TileSound tileSound)
         {
+            if(!_isCanPlaySound) return;
             foreach (var soundEvent in TileSoundLib.TileSoundDict.Where(soundEvent => soundEvent.ID == tileSound))
             {
                 RuntimeManager.PlayOneShot(soundEvent.soundEventPath);
             }
         }
-
+        
         public bool CantUse
         {
             get => _cantUse;
@@ -157,6 +165,7 @@ namespace BattleCombine.Gameplay
             FinalChoiceState = new FinalChoiceState(this, StateMachine);
             tileTextAnimationHelper.onTileTextAnimationTrigger += OnAnimationTileTextUpTrigger;
             tileAnimationHelper.onTileAnimationTrigger += OnAnimationTileTrigger;
+            _isCanPlaySound = false;
         }
 
         public void SetUpGlobalEventService(GlobalEventService ges)

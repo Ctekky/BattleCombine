@@ -15,6 +15,7 @@ namespace BattleCombine.Gameplay
             _tile.SetTileColor(false, _tile.GetTileStack.IDPlayer);
             _tile.SetBorderColor(false, _tile.GetTileStack.IDPlayer);
             StateName = TileState.DisabledState;
+            _tile.CanPlaySound = false;
             _tile.SetCurrentState(StateName);
         }
     }

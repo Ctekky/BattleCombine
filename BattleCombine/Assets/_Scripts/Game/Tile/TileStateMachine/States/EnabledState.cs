@@ -15,7 +15,6 @@ namespace BattleCombine.Gameplay
             _tile.SetBorderColor(false, _tile.GetTileStack.IDPlayer);
             StateName = TileState.EnabledState;
             _tile.SetCurrentState(StateName);
-
             _tile.SetAlignTileToPlayer1(false);
             _tile.SetAlignTileToPlayer2(false);
         }
