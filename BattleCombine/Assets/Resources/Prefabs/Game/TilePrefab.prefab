@@ -479,6 +479,7 @@ MonoBehaviour:
   isAlignPlayer2: 0
   tileNormalImage: {fileID: 21300000, guid: 61728d2d3825a524aa50faf7eacfbcd7, type: 3}
   tileEnemyEndImage: {fileID: 21300000, guid: 61728d2d3825a524aa50faf7eacfbcd7, type: 3}
+  FMODEventEmitter: {fileID: -7057234617789406234}
   tileLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -548,7 +549,7 @@ MonoBehaviour:
       Data4: 1703862735
     Path: event:/Sounds/TileClick
   Event: 
-  PlayEvent: 17
+  PlayEvent: 0
   StopEvent: 0
   AllowFadeout: 0
   TriggerOnce: 0
