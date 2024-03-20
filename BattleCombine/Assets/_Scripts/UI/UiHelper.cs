@@ -59,6 +59,7 @@ namespace _Scripts.UI
 
         [SerializeField] private Sprite disableSprite;
         [SerializeField] private bool isNextButtonEnable;
+        [SerializeField] private bool isRerollButtonEnable;
 
         [Inject]
         private AudioService audioService;
@@ -79,6 +80,7 @@ namespace _Scripts.UI
             if (_nextButton != null) _nextButton.image.sprite = disableSprite;
             if (_pauseMenu != null) _pauseMenu.OnLeaveGameButtonPress += EndBattle;
             isNextButtonEnable = false;
+            isRerollButtonEnable = true;
             AddListeners();
         }
 
@@ -213,9 +215,17 @@ namespace _Scripts.UI
 
         private void OnReRollButtonClick()
         {
+            if (!isRerollButtonEnable) return;
+            isRerollButtonEnable = false;
+            NextButtonDeactivate();
             RerollButtonClickEvent?.Invoke();
         }
 
+        public void ChangeRerollButtonState(bool state)
+        {
+            isRerollButtonEnable = state;
+        }
+        
         private void OnBattleButtonClick()
         {
             BattleButtonClickEvent?.Invoke();
