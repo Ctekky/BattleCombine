@@ -2037,8 +2037,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 107, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 100.03328, y: 0}
+  m_SizeDelta: {x: -200.0665, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &631381161
 MonoBehaviour:
@@ -3504,7 +3504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startNewBackgroundMusic: 1
-  _musicName: m_menu
+  _musicName: _menu
   _musicSlider: {fileID: 144985635}
   _sfxSlider: {fileID: 1515836898}
   _musicSource: {fileID: 0}
@@ -3649,7 +3649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
