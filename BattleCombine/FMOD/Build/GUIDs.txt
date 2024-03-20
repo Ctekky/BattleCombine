@@ -1,0 +1,9 @@
+{c550cb01-9aef-441e-a3e8-6f8be9f7e827} bank:/Master
+{5d4debd5-eb94-085c-25a1-e5751804eebf} bank:/Master.strings
+{ac4b5148-48a1-486c-a98d-fe7b7c84bc5a} bank:/Music
+{8fcaaa6e-0647-4f55-bbae-2ca67764afba} bus:/
+{e947fead-a77c-4a82-ac6a-8e71fbcd77b5} bus:/Reverb
+{16cde0bb-1f0d-4028-954d-e4c07b644acc} event:/Music/BattleMusic
+{3c0e8d93-d48d-4085-b277-65afb44e5062} event:/Music/MainMenuMusic
+{8b295df4-e666-43b1-8914-9507befdd447} parameter:/IsJustStarted
+{38dcb4e6-0a26-443a-ad3c-66d6a913f0f6} snapshot:/GameStartMode

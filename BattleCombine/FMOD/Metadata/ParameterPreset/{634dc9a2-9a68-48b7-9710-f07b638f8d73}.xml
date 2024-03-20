@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{634dc9a2-9a68-48b7-9710-f07b638f8d73}">
+		<property name="name">
+			<value>TrackMode</value>
+		</property>
+		<relationship name="folder">
+			<destination>{84ab7ad4-64b4-4ede-931e-96bdfabf2ec9}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{74567c40-3f32-4dd7-b36f-c90337a0845b}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{74567c40-3f32-4dd7-b36f-c90337a0845b}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>3</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Just started</value>
+			<value>After battle</value>
+			<value>Off</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>
