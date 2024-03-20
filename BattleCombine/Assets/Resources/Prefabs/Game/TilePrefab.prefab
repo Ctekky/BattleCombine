@@ -364,6 +364,7 @@ GameObject:
   - component: {fileID: 3068339636670248365}
   - component: {fileID: 105925409287168891}
   - component: {fileID: 3806609544471234140}
+  - component: {fileID: -7057234617789406234}
   m_Layer: 6
   m_Name: TilePrefab
   m_TagString: Untagged
@@ -456,8 +457,10 @@ MonoBehaviour:
   typeSprite: {fileID: 1425808723877999693}
   tileNormalColor: {r: 0, g: 0, b: 0, a: 0}
   tileChosenColor: {r: 0, g: 0, b: 0, a: 0}
+  tileChosenEnemyColor: {r: 0, g: 0, b: 0, a: 0}
   tileNormalBorder: {r: 0, g: 0, b: 0, a: 0}
   tileChosenBorder: {r: 0, g: 0, b: 0, a: 0}
+  tileChosenEnemyBorder: {r: 0, g: 0, b: 0, a: 0}
   tileStack: {fileID: 0}
   startTile: 0
   tileCurrentState: 0
@@ -524,6 +527,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-7057234617789406234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2841049852580622045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: Untagged
+  EventReference:
+    Guid:
+      Data1: 988621726
+      Data2: 1305150320
+      Data3: 1612078981
+      Data4: 1703862735
+    Path: event:/Sounds/TileClick
+  Event: 
+  PlayEvent: 17
+  StopEvent: 0
+  AllowFadeout: 0
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &2894030692692851580
 GameObject:
   m_ObjectHideFlags: 0
