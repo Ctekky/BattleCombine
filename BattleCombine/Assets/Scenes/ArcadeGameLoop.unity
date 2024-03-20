@@ -1730,6 +1730,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &587422312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1578336833261625232, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
+  m_PrefabInstance: {fileID: 1483202493}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &587422317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587422312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -686275368
+      Data2: 1202653605
+      Data3: -1384288865
+      Data4: -1951555157
+    Path: event:/Sounds/ButtonClickClose
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2245,13 +2281,13 @@ MonoBehaviour:
   CollisionTag: Untagged
   EventReference:
     Guid:
-      Data1: 988621726
-      Data2: 1305150320
-      Data3: 1612078981
-      Data4: 1703862735
-    Path: event:/Sounds/TileClick
+      Data1: 377779227
+      Data2: 1137601678
+      Data3: -1312724051
+      Data4: -1589876667
+    Path: event:/Sounds/ButtonClick
   Event: 
-  PlayEvent: 17
+  PlayEvent: 20
   StopEvent: 0
   AllowFadeout: 0
   TriggerOnce: 0
@@ -2947,7 +2983,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1578336833261625232, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 587422317}
   m_SourcePrefab: {fileID: 100100000, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
 --- !u!114 &1483202494 stripped
 MonoBehaviour:
@@ -4284,13 +4323,13 @@ MonoBehaviour:
   CollisionTag: Untagged
   EventReference:
     Guid:
-      Data1: 988621726
-      Data2: 1305150320
-      Data3: 1612078981
-      Data4: 1703862735
-    Path: event:/Sounds/TileClick
+      Data1: 377779227
+      Data2: 1137601678
+      Data3: -1312724051
+      Data4: -1589876667
+    Path: event:/Sounds/ButtonClick
   Event: 
-  PlayEvent: 17
+  PlayEvent: 20
   StopEvent: 0
   AllowFadeout: 0
   TriggerOnce: 0
