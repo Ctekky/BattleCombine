@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 62764298}
   - component: {fileID: 62764297}
   - component: {fileID: 62764299}
+  - component: {fileID: 62764300}
   m_Layer: 5
   m_Name: NextButton
   m_TagString: Untagged
@@ -380,6 +381,37 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &62764300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62764295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 377779227
+      Data2: 1137601678
+      Data3: -1312724051
+      Data4: -1589876667
+    Path: event:/Sounds/ButtonClick
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &65068898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,6 +1270,7 @@ GameObject:
   - component: {fileID: 415353175}
   - component: {fileID: 415353174}
   - component: {fileID: 415353173}
+  - component: {fileID: 415353177}
   m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -1346,6 +1379,37 @@ RectTransform:
   m_AnchoredPosition: {x: 124, y: -226}
   m_SizeDelta: {x: 115, y: 115}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &415353177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415353172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 377779227
+      Data2: 1137601678
+      Data3: -1312724051
+      Data4: -1589876667
+    Path: event:/Sounds/ButtonClick
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &455789245
 GameObject:
   m_ObjectHideFlags: 0
@@ -3896,6 +3960,7 @@ MonoBehaviour:
   enableSprite: {fileID: 21300000, guid: ff99001a15e16b042a9f032405be0af6, type: 3}
   disableSprite: {fileID: 21300000, guid: 2e095f055ae43744a8435b622382ea26, type: 3}
   isNextButtonEnable: 0
+  isRerollButtonEnable: 0
 --- !u!114 &1616429039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3945,12 +4010,48 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4968214070987825694, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
   m_PrefabInstance: {fileID: 2146440681147237773}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1769436931}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1769436931 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4279952195198239133, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
+  m_PrefabInstance: {fileID: 2146440681147237773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1769436933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769436931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -686275368
+      Data2: 1202653605
+      Data3: -1384288865
+      Data4: -1951555157
+    Path: event:/Sounds/ButtonClickClose
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1801610123
 GameObject:
   m_ObjectHideFlags: 0
@@ -4252,6 +4353,7 @@ GameObject:
   - component: {fileID: 1832797194}
   - component: {fileID: 1832797193}
   - component: {fileID: 1832797195}
+  - component: {fileID: 1832797196}
   m_Layer: 5
   m_Name: RerollButton
   m_TagString: Untagged
@@ -4363,6 +4465,37 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1832797196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832797191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1350203206
+      Data2: 1298582926
+      Data3: 1763781286
+      Data4: -1507292240
+    Path: event:/Sounds/ButtonReroll
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1851257096 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4099382795836505412, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
@@ -4498,6 +4631,10 @@ PrefabInstance:
     - target: {fileID: 4093327278859261581, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5094793508442196404, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
+      propertyPath: EventReference.Path
+      value: event:/Sounds/ButtonClickClose
       objectReference: {fileID: 0}
     - target: {fileID: 6664256418361369422, guid: a1b30c514b80c4840a3efb727382a33e, type: 3}
       propertyPath: m_Pivot.x
@@ -5500,7 +5637,10 @@ PrefabInstance:
     - {fileID: 7072643362034585200, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
     - {fileID: 1037831330565082159, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4279952195198239133, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1769436933}
   m_SourcePrefab: {fileID: 100100000, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
 --- !u!114 &2146440681147237775 stripped
 MonoBehaviour:
