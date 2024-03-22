@@ -95,8 +95,8 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
+  m_Spacing: 10
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
@@ -115,3 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47956b6454ba61b4f976bc52ac82dff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedBallGameObj: []
+  speedBallAnimationHelpers: []
+  tileStack: {fileID: 0}
+  currentPlayer: {fileID: 0}
+  idPlayer: 0
+  countTileInList: 0

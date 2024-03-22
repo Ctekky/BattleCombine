@@ -7,52 +7,19 @@
 [LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 0000026CCBBECD18 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 00000214B8CCF758 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] PlaybackSystem::init                     : done
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] Manager::init                            : done.
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 102528
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 9664
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 00000077D01FF418
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF958BA3F60
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF958BA3F20
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF958BA4040
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF958BA4100
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000026CCAB81D28
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='s_ui_battle_tile_select (2)', format=5, channels=2, frequency=48000, lengthbytes=6880, lengthpcm=21614, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.599304.
-[LOG] SoundI::release                          : m_battle_int3 (0000026CCC00D218)
-[LOG] SoundI::release                          :     m_battle_int3 (0000026B94FBA8A8)
-[LOG] SoundI::release                          :     m_battle_int3 (0000026CCC00B718)
-[LOG] SoundI::release                          : m_batttle_int2 (0000026CBFE143F8)
-[LOG] SoundI::release                          :     m_batttle_int2 (0000026B94FBAD88)
-[LOG] SoundI::release                          :     m_batttle_int2 (0000026CCC009F78)
-[LOG] SoundI::release                          : m_battle_int1 (0000026CBFE13EE8)
-[LOG] SoundI::release                          :     m_battle_int1 (0000026BD3F97118)
-[LOG] SoundI::release                          :     m_battle_int1 (0000026CCC00C2E8)
-[LOG] SoundI::release                          :  (0000026CBF7CF6D8)
-[LOG] SoundI::release                          :     s_ui_battle_tile_select (2) (0000026C9AF521F8)
-[LOG] Thread::callback                         : FMOD Studio update thread finished.
-[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
-[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
-[LOG] LiveUpdate::release                      : 
-[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
-[LOG] Thread::callback                         : FMOD stream thread finished.
-[LOG] Thread::callback                         : FMOD mixer thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
-[LOG] SystemI::close                           : Closed.
-[WRN] ObjectLookup::get                        : Lookup failed for EventModel: {3c0e8d93-d48d-4085-b277-65afb44e5062}
-[WRN] ObjectLookup::get                        : Lookup failed for EventModel: {d71844d8-09a5-47af-9f6d-7dadaba1ad8b}
+[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
+[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
+[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
+[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 3
+[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
+[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
@@ -60,5 +27,3 @@
 [LOG] Thread::callback                         : FMOD stream thread finished.
 [LOG] Thread::callback                         : FMOD mixer thread finished.
 [LOG] SystemI::close                           : Closed.
-[LOG] Thread::callback                         : FMOD nonblocking thread (0) finished.
-[LOG] Thread::callback                         : FMOD file thread finished.

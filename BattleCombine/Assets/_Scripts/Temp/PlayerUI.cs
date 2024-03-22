@@ -165,7 +165,7 @@ namespace _Scripts.Temp
 		{
 			createdSpeedObjectList.Last().SetActive(true);
 			if(animToTrigger != null) animToTrigger.onRerollTrigger -= EndRerollAnimation;
-			DeleteAllSpeedObject();
+			//DeleteAllSpeedObject();
 		}
 
 		private void OnDisable()

@@ -287,9 +287,9 @@ MonoBehaviour:
   playerLevelText: {fileID: 0}
   playerLevelSlider: {fileID: 0}
   shieldSprite: {fileID: 5594351656424530286}
-  avatarGameObject: {fileID: 3874588601323414672}
   speedArea: {fileID: 8127863691484786361}
-  speedPrefab: {fileID: 2188382078495627210, guid: d9bd76b31418c024c94e0a42c1cc8544, type: 3}
+  speedPrefab: {fileID: 2188382078495627210, guid: 19ac780cf62aabd4d9f75a8322c3cc35, type: 3}
+  speedPrefabBonus: {fileID: 2188382078495627210, guid: 0fedaea31783bb84a9c01d099daa9ad5, type: 3}
   createdSpeedObjectList: []
   enemyRerollAnimator: {fileID: 7348247660566857663}
   animToTrigger: {fileID: 6491512748226060928}
@@ -302,6 +302,7 @@ MonoBehaviour:
   _attackCooldownObj: {fileID: 0}
   _healthTimerText: {fileID: 0}
   _attackTimerText: {fileID: 0}
+  avatarGameObject: {fileID: 3874588601323414672}
 --- !u!114 &5288184384122326879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,6 +885,9 @@ MonoBehaviour:
   spriteStateTrue: {fileID: 0}
   spriteStateFalse: {fileID: 0}
   image: {fileID: 462751313424877367}
+  avatarBackgroud: {fileID: 0}
+  avatarBorder: {fileID: 0}
+  statBorder: {fileID: 0}
 --- !u!95 &2776847931743523618
 Animator:
   serializedVersion: 5
