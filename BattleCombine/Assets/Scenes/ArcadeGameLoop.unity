@@ -752,6 +752,7 @@ GameObject:
   - component: {fileID: 330953245}
   - component: {fileID: 330953244}
   - component: {fileID: 330953243}
+  - component: {fileID: 330953247}
   m_Layer: 5
   m_Name: BoostButton
   m_TagString: Untagged
@@ -860,6 +861,37 @@ RectTransform:
   m_AnchoredPosition: {x: 403.98145, y: 298.9297}
   m_SizeDelta: {x: 267.9629, y: 331.6877}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &330953247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330953242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -640986295
+      Data2: 1241557121
+      Data3: -187131757
+      Data4: 422796800
+    Path: event:/Sounds/ButtonBoosterClick
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &388951230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1730,42 +1762,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &587422312 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1578336833261625232, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
-  m_PrefabInstance: {fileID: 1483202493}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &587422317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587422312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -686275368
-      Data2: 1202653605
-      Data3: -1384288865
-      Data4: -1951555157
-    Path: event:/Sounds/ButtonClickClose
-  Event: 
-  PlayEvent: 20
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2070,6 +2066,26 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4099382795836505412, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
   m_PrefabInstance: {fileID: 1318042054}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &846506494 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4783006981211559218, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+  m_PrefabInstance: {fileID: 1318042054}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &846506498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846506494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744a208c85da6d04c861d81b992e4ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Emitters: []
+  TriggerEvent: 0
 --- !u!114 &855877394 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8959179363558593937, guid: 85e0e3e7d0cc086408881cefe7f4e3e2, type: 3}
@@ -2145,6 +2161,30 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6732514562976831752, guid: 68cdcc43df0190c4e8c0ed7820eebcec, type: 3}
   m_PrefabInstance: {fileID: 1739218633}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1022941294 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2022534014448424543, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+  m_PrefabInstance: {fileID: 1318042054}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1022941298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022941294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744a208c85da6d04c861d81b992e4ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Emitters:
+  - Target: {fileID: 0}
+    Params:
+    - Name: Parameter 1
+      Value: 1
+  TriggerEvent: 19
 --- !u!1 &1070244894
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,10 +2321,10 @@ MonoBehaviour:
   CollisionTag: Untagged
   EventReference:
     Guid:
-      Data1: 377779227
-      Data2: 1137601678
-      Data3: -1312724051
-      Data4: -1589876667
+      Data1: -1941190091
+      Data2: 1201231309
+      Data3: 1295895168
+      Data4: 1257187534
     Path: event:/Sounds/ButtonClick
   Event: 
   PlayEvent: 20
@@ -2665,6 +2705,10 @@ PrefabInstance:
       propertyPath: _healthPauseMenuPlusButton
       value: 
       objectReference: {fileID: 1483202498}
+    - target: {fileID: 528376140535060234, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 546497789429316259, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
       propertyPath: m_Color.a
       value: 0.92156863
@@ -2789,6 +2833,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6149425481393027899, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      propertyPath: Params.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6149425481393027899, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      propertyPath: Params.Array.data[0].Name
+      value: Parameter 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 337711277475889839, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
     - {fileID: -8403818877169524134, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
@@ -2798,6 +2850,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4099382795836505412, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1435692912}
+    - targetCorrespondingSourceObject: {fileID: 2022534014448424543, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1022941298}
+    - targetCorrespondingSourceObject: {fileID: 4783006981211559218, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 846506498}
   m_SourcePrefab: {fileID: 100100000, guid: 98464d4eb3b301341b9f91274eca6001, type: 3}
 --- !u!1 &1369698871
 GameObject:
@@ -2980,13 +3038,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8087616425113758764, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: -1941190091
+      objectReference: {fileID: 0}
+    - target: {fileID: 8087616425113758764, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1201231309
+      objectReference: {fileID: 0}
+    - target: {fileID: 8087616425113758764, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: 1295895168
+      objectReference: {fileID: 0}
+    - target: {fileID: 8087616425113758764, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: 1257187534
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1578336833261625232, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 587422317}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3453325dea558344792b3ea66b3416d8, type: 3}
 --- !u!114 &1483202494 stripped
 MonoBehaviour:
@@ -4323,10 +4394,10 @@ MonoBehaviour:
   CollisionTag: Untagged
   EventReference:
     Guid:
-      Data1: 377779227
-      Data2: 1137601678
-      Data3: -1312724051
-      Data4: -1589876667
+      Data1: -1941190091
+      Data2: 1201231309
+      Data3: 1295895168
+      Data4: 1257187534
     Path: event:/Sounds/ButtonClick
   Event: 
   PlayEvent: 20

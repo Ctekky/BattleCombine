@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617bfe66f032fd54189da4985047c7e7, type: 3}
   m_Name: TileSoundDictionary
   m_EditorClassIdentifier: 
+  TileSoundDict:
+  - ID: 0
+    soundEventPath: event:/Sounds/EventTileClick
+  - ID: 1
+    soundEventPath: event:/Sounds/EventTileUnclick
