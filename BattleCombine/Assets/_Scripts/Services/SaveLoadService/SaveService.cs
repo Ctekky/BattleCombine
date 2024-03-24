@@ -125,12 +125,6 @@ namespace BattleCombine.Services
             }
             _dataHandler.Save(_gameData);
         }
-
-        private void OnApplicationQuit()
-        {
-            //SaveGame();
-        }
-
         private List<ISaveLoad> FindAllSaveAndLoadInterfaces() //TODO
         {
             var saveInterfacesInScripts = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>();

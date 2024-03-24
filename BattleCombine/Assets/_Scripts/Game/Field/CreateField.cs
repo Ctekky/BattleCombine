@@ -16,6 +16,9 @@ namespace BattleCombine.Gameplay
     public class CreateField : MonoBehaviour, ISaveLoad
     {
         [SerializeField] private SOTileTypeTable tileTypeTable;
+        [SerializeField] private Animator backImageAnimator;
+        [SerializeField] private Canvas backImageCanvas;
+        private bool _isFieldSpawn;
 
         [Header("Scale or not on start")] [SerializeField]
         private bool makeScale;
@@ -45,7 +48,9 @@ namespace BattleCombine.Gameplay
         private float tileOffset = 1.1f;
 
         [SerializeField, Tooltip("Скейл в зависимости от размера поля")]
-        private List<float> fieldScales = new List<float>() {5f, 4f, 2.7f, 2.15f, 1.61f,1.29f,1.076f, 0.925f,
+        private List<float> fieldScales = new List<float>()
+        {
+            5f, 4f, 2.7f, 2.15f, 1.61f, 1.29f, 1.076f, 0.925f,
         };
 
         [Header("TileTypes & Chances - %")] [SerializeField]
@@ -76,6 +81,7 @@ namespace BattleCombine.Gameplay
 
         public Action<Tile> onTileTouched;
         public Action<bool> onSpeedEnded;
+        private static readonly int IsSpawn = Animator.StringToHash("isSpawn");
 
         #endregion
 
@@ -85,7 +91,9 @@ namespace BattleCombine.Gameplay
             _mainField = this.gameObject;
             _fieldParent = tileParent.transform;
             _isTileFullSetup = false;
+            _isFieldSpawn = true;
             tileStack.DescribeStartingTileList();
+            backImageCanvas.enabled = true;
         }
 
         public void SetupField(bool changeFieldSize, FieldSize fieldSize, ColorSettings tileColorSettings)
@@ -93,10 +101,19 @@ namespace BattleCombine.Gameplay
             _currentTileColorSettings = tileColorSettings;
             if (changeFieldSize) sizeType = fieldSize;
             ChangeFieldSize();
+            //tileParent.SetActive(false);
         }
-        
-        
-        
+
+        public void StartSpawnFieldAnimation()
+        {
+            if(_isFieldSpawn) backImageAnimator.SetBool(IsSpawn, true);
+        }
+
+        public void ChangeBackImageCanvasState(bool state)
+        {
+            backImageCanvas.enabled = state;
+        }
+
         private void Update()
         {
             if (!_isTileFullSetup) SetupTileOnField();
@@ -188,7 +205,7 @@ namespace BattleCombine.Gameplay
 
                 ApplyStartTileStatus(tile);
                 tileStack.AddTileToStartingList(tile);
-                tile.SetupTile(tileStack, _currentTileColorSettings,false);
+                tile.SetupTile(tileStack, _currentTileColorSettings, false);
                 tile.SetAlignTileToPlayer2(true);
             }
         }
@@ -197,7 +214,8 @@ namespace BattleCombine.Gameplay
         {
             tileParent.transform.localScale = new Vector3(fieldScales[_fieldSize - 1], 0, fieldScales[_fieldSize - 1]);
 
-            tileParent.transform.localPosition = _fieldSize switch {
+            tileParent.transform.localPosition = _fieldSize switch
+            {
                 //todo del magic num
                 3 => new Vector3(3, 0, 3),
                 2 => new Vector3(2.25f, 0, 3),
@@ -241,7 +259,6 @@ namespace BattleCombine.Gameplay
                         currentTile.ChangeTileModifier(currentTile.TileModifier + 1, true);
                 }
                 */
-                
             }
         }
 
@@ -334,6 +351,7 @@ namespace BattleCombine.Gameplay
         public void LoadData(GameData gameData, bool newGameBattle, bool firstStart)
         {
             sizeType = gameData.FieldSize;
+            _isFieldSpawn = false;
             if (_tileList.Count != gameData.FieldData.Count)
             {
                 Debug.Log("Field size in save not equal field size in game");

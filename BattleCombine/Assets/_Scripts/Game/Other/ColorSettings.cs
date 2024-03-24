@@ -9,5 +9,6 @@ namespace BattleCombine.Services.Other
         public Color borderColor;
         public Color tileEnemyColor;
         public Color borderEnemyColor;
+        public Sprite enemyEndStepSprite;
     }
 }

@@ -1072,6 +1072,7 @@ GameObject:
   - component: {fileID: 3711897694070920774}
   - component: {fileID: 7751243246816533687}
   - component: {fileID: 6530685277952549981}
+  - component: {fileID: 7114733990139263676}
   m_Layer: 5
   m_Name: shield
   m_TagString: Untagged
@@ -1157,6 +1158,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7114733990139263676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6998734131283611666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e2f95027287ed4b915d79402eed7cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 6530685277952549981}
 --- !u!1 &7032818665718123435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,12 +1577,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8416fbb0d9040264080effa17181ea60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  matchPanel: 0
   spriteStateTrue: {fileID: 21300000, guid: 3c9083763f797374fb572124fa9dc4f6, type: 3}
   spriteStateFalse: {fileID: 21300000, guid: a4eda67863c13b442bf3e61dc4142e08, type: 3}
   image: {fileID: 8114583503420129778}
   avatarBackgroud: {fileID: 0}
+  HeartImage: {fileID: 0}
+  attackImage: {fileID: 0}
+  speedArea: {fileID: 0}
   avatarBorder: {fileID: 0}
   statBorder: {fileID: 0}
+  _avatarBackgroudSprite: {fileID: 0}
+  _avatarBackgroudSpriteNega: {fileID: 0}
+  _attack: {fileID: 0}
+  _attackNega: {fileID: 0}
+  _heart: {fileID: 0}
+  _heartNega: {fileID: 0}
+  _speed: {fileID: 0}
+  _speedNega: {fileID: 0}
 --- !u!1 &8824866626931107620
 GameObject:
   m_ObjectHideFlags: 0

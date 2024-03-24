@@ -1,7 +1,6 @@
-using _Scripts.Temp;
 using BattleCombine.Enums;
 using BattleCombine.Gameplay;
-using System;
+using BattleCombine.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;

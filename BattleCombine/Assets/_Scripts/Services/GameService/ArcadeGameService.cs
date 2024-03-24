@@ -173,7 +173,6 @@ namespace BattleCombine.Services
                 Debug.Log("No game field object");
                 return;
             }
-
             var tileStackScript = gameField.GetComponent<TileStack>();
             tileStackScript.SetupArcadeGameService(this);
             tileStackScript.onTileChoose += TileChoose;
@@ -184,7 +183,9 @@ namespace BattleCombine.Services
                 Debug.Log("No field script");
                 return;
             }
-
+            fieldScript.SetupArcadeGameService(this);
+            fieldScript.StartSpawnFieldAnimation();
+            
             if (fight == null)
             {
                 Debug.Log("No fight script");
@@ -205,7 +206,6 @@ namespace BattleCombine.Services
 
             aiHandler.SetupAIHandler(this, inputService);
             fight.SetUpPlayers(player1.GetComponent<Player>(), player2.GetComponent<Player>());
-            fieldScript.SetupArcadeGameService(this);
             fieldScript.SetupField(false, fieldSize, _mainGameService.GetCurrentColorSettings());
             currentPlayerName = player1.GetComponent<Player>()?.GetPlayerName;
             currentPlayer = player1.GetComponent<Player>();
