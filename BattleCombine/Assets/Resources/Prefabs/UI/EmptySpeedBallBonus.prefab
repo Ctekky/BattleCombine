@@ -107,6 +107,7 @@ MonoBehaviour:
   _heartNega: {fileID: 0}
   _speed: {fileID: 0}
   _speedNega: {fileID: 0}
+  speedImages: []
 --- !u!1 &3361928144990545134
 GameObject:
   m_ObjectHideFlags: 0
