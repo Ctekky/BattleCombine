@@ -1141,10 +1141,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerLevel: {fileID: 6083322627962225891}
-  _coin: {fileID: 0}
-  _diamonds: {fileID: 0}
-  _exp: {fileID: 0}
-  _attack: {fileID: 0}
+  _coin: {fileID: 7595148596595914044}
+  _diamonds: {fileID: 2637080814797546133}
+  _exp: {fileID: 8685250084912020973}
+  _attack: {fileID: 3385409310424990748}
   _score: {fileID: 6062546250902928869}
   _bestScore: {fileID: 1408057119946908485}
 --- !u!114 &5985477712459757304
