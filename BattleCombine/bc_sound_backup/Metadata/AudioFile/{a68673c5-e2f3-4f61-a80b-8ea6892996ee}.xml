@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{a68673c5-e2f3-4f61-a80b-8ea6892996ee}">
+		<property name="assetPath">
+			<value>s_ui_button_surrender.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.7625623582766441</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{b7ab50e6-2fa2-488b-9027-67d94ab39850}</destination>
+		</relationship>
+	</object>
+</objects>

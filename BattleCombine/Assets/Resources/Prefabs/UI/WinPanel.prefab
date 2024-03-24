@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3345296693941027920}
   - component: {fileID: 7628430466088291766}
   - component: {fileID: 8959179363558593937}
+  - component: {fileID: 8370987153672862719}
   m_Layer: 5
   m_Name: WinPanel
   m_TagString: Untagged
@@ -97,6 +98,37 @@ MonoBehaviour:
   _attack: {fileID: 3459170242253486966}
   _score: {fileID: 7280057558461839257}
   _bestScore: {fileID: 8797278820478761796}
+--- !u!114 &8370987153672862719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281584242051332131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 2337019
+      Data2: 1240364432
+      Data3: 2044546717
+      Data4: -632892216
+    Path: event:/Sounds/EventWin
+  Event: 
+  PlayEvent: 11
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &429824545736155279
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,6 +886,7 @@ GameObject:
   - component: {fileID: 5756523893654580716}
   - component: {fileID: 6654976828011193375}
   - component: {fileID: 835818751812131627}
+  - component: {fileID: 4481329745308481212}
   m_Layer: 5
   m_Name: Exp
   m_TagString: Untagged
@@ -920,6 +953,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 4
+--- !u!114 &4481329745308481212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964477487306660978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 107158546
+      Data2: 1086448319
+      Data3: 1228381108
+      Data4: -665575792
+    Path: event:/Sounds/EventReward
+  Event: 
+  PlayEvent: 1
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &2886468396417249847
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,6 +995,7 @@ GameObject:
   - component: {fileID: 1679295240868709096}
   - component: {fileID: 1078313295562435865}
   - component: {fileID: 5570302525093959521}
+  - component: {fileID: 8606261561453891803}
   m_Layer: 5
   m_Name: Coins
   m_TagString: Untagged
@@ -997,6 +1062,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 4
+--- !u!114 &8606261561453891803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2886468396417249847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 107158546
+      Data2: 1086448319
+      Data3: 1228381108
+      Data4: -665575792
+    Path: event:/Sounds/EventReward
+  Event: 
+  PlayEvent: 1
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &3193485486795334080
 GameObject:
   m_ObjectHideFlags: 0
@@ -2065,6 +2161,7 @@ GameObject:
   - component: {fileID: 8781558483369283041}
   - component: {fileID: 4970938422792328800}
   - component: {fileID: 95326290921065295}
+  - component: {fileID: 1786464357446510473}
   m_Layer: 5
   m_Name: Diamonds
   m_TagString: Untagged
@@ -2131,6 +2228,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 4
+--- !u!114 &1786464357446510473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7686287757653857993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 107158546
+      Data2: 1086448319
+      Data3: 1228381108
+      Data4: -665575792
+    Path: event:/Sounds/EventReward
+  Event: 
+  PlayEvent: 1
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &7869612812207873665
 GameObject:
   m_ObjectHideFlags: 0
@@ -2457,8 +2585,47 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2295665993127491651, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5156281049409485361}
   m_SourcePrefab: {fileID: 100100000, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+--- !u!1 &336069907446808589 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2295665993127491651, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+  m_PrefabInstance: {fileID: 1977693497991247950}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5156281049409485361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336069907446808589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -686275368
+      Data2: 1202653605
+      Data3: -1384288865
+      Data4: -1951555157
+    Path: event:/Sounds/ButtonClickClose
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!224 &6943097541693689773 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8874619796983150563, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}

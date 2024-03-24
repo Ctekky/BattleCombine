@@ -1060,6 +1060,7 @@ GameObject:
   - component: {fileID: 1370943557193087347}
   - component: {fileID: 4875827896423879252}
   - component: {fileID: 7139448324318850721}
+  - component: {fileID: 5985477712459757304}
   m_Layer: 5
   m_Name: LosePanel
   m_TagString: Untagged
@@ -1146,6 +1147,37 @@ MonoBehaviour:
   _attack: {fileID: 3385409310424990748}
   _score: {fileID: 6062546250902928869}
   _bestScore: {fileID: 1408057119946908485}
+--- !u!114 &5985477712459757304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3963746296868259861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1899860921
+      Data2: 1097011687
+      Data3: -970682950
+      Data4: -235736161
+    Path: event:/Sounds/EventLose
+  Event: 
+  PlayEvent: 11
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &4938665950313644086
 GameObject:
   m_ObjectHideFlags: 0
@@ -2474,8 +2506,47 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2295665993127491651, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 938492069957995690}
   m_SourcePrefab: {fileID: 100100000, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+--- !u!1 &2470241968200754479 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2295665993127491651, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
+  m_PrefabInstance: {fileID: 4437127507917987180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &938492069957995690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2470241968200754479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -686275368
+      Data2: 1202653605
+      Data3: -1384288865
+      Data4: -1951555157
+    Path: event:/Sounds/ButtonClickClose
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!224 &5096716169017338511 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8874619796983150563, guid: a685234a8d59c5e46b6e405dbba2ffe5, type: 3}
@@ -2596,10 +2667,49 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6606106296525729532, guid: ce486bcb26e47734cb560ab9f82245b5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6247224379116454624}
   m_SourcePrefab: {fileID: 100100000, guid: ce486bcb26e47734cb560ab9f82245b5, type: 3}
 --- !u!224 &114735853378664216 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6948771187391084970, guid: ce486bcb26e47734cb560ab9f82245b5, type: 3}
   m_PrefabInstance: {fileID: 7059780761448664754}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4203261015492386894 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6606106296525729532, guid: ce486bcb26e47734cb560ab9f82245b5, type: 3}
+  m_PrefabInstance: {fileID: 7059780761448664754}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6247224379116454624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4203261015492386894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1159194679
+      Data2: 1258094260
+      Data3: -1034192760
+      Data4: 1666073730
+    Path: event:/Sounds/ButtonGoldSpent
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20

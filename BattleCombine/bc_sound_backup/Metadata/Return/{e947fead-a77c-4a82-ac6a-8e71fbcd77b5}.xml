@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerReturn" id="{e947fead-a77c-4a82-ac6a-8e71fbcd77b5}">
+		<property name="overridingInputFormat">
+			<value>2</value>
+		</property>
+		<property name="name">
+			<value>Reverb</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{4001c4c6-f160-41af-aa76-722ce6bdd78c}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{ee15039b-ffa1-4a88-ac9b-854973cef696}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{8fcaaa6e-0647-4f55-bbae-2ca67764afba}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{4001c4c6-f160-41af-aa76-722ce6bdd78c}">
+		<relationship name="effects">
+			<destination>{6fb89d65-3f35-4d54-ab53-64092cf71e61}</destination>
+			<destination>{8a26b5be-e882-4a66-8dcc-6ed4bebb510e}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{ee15039b-ffa1-4a88-ac9b-854973cef696}" />
+	<object class="MultibandEqEffect" id="{6fb89d65-3f35-4d54-ab53-64092cf71e61}" />
+	<object class="MixerBusFader" id="{8a26b5be-e882-4a66-8dcc-6ed4bebb510e}" />
+</objects>
