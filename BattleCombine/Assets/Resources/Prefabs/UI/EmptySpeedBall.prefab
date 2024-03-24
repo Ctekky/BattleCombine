@@ -164,9 +164,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8416fbb0d9040264080effa17181ea60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  matchPanel: 0
   spriteStateTrue: {fileID: 21300000, guid: ae081196f7736a74aac6e7ad9f936368, type: 3}
   spriteStateFalse: {fileID: 21300000, guid: 193005a9e12f56c48a30545c9fa4920d, type: 3}
   image: {fileID: 3046005838853098421}
+  avatarBackgroud: {fileID: 0}
+  HeartImage: {fileID: 0}
+  attackImage: {fileID: 0}
+  speedArea: {fileID: 0}
+  avatarBorder: {fileID: 0}
+  statBorder: {fileID: 0}
+  _avatarBackgroudSprite: {fileID: 0}
+  _avatarBackgroudSpriteNega: {fileID: 0}
+  _attack: {fileID: 0}
+  _attackNega: {fileID: 0}
+  _heart: {fileID: 0}
+  _heartNega: {fileID: 0}
+  _speed: {fileID: 0}
+  _speedNega: {fileID: 0}
 --- !u!1 &7785766127306496791
 GameObject:
   m_ObjectHideFlags: 0
