@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace BattleCombine.UI
@@ -44,12 +43,6 @@ namespace BattleCombine.UI
 			spriteStateFalse = spriteFalse;
 			
 			EnableState();
-			ShowBorders(false);
-		}
-
-		private void Start()
-		{
-			DisableState();
 		}
 
 		private void ShowBorders(bool show)
@@ -111,7 +104,7 @@ namespace BattleCombine.UI
 		private void UpdateSpeedArea(Transform parent)
 		{
 			if(SceneManager.GetActiveScene().name != "EnemySelectionScene") return;
-
+			speedImages.Clear();
 			foreach (Transform child in parent)
 			{
 				var imageComponent = child.GetComponent<Image>();

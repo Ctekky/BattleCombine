@@ -23,6 +23,9 @@ public class UIChosenEnemy : MonoBehaviour
         _thirdEnemyButton.onClick.AddListener(() => CheckToggleGroup(2));
     }
 
+    public void ManualToggle(int num) =>
+        CheckToggleGroup(num);
+
     private void CheckToggleGroup(int number)
     {
         switch (number)
