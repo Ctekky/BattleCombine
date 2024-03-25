@@ -32,7 +32,7 @@ namespace BattleCombine.UI
 		[SerializeField] private Sprite _speed;
 		[SerializeField] private Sprite _speedNega;
 
-		private List<Image> speedImages = new List<Image>();
+		[SerializeField]private List<Image> speedImages = new List<Image>();
 
 		public Sprite GetTrueStateSprite => spriteStateTrue;
 
@@ -42,6 +42,7 @@ namespace BattleCombine.UI
 		{
 			spriteStateTrue = spriteTrue;
 			spriteStateFalse = spriteFalse;
+			
 			EnableState();
 			ShowBorders(false);
 		}
@@ -54,6 +55,7 @@ namespace BattleCombine.UI
 		private void ShowBorders(bool show)
 		{
 			if(avatarBorder == null && statBorder == null) return;
+			speedImages = new List<Image>();
 			UpdateSpeedArea(speedArea.transform);
 
 			avatarBorder.SetActive(show);
