@@ -356,7 +356,6 @@ GameObject:
   - component: {fileID: 230248773165660187}
   - component: {fileID: 4032446992854270715}
   - component: {fileID: 5411824502802154030}
-  - component: {fileID: 3149665941601657063}
   m_Layer: 5
   m_Name: shield
   m_TagString: Untagged
@@ -421,27 +420,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &3149665941601657063
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009807414807607278}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9bc5f4cb6d7ab2e448c053182e9776d3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3034522516840527173
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,10 +511,10 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 377779227
-      Data2: 1137601678
-      Data3: -1312724051
-      Data4: -1589876667
+      Data1: -1941190091
+      Data2: 1201231309
+      Data3: 1295895168
+      Data4: 1257187534
     Path: event:/Sounds/ButtonClick
   Event: 
   PlayEvent: 11
@@ -793,7 +771,6 @@ GameObject:
   - component: {fileID: 3708729166834003189}
   - component: {fileID: 4200953333958026823}
   - component: {fileID: 1208635453157239507}
-  - component: {fileID: 3686515433645248266}
   m_Layer: 5
   m_Name: Avatar
   m_TagString: Untagged
@@ -870,6 +847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8416fbb0d9040264080effa17181ea60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  matchPanel: 0
   spriteStateTrue: {fileID: 0}
   spriteStateFalse: {fileID: 0}
   image: {fileID: 4200953333958026823}
@@ -887,27 +865,6 @@ MonoBehaviour:
   _heartNega: {fileID: 21300000, guid: 538e5bb5b9e47284eabfb46f8033209e, type: 3}
   _speed: {fileID: 21300000, guid: 76be4dc4957f5a246893197613e78a5a, type: 3}
   _speedNega: {fileID: 21300000, guid: f3aa840272b600546965f5644fae199a, type: 3}
---- !u!95 &3686515433645248266
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4779996241652399337}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9a5f61eeb2675fc48b2809ca11ab2c2a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5181551233762881448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,6 +1368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61e2f95027287ed4b915d79402eed7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
 --- !u!1 &8285568807792428348
 GameObject:
   m_ObjectHideFlags: 0

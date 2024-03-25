@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileSoundDict:
   - ID: 0
-    soundEventPath: event:/Sounds/TileClick
+    soundEventPath: event:/Sounds/EventTileClick
   - ID: 1
-    soundEventPath: event:/Sounds/ButtonClick
+    soundEventPath: event:/Sounds/EventTileUnclick

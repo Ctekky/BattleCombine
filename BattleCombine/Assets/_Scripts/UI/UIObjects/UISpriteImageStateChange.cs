@@ -32,7 +32,7 @@ namespace BattleCombine.UI
 		[SerializeField] private Sprite _speed;
 		[SerializeField] private Sprite _speedNega;
 
-		[SerializeField]private List<Image> speedImages = new List<Image>();
+		[SerializeField] private List<Image> speedImages = new List<Image>();
 
 		public Sprite GetTrueStateSprite => spriteStateTrue;
 
@@ -111,7 +111,7 @@ namespace BattleCombine.UI
 		private void UpdateSpeedArea(Transform parent)
 		{
 			if(SceneManager.GetActiveScene().name != "EnemySelectionScene") return;
-
+			speedImages.Clear();
 			foreach (Transform child in parent)
 			{
 				var imageComponent = child.GetComponent<Image>();

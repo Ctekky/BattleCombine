@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{f81bae9a-6fa9-4771-8d73-f83b1179665f}">
+		<property name="name">
+			<value>TurnCounter</value>
+		</property>
+		<relationship name="folder">
+			<destination>{84ab7ad4-64b4-4ede-931e-96bdfabf2ec9}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{be9178d3-78c2-4dd3-ae91-692c7e15fc90}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{be9178d3-78c2-4dd3-ae91-692c7e15fc90}">
+		<property name="maximum">
+			<value>15</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<relationship name="automators">
+			<destination>{ef500c4d-8008-4ac1-a2a6-75a99388c5f3}</destination>
+		</relationship>
+	</object>
+	<object class="Automator" id="{ef500c4d-8008-4ac1-a2a6-75a99388c5f3}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>cursorPosition</value>
+		</property>
+	</object>
+</objects>

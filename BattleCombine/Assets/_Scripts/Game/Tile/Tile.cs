@@ -13,7 +13,6 @@ using BattleCombine.Services.Other;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using Zenject;
-using _Scripts.Temp;
 using FMODUnity;
 
 namespace BattleCombine.Gameplay
@@ -263,7 +262,14 @@ namespace BattleCombine.Gameplay
             }
             else
             {
-                tileSprite.sprite = tileNormalImage;
+                if(tileSprite.sprite != tileEnemyEndImage) tileSprite.sprite = tileNormalImage;
+                else
+                {
+                    if (type.cellType == CellType.Empty)
+                    {
+                        typeSprite.sprite = tileEnemyEndImage;
+                    }
+                }
                 gameObject.layer = 6;
             }
 
@@ -335,6 +341,7 @@ namespace BattleCombine.Gameplay
             tileChosenEnemyBorder = tileColorSettings.borderEnemyColor;
             tileSprite.color = tileNormalColor;
             borderSprite.color = tileNormalBorder;
+            tileEnemyEndImage = tileColorSettings.enemyEndStepSprite;
             if (isLevelDesign) return;
             if (startTile)
             {
@@ -536,8 +543,7 @@ namespace BattleCombine.Gameplay
         public void TileEnemyEndTurn(bool flag)
         {
             if (flag) currentNormalColor = tileNormalColor;
-            tileNormalColor = flag ? tileEnemyColor : currentNormalColor;
-            typeSprite.color = flag ? tileEnemyColor : currentNormalColor;
+            tileSprite.sprite = flag ? tileEnemyEndImage : tileNormalImage;
         }
 
         private void ActionForTileTouch(List<GameObject> list)

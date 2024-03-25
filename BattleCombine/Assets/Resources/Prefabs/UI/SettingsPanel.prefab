@@ -481,10 +481,10 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 377779227
-      Data2: 1137601678
-      Data3: -1312724051
-      Data4: -1589876667
+      Data1: -1941190091
+      Data2: 1201231309
+      Data3: 1295895168
+      Data4: 1257187534
     Path: event:/Sounds/ButtonClick
   Event: 
   PlayEvent: 20
@@ -1356,10 +1356,10 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 377779227
-      Data2: 1137601678
-      Data3: -1312724051
-      Data4: -1589876667
+      Data1: -1941190091
+      Data2: 1201231309
+      Data3: 1295895168
+      Data4: 1257187534
     Path: event:/Sounds/ButtonClick
   Event: 
   PlayEvent: 20
@@ -1905,7 +1905,7 @@ MonoBehaviour:
       Data2: 1202653605
       Data3: -1384288865
       Data4: -1951555157
-    Path: event:/Sounds/ButtonCloseClick
+    Path: event:/Sounds/ButtonClickClose
   Event: 
   PlayEvent: 20
   StopEvent: 0

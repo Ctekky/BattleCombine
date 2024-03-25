@@ -396,10 +396,10 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 377779227
-      Data2: 1137601678
-      Data3: -1312724051
-      Data4: -1589876667
+      Data1: -1941190091
+      Data2: 1201231309
+      Data3: 1295895168
+      Data4: 1257187534
     Path: event:/Sounds/ButtonClick
   Event: 
   PlayEvent: 20
@@ -1394,10 +1394,10 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 377779227
-      Data2: 1137601678
-      Data3: -1312724051
-      Data4: -1589876667
+      Data1: -1941190091
+      Data2: 1201231309
+      Data3: 1295895168
+      Data4: 1257187534
     Path: event:/Sounds/ButtonClick
   Event: 
   PlayEvent: 20
@@ -4074,48 +4074,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4968214070987825694, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
   m_PrefabInstance: {fileID: 2146440681147237773}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769436931}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1769436931 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4279952195198239133, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
-  m_PrefabInstance: {fileID: 2146440681147237773}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1769436933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769436931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -686275368
-      Data2: 1202653605
-      Data3: -1384288865
-      Data4: -1951555157
-    Path: event:/Sounds/ButtonClickClose
-  Event: 
-  PlayEvent: 20
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1 &1801610123
 GameObject:
   m_ObjectHideFlags: 0
@@ -5705,10 +5669,7 @@ PrefabInstance:
     - {fileID: 7072643362034585200, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
     - {fileID: 1037831330565082159, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4279952195198239133, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1769436933}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
 --- !u!114 &2146440681147237775 stripped
 MonoBehaviour:

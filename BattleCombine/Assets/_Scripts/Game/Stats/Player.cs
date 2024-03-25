@@ -1,6 +1,6 @@
 using BattleCombine.Data;
 using BattleCombine.Interfaces;
-using _Scripts.Temp;
+using BattleCombine.UI;
 using BattleCombine.Services;
 using UnityEngine;
 using Zenject;
@@ -26,6 +26,7 @@ namespace BattleCombine.Gameplay
             base.Start();
             playerUIScript.SetUpAllStats(AttackValue.ToString(), HealthValue.ToString(), Shielded);
             playerUIScript.SetupAnimationService(_mainGameService.GetAnimationService());
+            ReloadAvatar();
         }
 
         public void UpdateStats()
@@ -37,6 +38,16 @@ namespace BattleCombine.Gameplay
         {
             playerUIScript.SetupAvatar(avatarStruct.enableSprite, avatarStruct.disableSprite);
             avatarID = id;
+        }
+
+        public void ReloadAvatar()
+        {
+            playerUIScript.ChangeAvatarState(true);
+        }
+
+        public void StartBattleAnimation()
+        {
+            if(playerName == "Enemy") playerUIScript.StartBattleAvatarAnimation();
         }
 
         public void PlayRerollAnimation(string animName)
