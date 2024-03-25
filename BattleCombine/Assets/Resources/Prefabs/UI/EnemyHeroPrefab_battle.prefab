@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 3348055214337014186}
   - component: {fileID: 5594351656424530286}
   - component: {fileID: 7373243420635749978}
+  - component: {fileID: 6740679588703544450}
   m_Layer: 5
   m_Name: shield
   m_TagString: Untagged
@@ -231,6 +232,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6740679588703544450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062996587838724909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e2f95027287ed4b915d79402eed7cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 7373243420635749978}
 --- !u!1 &2578447885334841932
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,8 +305,8 @@ MonoBehaviour:
   speedPrefab: {fileID: 2188382078495627210, guid: 19ac780cf62aabd4d9f75a8322c3cc35, type: 3}
   speedPrefabBonus: {fileID: 2188382078495627210, guid: 0fedaea31783bb84a9c01d099daa9ad5, type: 3}
   createdSpeedObjectList: []
-  enemyRerollAnimator: {fileID: 7348247660566857663}
-  animToTrigger: {fileID: 6491512748226060928}
+  enemyRerollAnimator: {fileID: 0}
+  animToTrigger: {fileID: 0}
   _heartImg: {fileID: 644905572888294709}
   _swordsImg: {fileID: 6339748891530809659}
   _heartsBackImg: {fileID: 8516226799831815717}
@@ -561,7 +575,6 @@ RectTransform:
   - {fileID: 7467641948454190044}
   - {fileID: 5683098833649555584}
   - {fileID: 105577928731238637}
-  - {fileID: 6061826138964972253}
   m_Father: {fileID: 2955619699538600078}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -683,116 +696,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &3493131182912050461
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6061826138964972253}
-  - component: {fileID: 5185769651960845083}
-  - component: {fileID: 4855444688792328755}
-  - component: {fileID: 7348247660566857663}
-  - component: {fileID: 6491512748226060928}
-  m_Layer: 5
-  m_Name: Reroll_image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &6061826138964972253
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3493131182912050461}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 403108131038964833}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 106.14, y: 0}
-  m_SizeDelta: {x: 212.28, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &5185769651960845083
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3493131182912050461}
-  m_CullTransparentMesh: 1
---- !u!114 &4855444688792328755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3493131182912050461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!95 &7348247660566857663
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3493131182912050461}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b5618cc8f0eca2541983646e43e421c5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6491512748226060928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3493131182912050461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61e2f95027287ed4b915d79402eed7cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3874588601323414672
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,6 +709,8 @@ GameObject:
   - component: {fileID: 462751313424877367}
   - component: {fileID: 4412374905340684101}
   - component: {fileID: 2776847931743523618}
+  - component: {fileID: 788348645865755447}
+  - component: {fileID: 8183469364488055149}
   m_Layer: 5
   m_Name: Avatar
   m_TagString: Untagged
@@ -860,7 +765,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0c16ad3f15be50842afd27b666f9b7bd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 174a1b00a16348e499aaba1afed02470, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -882,12 +787,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8416fbb0d9040264080effa17181ea60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  matchPanel: 0
   spriteStateTrue: {fileID: 0}
   spriteStateFalse: {fileID: 0}
   image: {fileID: 462751313424877367}
   avatarBackgroud: {fileID: 0}
+  HeartImage: {fileID: 0}
+  attackImage: {fileID: 0}
+  speedArea: {fileID: 0}
   avatarBorder: {fileID: 0}
   statBorder: {fileID: 0}
+  _avatarBackgroudSprite: {fileID: 0}
+  _avatarBackgroudSpriteNega: {fileID: 0}
+  _attack: {fileID: 0}
+  _attackNega: {fileID: 0}
+  _heart: {fileID: 0}
+  _heartNega: {fileID: 0}
+  _speed: {fileID: 0}
+  _speedNega: {fileID: 0}
 --- !u!95 &2776847931743523618
 Animator:
   serializedVersion: 5
@@ -909,6 +826,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &788348645865755447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3874588601323414672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e2f95027287ed4b915d79402eed7cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2776847931743523618}
+--- !u!114 &8183469364488055149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3874588601323414672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19cf2cdce71770f4cb8e80e96b688738, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteChangeHelper: {fileID: 4412374905340684101}
+  player: {fileID: 5288184384122326879}
 --- !u!1 &5129696612818776605
 GameObject:
   m_ObjectHideFlags: 0

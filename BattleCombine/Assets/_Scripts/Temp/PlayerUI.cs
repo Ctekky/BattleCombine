@@ -3,175 +3,188 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCombine.Animations;
 using BattleCombine.Services;
-using BattleCombine.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-namespace _Scripts.Temp
+namespace BattleCombine.UI
 {
-	public class PlayerUI : MonoBehaviour
-	{
-		public event Action onEndRerollTrigger;
+    public class PlayerUI : MonoBehaviour
+    {
+        public event Action onEndRerollTrigger;
 
-		[SerializeField] private TMP_Text attackText;
-		[SerializeField] private TMP_Text healthText;
-		[SerializeField] private TMP_Text playerLevelText;
-		[SerializeField] private Slider playerLevelSlider;
-		[SerializeField] private Image shieldSprite;
-		[SerializeField] private GameObject speedArea;
-		[SerializeField] private GameObject speedPrefab;
-		[SerializeField] private GameObject speedPrefabBonus;
-		[SerializeField] private List<GameObject> createdSpeedObjectList;
-		[SerializeField] private Animator enemyRerollAnimator;
-		[SerializeField] private AnimationTriggerToEventRelay animToTrigger;
+        [SerializeField] private TMP_Text attackText;
+        [SerializeField] private TMP_Text healthText;
+        [SerializeField] private TMP_Text playerLevelText;
+        [SerializeField] private Slider playerLevelSlider;
+        [SerializeField] private Image shieldSprite;
+        [SerializeField] private GameObject speedArea;
+        [SerializeField] private GameObject speedPrefab;
+        [SerializeField] private GameObject speedPrefabBonus;
+        [SerializeField] private List<GameObject> createdSpeedObjectList;
+        [SerializeField] private Animator enemyRerollAnimator;
+        [SerializeField] private AnimationTriggerToEventRelay animToTrigger;
 
-		[Header("BoostTimer")] [SerializeField]
-		private Image _heartImg;
+        [Header("BoostTimer")] [SerializeField]
+        private Image _heartImg;
 
-		[SerializeField] private Image _swordsImg;
-		[SerializeField] private Image _heartsBackImg;
-		[SerializeField] private Image _swordsBackImg;
-		[SerializeField] private List<Sprite> _cooldownSprites;
-		[SerializeField] private GameObject _healthCooldownObj;
-		[SerializeField] private GameObject _attackCooldownObj;
-		[SerializeField] private TMP_Text _healthTimerText;
-		[SerializeField] private TMP_Text _attackTimerText;
+        [SerializeField] private Image _swordsImg;
+        [SerializeField] private Image _heartsBackImg;
+        [SerializeField] private Image _swordsBackImg;
+        [SerializeField] private List<Sprite> _cooldownSprites;
+        [SerializeField] private GameObject _healthCooldownObj;
+        [SerializeField] private GameObject _attackCooldownObj;
+        [SerializeField] private TMP_Text _healthTimerText;
+        [SerializeField] private TMP_Text _attackTimerText;
 
-		[Header("Avatars")]
-		[SerializeField] private GameObject avatarGameObject;
+        [Header("Avatars")] [SerializeField] private GameObject avatarGameObject;
 
 
-		private bool _isShielded;
+        private bool _isShielded;
 
-		private bool _isPlayerBoostCooldownOn;
+        private bool _isPlayerBoostCooldownOn;
 
-		private AnimationService _animationService;
+        private AnimationService _animationService;
+        private static readonly int IsShielded = Animator.StringToHash("isShielded");
 
-		public List<GameObject> GetCreatedSpeedObjectList
-		{
-			get => createdSpeedObjectList;
-		}
+        public List<GameObject> GetCreatedSpeedObjectList
+        {
+            get => createdSpeedObjectList;
+        }
 
-		private void OnEnable()
-		{
-			if(animToTrigger != null) animToTrigger.onRerollTrigger += EndRerollAnimation;
-		}
+        private void OnEnable()
+        {
+            if (animToTrigger != null) animToTrigger.onRerollTrigger += EndRerollAnimation;
+        }
 
-		public void UpdateLevelSlider(float value)
-		{
-			playerLevelSlider.value = value;
-		}
+        public void UpdateLevelSlider(float value)
+        {
+            playerLevelSlider.value = value;
+        }
 
-		public void UpdatePlayerLevel(int value)
-		{
-			playerLevelText.text = value.ToString();
-		}
+        public void UpdatePlayerLevel(int value)
+        {
+            playerLevelText.text = value.ToString();
+        }
 
-		public void SetupAnimationService(AnimationService animationService)
-		{
-			_animationService = animationService;
-		}
+        public void SetupAnimationService(AnimationService animationService)
+        {
+            _animationService = animationService;
+        }
 
-		public void PlayRerollAnimation(string animName)
-		{
-			_animationService.PlayAnim(animName, enemyRerollAnimator);
-		}
+        public void PlayRerollAnimation(string animName)
+        {
+            _animationService.PlayAnim(animName, enemyRerollAnimator);
+        }
 
-		private void EndRerollAnimation(string animName)
-		{
-			_animationService.StopAnim(animName, enemyRerollAnimator);
-			onEndRerollTrigger?.Invoke();
-		}
+        private void EndRerollAnimation(string animName)
+        {
+            _animationService.StopAnim(animName, enemyRerollAnimator);
+            onEndRerollTrigger?.Invoke();
+        }
 
-		private void SetupStat(TMP_Text text, string value)
-		{
-			text.text = value;
-		}
+        private void SetupStat(TMP_Text text, string value)
+        {
+            text.text = value;
+        }
 
-		public void SetUpAllStats(string attackValue, string healthValue, bool isShielded)
-		{
-			SetupStat(attackText, attackValue);
-			SetupStat(healthText, healthValue);
-			SetShield(isShielded);
-			ChangeShieldSprite();
-		}
+        public void SetUpAllStats(string attackValue, string healthValue, bool isShielded)
+        {
+            SetupStat(attackText, attackValue);
+            SetupStat(healthText, healthValue);
+            SetShield(isShielded);
+            ChangeShieldSprite();
+        }
 
-		private void SetShield(bool value)
-		{
-			_isShielded = value;
-			ChangeShieldSprite();
-		}
+        private void SetShield(bool value)
+        {
+            _isShielded = value;
+            ChangeShieldSprite();
+        }
 
-		private void ChangeShieldSprite()
-		{
-			shieldSprite.enabled = _isShielded;
-		}
+        private void ChangeShieldSprite()
+        {
+            shieldSprite.enabled = _isShielded;
+            var shieldAnimator = shieldSprite.GetComponent<Animator>();
+            if (shieldAnimator == null) return;
+            if (_isShielded)
+                shieldAnimator.SetBool(IsShielded, true);
+        }
 
-		public void SetupAvatar(Sprite enableState, Sprite disableState)
-		{
-			var changeSpriteScript = avatarGameObject.GetComponent<UISpriteImageStateChange>();
-			changeSpriteScript.SetupSprites(enableState, disableState);
-		}
+        public void StartBattleAvatarAnimation()
+        {
+            var avatarAnimator = avatarGameObject.GetComponent<Animator>();
+            if(avatarAnimator != null) avatarAnimator.SetBool("isBattleStart", true);
+        }
 
-		public Sprite GetSprite(bool state)
-		{
-			var changeSpriteScript = avatarGameObject.GetComponent<UISpriteImageStateChange>();
-			var sprite = state ? changeSpriteScript.GetTrueStateSprite : changeSpriteScript.GetFalseStateSprite;
-			return sprite;
-		}
+        public void DisableAnimator()
+        {
+            avatarGameObject.GetComponent<Animator>().enabled = false;
+        }
 
-		public void ChangeAvatarState(bool state)
-		{
-			var changeSpriteScript = avatarGameObject.GetComponent<UISpriteImageStateChange>();
-			if(state)
-				changeSpriteScript.EnableState();
-			else
-				changeSpriteScript.DisableState();
-		}
+        public void SetupAvatar(Sprite enableState, Sprite disableState)
+        {
+            var changeSpriteScript = avatarGameObject.GetComponent<UISpriteImageStateChange>();
+            changeSpriteScript.SetupSprites(enableState, disableState);
+        }
 
-		public void SetupSpeed(int speed)
-		{
-			DeleteAllSpeedObject();
-			for(var i = 0; i < speed; i++)
-			{
-				var speedObject = Instantiate(speedPrefab, speedArea.transform);
-				createdSpeedObjectList.Add(speedObject);
-			}
+        public Sprite GetSprite(bool state)
+        {
+            var changeSpriteScript = avatarGameObject.GetComponent<UISpriteImageStateChange>();
+            var sprite = state ? changeSpriteScript.GetTrueStateSprite : changeSpriteScript.GetFalseStateSprite;
+            return sprite;
+        }
 
-			var speedObjectBonus = Instantiate(speedPrefabBonus, speedArea.transform);
-			createdSpeedObjectList.Add(speedObjectBonus);
-			speedObjectBonus.SetActive(false);
+        public void ChangeAvatarState(bool state)
+        {
+            var changeSpriteScript = avatarGameObject.GetComponent<UISpriteImageStateChange>();
+            if (state)
+                changeSpriteScript.EnableState();
+            else
+                changeSpriteScript.DisableState();
+        }
 
-			if(SceneManager.GetActiveScene().name == "ArcadeGameLoop")
-			{
-				speedArea.GetComponent<SpeedPanelAnimationHelper>().FindSpeedBallAnimationHelper();
-			}
-		}
+        public void SetupSpeed(int speed)
+        {
+            DeleteAllSpeedObject();
+            for (var i = 0; i < speed; i++)
+            {
+                var speedObject = Instantiate(speedPrefab, speedArea.transform);
+                createdSpeedObjectList.Add(speedObject);
+            }
 
-		private void DeleteAllSpeedObject()
-		{
-			foreach (var speedObject in createdSpeedObjectList)
-			{
-				Destroy(speedObject);
-			}
+            var speedObjectBonus = Instantiate(speedPrefabBonus, speedArea.transform);
+            createdSpeedObjectList.Add(speedObjectBonus);
+            speedObjectBonus.SetActive(false);
 
-			createdSpeedObjectList.Clear();
-		}
+            if (SceneManager.GetActiveScene().name == "ArcadeGameLoop")
+            {
+                speedArea.GetComponent<SpeedPanelAnimationHelper>().FindSpeedBallAnimationHelper();
+            }
+        }
 
-		public void EnabledBonusSpeedSprite()
-		{
-			createdSpeedObjectList.Last().SetActive(true);
-			if(animToTrigger != null) animToTrigger.onRerollTrigger -= EndRerollAnimation;
-			//DeleteAllSpeedObject();
-		}
+        private void DeleteAllSpeedObject()
+        {
+            foreach (var speedObject in createdSpeedObjectList)
+            {
+                Destroy(speedObject);
+            }
 
-		private void OnDisable()
-		{
-			DeleteAllSpeedObject();
-		}
+            createdSpeedObjectList.Clear();
+        }
 
-	}
+        public void EnabledBonusSpeedSprite()
+        {
+            createdSpeedObjectList.Last().SetActive(true);
+            if (animToTrigger != null) animToTrigger.onRerollTrigger -= EndRerollAnimation;
+            //DeleteAllSpeedObject();
+        }
+
+        private void OnDisable()
+        {
+            DeleteAllSpeedObject();
+        }
+    }
 }

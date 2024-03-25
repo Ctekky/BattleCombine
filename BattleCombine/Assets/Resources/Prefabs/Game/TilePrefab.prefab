@@ -538,6 +538,7 @@ GameObject:
   - component: {fileID: 8754641353907052396}
   - component: {fileID: 6805105043564170373}
   - component: {fileID: 30120979702810260}
+  - component: {fileID: 4402986772507647705}
   m_Layer: 6
   m_Name: Achor
   m_TagString: Untagged
@@ -599,6 +600,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 6805105043564170373}
   animationName: stretch
+--- !u!114 &4402986772507647705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2894030692692851580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e2f95027287ed4b915d79402eed7cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 6805105043564170373}
 --- !u!1 &6215361947914798964
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,6 +708,7 @@ GameObject:
   - component: {fileID: 4940977368881296686}
   - component: {fileID: 1875171897921131571}
   - component: {fileID: 4925942363016054613}
+  - component: {fileID: 3321232597745608359}
   m_Layer: 6
   m_Name: Text_Anchor
   m_TagString: Untagged
@@ -752,3 +767,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1875171897921131571}
   animationName: tile_up
+--- !u!114 &3321232597745608359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8235035522065186215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e2f95027287ed4b915d79402eed7cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1875171897921131571}

@@ -1,4 +1,3 @@
-using System;
 using BattleCombine.Data;
 using BattleCombine.Gameplay;
 using BattleCombine.Services;
@@ -33,8 +32,9 @@ public class ArcadeGameInitializer : MonoBehaviour
             disableSprite = avatarDisable
         };
         enemy.SetStats(attack, health, speed, shield);
-        enemy.SetupAvatar(avatarStruct, id);
+        enemy.StartBattleAnimation();
         enemy.SetupDefaultStats(attack, health, speed, shield);
+        enemy.SetupAvatar(avatarStruct, id);
     }
 
     private void SetupPlayerData(BattleStatsData playerBSD)

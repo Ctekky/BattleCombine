@@ -389,6 +389,7 @@ GameObject:
   - component: {fileID: 4988662660135519825}
   - component: {fileID: 1028240729400708151}
   - component: {fileID: 4968214070987825694}
+  - component: {fileID: 2517297462467229509}
   m_Layer: 5
   m_Name: MatchCloseButton
   m_TagString: Untagged
@@ -497,6 +498,37 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2517297462467229509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4279952195198239133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -686275368
+      Data2: 1202653605
+      Data3: -1384288865
+      Data4: -1951555157
+    Path: event:/Sounds/ButtonClickClose
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &6194530484163440126
 GameObject:
   m_ObjectHideFlags: 0

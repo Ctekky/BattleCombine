@@ -1,10 +1,9 @@
 using System;
-using _Scripts.Temp;
 using _Scripts.UI;
 using BattleCombine.Gameplay;
 using BattleCombine.Services;
 using UnityEngine;
-using Zenject;
+using BattleCombine.UI;
 
 namespace _Scripts.Game.Stats
 {

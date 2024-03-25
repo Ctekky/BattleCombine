@@ -1585,6 +1585,7 @@ GameObject:
   - component: {fileID: 6663416504777390122}
   - component: {fileID: 5181090025060930912}
   - component: {fileID: 5210499832129610422}
+  - component: {fileID: 5723281300054739854}
   m_Layer: 5
   m_Name: Close
   m_TagString: Untagged
@@ -1693,6 +1694,37 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5723281300054739854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3025603933790221954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -686275368
+      Data2: 1202653605
+      Data3: -1384288865
+      Data4: -1951555157
+    Path: event:/Sounds/ButtonClickClose
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &3287505700525215636
 GameObject:
   m_ObjectHideFlags: 0
@@ -2186,6 +2218,7 @@ GameObject:
   - component: {fileID: 8391629129008526284}
   - component: {fileID: 1883045175635689610}
   - component: {fileID: 1810335858017606627}
+  - component: {fileID: 4986811998266699122}
   m_Layer: 5
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -2295,6 +2328,37 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4986811998266699122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4090793057439476989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -686275368
+      Data2: 1202653605
+      Data3: -1384288865
+      Data4: -1951555157
+    Path: event:/Sounds/ButtonClickClose
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &4099382795836505412
 GameObject:
   m_ObjectHideFlags: 0
@@ -2791,6 +2855,7 @@ GameObject:
   - component: {fileID: 6400667033091808455}
   - component: {fileID: 6468942599544619682}
   - component: {fileID: 6566530023262122528}
+  - component: {fileID: 4083988015629399841}
   m_Layer: 5
   m_Name: speedImage
   m_TagString: Untagged
@@ -2915,6 +2980,39 @@ MonoBehaviour:
   _valueText: {fileID: 8084436282794730248}
   _cooldownText: {fileID: 3898285279208698038}
   _image: {fileID: 6400667033091808455}
+--- !u!114 &4083988015629399841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4815131561812477506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1257888769
+      Data2: 1111214402
+      Data3: -737959008
+      Data4: 222080725
+    Path: event:/Sounds/ButtonBoosterUse
+  Event: 
+  PlayEvent: 20
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params:
+  - Name: Action
+    Value: 0
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &4874402783525032818
 GameObject:
   m_ObjectHideFlags: 0
@@ -3325,7 +3423,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 66
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 381fee6bb8c4bc24081b23eba9a92284, type: 2}
   m_sharedMaterial: {fileID: 7043207254289701278, guid: 381fee6bb8c4bc24081b23eba9a92284, type: 2}
