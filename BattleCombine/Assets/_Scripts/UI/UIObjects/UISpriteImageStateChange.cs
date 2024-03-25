@@ -42,6 +42,7 @@ namespace BattleCombine.UI
 		{
 			spriteStateTrue = spriteTrue;
 			spriteStateFalse = spriteFalse;
+			
 			EnableState();
 			ShowBorders(false);
 		}
@@ -54,6 +55,7 @@ namespace BattleCombine.UI
 		private void ShowBorders(bool show)
 		{
 			if(avatarBorder == null && statBorder == null) return;
+			speedImages = new List<Image>();
 			UpdateSpeedArea(speedArea.transform);
 
 			avatarBorder.SetActive(show);
