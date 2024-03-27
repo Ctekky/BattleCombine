@@ -296,7 +296,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 272, y: 799}
+  m_AnchoredPosition: {x: 272, y: 770}
   m_SizeDelta: {x: 220, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &62764297
@@ -446,8 +446,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -229, y: -8}
-  m_SizeDelta: {x: 250, y: 100}
+  m_AnchoredPosition: {x: -229, y: -7.5}
+  m_SizeDelta: {x: 250, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &65068900
 MonoBehaviour:
@@ -521,8 +521,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -248, y: -8}
-  m_SizeDelta: {x: 250, y: 100}
+  m_AnchoredPosition: {x: -248, y: -7.5}
+  m_SizeDelta: {x: 250, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &74413961
 MonoBehaviour:
@@ -4500,7 +4500,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -145.99998, y: 799}
+  m_AnchoredPosition: {x: -145.99998, y: 770}
   m_SizeDelta: {x: 400, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1832797193
@@ -5553,6 +5553,18 @@ PrefabInstance:
     - target: {fileID: 4338865808104745035, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5531993402916900682, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
+      propertyPath: matchPanel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5531993402916900682, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
+      propertyPath: statBorder
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5531993402916900682, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
+      propertyPath: avatarBorder
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5531993402916900682, guid: 6a453896ec3fd6d4284a08bcdf5e91aa, type: 3}
       propertyPath: avatarBackgroud
